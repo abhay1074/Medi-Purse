@@ -7,7 +7,7 @@
 <div class="crumbs"><a href="/appointments">Appointments</a> › <a href="/patients/{{ p.id }}">{{ p.full_name }}</a> › Visit</div>
 <div class="head">
   <div><h1>{{ a.scheduled_at | dt }}</h1>
-  <div class="muted"><a href="/patients/{{ p.id }}">{{ p.full_name }}</a> ({{ p.mrn }}) · {{ a.doctor.display if a.doctor else 'No doctor assigned' }} · <span class="tag {{ a.status }}">{{ a.status }}</span></div></div>
+  <div class="muted"><a href="/patients/{{ p.id }}">{{ p.full_name }}</a> ({{ p.mrn }}) · {{ a.doctor.display if a.doctor else 'No doctor assigned' }} · <span class="tag {{ a.status }}">{{ a.status }}</span>{% if a.source == "online" %} <span class="tag online">online</span>{% endif %}</div></div>
   <div class="actions">
     {% if doc %}
     <a class="btn primary" href="/patients/{{ p.id }}/medicines/new?appointment_id={{ a.id }}">{{ icon('pill') }}Prescribe</a>
@@ -16,6 +16,11 @@
     {% if a.status == 'completed' %}<a class="btn outline" href="/patients/{{ p.id }}/feedback/new?appointment_id={{ a.id }}">{{ icon('message') }}Feedback</a>{% endif %}
   </div>
 </div>
+{% if a.source == 'online' and not a.acknowledged %}
+<div class="alert"><span class="ic blue">{{ icon('globe') }}</span><div class="grow"><b>Booked online by the patient</b>
+  <div class="small muted">{{ a.created_at | dt }}</div></div>
+  <form method="post" action="/appointments/{{ a.id }}/acknowledge"><button class="btn outline small">{{ icon('check') }}Mark as seen</button></form></div>
+{% endif %}
 {% if p.allergies %}<div class="note danger"><b>Allergies:</b> {{ p.allergies }}</div>{% endif %}
 
 {% if a.status == 'scheduled' %}
@@ -40,6 +45,17 @@
   <button class="btn primary">Save</button>
 </form>
 
+<div>
+<div class="card">
+  <div class="section-head" style="margin-top:0"><h3 style="margin:0">Patient emails</h3>
+  {% if a.status == 'scheduled' and p.email %}<form method="post" action="/appointments/{{ a.id }}/remind" class="inline"><button class="btn outline small">{{ icon('mail') }}Send reminder now</button></form>{% endif %}</div>
+  {% if not p.email %}<div class="muted">No email address on file. <a href="/patients/{{ p.id }}/edit">Add one</a> to send confirmations and reminders.</div>
+  {% elif not p.email_reminders %}<div class="muted small" style="margin-bottom:8px">Automatic emails are turned off for this patient.</div>{% endif %}
+  {% for n in emails %}
+  <div class="rx-item"><span class="ic {{ 'green' if n.status in ('sent','saved') else ('red' if n.status == 'failed' else 'blue') }}">{{ icon('mail') }}</span>
+    <div><a href="/notifications/{{ n.id }}">{{ n.subject }}</a><div class="muted small">{{ n.kind | capitalize }} · {{ (n.sent_at or n.created_at) | dt }} · {{ n.status }}</div></div></div>
+  {% else %}{% if p.email %}<div class="muted small">No emails yet. Reminders go out automatically before the visit.</div>{% endif %}{% endfor %}
+</div>
 <div class="card">
   <div class="section-head" style="margin-top:0"><h3 style="margin:0">Medicines given this visit</h3>
   {% if doc %}<a class="btn outline small" href="/patients/{{ p.id }}/medicines/new?appointment_id={{ a.id }}">{{ icon('plus') }}Add</a>{% endif %}</div>
@@ -48,6 +64,7 @@
     <div class="muted small">{{ r.frequency }}{% if r.duration %} · {{ r.duration }}{% endif %}{% if r.instructions %} · {{ r.instructions }}{% endif %}</div></div>
     <span class="tag {{ r.status }}">{{ r.status }}</span></div>
   {% else %}<div class="muted">No medicines prescribed for this visit yet.</div>{% endfor %}
+</div>
 </div>
 </div>
 {% endblock %}

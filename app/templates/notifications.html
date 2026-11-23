@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block title %}Email log{% endblock %}
+{% block content %}
+<div class="head">
+  <div><h1>Email log</h1>
+  <div class="muted">Confirmations, changes and reminders sent to patients. Reminders go out {{ hours | join(' and ') }} hours before each appointment.</div></div>
+</div>
+{% if not smtp_on %}
+<div class="note">Email sending is not set up, so emails are saved as files instead of being sent{% if user.role == 'admin' %} (folder: <code>{{ outbox }}</code>). Add the SMTP settings to <code>.env</code> to send real emails{% endif %}.</div>
+{% endif %}
+
+<form method="get" class="filters">
+  <div class="field"><label>Type</label><select name="kind" onchange="this.form.submit()"><option value="">All</option>
+    {% for k, label in [('confirmation','Confirmation'), ('reminder','Reminder'), ('rescheduled','Rescheduled'), ('cancelled','Cancelled'), ('invite','Portal invite'), ('password','Password link'), ('new-booking','New online booking')] %}
+    <option value="{{ k }}" {{ 'selected' if kind == k }}>{{ label }}</option>{% endfor %}</select></div>
+  <div class="field"><label>Status</label><select name="status" onchange="this.form.submit()"><option value="">All</option>
+    {% for k in ['sent', 'saved', 'queued', 'failed'] %}<option {{ 'selected' if status == k }}>{{ k }}</option>{% endfor %}</select></div>
+</form>
+
+{% if rows %}
+<div class="table-card"><table>
+  <tr><th>Created</th><th>To</th><th>Type</th><th>Subject</th><th>Status</th><th></th></tr>
+  {% for n in rows %}
+  <tr>
+    <td class="nowrap">{{ n.created_at | dt('%d %b %Y') }}<div class="muted small">{{ n.created_at | dt('%I:%M %p') }}</div></td>
+    <td>{% if n.patient %}<a href="/patients/{{ n.patient.id }}">{{ n.patient.full_name }}</a><div class="muted small">{{ n.to_email }}</div>{% else %}{{ n.to_email }}{% endif %}</td>
+    <td><span class="tag kind-{{ n.kind }}">{{ n.kind | replace('-', ' ') }}</span></td>
+    <td><a href="/notifications/{{ n.id }}">{{ n.subject }}</a>{% if n.error %}<div class="small" style="color:var(--red)">{{ n.error[:120] }}</div>{% endif %}</td>
+    <td><span class="tag {{ 'completed' if n.status in ('sent','saved') else ('error' if n.status == 'failed' else 'scheduled') }}">{{ n.status }}</span></td>
+    <td>{% if n.status == 'failed' %}<form method="post" action="/notifications/{{ n.id }}/retry" class="inline"><button class="btn outline small">Retry</button></form>{% endif %}</td>
+  </tr>
+  {% endfor %}
+</table></div>
+{% else %}<div class="empty">No emails yet.</div>{% endif %}
+{% endblock %}

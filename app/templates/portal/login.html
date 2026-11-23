@@ -1,0 +1,18 @@
+{% extends "portal/base.html" %}
+{% from "_icons.html" import icon %}
+{% block title %}Sign in{% endblock %}
+{% block content %}
+<div class="login">
+  <div class="login-brand"><span class="logo lg">{{ icon('plus', 22) }}</span></div>
+  <h1>Patient sign in</h1>
+  <p class="muted">Book appointments and get reminders by email.</p>
+  <form method="post" class="card">
+    <div class="field"><label>Email</label><input name="email" type="email" required autofocus placeholder="you@example.com"></div>
+    <div class="field"><label>Password</label><input name="password" type="password" required></div>
+    <button class="btn primary block">Sign in</button>
+    <div class="small" style="margin-top:12px;text-align:center"><a href="/portal/forgot">Forgot password or first time signing in?</a></div>
+  </form>
+  <p class="muted">New patient? <a href="/portal/register">Create an account</a></p>
+  <p class="small muted" style="margin-top:28px"><a href="/login" class="muted">Staff sign in</a></p>
+</div>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends "portal/base.html" %}
+{% from "_icons.html" import icon %}
+{% block title %}My appointments{% endblock %}
+{% block content %}
+<div class="head">
+  <div><h1>Hello, {{ patient.first_name }}</h1>
+  <div class="muted">{{ patient.clinic.label }}{% if patient.clinic.phone %} · {{ patient.clinic.phone }}{% endif %}</div></div>
+  <div class="actions"><a class="btn primary" href="/portal/book">{{ icon('calendar') }}Book an appointment</a></div>
+</div>
+
+{% for a in soon %}
+<div class="alert">
+  <span class="ic amber">{{ icon('bell') }}</span>
+  <div><b>Upcoming: {{ a.scheduled_at | dt('%A, %d %b at %I:%M %p') }}</b>
+  <div class="small">{{ a.doctor.display if a.doctor else patient.clinic.name }} · {{ patient.clinic.label }}. Please arrive 10 minutes early.</div></div>
+</div>
+{% endfor %}
+{% if not patient.email_reminders %}
+<div class="note">Email reminders are turned off. <a href="/portal/profile">Turn them on</a> to get a reminder before each visit.</div>
+{% endif %}
+
+<h2>Upcoming appointments</h2>
+{% if upcoming %}
+<div class="appt-list">
+{% for a in upcoming %}
+  <div class="appt-card">
+    <div class="date-chip"><span>{{ a.scheduled_at.strftime('%b') }}</span><b>{{ a.scheduled_at.day }}</b></div>
+    <div class="grow">
+      <div><b>{{ a.scheduled_at | dt('%A, %I:%M %p') }}</b></div>
+      <div class="muted small">{{ a.doctor.display if a.doctor else 'Doctor to be assigned' }}{% if a.reason %} · {{ a.reason }}{% endif %}</div>
+    </div>
+    {% if a.scheduled_at - now >= cutoff %}
+    <form method="post" action="/portal/appointments/{{ a.id }}/cancel" onsubmit="return confirm('Cancel this appointment?')">
+      <button class="btn destructive-outline small">Cancel</button></form>
+    {% else %}<span class="muted small">Call the clinic to change</span>{% endif %}
+  </div>
+{% endfor %}
+</div>
+{% else %}
+<div class="empty">No upcoming appointments. <a href="/portal/book">Book one</a>.</div>
+{% endif %}
+
+{% if rx %}
+<h2>Current medicines</h2>
+<div class="card">
+{% for r in rx %}
+  <div class="rx-item"><span class="ic violet">{{ icon('pill') }}</span><div><b>{{ r.medicine }}</b> {{ r.dosage }}
+    <div class="muted small">{{ r.frequency }}{% if r.duration %} · {{ r.duration }}{% endif %}{% if r.instructions %} · {{ r.instructions }}{% endif %}</div></div></div>
+{% endfor %}
+</div>
+{% endif %}
+
+<h2>Past appointments</h2>
+{% if past %}
+<div class="table-card"><table>
+  <tr><th>Date &amp; time</th><th>Doctor</th><th>Reason</th><th>Status</th></tr>
+  {% for a in past %}
+  <tr><td>{{ a.scheduled_at | dt }}</td><td>{{ a.doctor.display if a.doctor else '—' }}</td><td>{{ a.reason }}</td>
+  <td><span class="tag {{ a.status }}">{{ a.status }}</span></td></tr>
+  {% endfor %}
+</table></div>
+{% else %}<div class="empty">No past appointments.</div>{% endif %}
+{% endblock %}

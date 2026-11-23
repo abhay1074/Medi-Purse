@@ -24,6 +24,9 @@ Demo accounts (password is `DEMO_PASSWORD` in `app/seed.py`):
 | dr.rao@medipurse.test | Doctor, Neurology Clinic |
 | reception@medipurse.test | Receptionist, Genetics Clinic |
 
+Patient portal demo: sign in at http://localhost:8000/portal with sunita.verma@example.test
+(same demo password).
+
 ## What's in it
 
 | Role | Can do |
@@ -44,7 +47,27 @@ Demo accounts (password is `DEMO_PASSWORD` in `app/seed.py`):
   (and optionally a doctor), preview, then **Download Excel**. The .xlsx has date, time,
   patient, disease, medicine, dosage, frequency, duration, doctor and clinic, plus the
   period and a generated-at timestamp; the file name includes both.
+- **Patient portal** (`/portal`): patients create an account (or accept an emailed invite
+  from staff), book with a doctor in their clinic by choosing a day and a free 30-minute slot
+  (Mon-Sat 9:00-17:00, lunch 13:00-14:00 closed, up to 30 days ahead, at most 3 upcoming),
+  cancel up to 2 hours before, see current medicines, and turn email reminders on or off.
+- **Emails**: confirmation with a calendar invite (.ics) when booked by staff or online,
+  emails when an appointment is moved or cancelled, automatic reminders 24 h and 2 h before
+  (`REMINDER_HOURS`), portal invites and password links. A "Send reminder now" button is on
+  each appointment. Doctors get an email when a patient books online.
+- **Alerts**: new online bookings show on the dashboard with a red badge in the menu until
+  staff mark them seen. The **Email log** page lists every email with its status, and failed
+  ones can be retried.
 - **Feedback**: 1-5 rating plus comments per patient or visit; clinic-wide list with average.
+
+## Email setup
+
+Emails are queued and sent by a background worker in the app. Put SMTP settings in `.env`
+(see `.env.example`). For Gmail, turn on 2-step verification and create an App password,
+then use `SMTP_HOST=smtp.gmail.com`, `SMTP_PORT=587`, `SMTP_USER` = your address and
+`SMTP_PASSWORD` = the app password. Without `SMTP_HOST`, emails are saved as `.eml` files in
+`outbox/` (open them in Outlook or any mail program) so everything can be tried locally.
+Set `APP_BASE_URL` to the address patients use to reach the app, so links in emails work.
 
 ## AI diagnosis
 

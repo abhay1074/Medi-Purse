@@ -36,10 +36,11 @@ def _load_env() -> None:
 
 _load_env()
 
+from . import notify  # noqa: E402
 from .ai import AI  # noqa: E402
 from .db import (APPT_STATUSES, ROLES, AIAnalysis, Appointment, Clinic,  # noqa: E402
-                 Diagnosis, Feedback, Hospital, Patient, Prescription, SessionLocal,
-                 User, check_password, hash_password, init_db)
+                 Diagnosis, Feedback, Hospital, Notification, Patient, Prescription,
+                 SessionLocal, User, check_password, hash_password, init_db)
 
 app = FastAPI(title="MediPurse")
 app.add_middleware(SessionMiddleware, secret_key=os.environ.get("SECRET_KEY") or secrets.token_hex(32),
@@ -64,10 +65,12 @@ templates.env.filters["fromjson"] = lambda s: json.loads(s) if s else {}
 @app.on_event("startup")
 def _startup() -> None:
     init_db()
-    from .seed import seed_if_empty, seed_prescriptions_if_empty
+    from .seed import seed_if_empty, seed_portal_demo, seed_prescriptions_if_empty
     seed_if_empty()
     seed_prescriptions_if_empty()
+    seed_portal_demo()
     AI.load_async()
+    notify.start_worker()
 
 
 # ----------------------------------------------------------------------------
@@ -103,7 +106,7 @@ def current_user(request: Request, db=Depends(get_db)) -> User:
     uid = request.session.get("uid")
     user = db.get(User, uid) if uid else None
     if not user or not user.active:
-        request.session.clear()
+        request.session.pop("uid", None)
         raise Redirect("/login")
     return user
 
@@ -113,8 +116,22 @@ def require(user: User, *roles: str) -> None:
         raise HTTPException(403, "You do not have access to this page.")
 
 
+def online_bookings_query(db, user: User):
+    q = scoped_appointments(db, user).filter(Appointment.source == "online", Appointment.acknowledged == 0,
+                                             Appointment.status == "scheduled")
+    if user.role == "doctor":
+        q = q.filter(Appointment.doctor_id == user.id)
+    return q
+
+
 def render(request: Request, name: str, user: User | None = None, **ctx):
     msgs = request.session.pop("flash", []) if "flash" in request.session else []
+    if user is not None and "new_online" not in ctx:
+        db = SessionLocal()
+        try:
+            ctx["new_online"] = online_bookings_query(db, user).count()
+        finally:
+            db.close()
     return templates.TemplateResponse(request, name, {
         "user": user, "flashes": msgs, "ROLES": ROLES, "path": request.url.path,
         "ai_status": AI.status, "llm_on": AI.llm_configured, "today": date.today(), **ctx})
@@ -235,8 +252,9 @@ def dashboard(request: Request, db=Depends(get_db), user: User = Depends(current
         stats["clinics"] = db.query(Clinic).count()
         stats["staff"] = db.query(User).count()
     recent_patients = scoped_patients(db, user).order_by(Patient.created_at.desc()).limit(5).all()
+    online = online_bookings_query(db, user).order_by(Appointment.scheduled_at).all()
     return render(request, "dashboard.html", user, appts=appts, stats=stats,
-                  recent_patients=recent_patients)
+                  recent_patients=recent_patients, online=online)
 
 
 # ----------------------------------------------------------------------------
@@ -472,6 +490,7 @@ async def patient_create(request: Request, db=Depends(get_db), user: User = Depe
         flash(request, "First name and clinic are required.", "error")
         return redirect("/patients/new")
     p = Patient(clinic_id=clinic_id, dob=_date(form.get("dob")),
+                email_reminders=1 if form.get("email_reminders") else 0,
                 **{f: _s(form, f) for f in PATIENT_FIELDS})
     db.add(p)
     db.commit()
@@ -500,6 +519,21 @@ def patient_detail(pid: int, request: Request, tab: str = "overview", db=Depends
                   feedback=sorted(p.feedback, key=lambda f: f.created_at, reverse=True))
 
 
+@app.post("/patients/{pid}/invite")
+def patient_invite(pid: int, request: Request, db=Depends(get_db), user: User = Depends(current_user)):
+    p = get_patient(db, user, pid)
+    if not p.email:
+        flash(request, "Add the patient's email address first.", "error")
+        return redirect(f"/patients/{pid}/edit")
+    token = secrets.token_urlsafe(32)
+    p.portal_token, p.token_expires = token, datetime.now() + timedelta(days=7)
+    db.commit()
+    subject, body = notify.portal_link_message(p, token, invite=True)
+    notify.queue(db, to=p.email, subject=subject, body=body, kind="invite", patient_id=p.id)
+    flash(request, f"Patient portal invitation emailed to {p.email}.")
+    return redirect(f"/patients/{pid}")
+
+
 @app.get("/patients/{pid}/edit")
 def patient_edit(pid: int, request: Request, db=Depends(get_db), user: User = Depends(current_user)):
     return render(request, "patient_form.html", user, p=get_patient(db, user, pid),
@@ -512,6 +546,7 @@ async def patient_update(pid: int, request: Request, db=Depends(get_db), user: U
     form = await request.form()
     for f in PATIENT_FIELDS:
         setattr(p, f, _s(form, f))
+    p.email_reminders = 1 if form.get("email_reminders") else 0
     p.dob = _date(form.get("dob"))
     if user.role == "admin" and _int(form.get("clinic_id")):
         p.clinic_id = _int(form.get("clinic_id"))
@@ -575,9 +610,12 @@ async def appointment_create(request: Request, db=Depends(get_db), user: User = 
         flash(request, "That doctor already has an appointment within 15 minutes of this time.", "error")
         return redirect(back)
     a = Appointment(patient_id=p.id, doctor_id=doc, scheduled_at=when, reason=_s(form, "reason"))
+    notify.mark_past_reminders(a)
     db.add(a)
     db.commit()
-    flash(request, f"Appointment booked for {p.full_name} on {_fmt_dt(when)}.")
+    sent = notify.notify_patient(db, a, "confirmation")
+    flash(request, f"Appointment booked for {p.full_name} on {_fmt_dt(when)}."
+                   + (f" Confirmation emailed to {p.email}." if sent else ""))
     return redirect(f"/patients/{p.id}?tab=appointments")
 
 
@@ -588,15 +626,21 @@ def appointment_detail(aid: int, request: Request, db=Depends(get_db), user: Use
         raise HTTPException(404)
     get_patient(db, user, a.patient_id)
     rx = db.query(Prescription).filter(Prescription.appointment_id == a.id).order_by(Prescription.id).all()
-    return render(request, "appointment_detail.html", user, a=a, statuses=APPT_STATUSES, rx=rx,
+    emails = db.query(Notification).filter(Notification.appointment_id == a.id,
+                                           Notification.patient_id == a.patient_id,
+                                           Notification.kind != "new-booking").order_by(Notification.id.desc()).all()
+    return render(request, "appointment_detail.html", user, a=a, statuses=APPT_STATUSES, rx=rx, emails=emails,
                   doctors=doctors_for(db, user, a.patient.clinic_id))
 
 
 @app.post("/appointments/{aid}")
 async def appointment_update(aid: int, request: Request, db=Depends(get_db), user: User = Depends(current_user)):
     a = db.get(Appointment, aid)
+    if not a:
+        raise HTTPException(404)
     get_patient(db, user, a.patient_id)
     form = await request.form()
+    old_status, old_time = a.status, a.scheduled_at
     if _s(form, "status") in APPT_STATUSES:
         a.status = _s(form, "status")
     if "notes" in form:
@@ -610,9 +654,48 @@ async def appointment_update(aid: int, request: Request, db=Depends(get_db), use
             a.scheduled_at = datetime.fromisoformat(_s(form, "scheduled_at"))
         except ValueError:
             pass
+    a.acknowledged = 1
+    emailed = None
+    if a.status == "cancelled" and old_status != "cancelled":
+        db.commit()
+        emailed = notify.notify_patient(db, a, "cancelled")
+    elif a.status == "scheduled" and (a.scheduled_at != old_time or old_status != "scheduled"):
+        notify.mark_past_reminders(a)
+        db.commit()
+        emailed = notify.notify_patient(db, a, "rescheduled")
     db.commit()
-    flash(request, "Appointment updated.")
+    flash(request, "Appointment updated." + (f" The patient was emailed at {a.patient.email}." if emailed else ""))
     return redirect(f"/appointments/{aid}")
+
+
+@app.post("/appointments/{aid}/remind")
+def appointment_remind(aid: int, request: Request, db=Depends(get_db), user: User = Depends(current_user)):
+    a = db.get(Appointment, aid)
+    if not a:
+        raise HTTPException(404)
+    get_patient(db, user, a.patient_id)
+    if not a.patient.email:
+        flash(request, "This patient has no email address. Add one on the patient's details.", "error")
+    elif a.status != "scheduled" or a.scheduled_at < datetime.now():
+        flash(request, "Reminders can only be sent for upcoming scheduled appointments.", "error")
+    else:
+        hours = max(1, int((a.scheduled_at - datetime.now()).total_seconds() // 3600))
+        subject, body = notify.appointment_message(a, "reminder", hours)
+        notify.queue(db, to=a.patient.email, subject=subject, body=body, kind="reminder",
+                     patient_id=a.patient_id, appointment_id=a.id)
+        flash(request, f"Reminder emailed to {a.patient.email}.")
+    return redirect(f"/appointments/{aid}")
+
+
+@app.post("/appointments/{aid}/acknowledge")
+def appointment_ack(aid: int, request: Request, db=Depends(get_db), user: User = Depends(current_user)):
+    a = db.get(Appointment, aid)
+    if not a:
+        raise HTTPException(404)
+    get_patient(db, user, a.patient_id)
+    a.acknowledged = 1
+    db.commit()
+    return redirect(request.headers.get("referer") or "/")
 
 
 # ----------------------------------------------------------------------------
@@ -843,6 +926,45 @@ def reports_export(request: Request, db=Depends(get_db), user: User = Depends(cu
 
 
 # ----------------------------------------------------------------------------
+# email log
+# ----------------------------------------------------------------------------
+@app.get("/notifications")
+def notifications(request: Request, kind: str = "", status: str = "", db=Depends(get_db),
+                  user: User = Depends(current_user)):
+    q = db.query(Notification).outerjoin(Patient, Notification.patient_id == Patient.id)
+    if user.role != "admin":
+        q = q.filter(Patient.clinic_id == user.clinic_id)
+    if kind:
+        q = q.filter(Notification.kind == kind)
+    if status:
+        q = q.filter(Notification.status == status)
+    rows = q.order_by(Notification.id.desc()).limit(300).all()
+    return render(request, "notifications.html", user, rows=rows, kind=kind, status=status,
+                  smtp_on=notify.smtp_configured(), outbox=str(notify.outbox_path()),
+                  hours=notify.reminder_hours())
+
+
+@app.post("/notifications/{nid}/retry")
+def notification_retry(nid: int, request: Request, db=Depends(get_db), user: User = Depends(current_user)):
+    n = db.get(Notification, nid)
+    if not n or (user.role != "admin" and (not n.patient or n.patient.clinic_id != user.clinic_id)):
+        raise HTTPException(404)
+    n.status, n.attempts, n.error = "queued", 0, ""
+    db.commit()
+    notify._wake.set()
+    flash(request, "Email queued again.")
+    return redirect("/notifications")
+
+
+@app.get("/notifications/{nid}")
+def notification_view(nid: int, request: Request, db=Depends(get_db), user: User = Depends(current_user)):
+    n = db.get(Notification, nid)
+    if not n or (user.role != "admin" and (not n.patient or n.patient.clinic_id != user.clinic_id)):
+        raise HTTPException(404)
+    return render(request, "notification_detail.html", user, n=n)
+
+
+# ----------------------------------------------------------------------------
 # feedback
 # ----------------------------------------------------------------------------
 @app.get("/feedback")
@@ -994,3 +1116,9 @@ def ai_explain(aid: int, request: Request, db=Depends(get_db), user: User = Depe
 def ai_explain_status(aid: int, db=Depends(get_db), user: User = Depends(current_user)):
     an = _get_analysis(db, user, aid)
     return JSONResponse({"status": an.explain_status, "stage": an.explain_stage})
+
+
+# patient portal (registered last; it imports helpers from this module)
+from .portal import router as portal_router  # noqa: E402
+
+app.include_router(portal_router)

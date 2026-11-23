@@ -21,7 +21,7 @@
   <td><a href="/appointments/{{ a.id }}">{{ a.scheduled_at | dt }}</a></td>
   <td>{{ a.patient.full_name }} <span class="muted small">{{ a.patient.mrn }}</span></td>
   <td>{{ a.reason }}</td><td>{{ a.doctor.display if a.doctor else '—' }}</td>
-  <td><span class="tag {{ a.status }}">{{ a.status }}</span></td></tr>
+  <td><span class="tag {{ a.status }}">{{ a.status }}</span>{% if a.source == "online" %} <span class="tag online">online</span>{% endif %}</td></tr>
 {% endfor %}</table>
 {% else %}<div class="empty">No appointments match.</div>{% endif %}
 {% endblock %}

@@ -156,3 +156,19 @@ def seed_prescriptions_if_empty() -> None:
         db.commit()
     finally:
         db.close()
+
+
+DEMO_PATIENT_EMAIL = "sunita.verma@example.test"
+
+
+def seed_portal_demo() -> None:
+    """Give one demo patient an email and a portal password (local testing only)."""
+    db = SessionLocal()
+    try:
+        p = db.query(Patient).filter(Patient.first_name == "Sunita", Patient.last_name == "Verma").first()
+        if p and not p.password_hash and not p.email:
+            p.email = DEMO_PATIENT_EMAIL
+            p.password_hash = hash_password(DEMO_PASSWORD)
+            db.commit()
+    finally:
+        db.close()

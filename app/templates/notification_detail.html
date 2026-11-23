@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Email{% endblock %}
+{% block content %}
+<div class="crumbs"><a href="/notifications">Email log</a> › Email</div>
+<div class="head"><div><h1>{{ n.subject }}</h1>
+<div class="muted">To {{ n.to_email }} · {{ n.created_at | dt }} · <span class="tag {{ 'completed' if n.status in ('sent','saved') else ('error' if n.status == 'failed' else 'scheduled') }}">{{ n.status }}</span>
+{% if n.appointment %} · <a href="/appointments/{{ n.appointment.id }}">Appointment</a>{% endif %}</div></div></div>
+{% if n.error %}<div class="flash error">{{ n.error }}</div>{% endif %}
+<div class="casebox" style="max-width:680px">{{ n.body }}</div>
+{% endblock %}

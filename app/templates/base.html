@@ -26,12 +26,13 @@
 </header>
 <div class="shell">
   <nav class="sidebar">
-    {% macro nav(href, label, ic) %}<a href="{{ href }}" class="{{ 'on' if (path == href or (href != '/' and path.startswith(href))) }}">{{ icon(ic) }}{{ label }}</a>{% endmacro %}
-    {{ nav('/', 'Dashboard', 'home') }}
+    {% macro nav(href, label, ic, badge=0) %}<a href="{{ href }}" class="{{ 'on' if (path == href or (href != '/' and path.startswith(href))) }}">{{ icon(ic) }}{{ label }}{% if badge %}<span class="badge">{{ badge }}</span>{% endif %}</a>{% endmacro %}
+    {{ nav('/', 'Dashboard', 'home', new_online or 0) }}
     {{ nav('/patients', 'Patients', 'users') }}
     {{ nav('/appointments', 'Appointments', 'calendar') }}
     {% if user.role in ('doctor', 'admin') %}{{ nav('/ai', 'AI Diagnosis', 'sparkles') }}{% endif %}
     {{ nav('/reports', 'Medicine reports', 'sheet') }}
+    {{ nav('/notifications', 'Email log', 'mail') }}
     {{ nav('/feedback', 'Feedback', 'message') }}
     {% if user.role == 'admin' %}
       <div class="label">Registry</div>

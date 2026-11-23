@@ -98,6 +98,11 @@ class Patient(Base):
     blood_group: Mapped[str] = mapped_column(String(10), default="")
     allergies: Mapped[str] = mapped_column(Text, default="")
     emergency_contact: Mapped[str] = mapped_column(String(200), default="")
+    # patient portal
+    password_hash: Mapped[str] = mapped_column(String(300), default="")
+    portal_token: Mapped[str] = mapped_column(String(100), default="")
+    token_expires: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+    email_reminders: Mapped[int] = mapped_column(Integer, default=1)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now)
     clinic: Mapped[Clinic] = relationship(back_populates="patients")
     appointments: Mapped[list["Appointment"]] = relationship(back_populates="patient")
@@ -134,6 +139,9 @@ class Appointment(Base):
     reason: Mapped[str] = mapped_column(String(300), default="")
     status: Mapped[str] = mapped_column(String(20), default="scheduled")
     notes: Mapped[str] = mapped_column(Text, default="")
+    source: Mapped[str] = mapped_column(String(20), default="staff")  # staff | online
+    acknowledged: Mapped[int] = mapped_column(Integer, default=1)  # 0 = new online booking
+    reminders_sent: Mapped[str] = mapped_column(String(50), default="")  # e.g. "24,2"
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now)
     patient: Mapped[Patient] = relationship(back_populates="appointments")
     doctor: Mapped[User | None] = relationship()
@@ -209,6 +217,25 @@ class AIAnalysis(Base):
     doctor: Mapped[User | None] = relationship()
 
 
+class Notification(Base):
+    """An email sent (or queued) to a patient or staff member."""
+    __tablename__ = "notifications"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    patient_id: Mapped[int | None] = mapped_column(ForeignKey("patients.id"), nullable=True)
+    appointment_id: Mapped[int | None] = mapped_column(ForeignKey("appointments.id"), nullable=True)
+    kind: Mapped[str] = mapped_column(String(30))  # confirmation|reminder|rescheduled|cancelled|invite|password|new-booking
+    to_email: Mapped[str] = mapped_column(String(200))
+    subject: Mapped[str] = mapped_column(String(300))
+    body: Mapped[str] = mapped_column(Text)
+    status: Mapped[str] = mapped_column(String(20), default="queued")  # queued|sent|saved|failed
+    attempts: Mapped[int] = mapped_column(Integer, default=0)
+    error: Mapped[str] = mapped_column(Text, default="")
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now)
+    sent_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+    patient: Mapped[Patient | None] = relationship()
+    appointment: Mapped[Appointment | None] = relationship()
+
+
 # ----------------------------------------------------------------------------
 def hash_password(pw: str) -> str:
     salt = secrets.token_hex(16)
@@ -227,6 +254,24 @@ def check_password(pw: str, stored: str) -> bool:
 
 def init_db() -> None:
     Base.metadata.create_all(engine)
+    _add_missing_columns()
+
+
+def _add_missing_columns() -> None:
+    """Tiny migration: add columns introduced after a database was created (SQLite)."""
+    from sqlalchemy import inspect, text
+    insp = inspect(engine)
+    with engine.begin() as conn:
+        for table in Base.metadata.sorted_tables:
+            have = {c["name"] for c in insp.get_columns(table.name)}
+            for col in table.columns:
+                if col.name in have:
+                    continue
+                default = col.default.arg if col.default is not None and not callable(col.default.arg) else None
+                ddl = f'ALTER TABLE {table.name} ADD COLUMN {col.name} {col.type.compile(engine.dialect)}'
+                if default is not None:
+                    ddl += f" DEFAULT {default!r}" if isinstance(default, str) else f" DEFAULT {default}"
+                conn.execute(text(ddl))
 
 
 def count(db, model) -> int:

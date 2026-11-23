@@ -1,0 +1,26 @@
+{% extends "portal/base.html" %}
+{% block title %}My details{% endblock %}
+{% block content %}
+<h1>My details</h1>
+<p class="muted">{{ patient.full_name }} · {{ patient.mrn }}{% if patient.dob %} · born {{ patient.dob | d }}{% endif %}</p>
+<form method="post" class="card narrow" style="margin-left:0">
+  <h3 style="margin-top:0">Contact</h3>
+  <div class="row">
+    <div class="field"><label>Email</label><input type="email" name="email" value="{{ patient.email }}" required></div>
+    <div class="field"><label>Phone</label><input name="phone" value="{{ patient.phone }}"></div>
+  </div>
+  <div class="field"><label>Address</label><input name="address" value="{{ patient.address }}"></div>
+  <div class="field"><label>Emergency contact</label><input name="emergency_contact" value="{{ patient.emergency_contact }}"></div>
+
+  <h3>Notifications</h3>
+  <div class="field"><label class="check"><input type="checkbox" name="email_reminders" value="1" {{ 'checked' if patient.email_reminders }}>
+    Email me booking confirmations and appointment reminders</label></div>
+
+  <h3>Change password</h3>
+  <div class="row">
+    <div class="field"><label>Current password</label><input type="password" name="current_password"></div>
+    <div class="field"><label>New password</label><input type="password" name="new_password" minlength="8" placeholder="Leave blank to keep"></div>
+  </div>
+  <button class="btn primary">Save</button>
+</form>
+{% endblock %}
