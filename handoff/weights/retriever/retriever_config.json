@@ -1,0 +1,45 @@
+{
+ "name": "fusion_v4_shap8",
+ "version": "2026-11-23",
+ "catalog_size": 1464,
+ "k_pool": 100,
+ "bow_weight": 0.6,
+ "gbm_weight": 0.4,
+ "pool_pad": -0.3,
+ "features": [
+  "disease_svd_0",
+  "rank_min",
+  "tfidf_z",
+  "tfidf_minmax",
+  "tfidf_rank",
+  "svd_cosine",
+  "tfidf_x_bow",
+  "tfidf_recip_rank"
+ ],
+ "score": "0.6*minmax(bow_full) + 0.4*(minmax(gbm_pool) or pad -0.3) + 4e-5*minmax(bow_full)",
+ "gbm_model": "gbm_v4_shap8.txt",
+ "n_trees": 241,
+ "metrics": {
+  "val": {
+   "mrr": 0.5286,
+   "top1": null,
+   "top5": null,
+   "top10": 0.7335
+  },
+  "test": {
+   "mrr": 0.496,
+   "top1": 0.3911,
+   "top5": 0.6199,
+   "top10": 0.6848,
+   "r50": 0.798,
+   "r100": 0.8437
+  }
+ },
+ "artifacts": {
+  "tfidf": "tfidf_vectorizer.joblib + tfidf_classifier.joblib",
+  "bow": "bow_vectorizer_mass80.pkl + bow_centroids_mass80.npz + prune_sets_mass80.json",
+  "svd": "svd32.joblib + disease_svd32.npy",
+  "gbm": "gbm_v4_shap8.txt (production), gbm_v4_140.txt (full 140-feature alternative)"
+ },
+ "notes": "Feature order in gbm_v4_shap8.txt is the order of the features list above. TF-IDF scores are SGD log-loss probabilities. BoW scores are mass80 centroid cosine similarities."
+}

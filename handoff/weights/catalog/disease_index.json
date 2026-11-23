@@ -1,0 +1,8788 @@
+{
+ "diseases": [
+  {
+   "index": 0,
+   "id": "100",
+   "name": "Ataxia-telangiectasia",
+   "profile_available": true
+  },
+  {
+   "index": 1,
+   "id": "101",
+   "name": "Dentatorubral pallidoluysian atrophy",
+   "profile_available": true
+  },
+  {
+   "index": 2,
+   "id": "1018",
+   "name": "X-linked Alport syndrome-diffuse leiomyomatosis",
+   "profile_available": true
+  },
+  {
+   "index": 3,
+   "id": "102",
+   "name": "Multiple system atrophy",
+   "profile_available": true
+  },
+  {
+   "index": 4,
+   "id": "1031",
+   "name": "Enamel-renal syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 5,
+   "id": "1037",
+   "name": "Arthrogryposis multiplex congenita",
+   "profile_available": true
+  },
+  {
+   "index": 6,
+   "id": "104",
+   "name": "Leber hereditary optic neuropathy",
+   "profile_available": true
+  },
+  {
+   "index": 7,
+   "id": "1041",
+   "name": "Hydrops fetalis",
+   "profile_available": true
+  },
+  {
+   "index": 8,
+   "id": "1047",
+   "name": "Sideroblastic anemia",
+   "profile_available": true
+  },
+  {
+   "index": 9,
+   "id": "1052",
+   "name": "Mosaic variegated aneuploidy syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 10,
+   "id": "1053",
+   "name": "Vein of Galen aneurysmal malformation",
+   "profile_available": true
+  },
+  {
+   "index": 11,
+   "id": "1059",
+   "name": "Blue rubber bleb nevus",
+   "profile_available": true
+  },
+  {
+   "index": 12,
+   "id": "1071",
+   "name": "Ankyloblepharon-ectodermal defects-cleft lip/palate syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 13,
+   "id": "1083",
+   "name": "Microlissencephaly",
+   "profile_available": true
+  },
+  {
+   "index": 14,
+   "id": "1084",
+   "name": "Isolated lissencephaly type 1 without known genetic defects",
+   "profile_available": true
+  },
+  {
+   "index": 15,
+   "id": "109",
+   "name": "Bannayan-Riley-Ruvalcaba syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 16,
+   "id": "110",
+   "name": "Bardet-Biedl syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 17,
+   "id": "1106",
+   "name": "Microphthalmia with limb anomalies",
+   "profile_available": true
+  },
+  {
+   "index": 18,
+   "id": "111",
+   "name": "Barth syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 19,
+   "id": "1118",
+   "name": "Fibular aplasia-ectrodactyly syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 20,
+   "id": "112",
+   "name": "Bartter syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 21,
+   "id": "1125",
+   "name": "Ocular motor apraxia, Cogan type",
+   "profile_available": true
+  },
+  {
+   "index": 22,
+   "id": "113",
+   "name": "Bazex-Dupr\u00e9-Christol syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 23,
+   "id": "1138",
+   "name": "Abnormal origin of the pulmonary artery",
+   "profile_available": true
+  },
+  {
+   "index": 24,
+   "id": "1143",
+   "name": "Neurogenic arthrogryposis multiplex congenita",
+   "profile_available": true
+  },
+  {
+   "index": 25,
+   "id": "115",
+   "name": "Congenital contractural arachnodactyly",
+   "profile_available": true
+  },
+  {
+   "index": 26,
+   "id": "1154",
+   "name": "Arthrogryposis-oculomotor limitation-electroretinal anomalies syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 27,
+   "id": "116",
+   "name": "Beckwith-Wiedemann syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 28,
+   "id": "1163",
+   "name": "Aspergillosis",
+   "profile_available": true
+  },
+  {
+   "index": 29,
+   "id": "1164",
+   "name": "Allergic bronchopulmonary aspergillosis",
+   "profile_available": true
+  },
+  {
+   "index": 30,
+   "id": "117",
+   "name": "Beh\u00e7et disease",
+   "profile_available": true
+  },
+  {
+   "index": 31,
+   "id": "1170",
+   "name": "Autosomal recessive cerebelloparenchymal disorder type 3",
+   "profile_available": true
+  },
+  {
+   "index": 32,
+   "id": "1173",
+   "name": "Cerebellar ataxia-hypogonadism syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 33,
+   "id": "1175",
+   "name": "X-linked progressive cerebellar ataxia",
+   "profile_available": true
+  },
+  {
+   "index": 34,
+   "id": "118",
+   "name": "Beta-mannosidosis",
+   "profile_available": true
+  },
+  {
+   "index": 35,
+   "id": "1180",
+   "name": "Ataxia-hypogonadism-choroidal dystrophy syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 36,
+   "id": "1190",
+   "name": "Atelosteogenesis type I",
+   "profile_available": true
+  },
+  {
+   "index": 37,
+   "id": "1199",
+   "name": "Esophageal atresia",
+   "profile_available": true
+  },
+  {
+   "index": 38,
+   "id": "1202",
+   "name": "Larynx atresia",
+   "profile_available": true
+  },
+  {
+   "index": 39,
+   "id": "1207",
+   "name": "Pulmonary atresia with ventricular septal defect",
+   "profile_available": true
+  },
+  {
+   "index": 40,
+   "id": "1208",
+   "name": "Pulmonary atresia-intact ventricular septum syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 41,
+   "id": "1209",
+   "name": "Tricuspid atresia",
+   "profile_available": true
+  },
+  {
+   "index": 42,
+   "id": "1214",
+   "name": "Progressive hemifacial atrophy",
+   "profile_available": true
+  },
+  {
+   "index": 43,
+   "id": "1221",
+   "name": "Cheilitis glandularis",
+   "profile_available": true
+  },
+  {
+   "index": 44,
+   "id": "1226",
+   "name": "Bamforth-Lazarus syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 45,
+   "id": "1228",
+   "name": "Banki syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 46,
+   "id": "1234",
+   "name": "Bartsocas-Papas syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 47,
+   "id": "124",
+   "name": "Diamond-Blackfan anemia",
+   "profile_available": true
+  },
+  {
+   "index": 48,
+   "id": "1247",
+   "name": "Schistosomiasis",
+   "profile_available": true
+  },
+  {
+   "index": 49,
+   "id": "1248",
+   "name": "Maxillonasal dysplasia",
+   "profile_available": true
+  },
+  {
+   "index": 50,
+   "id": "125",
+   "name": "Bloom syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 51,
+   "id": "126",
+   "name": "Blepharophimosis-ptosis-epicanthus inversus syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 52,
+   "id": "1263",
+   "name": "Boomerang dysplasia",
+   "profile_available": true
+  },
+  {
+   "index": 53,
+   "id": "1267",
+   "name": "Botulism",
+   "profile_available": true
+  },
+  {
+   "index": 54,
+   "id": "127",
+   "name": "Borjeson-Forssman-Lehmann syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 55,
+   "id": "1276",
+   "name": "Brachydactyly-arterial hypertension syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 56,
+   "id": "1293",
+   "name": "Brachyolmia",
+   "profile_available": true
+  },
+  {
+   "index": 57,
+   "id": "1297",
+   "name": "Branchio-oculo-facial syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 58,
+   "id": "130",
+   "name": "Brugada syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 59,
+   "id": "1300",
+   "name": "Autosomal dominant popliteal pterygium syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 60,
+   "id": "1302",
+   "name": "Cryptogenic organizing pneumonia",
+   "profile_available": true
+  },
+  {
+   "index": 61,
+   "id": "1304",
+   "name": "Brucellosis",
+   "profile_available": true
+  },
+  {
+   "index": 62,
+   "id": "1308",
+   "name": "C syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 63,
+   "id": "131",
+   "name": "Budd-Chiari syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 64,
+   "id": "1310",
+   "name": "Caffey disease",
+   "profile_available": true
+  },
+  {
+   "index": 65,
+   "id": "132",
+   "name": "Hereditary butyrylcholinesterase deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 66,
+   "id": "1320",
+   "name": "Idiopathic camptocormia",
+   "profile_available": true
+  },
+  {
+   "index": 67,
+   "id": "1323",
+   "name": "Camptodactyly-joint contractures-facial skeletal defects syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 68,
+   "id": "1328",
+   "name": "Camurati-Engelmann disease",
+   "profile_available": true
+  },
+  {
+   "index": 69,
+   "id": "1329",
+   "name": "Complete atrioventricular septal defect",
+   "profile_available": true
+  },
+  {
+   "index": 70,
+   "id": "133",
+   "name": "Chronic beryllium disease",
+   "profile_available": true
+  },
+  {
+   "index": 71,
+   "id": "1330",
+   "name": "Partial atrioventricular septal defect",
+   "profile_available": true
+  },
+  {
+   "index": 72,
+   "id": "1331",
+   "name": "Familial prostate cancer",
+   "profile_available": true
+  },
+  {
+   "index": 73,
+   "id": "1332",
+   "name": "Medullary thyroid carcinoma",
+   "profile_available": true
+  },
+  {
+   "index": 74,
+   "id": "1334",
+   "name": "Chronic mucocutaneous candidiasis",
+   "profile_available": true
+  },
+  {
+   "index": 75,
+   "id": "1335",
+   "name": "Pentalogy of Cantrell",
+   "profile_available": true
+  },
+  {
+   "index": 76,
+   "id": "1344",
+   "name": "Isolated atrial standstill",
+   "profile_available": true
+  },
+  {
+   "index": 77,
+   "id": "135",
+   "name": "CACH syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 78,
+   "id": "1359",
+   "name": "Carney complex",
+   "profile_available": true
+  },
+  {
+   "index": 79,
+   "id": "136",
+   "name": "Cerebral autosomal dominant arteriopathy-subcortical infarcts-leukoencephalopathy",
+   "profile_available": true
+  },
+  {
+   "index": 80,
+   "id": "137",
+   "name": "Congenital disorder of glycosylation",
+   "profile_available": true
+  },
+  {
+   "index": 81,
+   "id": "1377",
+   "name": "Cataract-microcornea syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 82,
+   "id": "138",
+   "name": "CHARGE syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 83,
+   "id": "1380",
+   "name": "Cataract-nephropathy-encephalopathy syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 84,
+   "id": "1398",
+   "name": "Isolated cerebellar agenesis",
+   "profile_available": true
+  },
+  {
+   "index": 85,
+   "id": "1399",
+   "name": "Richards-Rundle syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 86,
+   "id": "14",
+   "name": "Abetalipoproteinemia",
+   "profile_available": true
+  },
+  {
+   "index": 87,
+   "id": "140",
+   "name": "Campomelic dysplasia",
+   "profile_available": true
+  },
+  {
+   "index": 88,
+   "id": "141",
+   "name": "Canavan disease",
+   "profile_available": true
+  },
+  {
+   "index": 89,
+   "id": "1412",
+   "name": "Tarsal-carpal coalition syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 90,
+   "id": "1416",
+   "name": "Familial calcium pyrophosphate deposition",
+   "profile_available": true
+  },
+  {
+   "index": 91,
+   "id": "142",
+   "name": "Anaplastic thyroid carcinoma",
+   "profile_available": true
+  },
+  {
+   "index": 92,
+   "id": "1422",
+   "name": "Chondrodysplasia-difference of sex development syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 93,
+   "id": "1425",
+   "name": "Desbuquois syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 94,
+   "id": "1426",
+   "name": "Greenberg dysplasia",
+   "profile_available": true
+  },
+  {
+   "index": 95,
+   "id": "1427",
+   "name": "Autosomal recessive otospondylomegaepiphyseal dysplasia",
+   "profile_available": true
+  },
+  {
+   "index": 96,
+   "id": "1438",
+   "name": "Ring chromosome 10 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 97,
+   "id": "144",
+   "name": "Lynch syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 98,
+   "id": "1440",
+   "name": "Ring chromosome 14 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 99,
+   "id": "1441",
+   "name": "Ring chromosome 17 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 100,
+   "id": "1442",
+   "name": "Ring chromosome 18 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 101,
+   "id": "1444",
+   "name": "Ring chromosome 20 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 102,
+   "id": "1445",
+   "name": "Ring chromosome 21 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 103,
+   "id": "1446",
+   "name": "Ring chromosome 22 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 104,
+   "id": "1448",
+   "name": "Ring chromosome 6 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 105,
+   "id": "1449",
+   "name": "Ring chromosome 7 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 106,
+   "id": "145",
+   "name": "Hereditary breast and/or ovarian cancer syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 107,
+   "id": "1450",
+   "name": "Ring chromosome 8 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 108,
+   "id": "1451",
+   "name": "CINCA syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 109,
+   "id": "1452",
+   "name": "Cleidocranial dysplasia",
+   "profile_available": true
+  },
+  {
+   "index": 110,
+   "id": "1456",
+   "name": "Middle aortic syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 111,
+   "id": "1457",
+   "name": "Aorta coarctation",
+   "profile_available": true
+  },
+  {
+   "index": 112,
+   "id": "146",
+   "name": "Differentiated thyroid carcinoma",
+   "profile_available": true
+  },
+  {
+   "index": 113,
+   "id": "1461",
+   "name": "Criss-cross heart",
+   "profile_available": true
+  },
+  {
+   "index": 114,
+   "id": "1463",
+   "name": "Triatrial heart",
+   "profile_available": true
+  },
+  {
+   "index": 115,
+   "id": "1464",
+   "name": "Univentricular heart",
+   "profile_available": true
+  },
+  {
+   "index": 116,
+   "id": "1465",
+   "name": "Coffin-Siris syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 117,
+   "id": "1466",
+   "name": "COFS syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 118,
+   "id": "1467",
+   "name": "Cogan syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 119,
+   "id": "147",
+   "name": "Carbamoyl-phosphate synthetase 1 deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 120,
+   "id": "1473",
+   "name": "Uveal coloboma-cleft lip and palate-intellectual disability",
+   "profile_available": true
+  },
+  {
+   "index": 121,
+   "id": "1475",
+   "name": "Renal coloboma syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 122,
+   "id": "1478",
+   "name": "Interatrial communication",
+   "profile_available": true
+  },
+  {
+   "index": 123,
+   "id": "1489",
+   "name": "Whooping cough",
+   "profile_available": true
+  },
+  {
+   "index": 124,
+   "id": "1490",
+   "name": "Corneal dystrophy-perceptive deafness syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 125,
+   "id": "15",
+   "name": "Achondroplasia",
+   "profile_available": true
+  },
+  {
+   "index": 126,
+   "id": "150",
+   "name": "Nasopharyngeal carcinoma",
+   "profile_available": true
+  },
+  {
+   "index": 127,
+   "id": "1501",
+   "name": "Adrenocortical carcinoma",
+   "profile_available": true
+  },
+  {
+   "index": 128,
+   "id": "1505",
+   "name": "Short rib-polydactyly syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 129,
+   "id": "1515",
+   "name": "Cranioectodermal dysplasia",
+   "profile_available": true
+  },
+  {
+   "index": 130,
+   "id": "1519",
+   "name": "SPECC1L-related hypertelorism syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 131,
+   "id": "1522",
+   "name": "Craniometaphyseal dysplasia",
+   "profile_available": true
+  },
+  {
+   "index": 132,
+   "id": "1531",
+   "name": "Craniosynostosis",
+   "profile_available": true
+  },
+  {
+   "index": 133,
+   "id": "154",
+   "name": "Familial isolated dilated cardiomyopathy",
+   "profile_available": true
+  },
+  {
+   "index": 134,
+   "id": "1540",
+   "name": "Jackson-Weiss syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 135,
+   "id": "1545",
+   "name": "Crisponi syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 136,
+   "id": "1553",
+   "name": "Curry-Jones syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 137,
+   "id": "1568",
+   "name": "X-linked intellectual disability-Dandy-Walker malformation-basal ganglia disease-seizures syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 138,
+   "id": "1573",
+   "name": "Hypotrichosis with juvenile macular degeneration",
+   "profile_available": true
+  },
+  {
+   "index": 139,
+   "id": "158",
+   "name": "Systemic primary carnitine deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 140,
+   "id": "1580",
+   "name": "Distal deletion 10p syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 141,
+   "id": "1587",
+   "name": "Monosomy 13q14 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 142,
+   "id": "159",
+   "name": "Carnitine-acylcarnitine translocase deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 143,
+   "id": "1598",
+   "name": "Monosomy 18p syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 144,
+   "id": "1606",
+   "name": "1p36 deletion syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 145,
+   "id": "1617",
+   "name": "Developmental delay-language impairment-dopa responsive dystonia-parkinsonism syndrome due to 2q24 microdeletion",
+   "profile_available": true
+  },
+  {
+   "index": 146,
+   "id": "162",
+   "name": "Congenital cataract-anterior segment dysgenesis syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 147,
+   "id": "1620",
+   "name": "Distal deletion 3p syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 148,
+   "id": "1627",
+   "name": "Deletion 5q35 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 149,
+   "id": "163",
+   "name": "Hereditary hyperferritinemia-cataract syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 150,
+   "id": "1636",
+   "name": "Distal monosomy 7q36 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 151,
+   "id": "1642",
+   "name": "Distal deletion 9p syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 152,
+   "id": "1643",
+   "name": "Xp22.3 microdeletion syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 153,
+   "id": "1646",
+   "name": "Chromosome Y microdeletion syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 154,
+   "id": "1647",
+   "name": "Oculocerebrocutaneous syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 155,
+   "id": "1652",
+   "name": "Dent disease",
+   "profile_available": true
+  },
+  {
+   "index": 156,
+   "id": "1656",
+   "name": "Dermatitis herpetiformis",
+   "profile_available": true
+  },
+  {
+   "index": 157,
+   "id": "1662",
+   "name": "Restrictive dermopathy",
+   "profile_available": true
+  },
+  {
+   "index": 158,
+   "id": "1667",
+   "name": "Wolcott-Rallison syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 159,
+   "id": "167",
+   "name": "Ch\u00e9diak-Higashi syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 160,
+   "id": "1672",
+   "name": "Diencephalic syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 161,
+   "id": "1675",
+   "name": "Dihydropyrimidine dehydrogenase deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 162,
+   "id": "167635",
+   "name": "Scleromyxedema",
+   "profile_available": true
+  },
+  {
+   "index": 163,
+   "id": "1677",
+   "name": "Familial idiopathic dilatation of the right atrium",
+   "profile_available": true
+  },
+  {
+   "index": 164,
+   "id": "1679",
+   "name": "Diphtheria",
+   "profile_available": true
+  },
+  {
+   "index": 165,
+   "id": "168",
+   "name": "Loose anagen syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 166,
+   "id": "1695",
+   "name": "Non-distal duplication 10q syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 167,
+   "id": "1698",
+   "name": "Mosaic trisomy 12 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 168,
+   "id": "1699",
+   "name": "Trisomy 12p syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 169,
+   "id": "17",
+   "name": "Fatal infantile lactic acidosis with methylmalonic aciduria",
+   "profile_available": true
+  },
+  {
+   "index": 170,
+   "id": "170",
+   "name": "Woolly hair",
+   "profile_available": true
+  },
+  {
+   "index": 171,
+   "id": "1702",
+   "name": "Non-distal duplication 13q syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 172,
+   "id": "1706",
+   "name": "Mosaic trisomy 15 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 173,
+   "id": "1708",
+   "name": "Mosaic trisomy 16 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 174,
+   "id": "171",
+   "name": "Primary sclerosing cholangitis",
+   "profile_available": true
+  },
+  {
+   "index": 175,
+   "id": "1711",
+   "name": "Mosaic trisomy 17 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 176,
+   "id": "1713",
+   "name": "17p11.2 microduplication syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 177,
+   "id": "1715",
+   "name": "Trisomy 18p syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 178,
+   "id": "1716",
+   "name": "Distal duplication 18q syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 179,
+   "id": "1717",
+   "name": "Distal duplication 19q syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 180,
+   "id": "172",
+   "name": "Progressive familial intrahepatic cholestasis",
+   "profile_available": true
+  },
+  {
+   "index": 181,
+   "id": "1723",
+   "name": "Mosaic trisomy 2 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 182,
+   "id": "1724",
+   "name": "Mosaic trisomy 20 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 183,
+   "id": "1727",
+   "name": "22q11.2 duplication syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 184,
+   "id": "173",
+   "name": "Cholera",
+   "profile_available": true
+  },
+  {
+   "index": 185,
+   "id": "1738",
+   "name": "Trisomy 4p syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 186,
+   "id": "174",
+   "name": "Metaphyseal chondrodysplasia, Schmid type",
+   "profile_available": true
+  },
+  {
+   "index": 187,
+   "id": "1742",
+   "name": "Trisomy 5p syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 188,
+   "id": "1747",
+   "name": "Mosaic trisomy 7 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 189,
+   "id": "175",
+   "name": "Cartilage-hair hypoplasia",
+   "profile_available": true
+  },
+  {
+   "index": 190,
+   "id": "1762",
+   "name": "Proximal Xq28 duplication syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 191,
+   "id": "1764",
+   "name": "Familial dysautonomia",
+   "profile_available": true
+  },
+  {
+   "index": 192,
+   "id": "177",
+   "name": "Rhizomelic chondrodysplasia punctata",
+   "profile_available": true
+  },
+  {
+   "index": 193,
+   "id": "1772",
+   "name": "45,X/46,XY mixed gonadal dysgenesis",
+   "profile_available": true
+  },
+  {
+   "index": 194,
+   "id": "1775",
+   "name": "Dyskeratosis congenita",
+   "profile_available": true
+  },
+  {
+   "index": 195,
+   "id": "1799",
+   "name": "Familial developmental dysphasia",
+   "profile_available": true
+  },
+  {
+   "index": 196,
+   "id": "18",
+   "name": "Distal renal tubular acidosis",
+   "profile_available": true
+  },
+  {
+   "index": 197,
+   "id": "180",
+   "name": "Choroideremia",
+   "profile_available": true
+  },
+  {
+   "index": 198,
+   "id": "181",
+   "name": "X-linked hypohidrotic ectodermal dysplasia",
+   "profile_available": true
+  },
+  {
+   "index": 199,
+   "id": "1826",
+   "name": "Frontometaphyseal dysplasia",
+   "profile_available": true
+  },
+  {
+   "index": 200,
+   "id": "183",
+   "name": "Eosinophilic granulomatosis with polyangiitis",
+   "profile_available": true
+  },
+  {
+   "index": 201,
+   "id": "184",
+   "name": "Cherubism",
+   "profile_available": true
+  },
+  {
+   "index": 202,
+   "id": "185",
+   "name": "Scimitar syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 203,
+   "id": "186",
+   "name": "Primary biliary cholangitis",
+   "profile_available": true
+  },
+  {
+   "index": 204,
+   "id": "1871",
+   "name": "Progressive cone dystrophy",
+   "profile_available": true
+  },
+  {
+   "index": 205,
+   "id": "1872",
+   "name": "Cone rod dystrophy",
+   "profile_available": true
+  },
+  {
+   "index": 206,
+   "id": "1878",
+   "name": "TRIM32-related limb-girdle muscular dystrophy R8",
+   "profile_available": true
+  },
+  {
+   "index": 207,
+   "id": "188",
+   "name": "Systemic capillary leak syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 208,
+   "id": "1880",
+   "name": "Ebstein malformation of the tricuspid valve",
+   "profile_available": true
+  },
+  {
+   "index": 209,
+   "id": "189",
+   "name": "Hidrotic ectodermal dysplasia",
+   "profile_available": true
+  },
+  {
+   "index": 210,
+   "id": "1896",
+   "name": "EEC syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 211,
+   "id": "1899",
+   "name": "Arthrochalasia Ehlers-Danlos syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 212,
+   "id": "190",
+   "name": "Coats disease",
+   "profile_available": true
+  },
+  {
+   "index": 213,
+   "id": "1900",
+   "name": "Kyphoscoliotic Ehlers-Danlos syndrome due to lysyl hydroxylase 1 deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 214,
+   "id": "1901",
+   "name": "Dermatosparaxis Ehlers-Danlos syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 215,
+   "id": "1902",
+   "name": "Ehrlichiosis",
+   "profile_available": true
+  },
+  {
+   "index": 216,
+   "id": "1906",
+   "name": "Fetal valproate spectrum disorder",
+   "profile_available": true
+  },
+  {
+   "index": 217,
+   "id": "191",
+   "name": "Cockayne syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 218,
+   "id": "1911",
+   "name": "Cocaine embryofetopathy",
+   "profile_available": true
+  },
+  {
+   "index": 219,
+   "id": "1912",
+   "name": "Fetal hydantoin syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 220,
+   "id": "1914",
+   "name": "Vitamin K antagonist embryofetopathy",
+   "profile_available": true
+  },
+  {
+   "index": 221,
+   "id": "1915",
+   "name": "Fetal alcohol syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 222,
+   "id": "1918",
+   "name": "Fetal minoxidil syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 223,
+   "id": "1919",
+   "name": "Phenobarbital embryopathy",
+   "profile_available": true
+  },
+  {
+   "index": 224,
+   "id": "192",
+   "name": "Coffin-Lowry syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 225,
+   "id": "1923",
+   "name": "Methimazole embryofetopathy",
+   "profile_available": true
+  },
+  {
+   "index": 226,
+   "id": "1928",
+   "name": "Congenital lobar emphysema",
+   "profile_available": true
+  },
+  {
+   "index": 227,
+   "id": "1929",
+   "name": "Rasmussen subacute encephalitis",
+   "profile_available": true
+  },
+  {
+   "index": 228,
+   "id": "193",
+   "name": "Cohen syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 229,
+   "id": "1930",
+   "name": "Herpes simplex virus encephalitis",
+   "profile_available": true
+  },
+  {
+   "index": 230,
+   "id": "1934",
+   "name": "Early infantile developmental and epileptic encephalopathy",
+   "profile_available": true
+  },
+  {
+   "index": 231,
+   "id": "1941",
+   "name": "Juvenile absence epilepsy",
+   "profile_available": true
+  },
+  {
+   "index": 232,
+   "id": "1942",
+   "name": "Epilepsy with myoclonic-atonic seizures",
+   "profile_available": true
+  },
+  {
+   "index": 233,
+   "id": "1945",
+   "name": "Self-limited epilepsy with centrotemporal spikes",
+   "profile_available": true
+  },
+  {
+   "index": 234,
+   "id": "1946",
+   "name": "Amelocerebrohypohidrotic syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 235,
+   "id": "1949",
+   "name": "Self-limited neonatal epilepsy",
+   "profile_available": true
+  },
+  {
+   "index": 236,
+   "id": "195",
+   "name": "Cat-eye syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 237,
+   "id": "1959",
+   "name": "Evans syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 238,
+   "id": "1970",
+   "name": "Facial dysmorphism-macrocephaly-myopia-Dandy-Walker malformation syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 239,
+   "id": "198",
+   "name": "Occipital horn syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 240,
+   "id": "199",
+   "name": "Cornelia de Lange syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 241,
+   "id": "1993",
+   "name": "Pai syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 242,
+   "id": "1997",
+   "name": "Blepharo-cheilo-odontic syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 243,
+   "id": "2004",
+   "name": "Laryngotracheoesophageal cleft",
+   "profile_available": true
+  },
+  {
+   "index": 244,
+   "id": "201",
+   "name": "Cowden syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 245,
+   "id": "2021",
+   "name": "Fibrochondrogenesis",
+   "profile_available": true
+  },
+  {
+   "index": 246,
+   "id": "2022",
+   "name": "Endocardial fibroelastosis",
+   "profile_available": true
+  },
+  {
+   "index": 247,
+   "id": "2024",
+   "name": "Hereditary gingival fibromatosis",
+   "profile_available": true
+  },
+  {
+   "index": 248,
+   "id": "2028",
+   "name": "Juvenile hyaline fibromatosis",
+   "profile_available": true
+  },
+  {
+   "index": 249,
+   "id": "2032",
+   "name": "Idiopathic pulmonary fibrosis",
+   "profile_available": true
+  },
+  {
+   "index": 250,
+   "id": "2036",
+   "name": "Scalp-ear-nipple syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 251,
+   "id": "204",
+   "name": "Sporadic Creutzfeldt-Jakob disease",
+   "profile_available": true
+  },
+  {
+   "index": 252,
+   "id": "2041",
+   "name": "Coronary arterial fistula",
+   "profile_available": true
+  },
+  {
+   "index": 253,
+   "id": "205",
+   "name": "Crigler-Najjar syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 254,
+   "id": "2052",
+   "name": "Fraser syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 255,
+   "id": "2053",
+   "name": "Freeman-Sheldon syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 256,
+   "id": "2059",
+   "name": "Fryns syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 257,
+   "id": "2062",
+   "name": "Progressive non-infectious anterior vertebral fusion",
+   "profile_available": true
+  },
+  {
+   "index": 258,
+   "id": "2065",
+   "name": "Galloway-Mowat syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 259,
+   "id": "2067",
+   "name": "GAPO syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 260,
+   "id": "207",
+   "name": "Crouzon syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 261,
+   "id": "2070",
+   "name": "Eosinophilic gastroenteritis",
+   "profile_available": true
+  },
+  {
+   "index": 262,
+   "id": "2073",
+   "name": "Narcolepsy type 1",
+   "profile_available": true
+  },
+  {
+   "index": 263,
+   "id": "2078",
+   "name": "Geroderma osteodysplastica",
+   "profile_available": true
+  },
+  {
+   "index": 264,
+   "id": "2084",
+   "name": "Glaucoma-ectopia lentis-microspherophakia-stiff joints-short stature syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 265,
+   "id": "2086",
+   "name": "Optic pathway glioma",
+   "profile_available": true
+  },
+  {
+   "index": 266,
+   "id": "209",
+   "name": "Cutis laxa",
+   "profile_available": true
+  },
+  {
+   "index": 267,
+   "id": "2092",
+   "name": "Focal dermal hypoplasia",
+   "profile_available": true
+  },
+  {
+   "index": 268,
+   "id": "2095",
+   "name": "Gorlin-Chaudhry-Moss syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 269,
+   "id": "2098",
+   "name": "Acromesomelic dysplasia, Grebe type",
+   "profile_available": true
+  },
+  {
+   "index": 270,
+   "id": "2102",
+   "name": "GTP cyclohydrolase I deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 271,
+   "id": "2116",
+   "name": "Hartnup disease",
+   "profile_available": true
+  },
+  {
+   "index": 272,
+   "id": "2126",
+   "name": "Solitary fibrous tumor",
+   "profile_available": true
+  },
+  {
+   "index": 273,
+   "id": "213",
+   "name": "Cystinosis",
+   "profile_available": true
+  },
+  {
+   "index": 274,
+   "id": "2133",
+   "name": "Hemoglobin E disease",
+   "profile_available": true
+  },
+  {
+   "index": 275,
+   "id": "2134",
+   "name": "Atypical hemolytic uremic syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 276,
+   "id": "2135",
+   "name": "Cutaneous mastocytosis-deafness-microtia syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 277,
+   "id": "2136",
+   "name": "Hennekam syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 278,
+   "id": "2137",
+   "name": "Autoimmune hepatitis",
+   "profile_available": true
+  },
+  {
+   "index": 279,
+   "id": "2138",
+   "name": "46,XX ovotesticular difference of sex development",
+   "profile_available": true
+  },
+  {
+   "index": 280,
+   "id": "214",
+   "name": "Cystinuria",
+   "profile_available": true
+  },
+  {
+   "index": 281,
+   "id": "2140",
+   "name": "Congenital diaphragmatic hernia",
+   "profile_available": true
+  },
+  {
+   "index": 282,
+   "id": "2149",
+   "name": "Nodular neuronal heterotopia",
+   "profile_available": true
+  },
+  {
+   "index": 283,
+   "id": "215",
+   "name": "Congenital stationary night blindness",
+   "profile_available": true
+  },
+  {
+   "index": 284,
+   "id": "2152",
+   "name": "Mowat-Wilson syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 285,
+   "id": "216",
+   "name": "Neuronal ceroid lipofuscinosis",
+   "profile_available": true
+  },
+  {
+   "index": 286,
+   "id": "2162",
+   "name": "Holoprosencephaly",
+   "profile_available": true
+  },
+  {
+   "index": 287,
+   "id": "217",
+   "name": "Isolated Dandy-Walker malformation",
+   "profile_available": true
+  },
+  {
+   "index": 288,
+   "id": "2177",
+   "name": "Hydranencephaly",
+   "profile_available": true
+  },
+  {
+   "index": 289,
+   "id": "218",
+   "name": "Darier disease",
+   "profile_available": true
+  },
+  {
+   "index": 290,
+   "id": "2182",
+   "name": "Hydrocephalus with stenosis of the aqueduct of Sylvius",
+   "profile_available": true
+  },
+  {
+   "index": 291,
+   "id": "2195",
+   "name": "Dicarboxylic aminoaciduria",
+   "profile_available": true
+  },
+  {
+   "index": 292,
+   "id": "2199",
+   "name": "Epidermolytic palmoplantar keratoderma",
+   "profile_available": true
+  },
+  {
+   "index": 293,
+   "id": "220",
+   "name": "Denys-Drash syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 294,
+   "id": "2207",
+   "name": "Familial primary hyperparathyroidism",
+   "profile_available": true
+  },
+  {
+   "index": 295,
+   "id": "2209",
+   "name": "Maternal phenylketonuria syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 296,
+   "id": "221",
+   "name": "Dermatomyositis",
+   "profile_available": true
+  },
+  {
+   "index": 297,
+   "id": "2222",
+   "name": "Hypertrichosis lanuginosa congenita",
+   "profile_available": true
+  },
+  {
+   "index": 298,
+   "id": "223",
+   "name": "Arginine vasopressin resistance",
+   "profile_available": true
+  },
+  {
+   "index": 299,
+   "id": "2234",
+   "name": "Male hypergonadotropic hypogonadism-intellectual disability-skeletal anomalies syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 300,
+   "id": "2237",
+   "name": "Hypoparathyroidism-sensorineural deafness-renal disease syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 301,
+   "id": "2238",
+   "name": "Familial isolated hypoparathyroidism",
+   "profile_available": true
+  },
+  {
+   "index": 302,
+   "id": "224",
+   "name": "Neonatal diabetes mellitus",
+   "profile_available": true
+  },
+  {
+   "index": 303,
+   "id": "2241",
+   "name": "Megacystis-microcolon-intestinal hypoperistalsis syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 304,
+   "id": "2248",
+   "name": "Hypoplastic left heart syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 305,
+   "id": "2254",
+   "name": "Pontocerebellar hypoplasia type 1",
+   "profile_available": true
+  },
+  {
+   "index": 306,
+   "id": "2266",
+   "name": "Hypotrichosis-intellectual disability, Lopes type",
+   "profile_available": true
+  },
+  {
+   "index": 307,
+   "id": "2273",
+   "name": "Ichthyosis follicularis-alopecia-photophobia syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 308,
+   "id": "2285",
+   "name": "Primary basilar invagination",
+   "profile_available": true
+  },
+  {
+   "index": 309,
+   "id": "2289",
+   "name": "Neuronal intranuclear inclusion disease",
+   "profile_available": true
+  },
+  {
+   "index": 310,
+   "id": "229",
+   "name": "Familial aortic dissection",
+   "profile_available": true
+  },
+  {
+   "index": 311,
+   "id": "2290",
+   "name": "Microvillus inclusion disease",
+   "profile_available": true
+  },
+  {
+   "index": 312,
+   "id": "2295",
+   "name": "Familial articular hypermobility syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 313,
+   "id": "2299",
+   "name": "Aortic arch interruption",
+   "profile_available": true
+  },
+  {
+   "index": 314,
+   "id": "23",
+   "name": "Argininosuccinic aciduria",
+   "profile_available": true
+  },
+  {
+   "index": 315,
+   "id": "2300",
+   "name": "Isolated multiple intestinal atresia",
+   "profile_available": true
+  },
+  {
+   "index": 316,
+   "id": "2301",
+   "name": "Congenital short bowel syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 317,
+   "id": "2302",
+   "name": "Asbestos intoxication",
+   "profile_available": true
+  },
+  {
+   "index": 318,
+   "id": "2308",
+   "name": "Jacobsen syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 319,
+   "id": "2309",
+   "name": "Pachyonychia congenita",
+   "profile_available": true
+  },
+  {
+   "index": 320,
+   "id": "2311",
+   "name": "Autosomal recessive spondylocostal dysostosis",
+   "profile_available": true
+  },
+  {
+   "index": 321,
+   "id": "2312",
+   "name": "Transient familial neonatal hyperbilirubinemia",
+   "profile_available": true
+  },
+  {
+   "index": 322,
+   "id": "2314",
+   "name": "Autosomal dominant hyper-IgE syndrome due to STAT3 deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 323,
+   "id": "232",
+   "name": "Sickle cell anemia",
+   "profile_available": true
+  },
+  {
+   "index": 324,
+   "id": "2322",
+   "name": "Kabuki syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 325,
+   "id": "2323",
+   "name": "Sanjad-Sakati syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 326,
+   "id": "2326",
+   "name": "Kallmann syndrome-heart disease syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 327,
+   "id": "233",
+   "name": "Duane retraction syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 328,
+   "id": "2331",
+   "name": "Kawasaki disease",
+   "profile_available": true
+  },
+  {
+   "index": 329,
+   "id": "2337",
+   "name": "Diffuse palmoplantar keratoderma, Bothnian type",
+   "profile_available": true
+  },
+  {
+   "index": 330,
+   "id": "234",
+   "name": "Dubin-Johnson syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 331,
+   "id": "2340",
+   "name": "Keratosis follicularis spinulosa decalvans",
+   "profile_available": true
+  },
+  {
+   "index": 332,
+   "id": "2345",
+   "name": "Isolated Klippel-Feil syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 333,
+   "id": "2348",
+   "name": "Familial partial lipodystrophy, Dunnigan type",
+   "profile_available": true
+  },
+  {
+   "index": 334,
+   "id": "2349",
+   "name": "Muscular pseudohypertrophy-hypothyroidism syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 335,
+   "id": "235",
+   "name": "Dubowitz syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 336,
+   "id": "2356",
+   "name": "Arachnoid cyst",
+   "profile_available": true
+  },
+  {
+   "index": 337,
+   "id": "2357",
+   "name": "Bronchogenic cyst",
+   "profile_available": true
+  },
+  {
+   "index": 338,
+   "id": "236",
+   "name": "Trisomy 9p syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 339,
+   "id": "2368",
+   "name": "Gastroschisis",
+   "profile_available": true
+  },
+  {
+   "index": 340,
+   "id": "2371",
+   "name": "Lethal Larsen-like syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 341,
+   "id": "2372",
+   "name": "Laryngocele",
+   "profile_available": true
+  },
+  {
+   "index": 342,
+   "id": "2378",
+   "name": "Laurin-Sandrow syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 343,
+   "id": "2380",
+   "name": "Legg-Calv\u00e9-Perthes disease",
+   "profile_available": true
+  },
+  {
+   "index": 344,
+   "id": "2382",
+   "name": "Lennox-Gastaut syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 345,
+   "id": "239",
+   "name": "Dyggve-Melchior-Clausen disease",
+   "profile_available": true
+  },
+  {
+   "index": 346,
+   "id": "2398",
+   "name": "Multiple symmetric lipomatosis",
+   "profile_available": true
+  },
+  {
+   "index": 347,
+   "id": "2399",
+   "name": "Nasopalpebral lipoma-coloboma syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 348,
+   "id": "24",
+   "name": "Fumaric aciduria",
+   "profile_available": true
+  },
+  {
+   "index": 349,
+   "id": "240",
+   "name": "L\u00e9ri-Weill dyschondrosteosis",
+   "profile_available": true
+  },
+  {
+   "index": 350,
+   "id": "2406",
+   "name": "Locked-in syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 351,
+   "id": "2414",
+   "name": "Congenital pulmonary lymphangiectasia",
+   "profile_available": true
+  },
+  {
+   "index": 352,
+   "id": "242",
+   "name": "46,XY complete gonadal dysgenesis",
+   "profile_available": true
+  },
+  {
+   "index": 353,
+   "id": "2420",
+   "name": "Primary pulmonary lymphoma",
+   "profile_available": true
+  },
+  {
+   "index": 354,
+   "id": "243",
+   "name": "46,XX gonadal dysgenesis",
+   "profile_available": true
+  },
+  {
+   "index": 355,
+   "id": "244",
+   "name": "Primary ciliary dyskinesia",
+   "profile_available": true
+  },
+  {
+   "index": 356,
+   "id": "2440",
+   "name": "Isolated split hand-split foot malformation",
+   "profile_available": true
+  },
+  {
+   "index": 357,
+   "id": "2442",
+   "name": "X-linked lymphoproliferative disease",
+   "profile_available": true
+  },
+  {
+   "index": 358,
+   "id": "2444",
+   "name": "Congenital pulmonary airway malformation",
+   "profile_available": true
+  },
+  {
+   "index": 359,
+   "id": "245",
+   "name": "Nager syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 360,
+   "id": "2451",
+   "name": "Mucocutaneous venous malformations",
+   "profile_available": true
+  },
+  {
+   "index": 361,
+   "id": "2457",
+   "name": "Mandibuloacral dysplasia",
+   "profile_available": true
+  },
+  {
+   "index": 362,
+   "id": "246",
+   "name": "Postaxial acrofacial dysostosis",
+   "profile_available": true
+  },
+  {
+   "index": 363,
+   "id": "2461",
+   "name": "Marden-Walker syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 364,
+   "id": "2462",
+   "name": "Shprintzen-Goldberg syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 365,
+   "id": "2467",
+   "name": "Systemic mastocytosis",
+   "profile_available": true
+  },
+  {
+   "index": 366,
+   "id": "247",
+   "name": "Inherited arrhythmogenic cardiomyopathy",
+   "profile_available": true
+  },
+  {
+   "index": 367,
+   "id": "2470",
+   "name": "Matthew-Wood syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 368,
+   "id": "2478",
+   "name": "Megalencephalic leukoencephalopathy with subcortical cysts",
+   "profile_available": true
+  },
+  {
+   "index": 369,
+   "id": "2484",
+   "name": "Melnick-Needles syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 370,
+   "id": "2485",
+   "name": "Melorheostosis",
+   "profile_available": true
+  },
+  {
+   "index": 371,
+   "id": "249",
+   "name": "Fibrous dysplasia of bone",
+   "profile_available": true
+  },
+  {
+   "index": 372,
+   "id": "2491",
+   "name": "M\u00fcllerian duct anomalies-limb anomalies syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 373,
+   "id": "2494",
+   "name": "M\u00e9n\u00e9trier disease",
+   "profile_available": true
+  },
+  {
+   "index": 374,
+   "id": "2495",
+   "name": "Meningioma",
+   "profile_available": true
+  },
+  {
+   "index": 375,
+   "id": "2499",
+   "name": "Metachondromatosis",
+   "profile_available": true
+  },
+  {
+   "index": 376,
+   "id": "25",
+   "name": "Glutaryl-CoA dehydrogenase deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 377,
+   "id": "250",
+   "name": "Frontonasal dysplasia",
+   "profile_available": true
+  },
+  {
+   "index": 378,
+   "id": "251",
+   "name": "Multiple epiphyseal dysplasia",
+   "profile_available": true
+  },
+  {
+   "index": 379,
+   "id": "2512",
+   "name": "Autosomal recessive primary microcephaly",
+   "profile_available": true
+  },
+  {
+   "index": 380,
+   "id": "2515",
+   "name": "Microcephaly-cardiomyopathy syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 381,
+   "id": "256",
+   "name": "Early-onset generalized limb-onset dystonia",
+   "profile_available": true
+  },
+  {
+   "index": 382,
+   "id": "2561",
+   "name": "Pyramidal molars-abnormal upper lip syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 383,
+   "id": "2573",
+   "name": "Moyamoya disease",
+   "profile_available": true
+  },
+  {
+   "index": 384,
+   "id": "2579",
+   "name": "Muscular atrophy-ataxia-retinitis pigmentosa-diabetes mellitus syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 385,
+   "id": "258",
+   "name": "Laminin subunit alpha 2-related congenital muscular dystrophy",
+   "profile_available": true
+  },
+  {
+   "index": 386,
+   "id": "2582",
+   "name": "Myalgia-eosinophilia syndrome associated with tryptophan",
+   "profile_available": true
+  },
+  {
+   "index": 387,
+   "id": "2584",
+   "name": "Classic mycosis fungoides",
+   "profile_available": true
+  },
+  {
+   "index": 388,
+   "id": "2590",
+   "name": "Spinal muscular atrophy-progressive myoclonic epilepsy syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 389,
+   "id": "2591",
+   "name": "Infantile myofibromatosis",
+   "profile_available": true
+  },
+  {
+   "index": 390,
+   "id": "2593",
+   "name": "Tubular aggregate myopathy",
+   "profile_available": true
+  },
+  {
+   "index": 391,
+   "id": "25968",
+   "name": "Self-limited childhood occipital epilepsy",
+   "profile_available": true
+  },
+  {
+   "index": 392,
+   "id": "2597",
+   "name": "Mitochondrial myopathy-lactic acidosis-deafness syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 393,
+   "id": "2598",
+   "name": "Mitochondrial myopathy and sideroblastic anemia",
+   "profile_available": true
+  },
+  {
+   "index": 394,
+   "id": "25980",
+   "name": "X-linked myopathy with excessive autophagy",
+   "profile_available": true
+  },
+  {
+   "index": 395,
+   "id": "26",
+   "name": "Methylmalonic acidemia with homocystinuria",
+   "profile_available": true
+  },
+  {
+   "index": 396,
+   "id": "2604",
+   "name": "Familial visceral myopathy",
+   "profile_available": true
+  },
+  {
+   "index": 397,
+   "id": "2609",
+   "name": "Isolated complex I deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 398,
+   "id": "261",
+   "name": "Emery-Dreifuss muscular dystrophy",
+   "profile_available": true
+  },
+  {
+   "index": 399,
+   "id": "2612",
+   "name": "Linear nevus sebaceus syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 400,
+   "id": "2613",
+   "name": "Nail-patella-like renal disease",
+   "profile_available": true
+  },
+  {
+   "index": 401,
+   "id": "26137",
+   "name": "Juvenile temporal arteritis",
+   "profile_available": true
+  },
+  {
+   "index": 402,
+   "id": "2614",
+   "name": "Nail-patella syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 403,
+   "id": "2616",
+   "name": "3M syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 404,
+   "id": "2623",
+   "name": "Geleophysic dysplasia",
+   "profile_available": true
+  },
+  {
+   "index": 405,
+   "id": "263",
+   "name": "Limb-girdle muscular dystrophy",
+   "profile_available": true
+  },
+  {
+   "index": 406,
+   "id": "2635",
+   "name": "Metatropic dysplasia",
+   "profile_available": true
+  },
+  {
+   "index": 407,
+   "id": "2636",
+   "name": "Microcephalic osteodysplastic primordial dwarfism types I and III",
+   "profile_available": true
+  },
+  {
+   "index": 408,
+   "id": "2637",
+   "name": "Microcephalic osteodysplastic primordial dwarfism type II",
+   "profile_available": true
+  },
+  {
+   "index": 409,
+   "id": "2655",
+   "name": "Thanatophoric dysplasia",
+   "profile_available": true
+  },
+  {
+   "index": 410,
+   "id": "2668",
+   "name": "Nephropathy-deafness-hyperparathyroidism syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 411,
+   "id": "2670",
+   "name": "Pierson syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 412,
+   "id": "26790",
+   "name": "Pseudomyxoma peritonei",
+   "profile_available": true
+  },
+  {
+   "index": 413,
+   "id": "26793",
+   "name": "Very long chain acyl-CoA dehydrogenase deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 414,
+   "id": "268",
+   "name": "Dysferlin-related limb-girdle muscular dystrophy R2",
+   "profile_available": true
+  },
+  {
+   "index": 415,
+   "id": "2688",
+   "name": "Adult idiopathic neutropenia",
+   "profile_available": true
+  },
+  {
+   "index": 416,
+   "id": "269",
+   "name": "Facioscapulohumeral dystrophy",
+   "profile_available": true
+  },
+  {
+   "index": 417,
+   "id": "27",
+   "name": "Vitamin B12-unresponsive methylmalonic acidemia",
+   "profile_available": true
+  },
+  {
+   "index": 418,
+   "id": "270",
+   "name": "Oculopharyngeal muscular dystrophy",
+   "profile_available": true
+  },
+  {
+   "index": 419,
+   "id": "2700",
+   "name": "Noma",
+   "profile_available": true
+  },
+  {
+   "index": 420,
+   "id": "2707",
+   "name": "Oculocerebrofacial syndrome, Kaufman type",
+   "profile_available": true
+  },
+  {
+   "index": 421,
+   "id": "2710",
+   "name": "Oculodentodigital dysplasia",
+   "profile_available": true
+  },
+  {
+   "index": 422,
+   "id": "272",
+   "name": "Congenital muscular dystrophy, Fukuyama type",
+   "profile_available": true
+  },
+  {
+   "index": 423,
+   "id": "273",
+   "name": "Steinert myotonic dystrophy",
+   "profile_available": true
+  },
+  {
+   "index": 424,
+   "id": "274",
+   "name": "Bernard-Soulier syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 425,
+   "id": "275",
+   "name": "Severe combined immunodeficiency due to DCLRE1C deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 426,
+   "id": "2751",
+   "name": "Orofaciodigital syndrome type 2",
+   "profile_available": true
+  },
+  {
+   "index": 427,
+   "id": "2754",
+   "name": "Orofaciodigital syndrome type 6",
+   "profile_available": true
+  },
+  {
+   "index": 428,
+   "id": "2763",
+   "name": "Osteocraniostenosis",
+   "profile_available": true
+  },
+  {
+   "index": 429,
+   "id": "2764",
+   "name": "Osteochondritis dissecans",
+   "profile_available": true
+  },
+  {
+   "index": 430,
+   "id": "2768",
+   "name": "Blount disease",
+   "profile_available": true
+  },
+  {
+   "index": 431,
+   "id": "277",
+   "name": "Severe combined immunodeficiency due to adenosine deaminase deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 432,
+   "id": "2770",
+   "name": "Nasu-Hakola disease",
+   "profile_available": true
+  },
+  {
+   "index": 433,
+   "id": "2771",
+   "name": "Bruck syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 434,
+   "id": "2779",
+   "name": "Osteopathia striata-pigmentary dermopathy-white forelock syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 435,
+   "id": "2783",
+   "name": "Autosomal dominant osteopetrosis type 1",
+   "profile_available": true
+  },
+  {
+   "index": 436,
+   "id": "2785",
+   "name": "Osteopetrosis with renal tubular acidosis",
+   "profile_available": true
+  },
+  {
+   "index": 437,
+   "id": "2791",
+   "name": "Otodental syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 438,
+   "id": "2796",
+   "name": "Pachydermoperiostosis",
+   "profile_available": true
+  },
+  {
+   "index": 439,
+   "id": "28",
+   "name": "Vitamin B12-responsive methylmalonic acidemia",
+   "profile_available": true
+  },
+  {
+   "index": 440,
+   "id": "280",
+   "name": "Wolf-Hirschhorn syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 441,
+   "id": "2800",
+   "name": "Extramammary Paget disease",
+   "profile_available": true
+  },
+  {
+   "index": 442,
+   "id": "2801",
+   "name": "Juvenile Paget disease",
+   "profile_available": true
+  },
+  {
+   "index": 443,
+   "id": "2804",
+   "name": "W syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 444,
+   "id": "2805",
+   "name": "Partial pancreatic agenesis",
+   "profile_available": true
+  },
+  {
+   "index": 445,
+   "id": "2806",
+   "name": "Subacute sclerosing leukoencephalitis",
+   "profile_available": true
+  },
+  {
+   "index": 446,
+   "id": "281",
+   "name": "Monosomy 5p syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 447,
+   "id": "282",
+   "name": "Frontotemporal dementia",
+   "profile_available": true
+  },
+  {
+   "index": 448,
+   "id": "2824",
+   "name": "Paraplegia-intellectual disability-hyperkeratosis syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 449,
+   "id": "2828",
+   "name": "Young-onset Parkinson disease",
+   "profile_available": true
+  },
+  {
+   "index": 450,
+   "id": "2839",
+   "name": "Pelvis-shoulder dysplasia",
+   "profile_available": true
+  },
+  {
+   "index": 451,
+   "id": "284",
+   "name": "Alveolar echinococcosis",
+   "profile_available": true
+  },
+  {
+   "index": 452,
+   "id": "2846",
+   "name": "Congenital pericardium anomaly",
+   "profile_available": true
+  },
+  {
+   "index": 453,
+   "id": "285",
+   "name": "Hypermobile Ehlers-Danlos syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 454,
+   "id": "2856",
+   "name": "Persistent M\u00fcllerian duct syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 455,
+   "id": "286",
+   "name": "Vascular Ehlers-Danlos syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 456,
+   "id": "2869",
+   "name": "Peutz-Jeghers syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 457,
+   "id": "287",
+   "name": "Classical Ehlers-Danlos syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 458,
+   "id": "2874",
+   "name": "Phakomatosis pigmentokeratotica",
+   "profile_available": true
+  },
+  {
+   "index": 459,
+   "id": "2875",
+   "name": "Phakomatosis pigmentovascularis",
+   "profile_available": true
+  },
+  {
+   "index": 460,
+   "id": "288",
+   "name": "Hereditary elliptocytosis",
+   "profile_available": true
+  },
+  {
+   "index": 461,
+   "id": "2882",
+   "name": "Sitosterolemia",
+   "profile_available": true
+  },
+  {
+   "index": 462,
+   "id": "2884",
+   "name": "Piebaldism",
+   "profile_available": true
+  },
+  {
+   "index": 463,
+   "id": "2886",
+   "name": "TARP syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 464,
+   "id": "2889",
+   "name": "Pili torti",
+   "profile_available": true
+  },
+  {
+   "index": 465,
+   "id": "289",
+   "name": "Ellis Van Creveld syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 466,
+   "id": "2897",
+   "name": "Pityriasis rubra pilaris",
+   "profile_available": true
+  },
+  {
+   "index": 467,
+   "id": "29",
+   "name": "Mevalonic aciduria",
+   "profile_available": true
+  },
+  {
+   "index": 468,
+   "id": "290",
+   "name": "Congenital rubella syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 469,
+   "id": "2901",
+   "name": "Neuralgic amyotrophy",
+   "profile_available": true
+  },
+  {
+   "index": 470,
+   "id": "2902",
+   "name": "Idiopathic chronic eosinophilic pneumonia",
+   "profile_available": true
+  },
+  {
+   "index": 471,
+   "id": "2905",
+   "name": "POEMS syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 472,
+   "id": "2907",
+   "name": "Hereditary acrokeratotic poikiloderma",
+   "profile_available": true
+  },
+  {
+   "index": 473,
+   "id": "29072",
+   "name": "Hereditary pheochromocytoma-paraganglioma",
+   "profile_available": true
+  },
+  {
+   "index": 474,
+   "id": "29073",
+   "name": "Multiple myeloma",
+   "profile_available": true
+  },
+  {
+   "index": 475,
+   "id": "2908",
+   "name": "Kindler epidermolysis bullosa",
+   "profile_available": true
+  },
+  {
+   "index": 476,
+   "id": "2909",
+   "name": "Rothmund-Thomson syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 477,
+   "id": "291",
+   "name": "Congenital varicella syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 478,
+   "id": "2911",
+   "name": "Poland syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 479,
+   "id": "2912",
+   "name": "Poliomyelitis",
+   "profile_available": true
+  },
+  {
+   "index": 480,
+   "id": "29207",
+   "name": "Reactive arthritis",
+   "profile_available": true
+  },
+  {
+   "index": 481,
+   "id": "2929",
+   "name": "Juvenile polyposis syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 482,
+   "id": "2935",
+   "name": "Crossed polysyndactyly",
+   "profile_available": true
+  },
+  {
+   "index": 483,
+   "id": "294",
+   "name": "Fetal cytomegalovirus syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 484,
+   "id": "2940",
+   "name": "Porencephaly",
+   "profile_available": true
+  },
+  {
+   "index": 485,
+   "id": "2942",
+   "name": "Postpoliomyelitis syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 486,
+   "id": "295",
+   "name": "Fetal parvovirus syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 487,
+   "id": "2952",
+   "name": "Adducted thumbs-arthrogryposis syndrome, Christian type",
+   "profile_available": true
+  },
+  {
+   "index": 488,
+   "id": "2959",
+   "name": "Progeria-short stature-pigmented nevi syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 489,
+   "id": "296",
+   "name": "Ollier disease",
+   "profile_available": true
+  },
+  {
+   "index": 490,
+   "id": "2965",
+   "name": "Prolactinoma",
+   "profile_available": true
+  },
+  {
+   "index": 491,
+   "id": "2970",
+   "name": "Prune belly syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 492,
+   "id": "2978",
+   "name": "Chronic intestinal pseudoobstruction syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 493,
+   "id": "2990",
+   "name": "Autosomal recessive multiple pterygium syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 494,
+   "id": "2995",
+   "name": "Baraitser-Winter cerebrofrontofacial syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 495,
+   "id": "30",
+   "name": "Hereditary orotic aciduria",
+   "profile_available": true
+  },
+  {
+   "index": 496,
+   "id": "3000",
+   "name": "Familial peripheral male-limited precocious puberty",
+   "profile_available": true
+  },
+  {
+   "index": 497,
+   "id": "3002",
+   "name": "Immune thrombocytopenia",
+   "profile_available": true
+  },
+  {
+   "index": 498,
+   "id": "3006",
+   "name": "Pyridoxine-dependent-developmental and epileptic encephalopathy",
+   "profile_available": true
+  },
+  {
+   "index": 499,
+   "id": "301",
+   "name": "Ependymal tumor",
+   "profile_available": true
+  },
+  {
+   "index": 500,
+   "id": "3027",
+   "name": "Caudal regression syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 501,
+   "id": "303",
+   "name": "Dystrophic epidermolysis bullosa",
+   "profile_available": true
+  },
+  {
+   "index": 502,
+   "id": "30391",
+   "name": "Isolated biliary atresia",
+   "profile_available": true
+  },
+  {
+   "index": 503,
+   "id": "304",
+   "name": "Epidermolysis bullosa simplex",
+   "profile_available": true
+  },
+  {
+   "index": 504,
+   "id": "3047",
+   "name": "Blepharophimosis-intellectual disability syndrome, SBBYS type",
+   "profile_available": true
+  },
+  {
+   "index": 505,
+   "id": "305",
+   "name": "Junctional epidermolysis bullosa",
+   "profile_available": true
+  },
+  {
+   "index": 506,
+   "id": "3051",
+   "name": "Nicolaides-Baraitser syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 507,
+   "id": "306",
+   "name": "Self-limited infantile epilepsy",
+   "profile_available": true
+  },
+  {
+   "index": 508,
+   "id": "3063",
+   "name": "X-linked intellectual disability, Snyder type",
+   "profile_available": true
+  },
+  {
+   "index": 509,
+   "id": "307",
+   "name": "Juvenile myoclonic epilepsy",
+   "profile_available": true
+  },
+  {
+   "index": 510,
+   "id": "3071",
+   "name": "Costello syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 511,
+   "id": "308",
+   "name": "Progressive myoclonic epilepsy type 1",
+   "profile_available": true
+  },
+  {
+   "index": 512,
+   "id": "30924",
+   "name": "Primary hypomagnesemia with secondary hypocalcemia",
+   "profile_available": true
+  },
+  {
+   "index": 513,
+   "id": "3093",
+   "name": "Congenital aortic valve stenosis",
+   "profile_available": true
+  },
+  {
+   "index": 514,
+   "id": "3099",
+   "name": "Rheumatic fever",
+   "profile_available": true
+  },
+  {
+   "index": 515,
+   "id": "31",
+   "name": "Oxoglutaric aciduria",
+   "profile_available": true
+  },
+  {
+   "index": 516,
+   "id": "310",
+   "name": "Reflex epilepsy",
+   "profile_available": true
+  },
+  {
+   "index": 517,
+   "id": "3103",
+   "name": "Roberts syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 518,
+   "id": "31043",
+   "name": "Primary hypomagnesemia with hypercalciuria and nephrocalcinosis without severe ocular involvement",
+   "profile_available": true
+  },
+  {
+   "index": 519,
+   "id": "3109",
+   "name": "Mayer-Rokitansky-K\u00fcster-Hauser syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 520,
+   "id": "3111",
+   "name": "Rotor syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 521,
+   "id": "312",
+   "name": "Autosomal dominant epidermolytic ichthyosis",
+   "profile_available": true
+  },
+  {
+   "index": 522,
+   "id": "3121",
+   "name": "Ruvalcaba syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 523,
+   "id": "3129",
+   "name": "Sarcosinemia",
+   "profile_available": true
+  },
+  {
+   "index": 524,
+   "id": "313",
+   "name": "Lamellar ichthyosis",
+   "profile_available": true
+  },
+  {
+   "index": 525,
+   "id": "3143",
+   "name": "Autoimmune polyendocrinopathy type 2",
+   "profile_available": true
+  },
+  {
+   "index": 526,
+   "id": "3162",
+   "name": "S\u00e9zary syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 527,
+   "id": "3163",
+   "name": "SHORT syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 528,
+   "id": "3165",
+   "name": "Eosinophilic fasciitis",
+   "profile_available": true
+  },
+  {
+   "index": 529,
+   "id": "318",
+   "name": "Acute erythroid leukemia",
+   "profile_available": true
+  },
+  {
+   "index": 530,
+   "id": "31827",
+   "name": "Paraquat poisoning",
+   "profile_available": true
+  },
+  {
+   "index": 531,
+   "id": "3189",
+   "name": "Congenital pulmonary valvar stenosis",
+   "profile_available": true
+  },
+  {
+   "index": 532,
+   "id": "319",
+   "name": "Skeletal Ewing sarcoma",
+   "profile_available": true
+  },
+  {
+   "index": 533,
+   "id": "3193",
+   "name": "Supravalvular aortic stenosis",
+   "profile_available": true
+  },
+  {
+   "index": 534,
+   "id": "3198",
+   "name": "Stiff person spectrum disorder",
+   "profile_available": true
+  },
+  {
+   "index": 535,
+   "id": "32",
+   "name": "Glutathione synthetase deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 536,
+   "id": "3205",
+   "name": "Sturge-Weber syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 537,
+   "id": "3206",
+   "name": "St\u00fcve-Wiedemann syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 538,
+   "id": "321",
+   "name": "Multiple osteochondromas",
+   "profile_available": true
+  },
+  {
+   "index": 539,
+   "id": "322",
+   "name": "Exstrophy-epispadias complex",
+   "profile_available": true
+  },
+  {
+   "index": 540,
+   "id": "324",
+   "name": "Fabry disease",
+   "profile_available": true
+  },
+  {
+   "index": 541,
+   "id": "3240",
+   "name": "Early-onset progressive leukoencephalopathy-central nervous system calcification-deafness-visual impairment syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 542,
+   "id": "3242",
+   "name": "Renpenning syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 543,
+   "id": "325",
+   "name": "Congenital factor II deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 544,
+   "id": "326",
+   "name": "Congenital factor V deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 545,
+   "id": "3260",
+   "name": "Idiopathic hypereosinophilic syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 546,
+   "id": "3261",
+   "name": "Autoimmune lymphoproliferative syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 547,
+   "id": "3265",
+   "name": "Isolated humero-radial synostosis",
+   "profile_available": true
+  },
+  {
+   "index": 548,
+   "id": "327",
+   "name": "Congenital factor VII deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 549,
+   "id": "3273",
+   "name": "Synovial sarcoma",
+   "profile_available": true
+  },
+  {
+   "index": 550,
+   "id": "3275",
+   "name": "Spondylocarpotarsal synostosis",
+   "profile_available": true
+  },
+  {
+   "index": 551,
+   "id": "328",
+   "name": "Congenital factor X deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 552,
+   "id": "3280",
+   "name": "Syringomyelia",
+   "profile_available": true
+  },
+  {
+   "index": 553,
+   "id": "3286",
+   "name": "Catecholaminergic polymorphic ventricular tachycardia",
+   "profile_available": true
+  },
+  {
+   "index": 554,
+   "id": "329",
+   "name": "Congenital factor XI deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 555,
+   "id": "3299",
+   "name": "Tetanus",
+   "profile_available": true
+  },
+  {
+   "index": 556,
+   "id": "33",
+   "name": "Isovaleric acidemia",
+   "profile_available": true
+  },
+  {
+   "index": 557,
+   "id": "330",
+   "name": "Congenital factor XII deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 558,
+   "id": "3303",
+   "name": "Tetralogy of Fallot",
+   "profile_available": true
+  },
+  {
+   "index": 559,
+   "id": "3306",
+   "name": "Inverted duplicated chromosome 15 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 560,
+   "id": "3307",
+   "name": "Tetrasomy 18p syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 561,
+   "id": "331",
+   "name": "Congenital factor XIII deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 562,
+   "id": "3310",
+   "name": "Tetrasomy 9p syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 563,
+   "id": "33108",
+   "name": "Lethal multiple pterygium syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 564,
+   "id": "3318",
+   "name": "Essential thrombocythemia",
+   "profile_available": true
+  },
+  {
+   "index": 565,
+   "id": "3320",
+   "name": "Thrombocytopenia-absent radius syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 566,
+   "id": "33208",
+   "name": "Idiopathic hypersomnia",
+   "profile_available": true
+  },
+  {
+   "index": 567,
+   "id": "3322",
+   "name": "Hoyeraal-Hreidarsson syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 568,
+   "id": "33226",
+   "name": "Waldenstr\u00f6m macroglobulinemia",
+   "profile_available": true
+  },
+  {
+   "index": 569,
+   "id": "3329",
+   "name": "Tibial aplasia-ectrodactyly syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 570,
+   "id": "333",
+   "name": "Farber disease",
+   "profile_available": true
+  },
+  {
+   "index": 571,
+   "id": "3337",
+   "name": "Primary Fanconi renotubular syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 572,
+   "id": "33402",
+   "name": "Pediatric hepatocellular carcinoma",
+   "profile_available": true
+  },
+  {
+   "index": 573,
+   "id": "3348",
+   "name": "Tracheobronchopathia osteochondroplastica",
+   "profile_available": true
+  },
+  {
+   "index": 574,
+   "id": "3363",
+   "name": "Trichomegaly-retina pigmentary degeneration-dwarfism syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 575,
+   "id": "3369",
+   "name": "Trigonocephaly-short stature-developmental delay syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 576,
+   "id": "337",
+   "name": "Fibrodysplasia ossificans progressiva",
+   "profile_available": true
+  },
+  {
+   "index": 577,
+   "id": "3375",
+   "name": "Trisomy X syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 578,
+   "id": "3376",
+   "name": "Triploidy syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 579,
+   "id": "3378",
+   "name": "Trisomy 13 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 580,
+   "id": "3380",
+   "name": "Trisomy 18 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 581,
+   "id": "3386",
+   "name": "American trypanosomiasis",
+   "profile_available": true
+  },
+  {
+   "index": 582,
+   "id": "3389",
+   "name": "Tuberculosis",
+   "profile_available": true
+  },
+  {
+   "index": 583,
+   "id": "340",
+   "name": "Hemorrhagic fever-renal syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 584,
+   "id": "3400",
+   "name": "Aorto-ventricular tunnel",
+   "profile_available": true
+  },
+  {
+   "index": 585,
+   "id": "3403",
+   "name": "Uhl anomaly",
+   "profile_available": true
+  },
+  {
+   "index": 586,
+   "id": "341",
+   "name": "Viral hemorrhagic fever",
+   "profile_available": true
+  },
+  {
+   "index": 587,
+   "id": "34149",
+   "name": "Autosomal dominant tubulointerstitial kidney disease",
+   "profile_available": true
+  },
+  {
+   "index": 588,
+   "id": "342",
+   "name": "Familial Mediterranean fever",
+   "profile_available": true
+  },
+  {
+   "index": 589,
+   "id": "34217",
+   "name": "Naxos disease",
+   "profile_available": true
+  },
+  {
+   "index": 590,
+   "id": "3426",
+   "name": "Double outlet right ventricle",
+   "profile_available": true
+  },
+  {
+   "index": 591,
+   "id": "3427",
+   "name": "Double outlet left ventricle",
+   "profile_available": true
+  },
+  {
+   "index": 592,
+   "id": "343",
+   "name": "Hyperimmunoglobulinemia D with periodic fever",
+   "profile_available": true
+  },
+  {
+   "index": 593,
+   "id": "3440",
+   "name": "Waardenburg syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 594,
+   "id": "3447",
+   "name": "Weaver syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 595,
+   "id": "3451",
+   "name": "West syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 596,
+   "id": "3452",
+   "name": "Whipple disease",
+   "profile_available": true
+  },
+  {
+   "index": 597,
+   "id": "3453",
+   "name": "Autoimmune polyendocrinopathy type 1",
+   "profile_available": true
+  },
+  {
+   "index": 598,
+   "id": "3454",
+   "name": "Wieacker-Wolff syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 599,
+   "id": "34587",
+   "name": "Danon disease",
+   "profile_available": true
+  },
+  {
+   "index": 600,
+   "id": "3463",
+   "name": "Wolfram syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 601,
+   "id": "3467",
+   "name": "Hereditary xanthinuria",
+   "profile_available": true
+  },
+  {
+   "index": 602,
+   "id": "347",
+   "name": "Frasier syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 603,
+   "id": "3471",
+   "name": "Young syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 604,
+   "id": "348",
+   "name": "Fructose-1,6-bisphosphatase deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 605,
+   "id": "349",
+   "name": "Fucosidosis",
+   "profile_available": true
+  },
+  {
+   "index": 606,
+   "id": "35",
+   "name": "Propionic acidemia",
+   "profile_available": true
+  },
+  {
+   "index": 607,
+   "id": "35069",
+   "name": "Infantile neuroaxonal dystrophy",
+   "profile_available": true
+  },
+  {
+   "index": 608,
+   "id": "35078",
+   "name": "T-B+ severe combined immunodeficiency due to JAK3 deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 609,
+   "id": "35107",
+   "name": "Desmosterolosis",
+   "profile_available": true
+  },
+  {
+   "index": 610,
+   "id": "35125",
+   "name": "Epidermal nevus syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 611,
+   "id": "35173",
+   "name": "X-linked dominant chondrodysplasia punctata",
+   "profile_available": true
+  },
+  {
+   "index": 612,
+   "id": "352",
+   "name": "Galactosemia",
+   "profile_available": true
+  },
+  {
+   "index": 613,
+   "id": "354",
+   "name": "GM1 gangliosidosis",
+   "profile_available": true
+  },
+  {
+   "index": 614,
+   "id": "355",
+   "name": "Gaucher disease",
+   "profile_available": true
+  },
+  {
+   "index": 615,
+   "id": "356",
+   "name": "Gerstmann-Straussler-Scheinker syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 616,
+   "id": "35687",
+   "name": "Erdheim-Chester disease",
+   "profile_available": true
+  },
+  {
+   "index": 617,
+   "id": "35689",
+   "name": "Primary lateral sclerosis",
+   "profile_available": true
+  },
+  {
+   "index": 618,
+   "id": "35698",
+   "name": "Mitochondrial DNA depletion syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 619,
+   "id": "35704",
+   "name": "L-Arginine:glycine amidinotransferase deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 620,
+   "id": "35710",
+   "name": "Glucose-galactose malabsorption",
+   "profile_available": true
+  },
+  {
+   "index": 621,
+   "id": "358",
+   "name": "Gitelman syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 622,
+   "id": "35807",
+   "name": "Malignant germ cell tumor of ovary",
+   "profile_available": true
+  },
+  {
+   "index": 623,
+   "id": "35808",
+   "name": "Malignant sex cord stromal tumor of ovary",
+   "profile_available": true
+  },
+  {
+   "index": 624,
+   "id": "35981",
+   "name": "Polymicrogyria",
+   "profile_available": true
+  },
+  {
+   "index": 625,
+   "id": "36",
+   "name": "Acrocallosal syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 626,
+   "id": "360",
+   "name": "Glioblastoma",
+   "profile_available": true
+  },
+  {
+   "index": 627,
+   "id": "361",
+   "name": "Familial glucocorticoid deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 628,
+   "id": "36204",
+   "name": "Intestinal lymphangiectasia",
+   "profile_available": true
+  },
+  {
+   "index": 629,
+   "id": "36234",
+   "name": "Bacterial toxic-shock syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 630,
+   "id": "36273",
+   "name": "Gastric linitis plastica",
+   "profile_available": true
+  },
+  {
+   "index": 631,
+   "id": "36355",
+   "name": "Bleeding disorder due to P2Y12 defect",
+   "profile_available": true
+  },
+  {
+   "index": 632,
+   "id": "36367",
+   "name": "Distal deletion 1q syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 633,
+   "id": "36387",
+   "name": "Genetic epilepsy with febrile seizure plus",
+   "profile_available": true
+  },
+  {
+   "index": 634,
+   "id": "364",
+   "name": "Glycogen storage disease due to glucose-6-phosphatase deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 635,
+   "id": "36412",
+   "name": "Hypocomplementemic urticarial vasculitis",
+   "profile_available": true
+  },
+  {
+   "index": 636,
+   "id": "365",
+   "name": "Glycogen storage disease due to acid maltase deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 637,
+   "id": "366",
+   "name": "Glycogen storage disease due to glycogen debranching enzyme deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 638,
+   "id": "367",
+   "name": "Glycogen storage disease due to glycogen branching enzyme deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 639,
+   "id": "368",
+   "name": "Glycogen storage disease due to muscle glycogen phosphorylase deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 640,
+   "id": "36899",
+   "name": "Myoclonus-dystonia syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 641,
+   "id": "369",
+   "name": "Glycogen storage disease due to liver glycogen phosphorylase deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 642,
+   "id": "37",
+   "name": "Acrodermatitis enteropathica",
+   "profile_available": true
+  },
+  {
+   "index": 643,
+   "id": "371",
+   "name": "Glycogen storage disease due to muscle phosphofructokinase deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 644,
+   "id": "37202",
+   "name": "Interstitial cystitis",
+   "profile_available": true
+  },
+  {
+   "index": 645,
+   "id": "373",
+   "name": "Simpson-Golabi-Behmel syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 646,
+   "id": "375",
+   "name": "Anti-glomerular basement membrane disease",
+   "profile_available": true
+  },
+  {
+   "index": 647,
+   "id": "377",
+   "name": "Gorlin syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 648,
+   "id": "37748",
+   "name": "Schnitzler syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 649,
+   "id": "379",
+   "name": "Chronic granulomatous disease",
+   "profile_available": true
+  },
+  {
+   "index": 650,
+   "id": "38",
+   "name": "Acrokeratoelastoidosis of Costa",
+   "profile_available": true
+  },
+  {
+   "index": 651,
+   "id": "380",
+   "name": "Greig cephalopolysyndactyly syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 652,
+   "id": "381",
+   "name": "Griscelli syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 653,
+   "id": "382",
+   "name": "Guanidinoacetate methyltransferase deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 654,
+   "id": "388",
+   "name": "Hirschsprung disease",
+   "profile_available": true
+  },
+  {
+   "index": 655,
+   "id": "389",
+   "name": "Langerhans cell histiocytosis",
+   "profile_available": true
+  },
+  {
+   "index": 656,
+   "id": "391",
+   "name": "Classic Hodgkin lymphoma",
+   "profile_available": true
+  },
+  {
+   "index": 657,
+   "id": "392",
+   "name": "Holt-Oram syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 658,
+   "id": "393",
+   "name": "46,XX testicular difference of sex development",
+   "profile_available": true
+  },
+  {
+   "index": 659,
+   "id": "394",
+   "name": "Homocystinuria due to cystathionine beta-synthase deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 660,
+   "id": "395",
+   "name": "Homocystinuria due to methylene tetrahydrofolate reductase deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 661,
+   "id": "396",
+   "name": "Chronic hiccup",
+   "profile_available": true
+  },
+  {
+   "index": 662,
+   "id": "397",
+   "name": "Giant cell arteritis",
+   "profile_available": true
+  },
+  {
+   "index": 663,
+   "id": "399",
+   "name": "Huntington disease",
+   "profile_available": true
+  },
+  {
+   "index": 664,
+   "id": "40",
+   "name": "Acromesomelic dysplasia, Maroteaux type",
+   "profile_available": true
+  },
+  {
+   "index": 665,
+   "id": "403",
+   "name": "Familial hyperaldosteronism type I",
+   "profile_available": true
+  },
+  {
+   "index": 666,
+   "id": "405",
+   "name": "Familial hypocalciuric hypercalcemia",
+   "profile_available": true
+  },
+  {
+   "index": 667,
+   "id": "407",
+   "name": "Glycine encephalopathy",
+   "profile_available": true
+  },
+  {
+   "index": 668,
+   "id": "408",
+   "name": "Isolated glycerol kinase deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 669,
+   "id": "40923",
+   "name": "Eales disease",
+   "profile_available": true
+  },
+  {
+   "index": 670,
+   "id": "41",
+   "name": "Dyschromatosis symmetrica hereditaria",
+   "profile_available": true
+  },
+  {
+   "index": 671,
+   "id": "412",
+   "name": "Dysbetalipoproteinemia",
+   "profile_available": true
+  },
+  {
+   "index": 672,
+   "id": "415",
+   "name": "Hyperornithinemia-hyperammonemia-homocitrullinuria syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 673,
+   "id": "416",
+   "name": "Primary hyperoxaluria",
+   "profile_available": true
+  },
+  {
+   "index": 674,
+   "id": "417",
+   "name": "Neonatal severe primary hyperparathyroidism",
+   "profile_available": true
+  },
+  {
+   "index": 675,
+   "id": "41751",
+   "name": "Bietti crystalline dystrophy",
+   "profile_available": true
+  },
+  {
+   "index": 676,
+   "id": "418",
+   "name": "Congenital adrenal hyperplasia",
+   "profile_available": true
+  },
+  {
+   "index": 677,
+   "id": "42",
+   "name": "Medium chain acyl-CoA dehydrogenase deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 678,
+   "id": "42062",
+   "name": "Iminoglycinuria",
+   "profile_available": true
+  },
+  {
+   "index": 679,
+   "id": "423",
+   "name": "Malignant hyperthermia of anesthesia",
+   "profile_available": true
+  },
+  {
+   "index": 680,
+   "id": "424",
+   "name": "Familial hyperthyroidism due to mutations in TSH receptor",
+   "profile_available": true
+  },
+  {
+   "index": 681,
+   "id": "42642",
+   "name": "PFAPA syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 682,
+   "id": "427",
+   "name": "Familial hypoaldosteronism",
+   "profile_available": true
+  },
+  {
+   "index": 683,
+   "id": "429",
+   "name": "Hypochondroplasia",
+   "profile_available": true
+  },
+  {
+   "index": 684,
+   "id": "43",
+   "name": "X-linked adrenoleukodystrophy",
+   "profile_available": true
+  },
+  {
+   "index": 685,
+   "id": "43117",
+   "name": "Acute tricyclic antidepressant poisoning",
+   "profile_available": true
+  },
+  {
+   "index": 686,
+   "id": "43393",
+   "name": "Lambert-Eaton myasthenic syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 687,
+   "id": "436",
+   "name": "Hypophosphatasia",
+   "profile_available": true
+  },
+  {
+   "index": 688,
+   "id": "44",
+   "name": "Neonatal adrenoleukodystrophy",
+   "profile_available": true
+  },
+  {
+   "index": 689,
+   "id": "442",
+   "name": "Congenital hypothyroidism",
+   "profile_available": true
+  },
+  {
+   "index": 690,
+   "id": "447",
+   "name": "Paroxysmal nocturnal hemoglobinuria",
+   "profile_available": true
+  },
+  {
+   "index": 691,
+   "id": "448",
+   "name": "Hemophilia",
+   "profile_available": true
+  },
+  {
+   "index": 692,
+   "id": "44890",
+   "name": "Gastrointestinal stromal tumor",
+   "profile_available": true
+  },
+  {
+   "index": 693,
+   "id": "449",
+   "name": "Hepatoblastoma",
+   "profile_available": true
+  },
+  {
+   "index": 694,
+   "id": "45",
+   "name": "Adenosine monophosphate deaminase deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 695,
+   "id": "452",
+   "name": "X-linked lissencephaly with abnormal genitalia",
+   "profile_available": true
+  },
+  {
+   "index": 696,
+   "id": "45448",
+   "name": "Miyoshi myopathy",
+   "profile_available": true
+  },
+  {
+   "index": 697,
+   "id": "455",
+   "name": "Superficial epidermolytic ichthyosis",
+   "profile_available": true
+  },
+  {
+   "index": 698,
+   "id": "457",
+   "name": "Harlequin ichthyosis",
+   "profile_available": true
+  },
+  {
+   "index": 699,
+   "id": "46",
+   "name": "Adenylosuccinate lyase deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 700,
+   "id": "461",
+   "name": "Recessive X-linked ichthyosis",
+   "profile_available": true
+  },
+  {
+   "index": 701,
+   "id": "464",
+   "name": "Incontinentia pigmenti",
+   "profile_available": true
+  },
+  {
+   "index": 702,
+   "id": "466",
+   "name": "Fatal familial insomnia",
+   "profile_available": true
+  },
+  {
+   "index": 703,
+   "id": "46724",
+   "name": "Cerebral arteriovenous malformation",
+   "profile_available": true
+  },
+  {
+   "index": 704,
+   "id": "469",
+   "name": "Hereditary fructose intolerance",
+   "profile_available": true
+  },
+  {
+   "index": 705,
+   "id": "47",
+   "name": "X-linked agammaglobulinemia",
+   "profile_available": true
+  },
+  {
+   "index": 706,
+   "id": "470",
+   "name": "Lysinuric protein intolerance",
+   "profile_available": true
+  },
+  {
+   "index": 707,
+   "id": "47045",
+   "name": "Familial cold urticaria",
+   "profile_available": true
+  },
+  {
+   "index": 708,
+   "id": "47159",
+   "name": "Proximal renal tubular acidosis",
+   "profile_available": true
+  },
+  {
+   "index": 709,
+   "id": "474",
+   "name": "Jeune syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 710,
+   "id": "475",
+   "name": "Isolated Joubert syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 711,
+   "id": "477",
+   "name": "KID syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 712,
+   "id": "478",
+   "name": "Kallmann syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 713,
+   "id": "48",
+   "name": "Congenital bilateral absence of vas deferens",
+   "profile_available": true
+  },
+  {
+   "index": 714,
+   "id": "480",
+   "name": "Kearns-Sayre syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 715,
+   "id": "481",
+   "name": "Kennedy disease",
+   "profile_available": true
+  },
+  {
+   "index": 716,
+   "id": "48104",
+   "name": "Pyoderma gangrenosum",
+   "profile_available": true
+  },
+  {
+   "index": 717,
+   "id": "482",
+   "name": "Kimura disease",
+   "profile_available": true
+  },
+  {
+   "index": 718,
+   "id": "48372",
+   "name": "Nodular regenerative hyperplasia of the liver",
+   "profile_available": true
+  },
+  {
+   "index": 719,
+   "id": "485",
+   "name": "Kniest dysplasia",
+   "profile_available": true
+  },
+  {
+   "index": 720,
+   "id": "486",
+   "name": "Autosomal dominant severe congenital neutropenia",
+   "profile_available": true
+  },
+  {
+   "index": 721,
+   "id": "48652",
+   "name": "Phelan-McDermid syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 722,
+   "id": "48686",
+   "name": "Primary effusion lymphoma",
+   "profile_available": true
+  },
+  {
+   "index": 723,
+   "id": "487",
+   "name": "Krabbe disease",
+   "profile_available": true
+  },
+  {
+   "index": 724,
+   "id": "48918",
+   "name": "Focal myositis",
+   "profile_available": true
+  },
+  {
+   "index": 725,
+   "id": "49041",
+   "name": "IgG4-related retroperitoneal fibrosis",
+   "profile_available": true
+  },
+  {
+   "index": 726,
+   "id": "49382",
+   "name": "Achromatopsia",
+   "profile_available": true
+  },
+  {
+   "index": 727,
+   "id": "494",
+   "name": "Keratoderma hereditarium mutilans",
+   "profile_available": true
+  },
+  {
+   "index": 728,
+   "id": "495",
+   "name": "Transgrediens et progrediens palmoplantar keratoderma",
+   "profile_available": true
+  },
+  {
+   "index": 729,
+   "id": "49804",
+   "name": "Lichen amyloidosis",
+   "profile_available": true
+  },
+  {
+   "index": 730,
+   "id": "49827",
+   "name": "Thiamine-responsive megaloblastic anemia syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 731,
+   "id": "50",
+   "name": "Aicardi syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 732,
+   "id": "500",
+   "name": "Noonan syndrome with multiple lentigines",
+   "profile_available": true
+  },
+  {
+   "index": 733,
+   "id": "501",
+   "name": "Lafora disease",
+   "profile_available": true
+  },
+  {
+   "index": 734,
+   "id": "502",
+   "name": "Trichorhinophalangeal syndrome type 2",
+   "profile_available": true
+  },
+  {
+   "index": 735,
+   "id": "503",
+   "name": "Larsen syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 736,
+   "id": "505",
+   "name": "Graham Little-Piccardi-Lassueur syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 737,
+   "id": "506",
+   "name": "Leigh syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 738,
+   "id": "507",
+   "name": "Leishmaniasis",
+   "profile_available": true
+  },
+  {
+   "index": 739,
+   "id": "508",
+   "name": "Donohue syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 740,
+   "id": "509",
+   "name": "Leptospirosis",
+   "profile_available": true
+  },
+  {
+   "index": 741,
+   "id": "50918",
+   "name": "Kikuchi-Fujimoto disease",
+   "profile_available": true
+  },
+  {
+   "index": 742,
+   "id": "51",
+   "name": "Aicardi-Gouti\u00e8res syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 743,
+   "id": "510",
+   "name": "Lesch-Nyhan syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 744,
+   "id": "511",
+   "name": "Maple syrup urine disease",
+   "profile_available": true
+  },
+  {
+   "index": 745,
+   "id": "512",
+   "name": "Metachromatic leukodystrophy",
+   "profile_available": true
+  },
+  {
+   "index": 746,
+   "id": "514",
+   "name": "Acute monoblastic/monocytic leukemia",
+   "profile_available": true
+  },
+  {
+   "index": 747,
+   "id": "51577",
+   "name": "Cobblestone lissencephaly",
+   "profile_available": true
+  },
+  {
+   "index": 748,
+   "id": "51636",
+   "name": "WHIM syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 749,
+   "id": "517",
+   "name": "Acute myelomonocytic leukemia",
+   "profile_available": true
+  },
+  {
+   "index": 750,
+   "id": "518",
+   "name": "Acute megakaryoblastic leukemia",
+   "profile_available": true
+  },
+  {
+   "index": 751,
+   "id": "52",
+   "name": "Alagille syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 752,
+   "id": "520",
+   "name": "Acute promyelocytic leukemia",
+   "profile_available": true
+  },
+  {
+   "index": 753,
+   "id": "52022",
+   "name": "Potocki-Shaffer syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 754,
+   "id": "521",
+   "name": "Chronic myeloid leukemia",
+   "profile_available": true
+  },
+  {
+   "index": 755,
+   "id": "523",
+   "name": "Hereditary leiomyomatosis and renal cell cancer",
+   "profile_available": true
+  },
+  {
+   "index": 756,
+   "id": "524",
+   "name": "Li-Fraumeni syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 757,
+   "id": "52416",
+   "name": "Mantle cell lymphoma",
+   "profile_available": true
+  },
+  {
+   "index": 758,
+   "id": "52417",
+   "name": "MALT lymphoma",
+   "profile_available": true
+  },
+  {
+   "index": 759,
+   "id": "526",
+   "name": "Liddle syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 760,
+   "id": "52688",
+   "name": "Myelodysplastic syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 761,
+   "id": "528",
+   "name": "Congenital generalized lipodystrophy",
+   "profile_available": true
+  },
+  {
+   "index": 762,
+   "id": "52901",
+   "name": "Isolated follicle stimulating hormone deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 763,
+   "id": "52994",
+   "name": "Orbital leiomyoma",
+   "profile_available": true
+  },
+  {
+   "index": 764,
+   "id": "53",
+   "name": "Albers-Sch\u00f6nberg osteopetrosis",
+   "profile_available": true
+  },
+  {
+   "index": 765,
+   "id": "530",
+   "name": "Lipoid proteinosis",
+   "profile_available": true
+  },
+  {
+   "index": 766,
+   "id": "531",
+   "name": "Miller-Dieker syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 767,
+   "id": "533",
+   "name": "Listeriosis",
+   "profile_available": true
+  },
+  {
+   "index": 768,
+   "id": "534",
+   "name": "Oculocerebrorenal syndrome of Lowe",
+   "profile_available": true
+  },
+  {
+   "index": 769,
+   "id": "535",
+   "name": "Rare cutaneous lupus erythematosus",
+   "profile_available": true
+  },
+  {
+   "index": 770,
+   "id": "53691",
+   "name": "Congenital cornea plana",
+   "profile_available": true
+  },
+  {
+   "index": 771,
+   "id": "53721",
+   "name": "Spinal arteriovenous metameric syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 772,
+   "id": "538",
+   "name": "Lymphangioleiomyomatosis",
+   "profile_available": true
+  },
+  {
+   "index": 773,
+   "id": "54",
+   "name": "X-linked recessive ocular albinism",
+   "profile_available": true
+  },
+  {
+   "index": 774,
+   "id": "54057",
+   "name": "Thrombotic thrombocytopenic purpura",
+   "profile_available": true
+  },
+  {
+   "index": 775,
+   "id": "54247",
+   "name": "Posterior cortical atrophy",
+   "profile_available": true
+  },
+  {
+   "index": 776,
+   "id": "54251",
+   "name": "Aseptic abscess syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 777,
+   "id": "54260",
+   "name": "Left ventricular noncompaction",
+   "profile_available": true
+  },
+  {
+   "index": 778,
+   "id": "543",
+   "name": "Burkitt lymphoma",
+   "profile_available": true
+  },
+  {
+   "index": 779,
+   "id": "54370",
+   "name": "Primary membranoproliferative glomerulonephritis",
+   "profile_available": true
+  },
+  {
+   "index": 780,
+   "id": "544",
+   "name": "Diffuse large B-cell lymphoma",
+   "profile_available": true
+  },
+  {
+   "index": 781,
+   "id": "545",
+   "name": "Follicular lymphoma",
+   "profile_available": true
+  },
+  {
+   "index": 782,
+   "id": "547",
+   "name": "Non-Hodgkin lymphoma",
+   "profile_available": true
+  },
+  {
+   "index": 783,
+   "id": "548",
+   "name": "Leprosy",
+   "profile_available": true
+  },
+  {
+   "index": 784,
+   "id": "549",
+   "name": "Legionnaires disease",
+   "profile_available": true
+  },
+  {
+   "index": 785,
+   "id": "55",
+   "name": "Oculocutaneous albinism",
+   "profile_available": true
+  },
+  {
+   "index": 786,
+   "id": "550",
+   "name": "MELAS",
+   "profile_available": true
+  },
+  {
+   "index": 787,
+   "id": "551",
+   "name": "MERRF",
+   "profile_available": true
+  },
+  {
+   "index": 788,
+   "id": "55595",
+   "name": "TNP03-related limb-girdle muscular dystrophy D2",
+   "profile_available": true
+  },
+  {
+   "index": 789,
+   "id": "556",
+   "name": "Malakoplakia",
+   "profile_available": true
+  },
+  {
+   "index": 790,
+   "id": "557",
+   "name": "Non-syndromic anorectal malformation",
+   "profile_available": true
+  },
+  {
+   "index": 791,
+   "id": "558",
+   "name": "Marfan syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 792,
+   "id": "559",
+   "name": "Marinesco-Sj\u00f6gren syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 793,
+   "id": "56",
+   "name": "Alkaptonuria",
+   "profile_available": true
+  },
+  {
+   "index": 794,
+   "id": "560",
+   "name": "Marshall syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 795,
+   "id": "56044",
+   "name": "Carcinoma of gallbladder and extrahepatic biliary tract",
+   "profile_available": true
+  },
+  {
+   "index": 796,
+   "id": "561",
+   "name": "Marshall-Smith syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 797,
+   "id": "562",
+   "name": "McCune-Albright syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 798,
+   "id": "563",
+   "name": "Peripartum cardiomyopathy",
+   "profile_available": true
+  },
+  {
+   "index": 799,
+   "id": "564",
+   "name": "Meckel syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 800,
+   "id": "56425",
+   "name": "Cold agglutinin disease",
+   "profile_available": true
+  },
+  {
+   "index": 801,
+   "id": "565",
+   "name": "Menkes disease",
+   "profile_available": true
+  },
+  {
+   "index": 802,
+   "id": "567",
+   "name": "22q11.2 deletion syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 803,
+   "id": "568",
+   "name": "Microphthalmia, Lenz type",
+   "profile_available": true
+  },
+  {
+   "index": 804,
+   "id": "569",
+   "name": "Familial or sporadic hemiplegic migraine",
+   "profile_available": true
+  },
+  {
+   "index": 805,
+   "id": "570",
+   "name": "Moebius syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 806,
+   "id": "572",
+   "name": "Immunodeficiency by defective expression of MHC class II",
+   "profile_available": true
+  },
+  {
+   "index": 807,
+   "id": "573",
+   "name": "Monilethrix",
+   "profile_available": true
+  },
+  {
+   "index": 808,
+   "id": "574",
+   "name": "21q deletion syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 809,
+   "id": "575",
+   "name": "Muckle-Wells syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 810,
+   "id": "576",
+   "name": "Mucolipidosis type II",
+   "profile_available": true
+  },
+  {
+   "index": 811,
+   "id": "577",
+   "name": "Mucolipidosis type III",
+   "profile_available": true
+  },
+  {
+   "index": 812,
+   "id": "57782",
+   "name": "Mazabraud syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 813,
+   "id": "578",
+   "name": "Mucolipidosis type IV",
+   "profile_available": true
+  },
+  {
+   "index": 814,
+   "id": "579",
+   "name": "Mucopolysaccharidosis type 1",
+   "profile_available": true
+  },
+  {
+   "index": 815,
+   "id": "58",
+   "name": "Alexander disease",
+   "profile_available": true
+  },
+  {
+   "index": 816,
+   "id": "580",
+   "name": "Mucopolysaccharidosis type 2",
+   "profile_available": true
+  },
+  {
+   "index": 817,
+   "id": "58017",
+   "name": "Classic hairy cell leukemia",
+   "profile_available": true
+  },
+  {
+   "index": 818,
+   "id": "581",
+   "name": "Mucopolysaccharidosis type 3",
+   "profile_available": true
+  },
+  {
+   "index": 819,
+   "id": "582",
+   "name": "Mucopolysaccharidosis type 4",
+   "profile_available": true
+  },
+  {
+   "index": 820,
+   "id": "583",
+   "name": "Mucopolysaccharidosis type 6",
+   "profile_available": true
+  },
+  {
+   "index": 821,
+   "id": "584",
+   "name": "Mucopolysaccharidosis type 7",
+   "profile_available": true
+  },
+  {
+   "index": 822,
+   "id": "585",
+   "name": "Multiple sulfatase deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 823,
+   "id": "586",
+   "name": "Cystic fibrosis",
+   "profile_available": true
+  },
+  {
+   "index": 824,
+   "id": "588",
+   "name": "Muscle-eye-brain disease",
+   "profile_available": true
+  },
+  {
+   "index": 825,
+   "id": "589",
+   "name": "Myasthenia gravis",
+   "profile_available": true
+  },
+  {
+   "index": 826,
+   "id": "59",
+   "name": "Allan-Herndon-Dudley syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 827,
+   "id": "590",
+   "name": "Congenital myasthenic syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 828,
+   "id": "592",
+   "name": "Macrophagic myofasciitis",
+   "profile_available": true
+  },
+  {
+   "index": 829,
+   "id": "596",
+   "name": "X-linked centronuclear myopathy",
+   "profile_available": true
+  },
+  {
+   "index": 830,
+   "id": "597",
+   "name": "Central core disease",
+   "profile_available": true
+  },
+  {
+   "index": 831,
+   "id": "598",
+   "name": "Multiminicore myopathy",
+   "profile_available": true
+  },
+  {
+   "index": 832,
+   "id": "60",
+   "name": "Alpha-1-antitrypsin deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 833,
+   "id": "602",
+   "name": "GNE myopathy",
+   "profile_available": true
+  },
+  {
+   "index": 834,
+   "id": "603",
+   "name": "Distal myopathy, Welander type",
+   "profile_available": true
+  },
+  {
+   "index": 835,
+   "id": "606",
+   "name": "Proximal myotonic myopathy",
+   "profile_available": true
+  },
+  {
+   "index": 836,
+   "id": "607",
+   "name": "Nemaline myopathy",
+   "profile_available": true
+  },
+  {
+   "index": 837,
+   "id": "609",
+   "name": "Tibial muscular dystrophy",
+   "profile_available": true
+  },
+  {
+   "index": 838,
+   "id": "61",
+   "name": "Alpha-mannosidosis",
+   "profile_available": true
+  },
+  {
+   "index": 839,
+   "id": "610",
+   "name": "Bethlem muscular dystrophy",
+   "profile_available": true
+  },
+  {
+   "index": 840,
+   "id": "611",
+   "name": "Inclusion body myositis",
+   "profile_available": true
+  },
+  {
+   "index": 841,
+   "id": "614",
+   "name": "Thomsen and Becker disease",
+   "profile_available": true
+  },
+  {
+   "index": 842,
+   "id": "616",
+   "name": "Medulloblastoma",
+   "profile_available": true
+  },
+  {
+   "index": 843,
+   "id": "618",
+   "name": "Familial melanoma",
+   "profile_available": true
+  },
+  {
+   "index": 844,
+   "id": "62",
+   "name": "Alpha-sarcoglycan-related limb-girdle muscular dystrophy R3",
+   "profile_available": true
+  },
+  {
+   "index": 845,
+   "id": "624",
+   "name": "Familial multiple nevi flammei",
+   "profile_available": true
+  },
+  {
+   "index": 846,
+   "id": "626",
+   "name": "Large/giant congenital melanocytic nevus",
+   "profile_available": true
+  },
+  {
+   "index": 847,
+   "id": "627",
+   "name": "Nance-Horan syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 848,
+   "id": "628",
+   "name": "Diastrophic dysplasia",
+   "profile_available": true
+  },
+  {
+   "index": 849,
+   "id": "63",
+   "name": "Alport syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 850,
+   "id": "633",
+   "name": "Laron syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 851,
+   "id": "634",
+   "name": "Netherton syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 852,
+   "id": "635",
+   "name": "Neuroblastoma",
+   "profile_available": true
+  },
+  {
+   "index": 853,
+   "id": "636",
+   "name": "Neurofibromatosis type 1",
+   "profile_available": true
+  },
+  {
+   "index": 854,
+   "id": "637",
+   "name": "Full NF2-related schwannomatosis",
+   "profile_available": true
+  },
+  {
+   "index": 855,
+   "id": "638",
+   "name": "Neurofibromatosis-Noonan syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 856,
+   "id": "64",
+   "name": "Alstr\u00f6m syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 857,
+   "id": "640",
+   "name": "Hereditary neuropathy with liability to pressure palsies",
+   "profile_available": true
+  },
+  {
+   "index": 858,
+   "id": "641",
+   "name": "Multifocal motor neuropathy",
+   "profile_available": true
+  },
+  {
+   "index": 859,
+   "id": "64280",
+   "name": "Childhood absence epilepsy",
+   "profile_available": true
+  },
+  {
+   "index": 860,
+   "id": "643",
+   "name": "Giant axonal neuropathy",
+   "profile_available": true
+  },
+  {
+   "index": 861,
+   "id": "646",
+   "name": "Niemann-Pick disease type C",
+   "profile_available": true
+  },
+  {
+   "index": 862,
+   "id": "64743",
+   "name": "Hepatoportal sclerosis",
+   "profile_available": true
+  },
+  {
+   "index": 863,
+   "id": "64746",
+   "name": "Autosomal dominant Charcot-Marie-Tooth disease type 2",
+   "profile_available": true
+  },
+  {
+   "index": 864,
+   "id": "64747",
+   "name": "X-linked Charcot-Marie-Tooth disease",
+   "profile_available": true
+  },
+  {
+   "index": 865,
+   "id": "64753",
+   "name": "Spinocerebellar ataxia with axonal neuropathy type 2",
+   "profile_available": true
+  },
+  {
+   "index": 866,
+   "id": "648",
+   "name": "Noonan syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 867,
+   "id": "649",
+   "name": "Norrie disease",
+   "profile_available": true
+  },
+  {
+   "index": 868,
+   "id": "65",
+   "name": "Leber congenital amaurosis",
+   "profile_available": true
+  },
+  {
+   "index": 869,
+   "id": "650",
+   "name": "LCAT deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 870,
+   "id": "652",
+   "name": "Multiple endocrine neoplasia type 1",
+   "profile_available": true
+  },
+  {
+   "index": 871,
+   "id": "65282",
+   "name": "Carvajal syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 872,
+   "id": "65285",
+   "name": "Lhermitte-Duclos disease",
+   "profile_available": true
+  },
+  {
+   "index": 873,
+   "id": "65286",
+   "name": "3q29 microdeletion syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 874,
+   "id": "655",
+   "name": "Nephronophthisis",
+   "profile_available": true
+  },
+  {
+   "index": 875,
+   "id": "656",
+   "name": "Hereditary steroid-resistant nephrotic syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 876,
+   "id": "65681",
+   "name": "Vaginal atresia",
+   "profile_available": true
+  },
+  {
+   "index": 877,
+   "id": "65682",
+   "name": "Benign recurrent intrahepatic cholestasis",
+   "profile_available": true
+  },
+  {
+   "index": 878,
+   "id": "657",
+   "name": "Congenital isolated hyperinsulinism",
+   "profile_available": true
+  },
+  {
+   "index": 879,
+   "id": "65748",
+   "name": "Multiple self-healing squamous epithelioma",
+   "profile_available": true
+  },
+  {
+   "index": 880,
+   "id": "65753",
+   "name": "Charcot-Marie-Tooth disease type 1",
+   "profile_available": true
+  },
+  {
+   "index": 881,
+   "id": "660",
+   "name": "Omphalocele",
+   "profile_available": true
+  },
+  {
+   "index": 882,
+   "id": "661",
+   "name": "Congenital central hypoventilation syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 883,
+   "id": "662",
+   "name": "Lymphedema with yellow nails",
+   "profile_available": true
+  },
+  {
+   "index": 884,
+   "id": "664",
+   "name": "Ornithine transcarbamylase deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 885,
+   "id": "66529",
+   "name": "Tako-Tsubo cardiomyopathy",
+   "profile_available": true
+  },
+  {
+   "index": 886,
+   "id": "666",
+   "name": "Osteogenesis imperfecta",
+   "profile_available": true
+  },
+  {
+   "index": 887,
+   "id": "667",
+   "name": "Autosomal recessive malignant osteopetrosis",
+   "profile_available": true
+  },
+  {
+   "index": 888,
+   "id": "668",
+   "name": "Osteosarcoma",
+   "profile_available": true
+  },
+  {
+   "index": 889,
+   "id": "672",
+   "name": "Pallister-Hall syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 890,
+   "id": "673",
+   "name": "Malaria",
+   "profile_available": true
+  },
+  {
+   "index": 891,
+   "id": "675",
+   "name": "Annular pancreas",
+   "profile_available": true
+  },
+  {
+   "index": 892,
+   "id": "676",
+   "name": "Autosomal dominant hereditary chronic pancreatitis",
+   "profile_available": true
+  },
+  {
+   "index": 893,
+   "id": "677",
+   "name": "Pancreatoblastoma",
+   "profile_available": true
+  },
+  {
+   "index": 894,
+   "id": "678",
+   "name": "Papillon-Lef\u00e8vre syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 895,
+   "id": "679",
+   "name": "Malignant atrophic papulosis",
+   "profile_available": true
+  },
+  {
+   "index": 896,
+   "id": "681",
+   "name": "Hypokalemic periodic paralysis",
+   "profile_available": true
+  },
+  {
+   "index": 897,
+   "id": "683",
+   "name": "Progressive supranuclear palsy",
+   "profile_available": true
+  },
+  {
+   "index": 898,
+   "id": "685",
+   "name": "Hereditary spastic paraplegia",
+   "profile_available": true
+  },
+  {
+   "index": 899,
+   "id": "69",
+   "name": "Amyloidosis",
+   "profile_available": true
+  },
+  {
+   "index": 900,
+   "id": "69061",
+   "name": "Idiopathic steroid-sensitive nephrotic syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 901,
+   "id": "69063",
+   "name": "Congenital membranous nephropathy due to fetomaternal anti-neutral endopeptidase alloimmunization",
+   "profile_available": true
+  },
+  {
+   "index": 902,
+   "id": "69078",
+   "name": "Liposarcoma",
+   "profile_available": true
+  },
+  {
+   "index": 903,
+   "id": "69088",
+   "name": "Hypohidrotic ectodermal dysplasia-immunodeficiency-osteopetrosis-lymphedema syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 904,
+   "id": "69736",
+   "name": "Bilateral acute depigmentation of the iris",
+   "profile_available": true
+  },
+  {
+   "index": 905,
+   "id": "69744",
+   "name": "Circumscribed palmoplantar hypokeratosis",
+   "profile_available": true
+  },
+  {
+   "index": 906,
+   "id": "69745",
+   "name": "Warty dyskeratoma",
+   "profile_available": true
+  },
+  {
+   "index": 907,
+   "id": "699",
+   "name": "Pearson syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 908,
+   "id": "7",
+   "name": "3C syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 909,
+   "id": "70",
+   "name": "Proximal spinal muscular atrophy",
+   "profile_available": true
+  },
+  {
+   "index": 910,
+   "id": "700",
+   "name": "Alopecia totalis",
+   "profile_available": true
+  },
+  {
+   "index": 911,
+   "id": "701",
+   "name": "Alopecia universalis",
+   "profile_available": true
+  },
+  {
+   "index": 912,
+   "id": "702",
+   "name": "Pelizaeus-Merzbacher disease",
+   "profile_available": true
+  },
+  {
+   "index": 913,
+   "id": "703",
+   "name": "Bullous pemphigoid",
+   "profile_available": true
+  },
+  {
+   "index": 914,
+   "id": "704",
+   "name": "Pemphigus vulgaris",
+   "profile_available": true
+  },
+  {
+   "index": 915,
+   "id": "70476",
+   "name": "Vernal keratoconjunctivitis",
+   "profile_available": true
+  },
+  {
+   "index": 916,
+   "id": "70482",
+   "name": "Carcinoma of esophagus",
+   "profile_available": true
+  },
+  {
+   "index": 917,
+   "id": "705",
+   "name": "Pendred syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 918,
+   "id": "70567",
+   "name": "Cholangiocarcinoma",
+   "profile_available": true
+  },
+  {
+   "index": 919,
+   "id": "70594",
+   "name": "Dopa-responsive dystonia due to sepiapterin reductase deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 920,
+   "id": "707",
+   "name": "Plague",
+   "profile_available": true
+  },
+  {
+   "index": 921,
+   "id": "708",
+   "name": "Peters anomaly",
+   "profile_available": true
+  },
+  {
+   "index": 922,
+   "id": "709",
+   "name": "Peters plus syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 923,
+   "id": "71",
+   "name": "Chylomicron retention disease",
+   "profile_available": true
+  },
+  {
+   "index": 924,
+   "id": "710",
+   "name": "Pfeiffer syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 925,
+   "id": "71272",
+   "name": "Sandifer syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 926,
+   "id": "71273",
+   "name": "Renal nutcracker syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 927,
+   "id": "71276",
+   "name": "Silent sinus syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 928,
+   "id": "713",
+   "name": "Glycogen storage disease due to phosphoglycerate kinase 1 deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 929,
+   "id": "714",
+   "name": "Hemolytic anemia due to diphosphoglycerate mutase deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 930,
+   "id": "716",
+   "name": "Phenylketonuria",
+   "profile_available": true
+  },
+  {
+   "index": 931,
+   "id": "718",
+   "name": "Isolated Pierre Robin sequence",
+   "profile_available": true
+  },
+  {
+   "index": 932,
+   "id": "72",
+   "name": "Angelman syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 933,
+   "id": "720",
+   "name": "Pili bifurcati",
+   "profile_available": true
+  },
+  {
+   "index": 934,
+   "id": "721",
+   "name": "Gray platelet syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 935,
+   "id": "725",
+   "name": "Developmental and epileptic encephalopathy with spike-wave activation in sleep",
+   "profile_available": true
+  },
+  {
+   "index": 936,
+   "id": "726",
+   "name": "Alpers-Huttenlocher syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 937,
+   "id": "727",
+   "name": "Microscopic polyangiitis",
+   "profile_available": true
+  },
+  {
+   "index": 938,
+   "id": "728",
+   "name": "Relapsing polychondritis",
+   "profile_available": true
+  },
+  {
+   "index": 939,
+   "id": "729",
+   "name": "Polycythemia vera",
+   "profile_available": true
+  },
+  {
+   "index": 940,
+   "id": "731",
+   "name": "Autosomal recessive polycystic kidney disease",
+   "profile_available": true
+  },
+  {
+   "index": 941,
+   "id": "732",
+   "name": "Polymyositis",
+   "profile_available": true
+  },
+  {
+   "index": 942,
+   "id": "73230",
+   "name": "Ossification anomalies-psychomotor developmental delay syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 943,
+   "id": "73256",
+   "name": "Central neurocytoma",
+   "profile_available": true
+  },
+  {
+   "index": 944,
+   "id": "73260",
+   "name": "Paracoccidioidomycosis",
+   "profile_available": true
+  },
+  {
+   "index": 945,
+   "id": "73263",
+   "name": "Zygomycosis",
+   "profile_available": true
+  },
+  {
+   "index": 946,
+   "id": "73267",
+   "name": "Non-24-hour sleep-wake syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 947,
+   "id": "73271",
+   "name": "Bleeding diathesis due to a collagen receptor defect",
+   "profile_available": true
+  },
+  {
+   "index": 948,
+   "id": "73272",
+   "name": "Growth delay due to insulin-like growth factor type 1 deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 949,
+   "id": "73273",
+   "name": "Growth delay due to insulin-like growth factor I resistance",
+   "profile_available": true
+  },
+  {
+   "index": 950,
+   "id": "733",
+   "name": "Familial adenomatous polyposis",
+   "profile_available": true
+  },
+  {
+   "index": 951,
+   "id": "738",
+   "name": "Porphyria",
+   "profile_available": true
+  },
+  {
+   "index": 952,
+   "id": "739",
+   "name": "Prader-Willi syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 953,
+   "id": "740",
+   "name": "Hutchinson-Gilford progeria syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 954,
+   "id": "741",
+   "name": "Familial mitral valve prolapse",
+   "profile_available": true
+  },
+  {
+   "index": 955,
+   "id": "742",
+   "name": "Prolidase deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 956,
+   "id": "744",
+   "name": "Proteus syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 957,
+   "id": "745",
+   "name": "Severe hereditary thrombophilia due to congenital protein C deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 958,
+   "id": "747",
+   "name": "Autoimmune pulmonary alveolar proteinosis",
+   "profile_available": true
+  },
+  {
+   "index": 959,
+   "id": "750",
+   "name": "Pseudoachondroplasia",
+   "profile_available": true
+  },
+  {
+   "index": 960,
+   "id": "752",
+   "name": "46,XY difference of sex development due to 17-beta-hydroxysteroid dehydrogenase 3 deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 961,
+   "id": "75233",
+   "name": "Wolman disease",
+   "profile_available": true
+  },
+  {
+   "index": 962,
+   "id": "75234",
+   "name": "Cholesteryl ester storage disease",
+   "profile_available": true
+  },
+  {
+   "index": 963,
+   "id": "75249",
+   "name": "Familial isolated restrictive cardiomyopathy",
+   "profile_available": true
+  },
+  {
+   "index": 964,
+   "id": "753",
+   "name": "46,XY difference of sex development due to 5-alpha-reductase 2 deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 965,
+   "id": "75326",
+   "name": "Familial isolated retinal arteriolar tortuosity",
+   "profile_available": true
+  },
+  {
+   "index": 966,
+   "id": "75327",
+   "name": "North Carolina macular dystrophy",
+   "profile_available": true
+  },
+  {
+   "index": 967,
+   "id": "75373",
+   "name": "Progressive bifocal chorioretinal atrophy",
+   "profile_available": true
+  },
+  {
+   "index": 968,
+   "id": "75376",
+   "name": "Familial drusen",
+   "profile_available": true
+  },
+  {
+   "index": 969,
+   "id": "75377",
+   "name": "Central areolar choroidal dystrophy",
+   "profile_available": true
+  },
+  {
+   "index": 970,
+   "id": "75381",
+   "name": "Cystoid macular dystrophy",
+   "profile_available": true
+  },
+  {
+   "index": 971,
+   "id": "75382",
+   "name": "Oguchi disease",
+   "profile_available": true
+  },
+  {
+   "index": 972,
+   "id": "75392",
+   "name": "Periodontal Ehlers-Danlos syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 973,
+   "id": "754",
+   "name": "Androgen insensitivity syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 974,
+   "id": "755",
+   "name": "Leydig cell hypoplasia",
+   "profile_available": true
+  },
+  {
+   "index": 975,
+   "id": "75563",
+   "name": "X-linked sideroblastic anemia",
+   "profile_available": true
+  },
+  {
+   "index": 976,
+   "id": "75564",
+   "name": "Acquired idiopathic sideroblastic anemia",
+   "profile_available": true
+  },
+  {
+   "index": 977,
+   "id": "75565",
+   "name": "Tropical endomyocardial fibrosis",
+   "profile_available": true
+  },
+  {
+   "index": 978,
+   "id": "75566",
+   "name": "Loeffler endocarditis",
+   "profile_available": true
+  },
+  {
+   "index": 979,
+   "id": "75567",
+   "name": "Primary progressive freezing gait",
+   "profile_available": true
+  },
+  {
+   "index": 980,
+   "id": "757",
+   "name": "Pseudohypoaldosteronism type 2",
+   "profile_available": true
+  },
+  {
+   "index": 981,
+   "id": "758",
+   "name": "Pseudoxanthoma elasticum",
+   "profile_available": true
+  },
+  {
+   "index": 982,
+   "id": "75858",
+   "name": "MORM syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 983,
+   "id": "760",
+   "name": "Purine nucleoside phosphorylase deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 984,
+   "id": "761",
+   "name": "Immunoglobulin A vasculitis",
+   "profile_available": true
+  },
+  {
+   "index": 985,
+   "id": "763",
+   "name": "Pycnodysostosis",
+   "profile_available": true
+  },
+  {
+   "index": 986,
+   "id": "764",
+   "name": "Pyomyositis",
+   "profile_available": true
+  },
+  {
+   "index": 987,
+   "id": "765",
+   "name": "Pyruvate dehydrogenase deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 988,
+   "id": "766",
+   "name": "Hemolytic anemia due to red cell pyruvate kinase deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 989,
+   "id": "767",
+   "name": "Polyarteritis nodosa",
+   "profile_available": true
+  },
+  {
+   "index": 990,
+   "id": "768",
+   "name": "Congenital long QT syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 991,
+   "id": "769",
+   "name": "Rabson-Mendenhall syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 992,
+   "id": "770",
+   "name": "Rabies",
+   "profile_available": true
+  },
+  {
+   "index": 993,
+   "id": "772",
+   "name": "Infantile Refsum disease",
+   "profile_available": true
+  },
+  {
+   "index": 994,
+   "id": "77240",
+   "name": "Primary lymphedema",
+   "profile_available": true
+  },
+  {
+   "index": 995,
+   "id": "77258",
+   "name": "Trichorhinophalangeal syndrome type 1",
+   "profile_available": true
+  },
+  {
+   "index": 996,
+   "id": "77259",
+   "name": "Gaucher disease type 1",
+   "profile_available": true
+  },
+  {
+   "index": 997,
+   "id": "77260",
+   "name": "Gaucher disease type 2",
+   "profile_available": true
+  },
+  {
+   "index": 998,
+   "id": "77292",
+   "name": "Infantile neurovisceral acid sphingomyelinase deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 999,
+   "id": "77293",
+   "name": "Chronic visceral acid sphingomyelinase deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 1000,
+   "id": "77295",
+   "name": "Odontoleukodystrophy",
+   "profile_available": true
+  },
+  {
+   "index": 1001,
+   "id": "77296",
+   "name": "Morgagni-Stewart-Morel syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1002,
+   "id": "77297",
+   "name": "Majeed syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1003,
+   "id": "77298",
+   "name": "Anophthalmia/microphthalmia-esophageal atresia syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1004,
+   "id": "773",
+   "name": "Refsum disease",
+   "profile_available": true
+  },
+  {
+   "index": 1005,
+   "id": "77301",
+   "name": "Monosomy 9q22.3 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1006,
+   "id": "774",
+   "name": "Hereditary hemorrhagic telangiectasia",
+   "profile_available": true
+  },
+  {
+   "index": 1007,
+   "id": "776",
+   "name": "Lujan-Fryns syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1008,
+   "id": "778",
+   "name": "Rett syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1009,
+   "id": "779",
+   "name": "Reynolds syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1010,
+   "id": "78",
+   "name": "Ankylostomiasis",
+   "profile_available": true
+  },
+  {
+   "index": 1011,
+   "id": "780",
+   "name": "Rhabdomyosarcoma",
+   "profile_available": true
+  },
+  {
+   "index": 1012,
+   "id": "781",
+   "name": "Q fever",
+   "profile_available": true
+  },
+  {
+   "index": 1013,
+   "id": "783",
+   "name": "Rubinstein-Taybi syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1014,
+   "id": "786",
+   "name": "Generalized glucocorticoid resistance syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1015,
+   "id": "790",
+   "name": "Retinoblastoma",
+   "profile_available": true
+  },
+  {
+   "index": 1016,
+   "id": "79078",
+   "name": "IgG4-related dacryoadenitis and sialadenitis",
+   "profile_available": true
+  },
+  {
+   "index": 1017,
+   "id": "79083",
+   "name": "PPARG-related familial partial lipodystrophy",
+   "profile_available": true
+  },
+  {
+   "index": 1018,
+   "id": "79086",
+   "name": "Acquired generalized lipodystrophy",
+   "profile_available": true
+  },
+  {
+   "index": 1019,
+   "id": "79087",
+   "name": "Acquired partial lipodystrophy",
+   "profile_available": true
+  },
+  {
+   "index": 1020,
+   "id": "79091",
+   "name": "Hereditary inclusion body myopathy-joint contractures-ophthalmoplegia syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1021,
+   "id": "79093",
+   "name": "Foix-Alajouanine syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1022,
+   "id": "79095",
+   "name": "Congenital bile acid synthesis defect type 4",
+   "profile_available": true
+  },
+  {
+   "index": 1023,
+   "id": "79096",
+   "name": "Pyridoxamine-5-phosphate deficiency-developmental and epileptic encephalopathy",
+   "profile_available": true
+  },
+  {
+   "index": 1024,
+   "id": "79097",
+   "name": "Folinic acid-responsive seizures",
+   "profile_available": true
+  },
+  {
+   "index": 1025,
+   "id": "79098",
+   "name": "Sympathetic ophthalmia",
+   "profile_available": true
+  },
+  {
+   "index": 1026,
+   "id": "79099",
+   "name": "Interstitial granulomatous dermatitis with arthritis",
+   "profile_available": true
+  },
+  {
+   "index": 1027,
+   "id": "791",
+   "name": "Retinitis pigmentosa",
+   "profile_available": true
+  },
+  {
+   "index": 1028,
+   "id": "79101",
+   "name": "Hyperprolinemia type 2",
+   "profile_available": true
+  },
+  {
+   "index": 1029,
+   "id": "79102",
+   "name": "Thyrotoxic periodic paralysis",
+   "profile_available": true
+  },
+  {
+   "index": 1030,
+   "id": "79105",
+   "name": "Myxofibrosarcoma",
+   "profile_available": true
+  },
+  {
+   "index": 1031,
+   "id": "79118",
+   "name": "Neonatal diabetes-congenital hypothyroidism-congenital glaucoma-hepatic fibrosis-polycystic kidneys syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1032,
+   "id": "79124",
+   "name": "Hepatic veno-occlusive disease-immunodeficiency syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1033,
+   "id": "79126",
+   "name": "Acute interstitial pneumonia",
+   "profile_available": true
+  },
+  {
+   "index": 1034,
+   "id": "79127",
+   "name": "Respiratory bronchiolitis-interstitial lung disease syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1035,
+   "id": "79128",
+   "name": "Lymphoid interstitial pneumonia",
+   "profile_available": true
+  },
+  {
+   "index": 1036,
+   "id": "79138",
+   "name": "Bickerstaff brainstem encephalitis",
+   "profile_available": true
+  },
+  {
+   "index": 1037,
+   "id": "79139",
+   "name": "Japanese encephalitis",
+   "profile_available": true
+  },
+  {
+   "index": 1038,
+   "id": "79140",
+   "name": "Cutaneous neuroendocrine carcinoma",
+   "profile_available": true
+  },
+  {
+   "index": 1039,
+   "id": "79143",
+   "name": "Isolated congenital anonychia",
+   "profile_available": true
+  },
+  {
+   "index": 1040,
+   "id": "79144",
+   "name": "Isolated congenital onychodysplasia",
+   "profile_available": true
+  },
+  {
+   "index": 1041,
+   "id": "79145",
+   "name": "Dowling-Degos disease",
+   "profile_available": true
+  },
+  {
+   "index": 1042,
+   "id": "79146",
+   "name": "Familial progressive hyperpigmentation",
+   "profile_available": true
+  },
+  {
+   "index": 1043,
+   "id": "79147",
+   "name": "Familial reactive perforating collagenosis",
+   "profile_available": true
+  },
+  {
+   "index": 1044,
+   "id": "79148",
+   "name": "Elastosis perforans serpiginosa",
+   "profile_available": true
+  },
+  {
+   "index": 1045,
+   "id": "79149",
+   "name": "Dermochondrocorneal dystrophy",
+   "profile_available": true
+  },
+  {
+   "index": 1046,
+   "id": "79150",
+   "name": "Linear and whorled nevoid hypermelanosis",
+   "profile_available": true
+  },
+  {
+   "index": 1047,
+   "id": "79151",
+   "name": "Acrokeratosis verruciformis of Hopf",
+   "profile_available": true
+  },
+  {
+   "index": 1048,
+   "id": "79152",
+   "name": "Disseminated superficial actinic porokeratosis",
+   "profile_available": true
+  },
+  {
+   "index": 1049,
+   "id": "79153",
+   "name": "Idiopathic trachyonychia",
+   "profile_available": true
+  },
+  {
+   "index": 1050,
+   "id": "79159",
+   "name": "Isobutyryl-CoA dehydrogenase deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 1051,
+   "id": "792",
+   "name": "X-linked retinoschisis",
+   "profile_available": true
+  },
+  {
+   "index": 1052,
+   "id": "79277",
+   "name": "Congenital erythropoietic porphyria",
+   "profile_available": true
+  },
+  {
+   "index": 1053,
+   "id": "79278",
+   "name": "Autosomal erythropoietic protoporphyria",
+   "profile_available": true
+  },
+  {
+   "index": 1054,
+   "id": "793",
+   "name": "SAPHO syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1055,
+   "id": "79312",
+   "name": "Vitamin B12-unresponsive methylmalonic acidemia type mut-",
+   "profile_available": true
+  },
+  {
+   "index": 1056,
+   "id": "79318",
+   "name": "PMM2-CDG",
+   "profile_available": true
+  },
+  {
+   "index": 1057,
+   "id": "79319",
+   "name": "MPI-CDG",
+   "profile_available": true
+  },
+  {
+   "index": 1058,
+   "id": "79320",
+   "name": "ALG6-CDG",
+   "profile_available": true
+  },
+  {
+   "index": 1059,
+   "id": "79321",
+   "name": "ALG3-CDG",
+   "profile_available": true
+  },
+  {
+   "index": 1060,
+   "id": "79330",
+   "name": "MOGS-CDG",
+   "profile_available": true
+  },
+  {
+   "index": 1061,
+   "id": "794",
+   "name": "Saethre-Chotzen syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1062,
+   "id": "796",
+   "name": "Sandhoff disease",
+   "profile_available": true
+  },
+  {
+   "index": 1063,
+   "id": "797",
+   "name": "Sarcoidosis",
+   "profile_available": true
+  },
+  {
+   "index": 1064,
+   "id": "798",
+   "name": "Schinzel-Giedion syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1065,
+   "id": "799",
+   "name": "Schizencephaly",
+   "profile_available": true
+  },
+  {
+   "index": 1066,
+   "id": "8",
+   "name": "47,XYY syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1067,
+   "id": "800",
+   "name": "Schwartz-Jampel syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1068,
+   "id": "801",
+   "name": "Scleroderma",
+   "profile_available": true
+  },
+  {
+   "index": 1069,
+   "id": "803",
+   "name": "Amyotrophic lateral sclerosis",
+   "profile_available": true
+  },
+  {
+   "index": 1070,
+   "id": "805",
+   "name": "Tuberous sclerosis complex",
+   "profile_available": true
+  },
+  {
+   "index": 1071,
+   "id": "806",
+   "name": "Scott syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1072,
+   "id": "808",
+   "name": "Seckel syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1073,
+   "id": "809",
+   "name": "Mixed connective tissue disease",
+   "profile_available": true
+  },
+  {
+   "index": 1074,
+   "id": "81",
+   "name": "Antisynthetase syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1075,
+   "id": "810",
+   "name": "Shigellosis",
+   "profile_available": true
+  },
+  {
+   "index": 1076,
+   "id": "812",
+   "name": "Sialidosis type 1",
+   "profile_available": true
+  },
+  {
+   "index": 1077,
+   "id": "813",
+   "name": "Silver-Russell syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1078,
+   "id": "816",
+   "name": "Sj\u00f6gren-Larsson syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1079,
+   "id": "818",
+   "name": "Smith-Lemli-Opitz syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1080,
+   "id": "819",
+   "name": "Smith-Magenis syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1081,
+   "id": "820",
+   "name": "Sneddon syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1082,
+   "id": "821",
+   "name": "Sotos syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1083,
+   "id": "822",
+   "name": "Hereditary spherocytosis",
+   "profile_available": true
+  },
+  {
+   "index": 1084,
+   "id": "823",
+   "name": "Spina bifida and other spinal dysraphisms",
+   "profile_available": true
+  },
+  {
+   "index": 1085,
+   "id": "827",
+   "name": "Stargardt disease",
+   "profile_available": true
+  },
+  {
+   "index": 1086,
+   "id": "828",
+   "name": "Stickler syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1087,
+   "id": "829",
+   "name": "Adult-onset Still disease",
+   "profile_available": true
+  },
+  {
+   "index": 1088,
+   "id": "83",
+   "name": "Antley-Bixler syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1089,
+   "id": "832",
+   "name": "Succinyl-CoA:3-oxoacid CoA transferase deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 1090,
+   "id": "833",
+   "name": "Encephalopathy due to sulfite oxidase deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 1091,
+   "id": "83311",
+   "name": "Rocky Mountain spotted fever",
+   "profile_available": true
+  },
+  {
+   "index": 1092,
+   "id": "83312",
+   "name": "Rickettsialpox",
+   "profile_available": true
+  },
+  {
+   "index": 1093,
+   "id": "83313",
+   "name": "Boutonneuse fever",
+   "profile_available": true
+  },
+  {
+   "index": 1094,
+   "id": "83314",
+   "name": "Epidemic typhus",
+   "profile_available": true
+  },
+  {
+   "index": 1095,
+   "id": "83315",
+   "name": "Murine typhus",
+   "profile_available": true
+  },
+  {
+   "index": 1096,
+   "id": "83317",
+   "name": "Scrub typhus",
+   "profile_available": true
+  },
+  {
+   "index": 1097,
+   "id": "83330",
+   "name": "Proximal spinal muscular atrophy type 1",
+   "profile_available": true
+  },
+  {
+   "index": 1098,
+   "id": "834",
+   "name": "Free sialic acid storage disease",
+   "profile_available": true
+  },
+  {
+   "index": 1099,
+   "id": "83418",
+   "name": "Proximal spinal muscular atrophy type 2",
+   "profile_available": true
+  },
+  {
+   "index": 1100,
+   "id": "83419",
+   "name": "Proximal spinal muscular atrophy type 3",
+   "profile_available": true
+  },
+  {
+   "index": 1101,
+   "id": "83420",
+   "name": "Proximal spinal muscular atrophy type 4",
+   "profile_available": true
+  },
+  {
+   "index": 1102,
+   "id": "83450",
+   "name": "Regional odontodysplasia",
+   "profile_available": true
+  },
+  {
+   "index": 1103,
+   "id": "83451",
+   "name": "Florid cemento-osseous dysplasia",
+   "profile_available": true
+  },
+  {
+   "index": 1104,
+   "id": "83452",
+   "name": "Complex regional pain syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1105,
+   "id": "83453",
+   "name": "Vulvovaginal gingival syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1106,
+   "id": "83454",
+   "name": "Glomuvenous malformation",
+   "profile_available": true
+  },
+  {
+   "index": 1107,
+   "id": "83463",
+   "name": "Microtia",
+   "profile_available": true
+  },
+  {
+   "index": 1108,
+   "id": "83465",
+   "name": "Narcolepsy type 2",
+   "profile_available": true
+  },
+  {
+   "index": 1109,
+   "id": "83467",
+   "name": "Morvan syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1110,
+   "id": "83468",
+   "name": "Solitary bone cyst",
+   "profile_available": true
+  },
+  {
+   "index": 1111,
+   "id": "83469",
+   "name": "Desmoplastic small round cell tumor",
+   "profile_available": true
+  },
+  {
+   "index": 1112,
+   "id": "83472",
+   "name": "CAMOS syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1113,
+   "id": "83473",
+   "name": "Megalencephaly-polymicrogyria-postaxial polydactyly-hydrocephalus syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1114,
+   "id": "83476",
+   "name": "West-Nile encephalitis",
+   "profile_available": true
+  },
+  {
+   "index": 1115,
+   "id": "83482",
+   "name": "Mycoplasma encephalitis",
+   "profile_available": true
+  },
+  {
+   "index": 1116,
+   "id": "83483",
+   "name": "La Crosse encephalitis",
+   "profile_available": true
+  },
+  {
+   "index": 1117,
+   "id": "83484",
+   "name": "St. Louis encephalitis",
+   "profile_available": true
+  },
+  {
+   "index": 1118,
+   "id": "83593",
+   "name": "Western equine encephalitis",
+   "profile_available": true
+  },
+  {
+   "index": 1119,
+   "id": "83594",
+   "name": "Eastern equine encephalitis",
+   "profile_available": true
+  },
+  {
+   "index": 1120,
+   "id": "83597",
+   "name": "Acute disseminated encephalomyelitis",
+   "profile_available": true
+  },
+  {
+   "index": 1121,
+   "id": "83600",
+   "name": "Encephalitis lethargica",
+   "profile_available": true
+  },
+  {
+   "index": 1122,
+   "id": "83601",
+   "name": "Steroid-responsive encephalopathy associated with autoimmune thyroiditis",
+   "profile_available": true
+  },
+  {
+   "index": 1123,
+   "id": "83616",
+   "name": "Rubella panencephalitis",
+   "profile_available": true
+  },
+  {
+   "index": 1124,
+   "id": "83620",
+   "name": "Enteric anendocrinosis",
+   "profile_available": true
+  },
+  {
+   "index": 1125,
+   "id": "83628",
+   "name": "LUMBAR syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1126,
+   "id": "839",
+   "name": "Congenital nephrotic syndrome, Finnish type",
+   "profile_available": true
+  },
+  {
+   "index": 1127,
+   "id": "84",
+   "name": "Fanconi anemia",
+   "profile_available": true
+  },
+  {
+   "index": 1128,
+   "id": "840",
+   "name": "Syringocystadenoma papilliferum",
+   "profile_available": true
+  },
+  {
+   "index": 1129,
+   "id": "84064",
+   "name": "Syndromic diarrhea",
+   "profile_available": true
+  },
+  {
+   "index": 1130,
+   "id": "84085",
+   "name": "Hinman syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1131,
+   "id": "84087",
+   "name": "Collagen type III glomerulopathy",
+   "profile_available": true
+  },
+  {
+   "index": 1132,
+   "id": "84090",
+   "name": "Fibronectin glomerulopathy",
+   "profile_available": true
+  },
+  {
+   "index": 1133,
+   "id": "841",
+   "name": "Sebocystomatosis",
+   "profile_available": true
+  },
+  {
+   "index": 1134,
+   "id": "842",
+   "name": "Testicular seminomatous germ cell tumor",
+   "profile_available": true
+  },
+  {
+   "index": 1135,
+   "id": "845",
+   "name": "Tay-Sachs disease",
+   "profile_available": true
+  },
+  {
+   "index": 1136,
+   "id": "846",
+   "name": "Alpha-thalassemia",
+   "profile_available": true
+  },
+  {
+   "index": 1137,
+   "id": "847",
+   "name": "X-linked alpha-thalassemia-intellectual disability syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1138,
+   "id": "848",
+   "name": "Beta-thalassemia",
+   "profile_available": true
+  },
+  {
+   "index": 1139,
+   "id": "849",
+   "name": "Glanzmann thrombasthenia",
+   "profile_available": true
+  },
+  {
+   "index": 1140,
+   "id": "85",
+   "name": "Congenital dyserythropoietic anemia",
+   "profile_available": true
+  },
+  {
+   "index": 1141,
+   "id": "851",
+   "name": "Paris-Trousseau thrombocytopenia",
+   "profile_available": true
+  },
+  {
+   "index": 1142,
+   "id": "85102",
+   "name": "Perineurioma",
+   "profile_available": true
+  },
+  {
+   "index": 1143,
+   "id": "85136",
+   "name": "Cystic leukoencephalopathy without megalencephaly",
+   "profile_available": true
+  },
+  {
+   "index": 1144,
+   "id": "85138",
+   "name": "Addison disease",
+   "profile_available": true
+  },
+  {
+   "index": 1145,
+   "id": "85162",
+   "name": "Facial onset sensory and motor neuronopathy",
+   "profile_available": true
+  },
+  {
+   "index": 1146,
+   "id": "85166",
+   "name": "Platyspondylic dysplasia, Torrance type",
+   "profile_available": true
+  },
+  {
+   "index": 1147,
+   "id": "85167",
+   "name": "Spondylometaphyseal dysplasia-cone-rod dystrophy syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1148,
+   "id": "85173",
+   "name": "IMAGe syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1149,
+   "id": "85182",
+   "name": "Diaphyseal medullary stenosis-bone malignancy syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1150,
+   "id": "85184",
+   "name": "Craniometadiaphyseal dysplasia, wormian bone type",
+   "profile_available": true
+  },
+  {
+   "index": 1151,
+   "id": "85191",
+   "name": "Singleton-Merten dysplasia",
+   "profile_available": true
+  },
+  {
+   "index": 1152,
+   "id": "85192",
+   "name": "Calvarial doughnut lesions-bone fragility syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1153,
+   "id": "85193",
+   "name": "Idiopathic juvenile osteoporosis",
+   "profile_available": true
+  },
+  {
+   "index": 1154,
+   "id": "85198",
+   "name": "Dysspondyloenchondromatosis",
+   "profile_available": true
+  },
+  {
+   "index": 1155,
+   "id": "85201",
+   "name": "Genitopatellar syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1156,
+   "id": "85202",
+   "name": "Keutel syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1157,
+   "id": "85279",
+   "name": "KDM5C-related syndromic X-linked intellectual disability",
+   "profile_available": true
+  },
+  {
+   "index": 1158,
+   "id": "85284",
+   "name": "BRESEK syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1159,
+   "id": "853",
+   "name": "Fetal and neonatal alloimmune thrombocytopenia",
+   "profile_available": true
+  },
+  {
+   "index": 1160,
+   "id": "85334",
+   "name": "X-linked neurodegenerative syndrome, Bertini type",
+   "profile_available": true
+  },
+  {
+   "index": 1161,
+   "id": "85408",
+   "name": "Rheumatoid factor-negative polyarticular juvenile idiopathic arthritis",
+   "profile_available": true
+  },
+  {
+   "index": 1162,
+   "id": "85410",
+   "name": "Oligoarticular juvenile idiopathic arthritis",
+   "profile_available": true
+  },
+  {
+   "index": 1163,
+   "id": "85414",
+   "name": "Systemic-onset juvenile idiopathic arthritis",
+   "profile_available": true
+  },
+  {
+   "index": 1164,
+   "id": "85435",
+   "name": "Rheumatoid factor-positive polyarticular juvenile idiopathic arthritis",
+   "profile_available": true
+  },
+  {
+   "index": 1165,
+   "id": "85436",
+   "name": "Psoriasis-related juvenile idiopathic arthritis",
+   "profile_available": true
+  },
+  {
+   "index": 1166,
+   "id": "85438",
+   "name": "Enthesitis-related juvenile idiopathic arthritis",
+   "profile_available": true
+  },
+  {
+   "index": 1167,
+   "id": "85443",
+   "name": "AL amyloidosis",
+   "profile_available": true
+  },
+  {
+   "index": 1168,
+   "id": "85445",
+   "name": "AA amyloidosis",
+   "profile_available": true
+  },
+  {
+   "index": 1169,
+   "id": "85446",
+   "name": "Wild type ABeta2M amyloidosis",
+   "profile_available": true
+  },
+  {
+   "index": 1170,
+   "id": "85447",
+   "name": "ATTRV30M amyloidosis",
+   "profile_available": true
+  },
+  {
+   "index": 1171,
+   "id": "85448",
+   "name": "AGel amyloidosis",
+   "profile_available": true
+  },
+  {
+   "index": 1172,
+   "id": "85450",
+   "name": "Hereditary amyloidosis with primary renal involvement",
+   "profile_available": true
+  },
+  {
+   "index": 1173,
+   "id": "85451",
+   "name": "ATTRV122I amyloidosis",
+   "profile_available": true
+  },
+  {
+   "index": 1174,
+   "id": "85458",
+   "name": "Cerebral Amyloid Angiopathy",
+   "profile_available": true
+  },
+  {
+   "index": 1175,
+   "id": "857",
+   "name": "Townes-Brocks syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1176,
+   "id": "858",
+   "name": "Congenital toxoplasmosis",
+   "profile_available": true
+  },
+  {
+   "index": 1177,
+   "id": "86",
+   "name": "Familial abdominal aortic aneurysm",
+   "profile_available": true
+  },
+  {
+   "index": 1178,
+   "id": "860",
+   "name": "Congenitally uncorrected transposition of the great arteries",
+   "profile_available": true
+  },
+  {
+   "index": 1179,
+   "id": "861",
+   "name": "Treacher-Collins syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1180,
+   "id": "863",
+   "name": "Trichinellosis",
+   "profile_available": true
+  },
+  {
+   "index": 1181,
+   "id": "86788",
+   "name": "X-linked severe congenital neutropenia",
+   "profile_available": true
+  },
+  {
+   "index": 1182,
+   "id": "86797",
+   "name": "Atypical lichen myxedematosus",
+   "profile_available": true
+  },
+  {
+   "index": 1183,
+   "id": "86815",
+   "name": "Aplasia of lacrimal and salivary glands",
+   "profile_available": true
+  },
+  {
+   "index": 1184,
+   "id": "86816",
+   "name": "Congenital analbuminemia",
+   "profile_available": true
+  },
+  {
+   "index": 1185,
+   "id": "86817",
+   "name": "Hemolytic anemia due to adenylate kinase deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 1186,
+   "id": "86819",
+   "name": "Atrichia with papular lesions",
+   "profile_available": true
+  },
+  {
+   "index": 1187,
+   "id": "86820",
+   "name": "Familial avascular necrosis of femoral head",
+   "profile_available": true
+  },
+  {
+   "index": 1188,
+   "id": "86829",
+   "name": "Chronic neutrophilic leukemia",
+   "profile_available": true
+  },
+  {
+   "index": 1189,
+   "id": "86830",
+   "name": "Chronic myeloproliferative disease, unclassifiable",
+   "profile_available": true
+  },
+  {
+   "index": 1190,
+   "id": "86834",
+   "name": "Juvenile myelomonocytic leukemia",
+   "profile_available": true
+  },
+  {
+   "index": 1191,
+   "id": "86836",
+   "name": "Refractory cytopenia with multilineage dysplasia",
+   "profile_available": true
+  },
+  {
+   "index": 1192,
+   "id": "86839",
+   "name": "Myelodysplastic neoplasm with increased blasts",
+   "profile_available": true
+  },
+  {
+   "index": 1193,
+   "id": "86841",
+   "name": "Myelodysplastic syndrome associated with isolated del(5q) chromosome abnormality",
+   "profile_available": true
+  },
+  {
+   "index": 1194,
+   "id": "86845",
+   "name": "Acute myeloid leukaemia with myelodysplasia-related features",
+   "profile_available": true
+  },
+  {
+   "index": 1195,
+   "id": "86846",
+   "name": "Therapy related acute myeloid leukemia and myelodysplastic syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1196,
+   "id": "86849",
+   "name": "Acute basophilic leukemia",
+   "profile_available": true
+  },
+  {
+   "index": 1197,
+   "id": "86850",
+   "name": "Myeloid sarcoma",
+   "profile_available": true
+  },
+  {
+   "index": 1198,
+   "id": "86852",
+   "name": "B-cell prolymphocytic leukemia",
+   "profile_available": true
+  },
+  {
+   "index": 1199,
+   "id": "86854",
+   "name": "Splenic marginal zone lymphoma",
+   "profile_available": true
+  },
+  {
+   "index": 1200,
+   "id": "86855",
+   "name": "Plasmacytoma",
+   "profile_available": true
+  },
+  {
+   "index": 1201,
+   "id": "86861",
+   "name": "Non-amyloid monoclonal immunoglobulin deposition disease",
+   "profile_available": true
+  },
+  {
+   "index": 1202,
+   "id": "86864",
+   "name": "Heavy chain disease",
+   "profile_available": true
+  },
+  {
+   "index": 1203,
+   "id": "86867",
+   "name": "Nodal marginal zone B-cell lymphoma",
+   "profile_available": true
+  },
+  {
+   "index": 1204,
+   "id": "86869",
+   "name": "Lymphomatoid granulomatosis",
+   "profile_available": true
+  },
+  {
+   "index": 1205,
+   "id": "86870",
+   "name": "Blastic plasmacytoid dendritic cell neoplasm",
+   "profile_available": true
+  },
+  {
+   "index": 1206,
+   "id": "86871",
+   "name": "T-cell prolymphocytic leukemia",
+   "profile_available": true
+  },
+  {
+   "index": 1207,
+   "id": "86872",
+   "name": "T-cell large granular lymphocyte leukemia",
+   "profile_available": true
+  },
+  {
+   "index": 1208,
+   "id": "86873",
+   "name": "Aggressive NK-cell leukemia",
+   "profile_available": true
+  },
+  {
+   "index": 1209,
+   "id": "86875",
+   "name": "Adult T-cell leukemia/lymphoma",
+   "profile_available": true
+  },
+  {
+   "index": 1210,
+   "id": "86879",
+   "name": "Extranodal nasal NK/T cell lymphoma",
+   "profile_available": true
+  },
+  {
+   "index": 1211,
+   "id": "86880",
+   "name": "Enteropathy-associated T-cell lymphoma",
+   "profile_available": true
+  },
+  {
+   "index": 1212,
+   "id": "86882",
+   "name": "Hepatosplenic T-cell lymphoma",
+   "profile_available": true
+  },
+  {
+   "index": 1213,
+   "id": "86884",
+   "name": "Subcutaneous panniculitis-like T-cell lymphoma",
+   "profile_available": true
+  },
+  {
+   "index": 1214,
+   "id": "86886",
+   "name": "Angioimmunoblastic T-cell lymphoma",
+   "profile_available": true
+  },
+  {
+   "index": 1215,
+   "id": "86893",
+   "name": "Nodular lymphocyte predominant Hodgkin lymphoma",
+   "profile_available": true
+  },
+  {
+   "index": 1216,
+   "id": "86896",
+   "name": "Histiocytic sarcoma",
+   "profile_available": true
+  },
+  {
+   "index": 1217,
+   "id": "86897",
+   "name": "Langerhans cell sarcoma",
+   "profile_available": true
+  },
+  {
+   "index": 1218,
+   "id": "869",
+   "name": "Triple A syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1219,
+   "id": "86900",
+   "name": "Interdigitating dendritic cell sarcoma",
+   "profile_available": true
+  },
+  {
+   "index": 1220,
+   "id": "86902",
+   "name": "Follicular dendritic cell sarcoma",
+   "profile_available": true
+  },
+  {
+   "index": 1221,
+   "id": "86903",
+   "name": "Dendritic cell sarcoma not otherwise specified",
+   "profile_available": true
+  },
+  {
+   "index": 1222,
+   "id": "86906",
+   "name": "Gelastic seizures with hypothalamic hamartoma",
+   "profile_available": true
+  },
+  {
+   "index": 1223,
+   "id": "86908",
+   "name": "Hemiconvulsion-hemiplegia-epilepsy syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1224,
+   "id": "86909",
+   "name": "Myoclonic epilepsy of infancy",
+   "profile_available": true
+  },
+  {
+   "index": 1225,
+   "id": "86911",
+   "name": "Epilepsy with myoclonic absences",
+   "profile_available": true
+  },
+  {
+   "index": 1226,
+   "id": "87",
+   "name": "Apert syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1227,
+   "id": "870",
+   "name": "Down syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1228,
+   "id": "873",
+   "name": "Desmoid tumor",
+   "profile_available": true
+  },
+  {
+   "index": 1229,
+   "id": "87503",
+   "name": "Mal de Meleda",
+   "profile_available": true
+  },
+  {
+   "index": 1230,
+   "id": "877",
+   "name": "Neuroendocrine neoplasm",
+   "profile_available": true
+  },
+  {
+   "index": 1231,
+   "id": "87876",
+   "name": "Sialidosis type 2",
+   "profile_available": true
+  },
+  {
+   "index": 1232,
+   "id": "87884",
+   "name": "Non-syndromic genetic deafness",
+   "profile_available": true
+  },
+  {
+   "index": 1233,
+   "id": "879",
+   "name": "Tungiasis",
+   "profile_available": true
+  },
+  {
+   "index": 1234,
+   "id": "881",
+   "name": "Turner syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1235,
+   "id": "882",
+   "name": "Tyrosinemia type 1",
+   "profile_available": true
+  },
+  {
+   "index": 1236,
+   "id": "884",
+   "name": "Pallister-Killian syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1237,
+   "id": "886",
+   "name": "Usher syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1238,
+   "id": "88619",
+   "name": "Familial acute necrotizing encephalopathy",
+   "profile_available": true
+  },
+  {
+   "index": 1239,
+   "id": "88630",
+   "name": "Terminal osseous dysplasia-pigmentary defects syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1240,
+   "id": "88635",
+   "name": "Vacuolar myopathy with sarcoplasmic reticulum protein aggregates",
+   "profile_available": true
+  },
+  {
+   "index": 1241,
+   "id": "88637",
+   "name": "Hypomyelination-hypogonadotropic hypogonadism-hypodontia syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1242,
+   "id": "88642",
+   "name": "Congenital insensitivity to pain-anosmia-neuropathic arthropathy",
+   "profile_available": true
+  },
+  {
+   "index": 1243,
+   "id": "88644",
+   "name": "Autosomal recessive ataxia, Beauce type",
+   "profile_available": true
+  },
+  {
+   "index": 1244,
+   "id": "88661",
+   "name": "Amelogenesis imperfecta",
+   "profile_available": true
+  },
+  {
+   "index": 1245,
+   "id": "887",
+   "name": "VACTERL/VATER association",
+   "profile_available": true
+  },
+  {
+   "index": 1246,
+   "id": "888",
+   "name": "Van der Woude syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1247,
+   "id": "889",
+   "name": "Cutaneous small vessel vasculitis",
+   "profile_available": true
+  },
+  {
+   "index": 1248,
+   "id": "890",
+   "name": "Hepatic veno-occlusive disease",
+   "profile_available": true
+  },
+  {
+   "index": 1249,
+   "id": "893",
+   "name": "WAGR syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1250,
+   "id": "897",
+   "name": "Waardenburg-Shah syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1251,
+   "id": "898",
+   "name": "Wagner disease",
+   "profile_available": true
+  },
+  {
+   "index": 1252,
+   "id": "899",
+   "name": "Walker-Warburg syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1253,
+   "id": "90",
+   "name": "Argininemia",
+   "profile_available": true
+  },
+  {
+   "index": 1254,
+   "id": "900",
+   "name": "Granulomatosis with polyangiitis",
+   "profile_available": true
+  },
+  {
+   "index": 1255,
+   "id": "90000",
+   "name": "Erythema elevatum diutinum",
+   "profile_available": true
+  },
+  {
+   "index": 1256,
+   "id": "90002",
+   "name": "Undifferentiated connective tissue syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1257,
+   "id": "90003",
+   "name": "Inflammatory pseudotumor of the liver",
+   "profile_available": true
+  },
+  {
+   "index": 1258,
+   "id": "90020",
+   "name": "Parkinson-dementia complex of Guam",
+   "profile_available": true
+  },
+  {
+   "index": 1259,
+   "id": "90021",
+   "name": "Radiation myelitis",
+   "profile_available": true
+  },
+  {
+   "index": 1260,
+   "id": "90024",
+   "name": "Deafness with labyrinthine aplasia, microtia, and microdontia",
+   "profile_available": true
+  },
+  {
+   "index": 1261,
+   "id": "90031",
+   "name": "Non-spherocytic hemolytic anemia due to hexokinase deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 1262,
+   "id": "90033",
+   "name": "Autoimmune hemolytic anemia, warm type",
+   "profile_available": true
+  },
+  {
+   "index": 1263,
+   "id": "90035",
+   "name": "Paroxysmal cold hemoglobinuria",
+   "profile_available": true
+  },
+  {
+   "index": 1264,
+   "id": "90036",
+   "name": "Mixed-type autoimmune hemolytic anemia",
+   "profile_available": true
+  },
+  {
+   "index": 1265,
+   "id": "90037",
+   "name": "Drug-induced autoimmune hemolytic anemia",
+   "profile_available": true
+  },
+  {
+   "index": 1266,
+   "id": "90038",
+   "name": "Shiga toxin-associated hemolytic uremic syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1267,
+   "id": "90039",
+   "name": "Hemoglobin D disease",
+   "profile_available": true
+  },
+  {
+   "index": 1268,
+   "id": "90042",
+   "name": "Primary familial polycythemia",
+   "profile_available": true
+  },
+  {
+   "index": 1269,
+   "id": "90044",
+   "name": "Familial pseudohyperkalemia",
+   "profile_available": true
+  },
+  {
+   "index": 1270,
+   "id": "90045",
+   "name": "Hereditary folate malabsorption",
+   "profile_available": true
+  },
+  {
+   "index": 1271,
+   "id": "90050",
+   "name": "Retinopathy of prematurity",
+   "profile_available": true
+  },
+  {
+   "index": 1272,
+   "id": "90051",
+   "name": "Sepsis in premature infants",
+   "profile_available": true
+  },
+  {
+   "index": 1273,
+   "id": "90056",
+   "name": "Moderate and severe traumatic brain injury",
+   "profile_available": true
+  },
+  {
+   "index": 1274,
+   "id": "90058",
+   "name": "Spinal cord injury",
+   "profile_available": true
+  },
+  {
+   "index": 1275,
+   "id": "90059",
+   "name": "Sudden sensorineural hearing loss",
+   "profile_available": true
+  },
+  {
+   "index": 1276,
+   "id": "90060",
+   "name": "Diffuse alveolar hemorrhage",
+   "profile_available": true
+  },
+  {
+   "index": 1277,
+   "id": "90062",
+   "name": "Acute liver failure",
+   "profile_available": true
+  },
+  {
+   "index": 1278,
+   "id": "90064",
+   "name": "Acute peripheral arterial occlusion",
+   "profile_available": true
+  },
+  {
+   "index": 1279,
+   "id": "90065",
+   "name": "Acquired aneurysmal subarachnoid hemorrhage",
+   "profile_available": true
+  },
+  {
+   "index": 1280,
+   "id": "90068",
+   "name": "Cocaine intoxication",
+   "profile_available": true
+  },
+  {
+   "index": 1281,
+   "id": "90078",
+   "name": "Invasive infections due to vancomycin-resistant enterococci",
+   "profile_available": true
+  },
+  {
+   "index": 1282,
+   "id": "90080",
+   "name": "Scarring in glaucoma filtration surgical procedures",
+   "profile_available": true
+  },
+  {
+   "index": 1283,
+   "id": "90081",
+   "name": "AIDS wasting syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1284,
+   "id": "901",
+   "name": "Wells syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1285,
+   "id": "90103",
+   "name": "Charcot-Marie-Tooth disease-deafness-intellectual disability syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1286,
+   "id": "90117",
+   "name": "Hereditary motor and sensory neuropathy, Okinawa type",
+   "profile_available": true
+  },
+  {
+   "index": 1287,
+   "id": "90120",
+   "name": "Hereditary motor and sensory neuropathy type 6",
+   "profile_available": true
+  },
+  {
+   "index": 1288,
+   "id": "902",
+   "name": "Werner syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1289,
+   "id": "903",
+   "name": "Von Willebrand disease",
+   "profile_available": true
+  },
+  {
+   "index": 1290,
+   "id": "904",
+   "name": "Williams syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1291,
+   "id": "905",
+   "name": "Wilson disease",
+   "profile_available": true
+  },
+  {
+   "index": 1292,
+   "id": "906",
+   "name": "Wiskott-Aldrich syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1293,
+   "id": "908",
+   "name": "Fragile X syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1294,
+   "id": "909",
+   "name": "Cerebrotendinous xanthomatosis",
+   "profile_available": true
+  },
+  {
+   "index": 1295,
+   "id": "910",
+   "name": "Xeroderma pigmentosum",
+   "profile_available": true
+  },
+  {
+   "index": 1296,
+   "id": "91127",
+   "name": "Adenovirus infection in immunocompromised patients",
+   "profile_available": true
+  },
+  {
+   "index": 1297,
+   "id": "91132",
+   "name": "Ichthyosis-hypotrichosis syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1298,
+   "id": "91136",
+   "name": "Acquired monoclonal Ig light chain-associated Fanconi syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1299,
+   "id": "91138",
+   "name": "Cryoglobulinemic vasculitis",
+   "profile_available": true
+  },
+  {
+   "index": 1300,
+   "id": "91139",
+   "name": "Simple cryoglobulinemia",
+   "profile_available": true
+  },
+  {
+   "index": 1301,
+   "id": "912",
+   "name": "Zellweger syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1302,
+   "id": "913",
+   "name": "Zollinger-Ellison syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1303,
+   "id": "91347",
+   "name": "TSH-secreting pituitary adenoma",
+   "profile_available": true
+  },
+  {
+   "index": 1304,
+   "id": "91348",
+   "name": "Functioning gonadotropic adenoma",
+   "profile_available": true
+  },
+  {
+   "index": 1305,
+   "id": "91349",
+   "name": "Non-functioning pituitary adenoma",
+   "profile_available": true
+  },
+  {
+   "index": 1306,
+   "id": "91354",
+   "name": "Pituitary deficiency due to empty sella turcica syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1307,
+   "id": "91355",
+   "name": "Sheehan syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1308,
+   "id": "91357",
+   "name": "Duplication of the esophagus",
+   "profile_available": true
+  },
+  {
+   "index": 1309,
+   "id": "91358",
+   "name": "Congenital esophageal diverticulum",
+   "profile_available": true
+  },
+  {
+   "index": 1310,
+   "id": "91364",
+   "name": "Non-specific interstitial pneumonia",
+   "profile_available": true
+  },
+  {
+   "index": 1311,
+   "id": "91378",
+   "name": "Hereditary angioedema",
+   "profile_available": true
+  },
+  {
+   "index": 1312,
+   "id": "91387",
+   "name": "Familial thoracic aortic aneurysm and aortic dissection",
+   "profile_available": true
+  },
+  {
+   "index": 1313,
+   "id": "91396",
+   "name": "Isolated cryptophthalmia",
+   "profile_available": true
+  },
+  {
+   "index": 1314,
+   "id": "91411",
+   "name": "Congenital ptosis",
+   "profile_available": true
+  },
+  {
+   "index": 1315,
+   "id": "91412",
+   "name": "Marcus-Gunn syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1316,
+   "id": "91413",
+   "name": "Congenital Horner syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1317,
+   "id": "91414",
+   "name": "Pilomatrixoma",
+   "profile_available": true
+  },
+  {
+   "index": 1318,
+   "id": "91483",
+   "name": "Rieger anomaly",
+   "profile_available": true
+  },
+  {
+   "index": 1319,
+   "id": "91489",
+   "name": "Isolated congenital megalocornea",
+   "profile_available": true
+  },
+  {
+   "index": 1320,
+   "id": "91490",
+   "name": "Isolated congenital sclerocornea",
+   "profile_available": true
+  },
+  {
+   "index": 1321,
+   "id": "91491",
+   "name": "Congenital ectropion uveae",
+   "profile_available": true
+  },
+  {
+   "index": 1322,
+   "id": "91492",
+   "name": "Early onset non-syndromic cataract",
+   "profile_available": true
+  },
+  {
+   "index": 1323,
+   "id": "91495",
+   "name": "Persistent hyperplastic primary vitreous",
+   "profile_available": true
+  },
+  {
+   "index": 1324,
+   "id": "91498",
+   "name": "Familial congenital palsy of trochlear nerve",
+   "profile_available": true
+  },
+  {
+   "index": 1325,
+   "id": "915",
+   "name": "Aarskog-Scott syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1326,
+   "id": "91500",
+   "name": "Tubulointerstitial nephritis and uveitis syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1327,
+   "id": "91546",
+   "name": "Lyme disease",
+   "profile_available": true
+  },
+  {
+   "index": 1328,
+   "id": "91547",
+   "name": "Relapsing fever",
+   "profile_available": true
+  },
+  {
+   "index": 1329,
+   "id": "92",
+   "name": "Juvenile idiopathic arthritis",
+   "profile_available": true
+  },
+  {
+   "index": 1330,
+   "id": "920",
+   "name": "Ablepharon macrostomia syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1331,
+   "id": "92050",
+   "name": "Congenital tufting enteropathy",
+   "profile_available": true
+  },
+  {
+   "index": 1332,
+   "id": "930",
+   "name": "Idiopathic achalasia",
+   "profile_available": true
+  },
+  {
+   "index": 1333,
+   "id": "93109",
+   "name": "Congenital megacalycosis",
+   "profile_available": true
+  },
+  {
+   "index": 1334,
+   "id": "93110",
+   "name": "Posterior urethral valve",
+   "profile_available": true
+  },
+  {
+   "index": 1335,
+   "id": "93114",
+   "name": "Autosomal dominant intermediate Charcot-Marie-Tooth disease type E",
+   "profile_available": true
+  },
+  {
+   "index": 1336,
+   "id": "93126",
+   "name": "Pauci-immune glomerulonephritis",
+   "profile_available": true
+  },
+  {
+   "index": 1337,
+   "id": "93164",
+   "name": "Transient pseudohypoaldosteronism",
+   "profile_available": true
+  },
+  {
+   "index": 1338,
+   "id": "932",
+   "name": "Achondrogenesis",
+   "profile_available": true
+  },
+  {
+   "index": 1339,
+   "id": "93293",
+   "name": "Okihiro syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1340,
+   "id": "939",
+   "name": "3-hydroxyisobutyric aciduria",
+   "profile_available": true
+  },
+  {
+   "index": 1341,
+   "id": "94058",
+   "name": "Neovascular glaucoma",
+   "profile_available": true
+  },
+  {
+   "index": 1342,
+   "id": "94059",
+   "name": "Uremic pruritus",
+   "profile_available": true
+  },
+  {
+   "index": 1343,
+   "id": "94064",
+   "name": "Deafness-infertility syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1344,
+   "id": "94087",
+   "name": "Cytophagic histiocytic panniculitis",
+   "profile_available": true
+  },
+  {
+   "index": 1345,
+   "id": "94088",
+   "name": "Hereditary renal hypouricemia",
+   "profile_available": true
+  },
+  {
+   "index": 1346,
+   "id": "94089",
+   "name": "Pseudohypoparathyroidism type 1B",
+   "profile_available": true
+  },
+  {
+   "index": 1347,
+   "id": "94090",
+   "name": "Pseudohypoparathyroidism type 2",
+   "profile_available": true
+  },
+  {
+   "index": 1348,
+   "id": "94093",
+   "name": "Neuroleptic malignant syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1349,
+   "id": "94122",
+   "name": "Cerebellar ataxia, Cayman type",
+   "profile_available": true
+  },
+  {
+   "index": 1350,
+   "id": "94124",
+   "name": "Spinocerebellar ataxia with axonal neuropathy type 1",
+   "profile_available": true
+  },
+  {
+   "index": 1351,
+   "id": "94147",
+   "name": "Spinocerebellar ataxia type 7",
+   "profile_available": true
+  },
+  {
+   "index": 1352,
+   "id": "945",
+   "name": "Acalvaria",
+   "profile_available": true
+  },
+  {
+   "index": 1353,
+   "id": "95",
+   "name": "Friedreich ataxia",
+   "profile_available": true
+  },
+  {
+   "index": 1354,
+   "id": "950",
+   "name": "Acrodysostosis",
+   "profile_available": true
+  },
+  {
+   "index": 1355,
+   "id": "95409",
+   "name": "Acute adrenal insufficiency",
+   "profile_available": true
+  },
+  {
+   "index": 1356,
+   "id": "95427",
+   "name": "Secondary short bowel syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1357,
+   "id": "95428",
+   "name": "COG8-CDG",
+   "profile_available": true
+  },
+  {
+   "index": 1358,
+   "id": "95429",
+   "name": "Angioma serpiginosum",
+   "profile_available": true
+  },
+  {
+   "index": 1359,
+   "id": "95430",
+   "name": "Congenital tracheomalacia",
+   "profile_available": true
+  },
+  {
+   "index": 1360,
+   "id": "95431",
+   "name": "Twin to twin transfusion syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1361,
+   "id": "95433",
+   "name": "Autosomal recessive spinocerebellar ataxia-blindness-deafness syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1362,
+   "id": "95434",
+   "name": "Autosomal recessive cerebellar ataxia-movement disorder syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1363,
+   "id": "95443",
+   "name": "Mesocardia",
+   "profile_available": true
+  },
+  {
+   "index": 1364,
+   "id": "95448",
+   "name": "Congenital aortic valve atresia",
+   "profile_available": true
+  },
+  {
+   "index": 1365,
+   "id": "95455",
+   "name": "Stevens-Johnson syndrome/toxic epidermal necrolysis spectrum",
+   "profile_available": true
+  },
+  {
+   "index": 1366,
+   "id": "95461",
+   "name": "Straddling or overriding tricuspid valve",
+   "profile_available": true
+  },
+  {
+   "index": 1367,
+   "id": "95462",
+   "name": "Accessory tricuspid valve tissue",
+   "profile_available": true
+  },
+  {
+   "index": 1368,
+   "id": "95474",
+   "name": "Double-orifice mitral valve",
+   "profile_available": true
+  },
+  {
+   "index": 1369,
+   "id": "95491",
+   "name": "Congenital coronary artery aneurysm",
+   "profile_available": true
+  },
+  {
+   "index": 1370,
+   "id": "95498",
+   "name": "Congenital anomaly of superior vena cava",
+   "profile_available": true
+  },
+  {
+   "index": 1371,
+   "id": "95499",
+   "name": "Congenital anomaly of the inferior vena cava",
+   "profile_available": true
+  },
+  {
+   "index": 1372,
+   "id": "955",
+   "name": "Hajdu-Cheney syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1373,
+   "id": "95507",
+   "name": "Congenital anomaly of hepatic vein",
+   "profile_available": true
+  },
+  {
+   "index": 1374,
+   "id": "958",
+   "name": "Acro-renal-mandibular syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1375,
+   "id": "959",
+   "name": "Acro-renal-ocular syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1376,
+   "id": "96055",
+   "name": "Tetrasomy 21 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1377,
+   "id": "96060",
+   "name": "Mosaic trisomy 5 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1378,
+   "id": "96061",
+   "name": "Mosaic trisomy 8 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1379,
+   "id": "96063",
+   "name": "Mosaic trisomy 10 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1380,
+   "id": "96068",
+   "name": "Mosaic trisomy 22 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1381,
+   "id": "96069",
+   "name": "Distal duplication 1p36 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1382,
+   "id": "96071",
+   "name": "Distal duplication 3p syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1383,
+   "id": "96074",
+   "name": "Distal duplication 7p syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1384,
+   "id": "96078",
+   "name": "16p13.3 microduplication syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1385,
+   "id": "96092",
+   "name": "8p inverted duplication/deletion syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1386,
+   "id": "96094",
+   "name": "Distal duplication 2q syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1387,
+   "id": "96095",
+   "name": "3q26 microduplication syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1388,
+   "id": "96096",
+   "name": "Distal duplication 4q syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1389,
+   "id": "96102",
+   "name": "Distal duplication 10q syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1390,
+   "id": "96105",
+   "name": "Distal duplication 13q syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1391,
+   "id": "96106",
+   "name": "Distal duplication 16q syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1392,
+   "id": "96109",
+   "name": "Distal duplication 22q syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1393,
+   "id": "96112",
+   "name": "Non-distal duplication 9q syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1394,
+   "id": "96121",
+   "name": "7q11.23 microduplication syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1395,
+   "id": "96126",
+   "name": "Distal deletion 7p syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1396,
+   "id": "96145",
+   "name": "Distal deletion 4q syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1397,
+   "id": "96148",
+   "name": "Distal deletion 10q syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1398,
+   "id": "96149",
+   "name": "Distal deletion 12q syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1399,
+   "id": "96168",
+   "name": "Monosomy 13q34 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1400,
+   "id": "96169",
+   "name": "Koolen-De Vries syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1401,
+   "id": "96170",
+   "name": "Emanuel syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1402,
+   "id": "96171",
+   "name": "Ring chromosome 2 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1403,
+   "id": "96173",
+   "name": "Ring chromosome 9 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1404,
+   "id": "96175",
+   "name": "Ring chromosome 11 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1405,
+   "id": "96176",
+   "name": "Ring chromosome 13 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1406,
+   "id": "96179",
+   "name": "Maternal uniparental disomy of chromosome 2 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1407,
+   "id": "96180",
+   "name": "Maternal uniparental disomy of chromosome 4 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1408,
+   "id": "96181",
+   "name": "Maternal uniparental disomy of chromosome 6 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1409,
+   "id": "96183",
+   "name": "Maternal uniparental disomy of chromosome 9 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1410,
+   "id": "96185",
+   "name": "Maternal uniparental disomy of chromosome 16 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1411,
+   "id": "96187",
+   "name": "Maternal uniparental disomy of chromosome 21 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1412,
+   "id": "96188",
+   "name": "Maternal uniparental disomy of chromosome 22 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1413,
+   "id": "96190",
+   "name": "Paternal uniparental disomy of chromosome 5 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1414,
+   "id": "96191",
+   "name": "Paternal uniparental disomy of chromosome 6 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1415,
+   "id": "96192",
+   "name": "Paternal uniparental disomy of chromosome 7 syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1416,
+   "id": "963",
+   "name": "Acromegaly",
+   "profile_available": true
+  },
+  {
+   "index": 1417,
+   "id": "96321",
+   "name": "Polyploidy syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1418,
+   "id": "968",
+   "name": "Acromesomelic dysplasia, Hunter-Thompson type",
+   "profile_available": true
+  },
+  {
+   "index": 1419,
+   "id": "969",
+   "name": "Acromicric dysplasia",
+   "profile_available": true
+  },
+  {
+   "index": 1420,
+   "id": "97",
+   "name": "Familial paroxysmal ataxia",
+   "profile_available": true
+  },
+  {
+   "index": 1421,
+   "id": "970",
+   "name": "Hereditary sensory and autonomic neuropathy type 2",
+   "profile_available": true
+  },
+  {
+   "index": 1422,
+   "id": "971",
+   "name": "Acrorenal syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1423,
+   "id": "972",
+   "name": "Hereditary continuous muscle fiber activity",
+   "profile_available": true
+  },
+  {
+   "index": 1424,
+   "id": "97214",
+   "name": "Eisenmenger syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1425,
+   "id": "97229",
+   "name": "Riboflavin transporter deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 1426,
+   "id": "97230",
+   "name": "Solar urticaria",
+   "profile_available": true
+  },
+  {
+   "index": 1427,
+   "id": "97234",
+   "name": "Glycogen storage disease due to phosphoglycerate mutase deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 1428,
+   "id": "97238",
+   "name": "Rippling muscle disease",
+   "profile_available": true
+  },
+  {
+   "index": 1429,
+   "id": "97239",
+   "name": "Reducing body myopathy",
+   "profile_available": true
+  },
+  {
+   "index": 1430,
+   "id": "97240",
+   "name": "Zebra body myopathy",
+   "profile_available": true
+  },
+  {
+   "index": 1431,
+   "id": "97244",
+   "name": "Rigid spine syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1432,
+   "id": "97252",
+   "name": "Mega-cisterna magna",
+   "profile_available": true
+  },
+  {
+   "index": 1433,
+   "id": "97261",
+   "name": "GRFoma",
+   "profile_available": true
+  },
+  {
+   "index": 1434,
+   "id": "97278",
+   "name": "PPoma",
+   "profile_available": true
+  },
+  {
+   "index": 1435,
+   "id": "97279",
+   "name": "Insulinoma",
+   "profile_available": true
+  },
+  {
+   "index": 1436,
+   "id": "97280",
+   "name": "Glucagonoma",
+   "profile_available": true
+  },
+  {
+   "index": 1437,
+   "id": "97282",
+   "name": "VIPoma",
+   "profile_available": true
+  },
+  {
+   "index": 1438,
+   "id": "97283",
+   "name": "Somatostatinoma",
+   "profile_available": true
+  },
+  {
+   "index": 1439,
+   "id": "97285",
+   "name": "Thyroid lymphoma",
+   "profile_available": true
+  },
+  {
+   "index": 1440,
+   "id": "97286",
+   "name": "Carney-Stratakis syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1441,
+   "id": "97287",
+   "name": "Bronchial neuroendocrine tumor",
+   "profile_available": true
+  },
+  {
+   "index": 1442,
+   "id": "97289",
+   "name": "Thymic neuroendocrine tumor",
+   "profile_available": true
+  },
+  {
+   "index": 1443,
+   "id": "97290",
+   "name": "Familial papillary thyroid carcinoma with renal papillary neoplasia",
+   "profile_available": true
+  },
+  {
+   "index": 1444,
+   "id": "97292",
+   "name": "Cardiogenic shock",
+   "profile_available": true
+  },
+  {
+   "index": 1445,
+   "id": "97297",
+   "name": "Bohring-Opitz syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1446,
+   "id": "97330",
+   "name": "Thoracic outlet syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1447,
+   "id": "97332",
+   "name": "Kienbock disease",
+   "profile_available": true
+  },
+  {
+   "index": 1448,
+   "id": "97336",
+   "name": "Panner disease",
+   "profile_available": true
+  },
+  {
+   "index": 1449,
+   "id": "97337",
+   "name": "Sinding-Larsen-Johansson disease",
+   "profile_available": true
+  },
+  {
+   "index": 1450,
+   "id": "97338",
+   "name": "Melanoma of soft tissue",
+   "profile_available": true
+  },
+  {
+   "index": 1451,
+   "id": "97339",
+   "name": "Dural sinus malformation",
+   "profile_available": true
+  },
+  {
+   "index": 1452,
+   "id": "97340",
+   "name": "Hunter-McAlpine syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1453,
+   "id": "97341",
+   "name": "Persistent placoid maculopathy",
+   "profile_available": true
+  },
+  {
+   "index": 1454,
+   "id": "97349",
+   "name": "Postencephalitic parkinsonism",
+   "profile_available": true
+  },
+  {
+   "index": 1455,
+   "id": "97352",
+   "name": "Pellagra",
+   "profile_available": true
+  },
+  {
+   "index": 1456,
+   "id": "97360",
+   "name": "Robinow syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1457,
+   "id": "974",
+   "name": "Adams-Oliver syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1458,
+   "id": "976",
+   "name": "Adenine phosphoribosyltransferase deficiency",
+   "profile_available": true
+  },
+  {
+   "index": 1459,
+   "id": "978",
+   "name": "ADULT syndrome",
+   "profile_available": true
+  },
+  {
+   "index": 1460,
+   "id": "98",
+   "name": "Autosomal recessive spastic ataxia of Charlevoix-Saguenay",
+   "profile_available": true
+  },
+  {
+   "index": 1461,
+   "id": "982",
+   "name": "Pulmonary valve agenesis",
+   "profile_available": true
+  },
+  {
+   "index": 1462,
+   "id": "984",
+   "name": "Pulmonary agenesis",
+   "profile_available": true
+  },
+  {
+   "index": 1463,
+   "id": "999",
+   "name": "Ermine phenotype",
+   "profile_available": true
+  }
+ ]
+}

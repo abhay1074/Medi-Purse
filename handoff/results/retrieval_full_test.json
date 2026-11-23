@@ -1,0 +1,59 @@
+{
+  "system": "fusion_v4_shap8",
+  "evaluated_on": "full test split (10,702 cases)",
+  "val": {
+    "mrr": 0.5286,
+    "top10": 0.7335
+  },
+  "test": {
+    "mrr": 0.496,
+    "top1": 0.3911,
+    "top5": 0.6199,
+    "top10": 0.6848,
+    "r50": 0.798,
+    "r100": 0.8437
+  },
+  "baselines_test": {
+    "tfidf_top100": {
+      "mrr": 0.4203,
+      "top10": 0.6113
+    },
+    "bow_centroid": {
+      "mrr": 0.4695,
+      "top10": 0.6533
+    },
+    "gbm_full_115": {
+      "mrr": 0.4602,
+      "top10": 0.6574
+    },
+    "gbm_v4_140": {
+      "mrr": 0.4614,
+      "top10": 0.6663
+    },
+    "fusion_v4_minmax": {
+      "mrr": 0.4955,
+      "top10": 0.6824
+    },
+    "fusion_v4_shap8": {
+      "mrr": 0.496,
+      "top10": 0.6848
+    },
+    "v5_union_fair": {
+      "mrr": 0.4387,
+      "top10": 0.6095
+    },
+    "v5_union_conditional": {
+      "mrr": 0.532,
+      "note": "excludes 12.1% of test cases"
+    },
+    "hybrid_top30_v5_tail": {
+      "mrr": 0.496,
+      "r100": 0.8497
+    }
+  },
+  "sources": [
+    "rerank/final_comparison_v5.csv",
+    "rerank/best_full_catalog_config.json",
+    "FINAL_RESULTS.md"
+  ]
+}
