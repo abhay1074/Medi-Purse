@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Appointments{% endblock %}
+{% block content %}
+<div class="head"><div><h1>Appointments</h1><div class="muted">{{ appts | length }} shown</div></div>
+<a class="btn primary" href="/appointments/new">Book appointment</a></div>
+<form class="filters" method="get">
+  <div class="field"><label>Date</label><input type="date" name="day" value="{{ day }}"></div>
+  <div class="field"><label>Status</label><select name="status"><option value="">All</option>
+    {% for s in statuses %}<option {{ 'selected' if status == s }}>{{ s }}</option>{% endfor %}</select></div>
+  <div class="field"><label>Doctor</label><select name="doctor"><option value="">All</option>
+    {% if user.role == 'doctor' %}<option value="me" {{ 'selected' if doctor == 'me' }}>Me</option>{% endif %}
+    {% for d in doctors %}<option value="{{ d.id }}" {{ 'selected' if doctor == d.id|string }}>{{ d.display }}</option>{% endfor %}</select></div>
+  <button class="btn">Filter</button>
+  <a class="btn" href="/appointments?day={{ today.isoformat() }}">Today</a>
+  {% if day or status or doctor %}<a href="/appointments">Clear</a>{% endif %}
+</form>
+{% if appts %}
+<table><tr><th>Date &amp; time</th><th>Patient</th><th>Reason</th><th>Doctor</th><th>Status</th></tr>
+{% for a in appts %}
+<tr class="click" onclick="location='/appointments/{{ a.id }}'">
+  <td><a href="/appointments/{{ a.id }}">{{ a.scheduled_at | dt }}</a></td>
+  <td>{{ a.patient.full_name }} <span class="muted small">{{ a.patient.mrn }}</span></td>
+  <td>{{ a.reason }}</td><td>{{ a.doctor.display if a.doctor else '—' }}</td>
+  <td><span class="tag {{ a.status }}">{{ a.status }}</span></td></tr>
+{% endfor %}</table>
+{% else %}<div class="empty">No appointments match.</div>{% endif %}
+{% endblock %}

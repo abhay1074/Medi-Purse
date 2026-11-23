@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block title %}AI Diagnosis{% endblock %}
+{% block content %}
+<div class="head"><div><h1>AI Diagnosis assistant</h1>
+<div class="muted">Suggests likely rare diseases from a case description and shows the evidence for each.</div></div></div>
+
+<div class="card">
+  <h3 style="margin-top:0">Start a new analysis</h3>
+  <form method="get" onsubmit="if(!this.pid.value)return false;location='/patients/'+this.pid.value+'/ai/new';return false" class="filters">
+    <div class="field" style="flex:1"><label>Patient</label>
+      <select name="pid" style="width:100%"><option value="">Choose a patient…</option>
+      {% for p in patients %}<option value="{{ p.id }}">{{ p.full_name }} ({{ p.mrn }})</option>{% endfor %}</select></div>
+    <button class="btn ai">{{ icon('sparkles') }}Continue</button>
+  </form>
+  {% if ai_status != 'ready' %}<div class="small muted"><span class="spinner"></span> AI is starting up…</div>{% endif %}
+</div>
+
+<h2>Recent analyses</h2>
+{% if rows %}
+<div class="table-card"><table><tr><th>Date</th><th>Patient</th><th>Case summary</th><th>Top suggestion</th><th>Explanation</th></tr>
+{% for an in rows %}
+<tr class="click" onclick="location='/ai/{{ an.id }}'"><td><a href="/ai/{{ an.id }}">{{ an.created_at | dt }}</a></td>
+<td>{{ an.patient.full_name }}</td><td>{{ an.case_text[:80] }}{% if an.case_text | length > 80 %}…{% endif %}</td>
+<td>{{ (an.ranking_json | fromjson).candidates[0].name if an.ranking_json else '—' }}</td>
+<td><span class="tag {{ an.explain_status }}">{{ 'not run' if an.explain_status == 'none' else an.explain_status }}</span></td></tr>
+{% endfor %}</table></div>
+{% else %}<div class="empty">No analyses yet.</div>{% endif %}
+{% endblock %}

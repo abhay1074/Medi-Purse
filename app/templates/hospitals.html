@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Hospitals{% endblock %}
+{% block content %}
+<div class="head"><div><h1>Hospitals</h1><div class="muted">Registered hospitals and their clinics</div></div>
+<a class="btn primary" href="/hospitals/new">Register hospital</a></div>
+{% if hospitals %}
+<table>
+  <tr><th>Name</th><th>Registration no.</th><th>City</th><th>Phone</th><th>Clinics</th></tr>
+  {% for h in hospitals %}
+  <tr class="click" onclick="location='/hospitals/{{ h.id }}'">
+    <td><a href="/hospitals/{{ h.id }}">{{ h.name }}</a></td><td>{{ h.registration_no }}</td>
+    <td>{{ h.city }}</td><td>{{ h.phone }}</td><td>{{ h.clinics | length }}</td></tr>
+  {% endfor %}
+</table>
+{% else %}<div class="empty">No hospitals registered yet.</div>{% endif %}
+{% endblock %}

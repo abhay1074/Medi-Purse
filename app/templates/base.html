@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}MediPurse{% endblock %} · MediPurse</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+{% from "_icons.html" import icon %}
+{% if user %}
+<header class="topbar">
+  <a class="brand" href="/"><span class="logo">{{ icon('plus', 16) }}</span>MediPurse</a>
+  <form class="search" action="/patients" method="get">
+    {{ icon('search') }}
+    <input name="q" placeholder="Search patients by name, phone or ID" value="{{ q or '' }}">
+  </form>
+  <div class="me">
+    <span class="avatar">{{ user.name[:1] | upper }}</span>
+    <div><div class="me-name">{{ user.display }}</div>
+    <div class="muted small">{{ user.role_label }}{% if user.clinic %} · {{ user.clinic.name }}{% endif %}</div></div>
+  </div>
+  <a href="/logout" class="btn ghost small" title="Sign out">{{ icon('logout') }}<span class="hide-sm">Sign out</span></a>
+</header>
+<div class="shell">
+  <nav class="sidebar">
+    {% macro nav(href, label, ic) %}<a href="{{ href }}" class="{{ 'on' if (path == href or (href != '/' and path.startswith(href))) }}">{{ icon(ic) }}{{ label }}</a>{% endmacro %}
+    {{ nav('/', 'Dashboard', 'home') }}
+    {{ nav('/patients', 'Patients', 'users') }}
+    {{ nav('/appointments', 'Appointments', 'calendar') }}
+    {% if user.role in ('doctor', 'admin') %}{{ nav('/ai', 'AI Diagnosis', 'sparkles') }}{% endif %}
+    {{ nav('/reports', 'Medicine reports', 'sheet') }}
+    {{ nav('/feedback', 'Feedback', 'message') }}
+    {% if user.role == 'admin' %}
+      <div class="label">Registry</div>
+      {{ nav('/hospitals', 'Hospitals', 'building') }}
+      {{ nav('/clinics', 'Clinics', 'stethoscope') }}
+      {{ nav('/staff', 'Staff accounts', 'user') }}
+    {% elif user.clinic %}
+      <div class="label">Clinic</div>
+      {{ nav('/clinics/' ~ user.clinic.id, user.clinic.name, 'stethoscope') }}
+    {% endif %}
+  </nav>
+  <main>
+    {% for kind, msg in flashes %}<div class="flash {{ kind }}">{{ msg }}</div>{% endfor %}
+    {% block content %}{% endblock %}
+  </main>
+</div>
+{% else %}
+  {% block public %}{% endblock %}
+{% endif %}
+</body>
+</html>

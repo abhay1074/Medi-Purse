@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Feedback{% endblock %}
+{% block content %}
+<div class="head"><div><h1>Patient feedback</h1>
+<div class="muted">{{ rows | length }} response(s){% if avg %} · average rating {{ avg }} / 5{% endif %}</div></div></div>
+{% if rows %}
+<table><tr><th>Date</th><th>Patient</th><th>Rating</th><th>Comments</th><th>Visit</th></tr>
+{% for f in rows %}
+<tr><td>{{ f.created_at | d }}</td><td><a href="/patients/{{ f.patient.id }}?tab=feedback">{{ f.patient.full_name }}</a></td>
+<td>{{ '★' * f.rating }}{{ '☆' * (5 - f.rating) }}</td><td>{{ f.comments }}</td>
+<td>{% if f.appointment %}{{ f.appointment.reason }}{% if f.appointment.doctor %} · {{ f.appointment.doctor.display }}{% endif %}{% else %}—{% endif %}</td></tr>
+{% endfor %}</table>
+{% else %}<div class="empty">No feedback yet. Record feedback from a patient's page.</div>{% endif %}
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Edit patient' if p else 'Register patient' }}{% endblock %}
+{% block content %}
+<div class="muted small"><a href="/patients">Patients</a> ›{% if p %} <a href="/patients/{{ p.id }}">{{ p.full_name }}</a> ›{% endif %}</div>
+<h1>{{ 'Edit patient details' if p else 'Register a patient' }}</h1>
+<form method="post" class="stack">
+  {% if user.role == 'admin' %}
+  <div class="field"><label>Clinic *</label>
+    <select name="clinic_id" required>
+      {% for c in clinics %}<option value="{{ c.id }}" {{ 'selected' if p and p.clinic_id == c.id }}>{{ c.label }}</option>{% endfor %}
+    </select></div>
+  {% endif %}
+  <div class="row">
+    <div class="field"><label>First name *</label><input name="first_name" required value="{{ p.first_name if p else '' }}"></div>
+    <div class="field"><label>Last name</label><input name="last_name" value="{{ p.last_name if p else '' }}"></div>
+  </div>
+  <div class="row">
+    <div class="field"><label>Date of birth</label><input name="dob" type="date" value="{{ p.dob.isoformat() if p and p.dob else '' }}"></div>
+    <div class="field"><label>Sex</label>
+      <select name="sex">{% for s in ['', 'Female', 'Male', 'Other'] %}<option {{ 'selected' if p and p.sex == s }}>{{ s }}</option>{% endfor %}</select></div>
+  </div>
+  <div class="row">
+    <div class="field"><label>Phone</label><input name="phone" value="{{ p.phone if p else '' }}"></div>
+    <div class="field"><label>Email</label><input name="email" type="email" value="{{ p.email if p else '' }}"></div>
+  </div>
+  <div class="field"><label>Address</label><input name="address" value="{{ p.address if p else '' }}"></div>
+  <div class="row">
+    <div class="field"><label>Blood group</label>
+      <select name="blood_group">{% for b in ['', 'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'] %}<option {{ 'selected' if p and p.blood_group == b }}>{{ b }}</option>{% endfor %}</select></div>
+    <div class="field"><label>Emergency contact</label><input name="emergency_contact" placeholder="Name, relation, phone" value="{{ p.emergency_contact if p else '' }}"></div>
+  </div>
+  <div class="field"><label>Allergies</label><input name="allergies" placeholder="e.g. Penicillin" value="{{ p.allergies if p else '' }}"></div>
+  <div class="actions"><button class="btn primary">{{ 'Save' if p else 'Register patient' }}</button>
+  <a class="btn" href="{{ '/patients/' ~ p.id if p else '/patients' }}">Cancel</a></div>
+</form>
+{% endblock %}

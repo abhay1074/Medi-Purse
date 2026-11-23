@@ -1,0 +1,16 @@
+# AI model (versions must match the shipped weights)
+scikit-learn==1.9.1
+numpy
+scipy
+lightgbm
+joblib
+pandas
+requests
+# Web app
+fastapi
+uvicorn
+jinja2
+python-multipart
+itsdangerous
+sqlalchemy
+openpyxl

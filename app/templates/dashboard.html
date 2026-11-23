@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="head">
+  <div><h1>Welcome, {{ user.display }}</h1>
+  <div class="muted">{{ today.strftime('%A') }}, {{ today | d }}</div></div>
+  <div class="actions">
+    <a class="btn primary" href="/patients/new">{{ icon('plus') }}Register patient</a>
+    <a class="btn outline" href="/appointments/new">{{ icon('calendar') }}Book appointment</a>
+    <a class="btn outline" href="/reports">{{ icon('download') }}Medicine report</a>
+    {% if user.role == 'admin' %}<a class="btn outline" href="/hospitals/new">{{ icon('building') }}Register hospital</a>{% endif %}
+  </div>
+</div>
+
+{% macro stat(href, label, n, ic, color) %}
+<a class="stat" {% if href %}href="{{ href }}"{% endif %}><div class="stat-top"><span class="muted">{{ label }}</span><span class="ic {{ color }}">{{ icon(ic) }}</span></div><div class="n">{{ n }}</div></a>
+{% endmacro %}
+<div class="grid">
+  {{ stat('/patients', 'Patients', stats.patients, 'users', 'blue') }}
+  {{ stat('/appointments?day=' ~ today.isoformat() ~ ('&doctor=me' if user.role == 'doctor' else ''), 'Appointments today', stats.today, 'clock', 'green') }}
+  {{ stat('/appointments?status=scheduled' ~ ('&doctor=me' if user.role == 'doctor' else ''), 'Upcoming', stats.upcoming, 'calendar', 'amber') }}
+  {{ stat('/reports', 'Medicines given today', stats.rx_today, 'pill', 'violet') }}
+  {{ stat('', 'Active diagnoses', stats.active_dx, 'activity', 'red') }}
+  {% if user.role == 'admin' %}
+  {{ stat('/hospitals', 'Hospitals', stats.hospitals, 'building', 'blue') }}
+  {{ stat('/clinics', 'Clinics', stats.clinics, 'stethoscope', 'green') }}
+  {{ stat('/staff', 'Staff accounts', stats.staff, 'user', 'amber') }}
+  {% endif %}
+</div>
+
+<h2>{{ 'Your appointments today' if user.role == 'doctor' else 'Appointments today' }}</h2>
+{% if appts %}
+<table>
+  <tr><th>Time</th><th>Patient</th><th>Reason</th><th>Doctor</th><th>Status</th><th></th></tr>
+  {% for a in appts %}
+  <tr>
+    <td>{{ a.scheduled_at | dt('%I:%M %p') }}</td>
+    <td><a href="/patients/{{ a.patient.id }}">{{ a.patient.full_name }}</a> <span class="muted small">{{ a.patient.mrn }}</span></td>
+    <td>{{ a.reason }}</td>
+    <td>{{ a.doctor.display if a.doctor else '—' }}</td>
+    <td><span class="tag {{ a.status }}">{{ a.status }}</span></td>
+    <td class="actions">
+      <a class="btn small" href="/appointments/{{ a.id }}">Open</a>
+      {% if user.role in ('doctor','admin') %}<a class="btn ai small" href="/patients/{{ a.patient.id }}/ai/new?appointment_id={{ a.id }}">AI diagnose</a>{% endif %}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}<div class="empty">No appointments today.</div>{% endif %}
+
+<h2>Recently registered patients</h2>
+{% if recent_patients %}
+<table>
+  {% for p in recent_patients %}
+  <tr><td><a href="/patients/{{ p.id }}">{{ p.full_name }}</a></td><td class="muted">{{ p.mrn }}</td>
+  <td class="muted">{{ p.clinic.name }}</td><td class="muted">{{ p.created_at | d }}</td></tr>
+  {% endfor %}
+</table>
+{% else %}<div class="empty">No patients yet. <a href="/patients/new">Register the first one</a>.</div>{% endif %}
+{% endblock %}

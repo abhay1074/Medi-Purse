@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block title %}Sign in{% endblock %}
+{% block public %}
+<div class="login">
+  <div class="login-brand"><span class="logo lg">{{ icon('plus', 22) }}</span></div>
+  <h1>Sign in to MediPurse</h1>
+  <p class="muted">Use your staff account to continue.</p>
+  {% for kind, msg in flashes %}<div class="flash {{ kind }}">{{ msg }}</div>{% endfor %}
+  <form method="post" class="card">
+    <div class="field"><label>Email</label><input name="email" type="email" required autofocus placeholder="name@hospital.com"></div>
+    <div class="field"><label>Password</label><input name="password" type="password" required></div>
+    <button class="btn primary block">Sign in</button>
+  </form>
+</div>
+{% endblock %}

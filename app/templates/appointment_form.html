@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Book appointment{% endblock %}
+{% block content %}
+<div class="muted small"><a href="/appointments">Appointments</a> ›{% if p %} <a href="/patients/{{ p.id }}">{{ p.full_name }}</a> ›{% endif %}</div>
+<h1>Book an appointment{% if p %} for {{ p.full_name }}{% endif %}</h1>
+<form method="post" class="stack">
+  {% if p %}<input type="hidden" name="patient_id" value="{{ p.id }}">
+  {% else %}
+  <div class="field"><label>Patient *</label>
+    <select name="patient_id" required><option value="">Choose a patient…</option>
+      {% for x in patients %}<option value="{{ x.id }}">{{ x.full_name }} ({{ x.mrn }}{% if x.phone %}, {{ x.phone }}{% endif %})</option>{% endfor %}
+    </select>
+    <div class="small muted">Not registered yet? <a href="/patients/new">Register the patient first</a>.</div></div>
+  {% endif %}
+  <div class="row">
+    <div class="field"><label>Date &amp; time *</label><input type="datetime-local" name="scheduled_at" required value="{{ default_time }}"></div>
+    <div class="field"><label>Doctor</label><select name="doctor_id"><option value="">Any available</option>
+      {% for d in doctors %}<option value="{{ d.id }}" {{ 'selected' if user.id == d.id }}>{{ d.display }}{% if d.specialty %} — {{ d.specialty }}{% endif %}</option>{% endfor %}</select></div>
+  </div>
+  <div class="field"><label>Reason for visit</label><input name="reason" placeholder="e.g. Follow-up, chest pain, test results"></div>
+  <div class="actions"><button class="btn primary">Book appointment</button>
+  <a class="btn" href="{{ '/patients/' ~ p.id if p else '/appointments' }}">Cancel</a></div>
+</form>
+{% endblock %}

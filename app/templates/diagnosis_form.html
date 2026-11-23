@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Add diagnosis{% endblock %}
+{% block content %}
+<div class="muted small"><a href="/patients">Patients</a> › <a href="/patients/{{ p.id }}?tab=diagnoses">{{ p.full_name }}</a> ›</div>
+<h1>Add a diagnosis for {{ p.full_name }}</h1>
+{% if analysis_id %}<div class="note">From AI analysis. The AI only suggests possibilities; record this only if you, the doctor, confirm it clinically.</div>{% endif %}
+<form method="post" class="stack">
+  <input type="hidden" name="analysis_id" value="{{ analysis_id or '' }}">
+  <div class="field"><label>Condition *</label><input name="condition" required value="{{ condition }}"></div>
+  <div class="row">
+    <div class="field"><label>Orphanet code (optional)</label><input name="disease_id" placeholder="e.g. 758" value="{{ disease_id }}"></div>
+    <div class="field"><label>Date diagnosed</label><input type="date" name="diagnosed_on" value="{{ today.isoformat() }}"></div>
+  </div>
+  <div class="field"><label>Linked appointment</label><select name="appointment_id"><option value="">None</option>
+    {% for a in appts %}<option value="{{ a.id }}" {{ 'selected' if appointment_id == a.id }}>{{ a.scheduled_at | dt }} — {{ a.reason }}</option>{% endfor %}</select></div>
+  <div class="field"><label>Notes</label><textarea name="notes" placeholder="Basis for diagnosis, confirmatory tests, plan…"></textarea></div>
+  <div class="actions"><button class="btn primary">Save diagnosis</button>
+  <a class="btn" href="{{ '/ai/' ~ analysis_id if analysis_id else '/patients/' ~ p.id ~ '?tab=diagnoses' }}">Cancel</a></div>
+</form>
+{% endblock %}

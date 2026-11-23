@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block title %}AI analysis · {{ p.full_name }}{% endblock %}
+{% block content %}
+<div class="crumbs"><a href="/patients">Patients</a> › <a href="/patients/{{ p.id }}?tab=ai">{{ p.full_name }}</a> › AI analysis</div>
+<div class="head">
+  <div><h1>AI analysis</h1>
+  <div class="muted">{{ p.full_name }} ({{ p.mrn }}) · {{ an.created_at | dt }}{% if an.doctor %} · {{ an.doctor.display }}{% endif %}</div></div>
+  <div class="actions"><a class="btn outline" href="/patients/{{ p.id }}/medicines/new">{{ icon('pill') }}Prescribe</a><a class="btn outline" href="/patients/{{ p.id }}/ai/new">{{ icon('plus') }}New analysis</a></div>
+</div>
+
+<div class="note">AI suggestions support clinical judgement. Confirm any diagnosis before recording it.</div>
+
+<h3>Case description</h3>
+<div class="casebox">{{ an.case_text }}</div>
+
+{# ---------------- explanation status ---------------- #}
+<div class="card" style="margin-top:16px">
+{% if an.explain_status == 'none' %}
+  <div class="head" style="margin:0"><div><b>AI explanation</b>
+    <div class="muted small">Extracts the key findings, checks each suggestion against the evidence and explains the reasoning. Takes about a minute.</div></div>
+  <form method="post" action="/ai/{{ an.id }}/explain"><button class="btn ai" {{ 'disabled' if not llm_on }}>{{ icon('sparkles') }}Explain with AI</button></form></div>
+{% elif an.explain_status == 'running' %}
+  <span class="spinner"></span> <b>Generating explanation…</b> <span class="muted" id="stage">{{ an.explain_stage }}</span>
+  <script>
+    (function poll(){ setTimeout(function(){ fetch('/ai/{{ an.id }}/status').then(r=>r.json()).then(function(s){
+      if (s.status !== 'running') location.reload(); else { document.getElementById('stage').textContent = s.stage; poll(); }
+    }).catch(poll); }, 2500); })();
+  </script>
+{% elif an.explain_status == 'error' %}
+  <div class="flash error" style="margin:0 0 8px">The AI explanation could not be generated. Please try again later.
+    {% if user.role == 'admin' %}<div class="small" style="margin-top:4px">Details: {{ an.explain_error }}</div>{% endif %}</div>
+  <form method="post" action="/ai/{{ an.id }}/explain"><button class="btn outline">Try again</button></form>
+{% elif explain %}
+  <b>Key findings extracted by AI</b>
+  <ul class="ev">{% for f in explain.findings %}
+    <li><span class="cite">{{ f.id }}</span> {{ f.text }} <span class="muted small">({{ f.type }}{% if not f.quote_verified %}, quote not found in case text{% endif %})</span></li>
+  {% endfor %}</ul>
+{% endif %}
+</div>
+
+{# ---------------- candidates ---------------- #}
+<h2>Suggested conditions</h2>
+<p class="muted small">Most likely first, out of {{ ranking.catalog_size }} rare diseases. Click a condition to see the evidence.</p>
+{% set fmap = {} %}{% if explain %}{% for f in explain.findings %}{% set _ = fmap.update({f.id: f.text}) %}{% endfor %}{% endif %}
+{% for c in ranking.candidates %}
+{% set x = explain.diseases[c.disease_id] if explain and c.disease_id in explain.diseases else none %}
+<details class="cand" {{ 'open' if loop.first }}>
+  <summary>
+    <span class="rank">{{ c.rank }}</span>
+    <span class="name">{{ c.name }}{% if c.disease_id in saved %} <span class="tag completed">in record</span>{% endif %}</span>
+    {% if x and x.plausibility is not none %}<span class="tag {{ x.verdict }}" title="AI audit verdict">{{ x.verdict }} · {{ x.plausibility | int }}%</span>{% endif %}
+    <span class="bar" title="Match score {{ '%.2f' % c.score }}"><i style="width:{{ ([0, c.score] | max * 100) | round }}%"></i></span>
+  </summary>
+  <div class="body">
+    <div class="two">
+      <div>
+        <h3 style="margin-top:0">Why it was suggested</h3>
+        {% if c.matched_terms %}<div class="small muted">Matching terms in the case</div>
+        <div class="chips" style="margin:4px 0 8px">{% for t in c.matched_terms %}<span class="chip">{{ t }}</span>{% endfor %}</div>{% endif %}
+        <div class="small muted">Disease profile (Orphanet)</div>
+        <ul class="ev">{% for ev in c.evidence %}<li>{{ ev.text }} <span class="muted small">— {{ ev.field }}</span></li>{% endfor %}</ul>
+      </div>
+      <div>
+        <dl class="info small" style="grid-template-columns:110px 1fr">
+          <dt>Inheritance</dt><dd>{{ c.inheritance or '—' }}</dd>
+          <dt>Age of onset</dt><dd>{{ c.onset or '—' }}</dd>
+          <dt>Prevalence</dt><dd>{{ c.prevalence or '—' }}</dd>
+          <dt>Orphanet</dt><dd><a href="{{ c.url }}" target="_blank" rel="noopener">ORPHA:{{ c.disease_id }} ↗</a></dd>
+        </dl>
+        {% if c.kg %}<div class="small muted" style="margin-top:8px">Known phenotypes / genes</div>
+        <div class="chips" style="margin-top:4px">{% for k in c.kg %}<span class="chip" title="{{ k.relation }}">{{ k.object }}</span>{% endfor %}</div>{% endif %}
+      </div>
+    </div>
+
+    {% if x %}
+    <h3>AI explanation</h3>
+    {% set shown = x.claims | selectattr('show') | list %}
+    {% if shown %}
+      {% for cl in shown %}<div class="claim"><span class="tag {{ 'supported' if cl.kind == 'support' else 'uncertain' }}">{{ cl.kind }}</span> {{ cl.display }}
+        <div class="small muted">{% for ct in cl.cited %}<span class="cite" title="{{ ct.text }}">{{ ct.id }}</span> {{ ct.text[:110] }}{{ '…' if ct.text | length > 110 }}<br>{% endfor %}</div></div>{% endfor %}
+    {% endif %}
+    {% if x.supports %}<div class="small" style="margin-top:8px"><b>Findings explained:</b>
+      {% for s in x.supports %}<div>✓ {{ fmap.get(s.finding, s.finding) }}{% if s.reason %} <span class="muted">— {{ s.reason }}</span>{% endif %}</div>{% endfor %}</div>{% endif %}
+    {% if x.contradictions %}<div class="small" style="margin-top:8px"><b>Conflicts:</b>
+      {% for s in x.contradictions %}<div>✗ {{ fmap.get(s.finding, s.finding) }}{% if s.reason %} <span class="muted">— {{ s.reason }}</span>{% endif %}</div>{% endfor %}</div>{% endif %}
+    {% if x.missing %}<div class="small" style="margin-top:8px"><b>Not documented yet:</b> {{ x.missing }}</div>{% endif %}
+    {% if not shown and not x.supports and not x.contradictions %}<div class="muted small">No explanation was produced for this candidate.</div>{% endif %}
+    {% endif %}
+
+    <div class="actions" style="margin-top:12px">
+      {% if c.disease_id in saved %}<span class="muted small">Already in the patient's record.</span>
+      {% else %}<a class="btn primary small" href="/patients/{{ p.id }}/diagnoses/new?condition={{ c.name | urlencode }}&disease_id={{ c.disease_id }}&analysis_id={{ an.id }}">Add to patient's diagnoses</a>{% endif %}
+    </div>
+  </div>
+</details>
+{% endfor %}
+{% endblock %}
