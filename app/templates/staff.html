@@ -1,13 +1,15 @@
 {% extends "base.html" %}
+{% from "_ui.html" import avatar %}
+{% from "_icons.html" import icon %}
 {% block title %}Staff accounts{% endblock %}
 {% block content %}
-<div class="head"><div><h1>Staff accounts</h1><div class="muted">Doctors, receptionists and registrars who can sign in</div></div>
-<a class="btn primary" href="/staff/new">Add staff account</a></div>
-<table><tr><th>Name</th><th>Role</th><th>Clinic</th><th>Email</th><th>Status</th><th></th></tr>
+<div class="head"><div><h1>Staff accounts</h1><div class="muted">Doctors, receptionists, pharmacists and registrars who can sign in</div></div>
+<a class="btn primary" href="/staff/new">{{ icon('plus') }}Add staff account</a></div>
+<div class="table-card"><table><tr><th>Name</th><th>Role</th><th>Clinic</th><th>Email</th><th>Status</th><th></th></tr>
 {% for s in staff %}
-<tr><td>{{ s.display }}{% if s.specialty %}<div class="muted small">{{ s.specialty }}</div>{% endif %}</td>
-<td>{{ s.role_label }}</td><td>{{ s.clinic.label if s.clinic else '—' }}</td><td>{{ s.email }}</td>
+<tr><td><div class="who">{{ avatar(s.name, 30) }}<div>{{ s.display }}{% if s.specialty %}<div class="muted small">{{ s.specialty }}</div>{% endif %}</div></div></td>
+<td>{% for r in s.roles %}<span class="tag {{ 'scheduled' if r == 'doctor' else 'active' if r == 'admin' else 'online' if r == 'pharmacist' else '' }}">{{ ROLES[r] }}</span> {% endfor %}</td><td>{{ s.clinic.label if s.clinic else '—' }}</td><td>{{ s.email }}</td>
 <td>{% if s.active %}<span class="tag completed">active</span>{% else %}<span class="tag">disabled</span>{% endif %}</td>
-<td><a class="btn small" href="/staff/{{ s.id }}/edit">Edit</a></td></tr>
-{% endfor %}</table>
+<td><a class="btn outline small" href="/staff/{{ s.id }}/edit">Edit</a></td></tr>
+{% endfor %}</table></div>
 {% endblock %}

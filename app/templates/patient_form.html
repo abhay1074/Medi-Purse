@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% block title %}{{ 'Edit patient' if p else 'Register patient' }}{% endblock %}
 {% block content %}
-<div class="muted small"><a href="/patients">Patients</a> ›{% if p %} <a href="/patients/{{ p.id }}">{{ p.full_name }}</a> ›{% endif %}</div>
+<div class="crumbs"><a href="/patients">Patients</a> ›{% if p %} <a href="/patients/{{ p.id }}">{{ p.full_name }}</a> › Edit details{% else %} Register patient{% endif %}</div>
 <h1>{{ 'Edit patient details' if p else 'Register a patient' }}</h1>
 <form method="post" class="stack">
-  {% if user.role == 'admin' %}
+  {% if user.has('admin') %}
   <div class="field"><label>Clinic *</label>
     <select name="clinic_id" required>
       {% for c in clinics %}<option value="{{ c.id }}" {{ 'selected' if p and p.clinic_id == c.id }}>{{ c.label }}</option>{% endfor %}
@@ -32,6 +32,6 @@
   <div class="field"><label>Allergies</label><input name="allergies" placeholder="e.g. Penicillin" value="{{ p.allergies if p else '' }}"></div>
   <div class="field"><label class="check"><input type="checkbox" name="email_reminders" value="1" {{ 'checked' if (not p or p.email_reminders) }}> Email appointment confirmations and reminders to the patient</label></div>
   <div class="actions"><button class="btn primary">{{ 'Save' if p else 'Register patient' }}</button>
-  <a class="btn" href="{{ '/patients/' ~ p.id if p else '/patients' }}">Cancel</a></div>
+  <a class="btn outline" href="{{ '/patients/' ~ p.id if p else '/patients' }}">Cancel</a></div>
 </form>
 {% endblock %}

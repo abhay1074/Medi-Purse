@@ -35,7 +35,7 @@ from pathlib import Path
 import re
 import secrets
 
-from .db import ROOT, Appointment, FeedbackRequest, Notification, Patient, SessionLocal, User
+from .db import ROOT, Appointment, FeedbackRequest, Notification, Patient, SessionLocal, User, role_clause
 
 OUTBOX = ROOT / "outbox"
 MAX_ATTEMPTS = 3
@@ -379,7 +379,7 @@ def _rx_line(r) -> str:
 def prescription_message(p: Patient, rxs: list, doctor: User | None) -> tuple[str, str]:
     names = ", ".join(r.medicine for r in rxs)
     subject = f"New prescription: {names}" if len(names) <= 60 else f"New prescription: {len(rxs)} medicines"
-    by = f" by {doctor.display}" if doctor and doctor.role == "doctor" else ""
+    by = f" by {doctor.display}" if doctor and doctor.has("doctor") else ""
     when = rxs[0].prescribed_at or datetime.now()
     body = "\n".join([f"Dear {p.first_name},", "",
                       f"The following medicine{'s were' if len(rxs) != 1 else ' was'} prescribed for you{by} "
@@ -443,7 +443,7 @@ def request_feedback(db, p: Patient, *, doctor: User | None = None, appointment_
     if recent.filter(FeedbackRequest.created_at >= datetime.now() - FEEDBACK_GAP).first():
         return None
     fr = FeedbackRequest(patient_id=p.id, appointment_id=appointment_id, diagnosis_id=diagnosis_id,
-                         doctor_id=doctor.id if doctor and doctor.role == "doctor" else None,
+                         doctor_id=doctor.id if doctor and doctor.has("doctor") else None,
                          token=secrets.token_urlsafe(32), expires_at=datetime.now() + timedelta(days=FEEDBACK_DAYS))
     db.add(fr)
     db.commit()
@@ -453,7 +453,7 @@ def request_feedback(db, p: Patient, *, doctor: User | None = None, appointment_
 
 
 def _clinic_doctors(db, p: Patient) -> list[User]:
-    return db.query(User).filter(User.role == "doctor", User.active == 1, User.clinic_id == p.clinic_id).all()
+    return db.query(User).filter(role_clause("doctor"), User.active == 1, User.clinic_id == p.clinic_id).all()
 
 
 def alert_low_feedback(db, fb, doctor: User | None) -> int:

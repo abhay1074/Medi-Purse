@@ -11,7 +11,7 @@
     · <span class="tag {{ 'completed' if h.status == 'completed' else 'scheduled' }}">{{ 'completed' if h.status == 'completed' else 'in progress' }}</span>
     <span class="tag">{{ 'AI interview' if h.mode == 'ai' else 'guided interview' }}</span></div></div>
   <div class="actions">
-    {% if user.role in ('doctor','admin') and h.status == 'completed' %}<a class="btn ai" href="/patients/{{ p.id }}/ai/new?history_id={{ h.id }}{% if h.appointment_id %}&appointment_id={{ h.appointment_id }}{% endif %}">{{ icon('sparkles') }}Use in AI diagnosis</a>{% endif %}
+    {% if user.has('doctor','admin') and h.status == 'completed' %}<a class="btn ai" href="/patients/{{ p.id }}/ai/new?history_id={{ h.id }}{% if h.appointment_id %}&appointment_id={{ h.appointment_id }}{% endif %}">{{ icon('sparkles') }}Use in AI diagnosis</a>{% endif %}
     {% if not h.reviewed and h.status == 'completed' %}<form method="post" action="/history/{{ h.id }}/reviewed" class="inline"><button class="btn outline">{{ icon('check') }}Mark reviewed</button></form>{% endif %}
   </div>
 </div>

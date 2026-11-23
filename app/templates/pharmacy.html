@@ -1,17 +1,14 @@
 {% extends "base.html" %}
 {% from "_icons.html" import icon %}
+{% from "_ui.html" import banner, avatar %}
 {% block title %}Dispensing{% endblock %}
 {% block content %}
-<div class="head">
-  <div><h1>Dispensing</h1>
-  <div class="muted">Prescriptions from the clinic's doctors wait here until the medicines are handed over. Stock is deducted when you give them.</div></div>
-  <div class="actions">
+{% call banner('Dispensing', 'Prescriptions from the clinic\'s doctors wait here until the medicines are handed over. Stock is deducted when you give them.', 'hero-pharmacy.svg', 'violet') %}
     {% if can_sell %}<a class="btn primary" href="/pharmacy/sales/new">{{ icon('plus') }}New counter sale</a>{% endif %}
     <a class="btn outline" href="/inventory">{{ icon('building') }}Stock</a>
-  </div>
-</div>
+{% endcall %}
 
-{% if user.role == 'admin' %}
+{% if user.has('admin') %}
 <form method="get" class="filters"><div class="field"><label>Clinic</label><select name="clinic_id" onchange="this.form.submit()"><option value="">All clinics</option>
   {% for c in clinics %}<option value="{{ c.id }}" {{ 'selected' if clinic_id == c.id }}>{{ c.name }}</option>{% endfor %}</select></div></form>
 {% endif %}
@@ -29,8 +26,8 @@
 {% for g in pending %}
   <a class="ph-card" href="/pharmacy/rx/{{ g.key }}">
     <div class="ph-card-head">
-      <div><b>{{ g.patient.full_name }}</b> <span class="muted small">{{ g.patient.mrn }}</span>
-        <div class="small muted">{{ g.doctor.display if g.doctor else 'Doctor' }} · {{ g.at | dt('%d %b, %I:%M %p') }}</div></div>
+      <div class="who">{{ avatar(g.patient.full_name, 30) }}<div><b>{{ g.patient.full_name }}</b> <span class="muted small">{{ g.patient.mrn }}</span>
+        <div class="small muted">{{ g.doctor.display if g.doctor else 'Doctor' }} · {{ g.at | dt('%d %b, %I:%M %p') }}</div></div></div>
       <span class="btn primary small">{{ icon('pill', 14) }}Give</span>
     </div>
     <div class="ph-lines">

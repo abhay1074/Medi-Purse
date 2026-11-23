@@ -41,7 +41,7 @@
           <textarea name="finding" rows="2" placeholder="What it shows">{{ img.finding }}</textarea>
           <div class="actions"><button class="btn primary small">Save</button></div>
         </form>
-        {% if user and (user.role in ('doctor', 'admin') or img.uploaded_by_id == user.id) %}
+        {% if user and (user.has('doctor', 'admin') or img.uploaded_by_id == user.id) %}
         <form method="post" action="/images/{{ img.id }}/delete" onsubmit="return confirm('Remove this image from the record?')">
           <button class="btn danger small">{{ icon('trash', 14) }}Remove</button></form>{% endif %}
       </details>

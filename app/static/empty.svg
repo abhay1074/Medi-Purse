@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120">
+  <defs>
+    <linearGradient id="b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#dbeafe"/><stop offset="1" stop-color="#ccfbf1"/></linearGradient>
+    <linearGradient id="c" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2563eb"/><stop offset="1" stop-color="#0d9488"/></linearGradient>
+  </defs>
+  <ellipse cx="80" cy="108" rx="52" ry="6" fill="#94a3b8" opacity=".18"/>
+  <circle cx="80" cy="58" r="46" fill="url(#b)"/>
+  <!-- clipboard -->
+  <rect x="56" y="30" width="48" height="62" rx="7" fill="#fff" stroke="#bfdbfe" stroke-width="2"/>
+  <rect x="68" y="25" width="24" height="11" rx="4" fill="url(#c)"/>
+  <rect x="64" y="48" width="32" height="4" rx="2" fill="#bfdbfe"/>
+  <rect x="64" y="58" width="24" height="4" rx="2" fill="#dbeafe"/>
+  <rect x="64" y="68" width="28" height="4" rx="2" fill="#dbeafe"/>
+  <!-- plus badge -->
+  <circle cx="108" cy="82" r="13" fill="url(#c)"/>
+  <path d="M108 76v12M102 82h12" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+  <!-- sparkles -->
+  <path d="M38 34v8M34 38h8" stroke="#93c5fd" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="126" cy="36" r="3" fill="#5eead4"/>
+  <circle cx="34" cy="80" r="2.5" fill="#c4b5fd"/>
+</svg>

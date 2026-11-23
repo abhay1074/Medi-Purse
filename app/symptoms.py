@@ -161,10 +161,22 @@ class SymptomIndex:
         out.sort(key=lambda x: x[0])
         return [x[1] for x in out[:limit]]
 
-    def find_in_text(self, text: str) -> list[dict]:
-        """Phenotypes mentioned in free text (longest match first, no overlaps)."""
+    def find_in_text(self, text: str, negation: bool = True) -> list[dict]:
+        """Phenotypes mentioned in free text (longest match first, no overlaps).
+        With negation=True, findings within a few words after "no", "not", "without",
+        "denies" (in the same sentence) are skipped: "no fever or cough" finds nothing."""
         self.load()
-        toks = stem_phrase(text.replace("'", "")).split()
+        toks, neg_until = [], []
+        for sent in re.split(r"[.;:\n]+", text.replace("'", "")):
+            st = stem_phrase(sent).split()
+            last_neg = -99
+            for j, t in enumerate(st):
+                if t in NEGATORS:
+                    last_neg = j
+                elif t in CONTRAST:
+                    last_neg = -99
+                toks.append(t)
+                neg_until.append(negation and 0 < j - last_neg <= NEG_WINDOW)
         found, used = [], set()
         i = 0
         while i < len(toks):
@@ -177,6 +189,9 @@ class SymptomIndex:
                     break
             if hit:
                 n, item, phrase = hit
+                if neg_until[i]:
+                    i += n
+                    continue
                 if item["id"] not in used:
                     used.add(item["id"])
                     found.append({**item, "matched": phrase})
@@ -184,6 +199,81 @@ class SymptomIndex:
             else:
                 i += 1
         return found
+
+
+NEGATORS = {"no", "not", "without", "denie", "denies", "denied", "negative", "nor", "never"}
+NEG_WINDOW = 4
+CONTRAST = {"but", "however", "although", "yet", "with", "has", "have"}
+
+# Everyday phrasings that the phenotype index does not cover, mapped straight to the
+# everyday-symptom keys in clinical.COMMON_SYMPTOMS. Lower-case regexes.
+EVERYDAY_PATTERNS = {
+    "constipation": r"constipat|hard,? (?:infrequent |dry )?stools?|infrequent stools?|straining|stools? (?:only )?(?:every|once|twice) \w+ days?|not opened (?:his|her|my) bowels",
+    "blood_stool": r"blood (?:on|in) (?:the )?(?:toilet )?(?:paper|stools?|pan)|rectal bleeding|bleeding from the (?:back passage|bottom|anus)",
+    "diarrhea": r"loose (?:motions?|stools?)|watery stools?|diarrh",
+    "knee_pain": r"(?:painful|aching|sore|stiff) knees?|knees? (?:pain|ache|aching|hurt)",
+    "joint_pain": r"big toe|toe joint|(?:painful|aching|sore) (?:joints?|knuckles?|wrists?|fingers?)|joints? (?:pain|ache)",
+    "joint_swelling": r"swollen (?:big )?(?:toe|joints?|knuckles?|wrists?|fingers?|knees?|ankles? joint)|(?:red|hot),? (?:hot,? )?swollen (?:big )?toe",
+    "morning_stiffness": r"(?:stiff|stiffness)[^.]{0,30}morning|morning stiffness",
+    "acne": r"pimples?|blackheads?|whiteheads?|\bzits?\b|pustules? on (?:the |his |her )?(?:face|forehead|chin|back)",
+    "chest_pain": r"chest (?:pain|tightness|pressure|discomfort|heaviness)|tight(?:ness)? (?:in the )?chest",
+    "breathless": r"breathless|short(?:ness)? of breath|out of breath|gasping",
+    "high_bp": r"(?:blood pressure|\bbp\b)[^.]{0,25}?\b1[4-9]\d\s*/\s*\d{2,3}|high blood pressure|raised blood pressure|hypertensi",
+    "poor_sleep": r"can'?t sleep|cannot sleep|lies? awake|trouble (?:sleeping|falling asleep)|difficulty (?:sleeping|falling asleep)|wak(?:es|ing) (?:up )?(?:early|at [2-5])|insomnia|poor sleep",
+    "low_mood": r"low mood|feeling (?:sad|low|down|empty|hopeless|worthless)|no interest|lost interest|loss of interest",
+    "anxiety": r"worr(?:y|ies|ying)|anxious|nervous|on edge|panic",
+    "toothache": r"tooth ?ache|tooth pain|painful tooth|teeth (?:pain|hurt)",
+    "mouth_ulcers": r"(?:mouth|oral) ulcers?|ulcers? (?:inside|in) (?:the |his |her |my )?mouth|canker sores?",
+    "skin_infection": r"red,? hot,? (?:and )?swollen|spreading redness|hot,? red,? (?:and )?swollen (?:leg|arm|skin)",
+    "flank_pain": r"\bloin\b|flank pain|pain in the (?:right|left) (?:loin|flank|side)",
+    "frequent_urination": r"going (?:to the toilet )?(?:very )?often|peeing (?:a lot|often)|urinat\w* (?:very )?often|urgency|urgently",
+    "painful_urination": r"burning (?:when|on) (?:passing urine|peeing|urinating)|stinging (?:when|on) (?:peeing|passing urine)|painful urination|dysuria",
+    "vaginal_discharge": r"vaginal discharge|thick white discharge|(?:white|grey|fishy) discharge",
+    "period_pain": r"period pains?|painful periods|cramps?[^.]{0,30}periods?",
+    "irregular_periods": r"irregular periods|periods? every (?:two|three|2|3) (?:to \w+ )?months|missed periods",
+    "back_pain": r"back ?ache|(?:low(?:er)?|upper) back pain|back pain|pain in (?:the|his|her|my) (?:lower )?back",
+    "neck_pain": r"neck (?:pain|stiffness)|stiff(?:,)? (?:painful )?neck|painful neck|sore neck",
+    "shoulder_pain": r"shoulder (?:pain|stiffness)|(?:lifting|raising) the arm|reach(?:ing)? (?:up|behind)|comb(?:ing)? (?:her|his) hair",
+    "ear_pain": r"ear ?ache|ear pain|tugging at (?:his|her|the) ear|pain(?:ful)? (?:right |left )?ear",
+    "itching": r"\bitch",
+    "rash": r"\brash\b|spots? (?:on|all over)|welts?",
+    "fatigue": r"tired|exhausted|no energy|fatigue|worn out",
+    "fever": r"fever|feverish|high temperature|\bpyrexi|shiver",
+    "runny_nose": r"runny nose|running nose|nasal discharge|rhinorrh",
+    "blocked_nose": r"blocked nose|stuffy nose|nasal congestion|congested nose",
+    "sore_throat": r"sore throat|throat (?:pain|is sore)|painful swallowing|pain on swallowing|scratchy throat",
+    "headache": r"headaches?|head ?ache",
+    "wheeze": r"wheez",
+    "red_eye": r"red(?:,)? (?:itchy )?(?:watery )?eyes?|pink (?:sticky )?eye|conjunctiv",
+    "numbness": r"pins and needles|tingling|numb",
+}
+_EVERYDAY_RX = {k: re.compile(v) for k, v in EVERYDAY_PATTERNS.items()}
+_NEG_RX = re.compile(r"\b(?:no|not|without|denies|denied|nor|never)\b")
+
+
+def everyday_keys_by_pattern(text: str) -> set[str]:
+    """Everyday-symptom keys found by phrase patterns, skipping negated mentions."""
+    t = " " + text.lower() + " "
+    keys = set()
+    for key, rx in _EVERYDAY_RX.items():
+        if any(not negated_at(t, m.start()) for m in rx.finditer(t)):
+            keys.add(key)
+    return keys
+
+
+def negated_at(t: str, pos: int) -> bool:
+    """True if a negator ("no", "not", "without"...) appears shortly before pos in the same
+    sentence. Lists stay negated: "no fever, cough or back pain"."""
+    before = re.split(r"[.;:\n]", t[max(0, pos - 60):pos])[-1]
+    words = before.replace(",", " , ").split()
+    tail = words[-8:]
+    in_list = any(w in (",", "or", "and", "nor") for w in tail)
+    window = tail if in_list else words[-NEG_WINDOW:]
+    negs = [i for i, w in enumerate(window) if _NEG_RX.fullmatch(w)]
+    if not negs:
+        return False
+    # "no fever but seizures": a contrast word after the negator ends the negation
+    return not any(w in ("but", "however", "although", "yet", "with", "has", "have") for w in window[negs[-1] + 1:])
 
 
 INDEX = SymptomIndex()
@@ -199,13 +289,22 @@ def common_symptoms_grouped() -> list[dict]:
 
 def common_keys_in(text: str) -> set[str]:
     """Which everyday symptoms (clinical.COMMON_SYMPTOMS keys) a text mentions."""
-    tn = " " + norm(text) + " "
+    # keep sentence breaks so negation never crosses a full stop
+    tn = " " + " . ".join(norm(part) for part in re.split(r"[.;:\n]+", text)) + " "
     keys = set()
     INDEX.load()
     found_ids = {f["id"] for f in INDEX.find_in_text(text)}
     for key, label, term, cat, hpo in COMMON_SYMPTOMS:
-        if (hpo and hpo in found_ids) or f" {norm(term)} " in tn or f" {norm(label)} " in tn:
+        hit = bool(hpo and hpo in found_ids)
+        for phrase in (term, label):
+            pn = f" {norm(phrase)} "
+            i = tn.find(pn)
+            while i >= 0 and not hit:
+                hit = not negated_at(tn, i + 1)
+                i = tn.find(pn, i + 1)
+        if hit:
             keys.add(key)
+    keys |= {k for k in everyday_keys_by_pattern(text) if k in COMMON_BY_KEY}
     # synonyms that share an HPO id (e.g. dizziness and vertigo) both count
     for key in list(keys):
         hpo = COMMON_BY_KEY[key][4]

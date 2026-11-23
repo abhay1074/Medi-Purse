@@ -7,7 +7,7 @@
 <p class="muted">For walk-in customers or prescriptions from outside the clinic. Stock is deducted when you save.</p>
 
 <form method="post" class="card" id="sale-form">
-  {% if user.role == 'admin' %}<div class="field" style="max-width:320px"><label>Clinic pharmacy</label><select name="clinic_id" id="sale-clinic" required><option value="">Choose…</option>
+  {% if user.has('admin') %}<div class="field" style="max-width:320px"><label>Clinic pharmacy</label><select name="clinic_id" id="sale-clinic" required><option value="">Choose…</option>
     {% for c in clinics %}<option value="{{ c.id }}">{{ c.name }}</option>{% endfor %}</select></div>{% endif %}
   <div class="row">
     <div class="field"><label>Customer name</label><input name="customer_name" placeholder="Optional"></div>

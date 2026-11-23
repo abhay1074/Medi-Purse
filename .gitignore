@@ -13,3 +13,6 @@ data/optimuskg/*.parquet
 
 # clinical images (patient data, never commit)
 uploads/
+
+# ZebraMap corpus (CC BY 4.0, download with scripts/zebramap_fetch.py)
+data/zebramap/

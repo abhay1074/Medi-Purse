@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% block title %}{{ h.name }}{% endblock %}
 {% block content %}
-<div class="muted small"><a href="/hospitals">Hospitals</a> ›</div>
+<div class="crumbs"><a href="/hospitals">Hospitals</a> › {{ h.name }}</div>
 <div class="head"><div><h1>{{ h.name }}</h1><div class="muted">{{ h.city }}</div></div>
 <div class="actions"><a class="btn primary" href="/clinics/new?hospital_id={{ h.id }}">Add clinic</a>
-<a class="btn" href="/hospitals/{{ h.id }}/edit">Edit</a></div></div>
+<a class="btn outline" href="/hospitals/{{ h.id }}/edit">Edit</a></div></div>
 <div class="card"><dl class="info">
   <dt>Registration no.</dt><dd>{{ h.registration_no or '—' }}</dd>
   <dt>Address</dt><dd>{{ h.address or '—' }}</dd>
@@ -14,10 +14,10 @@
 </dl></div>
 <h2>Clinics ({{ h.clinics | length }})</h2>
 {% if h.clinics %}
-<table><tr><th>Clinic</th><th>Specialty</th><th>Location</th><th>Phone</th><th>Staff</th></tr>
+<div class="table-card"><table><tr><th>Clinic</th><th>Specialty</th><th>Location</th><th>Phone</th><th>Staff</th></tr>
 {% for c in h.clinics %}
 <tr class="click" onclick="location='/clinics/{{ c.id }}'"><td><a href="/clinics/{{ c.id }}">{{ c.name }}</a></td>
 <td>{{ c.specialty }}</td><td>{{ c.address }}</td><td>{{ c.phone }}</td><td>{{ c.staff | length }}</td></tr>
-{% endfor %}</table>
+{% endfor %}</table></div>
 {% else %}<div class="empty">No clinics yet. <a href="/clinics/new?hospital_id={{ h.id }}">Add a clinic</a>.</div>{% endif %}
 {% endblock %}

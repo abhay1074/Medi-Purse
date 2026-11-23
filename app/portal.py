@@ -16,7 +16,7 @@ import json
 from . import history as hx
 from . import images as imgs
 from . import notify
-from .db import (Appointment, Clinic, Feedback, FeedbackRequest, HistoryIntake, Patient, PatientImage, User,
+from .db import (Appointment, Clinic, Feedback, FeedbackRequest, HistoryIntake, Patient, PatientImage, User, role_clause,
                  check_password, hash_password)
 from .symptoms import common_symptoms_grouped
 from .main import Redirect, _date, _int, _s, flash, get_db, redirect, templates
@@ -213,7 +213,7 @@ def db_intakes(p: Patient) -> list[HistoryIntake]:
 # booking
 # ----------------------------------------------------------------------------
 def _clinic_doctors(db, p: Patient) -> list[User]:
-    return db.query(User).filter(User.role == "doctor", User.active == 1,
+    return db.query(User).filter(role_clause("doctor"), User.active == 1,
                                  User.clinic_id == p.clinic_id).order_by(User.name).all()
 
 

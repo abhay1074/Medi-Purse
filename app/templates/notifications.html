@@ -7,7 +7,7 @@
   <div class="muted">Appointment, prescription and feedback emails to patients, and alerts to staff. Reminders go out {{ hours | join(' and ') }} hours before each appointment.</div></div>
 </div>
 {% if not smtp_on %}
-<div class="note">Email sending is not set up, so emails are saved as files instead of being sent{% if user.role == 'admin' %} (folder: <code>{{ outbox }}</code>). Add the SMTP settings to <code>.env</code> to send real emails{% endif %}.</div>
+<div class="note">Email sending is not set up, so emails are saved as files instead of being sent{% if user.has('admin') %} (folder: <code>{{ outbox }}</code>). Add the SMTP settings to <code>.env</code> to send real emails{% endif %}.</div>
 {% endif %}
 
 <form method="get" class="filters">

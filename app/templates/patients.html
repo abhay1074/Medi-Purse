@@ -1,22 +1,24 @@
 {% extends "base.html" %}
+{% from "_ui.html" import avatar %}
+{% from "_icons.html" import icon %}
 {% block title %}Patients{% endblock %}
 {% block content %}
 <div class="head"><div><h1>Patients</h1>
 <div class="muted">{% if q %}{{ patients | length }} result(s) for “{{ q }}” · <a href="/patients">Clear search</a>{% else %}{{ patients | length }} patient(s){% if user.clinic %} in {{ user.clinic.name }}{% endif %}{% endif %}</div></div>
-<a class="btn primary" href="/patients/new">Register patient</a></div>
+<a class="btn primary" href="/patients/new">{{ icon('plus') }}Register patient</a></div>
 {% if patients %}
-<table>
-  <tr><th>Patient</th><th>ID</th><th>Age / Sex</th><th>Phone</th>{% if user.role == 'admin' %}<th>Clinic</th>{% endif %}<th>Active diagnoses</th></tr>
+<div class="table-card"><table>
+  <tr><th>Patient</th><th>ID</th><th>Age / Sex</th><th>Phone</th>{% if user.has('admin') %}<th>Clinic</th>{% endif %}<th>Active diagnoses</th></tr>
   {% for p in patients %}
   <tr class="click" onclick="location='/patients/{{ p.id }}'">
-    <td><a href="/patients/{{ p.id }}">{{ p.full_name }}</a></td>
+    <td><a class="who" href="/patients/{{ p.id }}">{{ avatar(p.full_name, 30) }}{{ p.full_name }}</a></td>
     <td class="muted">{{ p.mrn }}</td>
     <td>{{ p.age if p.age is not none else '—' }}{% if p.sex %} / {{ p.sex }}{% endif %}</td>
     <td>{{ p.phone }}</td>
-    {% if user.role == 'admin' %}<td>{{ p.clinic.name }}</td>{% endif %}
+    {% if user.has('admin') %}<td>{{ p.clinic.name }}</td>{% endif %}
     <td>{% for d in p.diagnoses if d.status == 'active' %}<span class="tag active">{{ d.condition }}</span> {% else %}<span class="muted">—</span>{% endfor %}</td>
   </tr>
   {% endfor %}
-</table>
+</table></div>
 {% else %}<div class="empty">No patients found.</div>{% endif %}
 {% endblock %}

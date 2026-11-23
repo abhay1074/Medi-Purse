@@ -10,7 +10,7 @@
   <div class="actions"><a class="btn outline" href="/patients/{{ p.id }}/medicines/new">{{ icon('pill') }}Prescribe</a><a class="btn outline" href="/patients/{{ p.id }}/ai/new">{{ icon('plus') }}New analysis</a></div>
 </div>
 
-<div class="note">AI suggestions support clinical judgement. Confirm any diagnosis before recording it.</div>
+<div class="note">AI suggestions support clinical judgement. Confirm any diagnosis before recording it. <a href="/ai/performance">How accurate is this?</a></div>
 
 <h3>Case description</h3>
 <div class="casebox">{{ an.case_text }}</div>
@@ -26,7 +26,7 @@
     <div class="muted small">Extracts the key findings, checks each suggestion against the evidence and explains the reasoning. Takes about a minute.</div></div>
   <form method="post" action="/ai/{{ an.id }}/explain"><button class="btn ai" {{ 'disabled' if not llm_ok }}>{{ icon('sparkles') }}Explain with AI</button></form></div>
   {% if not llm_ok %}<div class="small muted" style="margin-top:8px">AI explanations are temporarily unavailable. The suggestions and evidence below are still available.
-    {% if user.role == 'admin' and llm_reason %}<span style="color:var(--red)">({{ llm_reason }})</span>{% endif %}</div>{% endif %}
+    {% if user.has('admin') and llm_reason %}<span style="color:var(--red)">({{ llm_reason }})</span>{% endif %}</div>{% endif %}
 {% elif an.explain_status == 'running' %}
   <span class="spinner"></span> <b>Generating explanation…</b> <span class="muted" id="stage">{{ an.explain_stage }}</span>
   <script>
@@ -36,7 +36,7 @@
   </script>
 {% elif an.explain_status == 'error' %}
   <div class="flash error" style="margin:0 0 8px">The AI explanation could not be generated. Please try again later.
-    {% if user.role == 'admin' %}<div class="small" style="margin-top:4px">Details: {{ an.explain_error }}</div>{% endif %}</div>
+    {% if user.has('admin') %}<div class="small" style="margin-top:4px">Details: {{ an.explain_error }}</div>{% endif %}</div>
   <form method="post" action="/ai/{{ an.id }}/explain"><button class="btn outline">Try again</button></form>
 {% elif explain %}
   <b>Key findings extracted by AI</b>

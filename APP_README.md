@@ -95,6 +95,23 @@ given on a prescription, sold, corrected) is kept in the medicine's stock histor
 
 Light and dark mode follow the device setting; the sun/moon button switches and remembers it.
 
+## Prescribing: suggestions and reactions
+
+- **Suggestions for the chosen diagnosis** (`app/drug_suggest.py`):
+  - **Everyday diagnoses:** usual first-line options with typical doses.
+  - **Rare diagnoses:** the medicines used in published ZebraMap case reports for that disease,
+    with how many cases used each, plus approved indications from OptimusKG.
+    The data is in `app/data/disease_drugs.json`, built by `scripts/build_drug_suggestions.py`.
+- **Contraindications:** if a medicine is listed as contraindicated in one of the patient's
+  diagnoses (OptimusKG), the line is flagged.
+- **Reactions:** "Report reaction" on any medicine records what happened (irritation, rash,
+  allergy…), the severity and notes. It can stop the medicine and mark it **to avoid**.
+  Medicines given elsewhere can be recorded too.
+- **The avoid list** shows as a red banner on the patient, prescription and dispensing pages.
+- **Prescribing an avoided medicine** needs explicit confirmation. Brand names and abbreviations
+  are matched to the generic: pcm → paracetamol, Augmentin → amoxicillin.
+- **Lifting a flag:** doctors can remove an avoid flag; the reaction stays in the record.
+
 ## Email setup
 
 What is emailed (patients can turn emails off in "My details"; the Email log shows all of them):
@@ -190,6 +207,27 @@ How images are stored (`app/images.py`):
   set `HMS_IMAGE_CAPTIONS=1` and install `torch` and `transformers` (large). Off by default;
   the pipeline treats captions as unreliable and the written description as the finding.
 
+**Evaluation:** `evaluation/README.md` has two parts.
+
+- **Real-world usage:**
+  - results in about 0.33 s for one doctor (p99 0.41 s);
+  - about 2.9 analyses per second per server;
+  - ready 9 s after start, using about 0.6 GB;
+  - "Explain with AI" about 17 s and about ₹1 per case;
+  - coverage of the knowledge behind the suggestions.
+- **Accuracy verification:**
+  - the official test split (MRR 0.496, top-10 0.685);
+  - 92 synthetic cases written as case reports: combined MRR@10 0.832 with the router, against
+    0.518 with the old rules;
+  - 300 real held-out case reports.
+
+Doctors and admins see a summary under AI diagnosis → "How accurate is this?" (`/ai/performance`).
+
+**Realist router** (`app/router.py`): a small logistic model fitted by `scripts/fit_router.py`
+decides whether common causes come first. It combines the rare-disease ranking's confidence with
+text signals: specialised tests mentioned, how well symptoms fit a common condition, and
+rare-disease cues. Without `app/data/router.json`, the original rules are used.
+
 **Research prototype, not a diagnostic device.** Use made-up or published cases only;
 do not send real patient data to an external API.
 
@@ -208,6 +246,7 @@ app/images.py      clinical image storage and AI pipeline glue
 uploads/           stored images (not in git)
 app/data/          OptimusKG phenotype list
 scripts/           build_phenotypes.py
+evaluation/        synthetic test cases, run_eval.py, results.json, README.md
 app/templates/     pages (Jinja2)
 app/static/        style.css
 handoff/           Aarav's bundle: weights, catalog, pipeline code, docs

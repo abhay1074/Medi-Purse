@@ -5,7 +5,7 @@
 <div class="crumbs"><a href="/inventory">Pharmacy stock</a> › Add medicine</div>
 <h1>Add a medicine to stock</h1>
 <form method="post" class="card" style="max-width:760px">
-  {% if user.role == 'admin' %}<div class="field"><label>Clinic</label><select name="clinic_id" required><option value="">Choose…</option>
+  {% if user.has('admin') %}<div class="field"><label>Clinic</label><select name="clinic_id" required><option value="">Choose…</option>
     {% for c in clinics %}<option value="{{ c.id }}">{{ c.name }}</option>{% endfor %}</select></div>{% endif %}
   <div class="row">
     <div class="field"><label>Medicine (generic name)</label><input name="name" required placeholder="e.g. Paracetamol" list="med-names" autofocus></div>

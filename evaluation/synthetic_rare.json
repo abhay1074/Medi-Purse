@@ -1,0 +1,328 @@
+{
+ "description": "Synthetic rare cases for evaluation, v2 (2026-11-24). Full cases are written as single-paragraph case-report narratives in the structure of ZebraMap notes: opening ('The patient was...', 'A previously healthy...', 'We report...'), history, examination, laboratory values, imaging, diagnosis-confirming tests, treatment and follow-up, 120-230 words. Rare and common sets use the same structure and length range so that length and style do not reveal the answer. The short notes (one or two lines) mirror the ~10% of ZebraMap notes under 72 words. Nothing is copied from ZebraMap or Orphanet. v1 (short clinic notes) is kept in *_v1.json.",
+ "author": "synthetic, 2026-11-24",
+ "cases": [
+  {
+   "id": "R01",
+   "gold_id": "758",
+   "gold": "Pseudoxanthoma elasticum",
+   "difficulty": "typical",
+   "text": "The patient was a 41-year-old woman referred to the retina clinic for blurred central vision and distortion of straight lines in her right eye over two months. She had no history of trauma or high myopia. Best-corrected visual acuity was 6/18 in the right eye and 6/6 in the left. Fundoscopy showed irregular grey-brown streaks radiating from the optic disc in both eyes, a peau d'orange appearance of the temporal fundus and a subretinal haemorrhage at the right macula. Optical coherence tomography confirmed a type 2 choroidal neovascular membrane. On questioning she reported soft yellowish bumps on the sides of the neck since her twenties, and examination showed coalescing yellow papules on the neck and lax redundant skin folds in both axillae. A punch biopsy of the neck skin showed fragmented, clumped and calcified elastic fibres in the mid-dermis on von Kossa staining. Echocardiography and lipid profile were normal; ankle-brachial index was mildly reduced. She received three monthly intravitreal anti-VEGF injections with improvement to 6/9 and was advised to avoid contact sports. Her sister was later found to have similar skin changes."
+  },
+  {
+   "id": "R02",
+   "gold_id": "324",
+   "gold": "Fabry disease",
+   "difficulty": "typical",
+   "text": "A 23-year-old man was referred by his general practitioner for proteinuria found at a pre-employment medical. He described episodes of burning pain in the hands and feet since the age of eight, triggered by fever, hot weather and exercise, and said he hardly ever sweats. On examination there were clusters of small dark red non-blanching papules in the bathing-trunk area between the umbilicus and the knees. Blood pressure was 132/84 mmHg. Urinalysis showed 2+ protein with a urine protein to creatinine ratio of 85 mg/mmol and estimated GFR was 78 ml/min. Slit-lamp examination revealed whorl-shaped corneal opacities in both eyes. ECG showed a short PR interval and echocardiography showed mild concentric left ventricular hypertrophy. His maternal uncle had needed dialysis and had a stroke at 45. Plasma alpha-galactosidase A activity was markedly reduced and a pathogenic GLA variant was identified. Kidney biopsy showed vacuolated podocytes with zebra bodies on electron microscopy. Enzyme replacement therapy and an ACE inhibitor were started, and family screening was arranged."
+  },
+  {
+   "id": "R03",
+   "gold_id": "355",
+   "gold": "Gaucher disease",
+   "difficulty": "typical",
+   "text": "We report a 16-year-old girl of Ashkenazi Jewish descent who was referred to haematology for easy bruising, frequent nosebleeds and tiredness. She had been admitted twice in the past year with severe pain in the thighs that had been attributed to growing pains. Examination showed pallor, scattered bruises and massive splenomegaly extending to the right iliac fossa, with moderate hepatomegaly. Haemoglobin was 9.8 g/dl, platelets 62,000 per microlitre and white cells normal. Chitotriosidase and ferritin were markedly elevated. MRI of the femurs showed marrow infiltration and an Erlenmeyer flask deformity of the distal femurs, and a DEXA scan showed reduced bone density. A bone marrow aspirate performed to exclude leukaemia showed large lipid-laden macrophages with a wrinkled tissue-paper cytoplasm. Glucocerebrosidase activity in leucocytes was very low and genetic testing found homozygous N370S variants in GBA1. There were no neurological signs. Enzyme replacement therapy with imiglucerase was started and at twelve months the spleen volume had fallen by 40 percent with normalisation of the platelet count."
+  },
+  {
+   "id": "R04",
+   "gold_id": "905",
+   "gold": "Wilson disease",
+   "difficulty": "typical",
+   "text": "The patient was a 19-year-old university student brought by his parents because of a six-month history of tremor of both hands, slurred speech and drooling, with a marked decline in his grades and episodes of irritability. He had been treated for depression a year earlier. Neurological examination showed a coarse wing-beating tremor on outstretched arms, dysarthria, mild rigidity and a fixed smile. Liver examination was unremarkable but blood tests showed ALT 98 U/l, AST 76 U/l, mild thrombocytopenia and a low alkaline phosphatase. Slit-lamp examination revealed golden-brown Kayser-Fleischer rings at the limbus of both corneas. Serum ceruloplasmin was 6 mg/dl and 24-hour urinary copper excretion was 420 micrograms. MRI of the brain showed symmetrical T2 hyperintensities in the putamina and a face of the giant panda sign in the midbrain. Abdominal ultrasound showed a coarse liver echotexture. Genetic testing confirmed compound heterozygous ATP7B variants. He was started on chelation with penicillamine and zinc with slow improvement of speech over one year; his younger sister was screened."
+  },
+  {
+   "id": "R05",
+   "gold_id": "558",
+   "gold": "Marfan syndrome",
+   "difficulty": "typical",
+   "text": "A 17-year-old boy was referred to cardiology after a school physical examination noted a murmur. He was 196 cm tall with an arm span of 204 cm, long slender fingers, a pectus excavatum, scoliosis and flat feet. The wrist and thumb signs were positive. He had worn thick glasses since childhood and had been told that his lenses were dislocated; slit-lamp examination confirmed bilateral superotemporal ectopia lentis. Echocardiography showed dilatation of the aortic root to 45 mm (Z-score 4.2) with mild aortic regurgitation and mitral valve prolapse. His father had died suddenly at 34 from what was described as a burst artery in the chest. Genetic testing identified a pathogenic FBN1 variant. He was started on losartan, advised to avoid competitive and contact sports and isometric exercise, and enrolled in annual imaging. At 24 the aortic root had reached 50 mm and he underwent valve-sparing aortic root replacement without complications."
+  },
+  {
+   "id": "R06",
+   "gold_id": "636",
+   "gold": "Neurofibromatosis type 1",
+   "difficulty": "typical",
+   "text": "The proband was a 9-year-old girl referred to the paediatric genetics clinic because of multiple skin patches and learning difficulties at school. On examination there were eight flat light-brown macules larger than 15 mm on the trunk and limbs, freckling in both axillae and the groins, and two soft skin-coloured nodules on the back. Slit-lamp examination showed several small pigmented hamartomas of the iris. Head circumference was above the 97th centile. Blood pressure was normal. MRI of the brain showed focal areas of T2 signal intensity in the basal ganglia and cerebellum and no optic pathway glioma. Psychological assessment found attention deficit and a specific learning disorder. Her mother, aged 36, had dozens of cutaneous nodules and a plexiform lesion on the thigh that had been removed. Genetic testing found a pathogenic NF1 variant in both. The girl was enrolled in annual ophthalmological and clinical follow-up and received educational support."
+  },
+  {
+   "id": "R07",
+   "gold_id": "805",
+   "gold": "Tuberous sclerosis complex",
+   "difficulty": "typical",
+   "text": "We describe a 6-year-old boy with epilepsy and autism spectrum disorder. Seizures began at five months of age as clusters of flexor spasms, and EEG at the time showed hypsarrhythmia; he was treated with vigabatrin. Echocardiography in infancy had shown three cardiac rhabdomyomas that regressed spontaneously. At the current visit he had focal seizures several times a week despite two anti-seizure medications. Skin examination showed five hypomelanotic leaf-shaped macules on the trunk, red papules over the nose and cheeks consistent with facial angiofibromas, and a rough leathery shagreen patch on the lower back. MRI of the brain showed multiple cortical tubers, subependymal nodules along the lateral ventricles and a 9 mm nodule near the foramen of Monro. Renal ultrasound showed small angiomyolipomas in both kidneys. A pathogenic TSC2 variant was identified. He was started on an mTOR inhibitor and seizure frequency decreased; MRI surveillance for subependymal giant cell astrocytoma was planned."
+  },
+  {
+   "id": "R08",
+   "gold_id": "2331",
+   "gold": "Kawasaki disease",
+   "difficulty": "typical",
+   "text": "A previously healthy 3-year-old boy was admitted with six days of high fever up to 40 degrees that had not responded to two courses of oral antibiotics prescribed for presumed tonsillitis. He was irritable and had red eyes without discharge, cracked red lips, a strawberry tongue, a polymorphous rash on the trunk, swelling and redness of the hands and feet, and a single firm 2 cm cervical lymph node. Laboratory tests showed CRP 145 mg/l, white cells 17,800 with neutrophilia, ESR 98 mm/h, albumin 28 g/l, raised ALT and sterile pyuria; platelets rose to 690,000 by day ten. Throat swab and blood cultures were negative. Echocardiography showed dilatation of the left anterior descending coronary artery with a Z-score of 3.1. He received intravenous immunoglobulin 2 g/kg and high-dose aspirin, and the fever resolved within 36 hours. Desquamation of the fingertips began on day 11. At six weeks the coronary dilatation had regressed and aspirin was stopped."
+  },
+  {
+   "id": "R09",
+   "gold_id": "342",
+   "gold": "Familial Mediterranean fever",
+   "difficulty": "typical",
+   "text": "The patient was a 14-year-old girl of Armenian origin referred for recurrent fever. Since the age of six she had had attacks every three to five weeks of fever to 39.5 degrees with severe diffuse abdominal pain and guarding, lasting 48 to 72 hours and resolving spontaneously. During some attacks she had pleuritic chest pain and once a painful swollen right ankle. An appendicectomy at ten years had found a normal appendix with mild peritoneal fluid. Between attacks she was well and grew normally. During an observed attack, CRP was 180 mg/l and serum amyloid A was high, and both returned to normal within a week. Urinalysis showed no protein. Her older brother had similar episodes. Genetic testing showed homozygous M694V variants in the MEFV gene. Colchicine was started at 1 mg daily and over the next year she had only one mild attack; urine protein was monitored for amyloidosis."
+  },
+  {
+   "id": "R10",
+   "gold_id": "829",
+   "gold": "Adult-onset Still disease",
+   "difficulty": "typical",
+   "text": "A 29-year-old woman was admitted with a three-week history of daily spiking fevers above 39 degrees, occurring each evening and returning to normal by morning, accompanied by a salmon-pink macular rash on the trunk and thighs that appeared with the fever. She also had a sore throat, pain and swelling of the wrists and knees, and myalgia. Examination showed cervical lymphadenopathy and a palpable spleen. White cells were 21,400 with 90 percent neutrophils, CRP 210 mg/l, ALT twice normal and ferritin 8,450 ng/ml with a low glycosylated fraction. Blood cultures, viral serology, procalcitonin, ANA and rheumatoid factor were negative. CT of the chest, abdomen and pelvis and a PET scan showed no malignancy, and bone marrow examination was reactive. Echocardiography showed a small pericardial effusion. She was treated with high-dose prednisolone with rapid defervescence, and an IL-1 inhibitor was added when steroids could not be tapered."
+  },
+  {
+   "id": "R11",
+   "gold_id": "589",
+   "gold": "Myasthenia gravis",
+   "difficulty": "typical",
+   "text": "A 34-year-old woman presented to the neurology clinic with three months of drooping of both upper eyelids and intermittent double vision that were worse in the evening and after reading, together with fatigue when chewing at the end of meals and difficulty holding her arms up to dry her hair. Symptoms improved after rest. Examination showed fatigable ptosis after sustained upgaze, variable diplopia and weakness of neck flexion; reflexes and sensation were normal. An ice pack test improved the ptosis. Repetitive nerve stimulation showed a 22 percent decremental response and single-fibre EMG showed increased jitter. Acetylcholine receptor antibodies were strongly positive and thyroid function was normal. CT of the chest showed an anterior mediastinal mass. She was started on pyridostigmine and prednisolone and underwent thymectomy; histology showed a type B1 thymoma. At one year she was in minimal manifestation status."
+  },
+  {
+   "id": "R12",
+   "gold_id": "399",
+   "gold": "Huntington disease",
+   "difficulty": "typical",
+   "text": "The patient was a 44-year-old accountant referred by his psychiatrist because of abnormal movements. Over three years he had become irritable, depressed and disorganised at work, and had lost his job. His wife described restless, jerky, dance-like movements of the face, trunk and limbs that he seemed unaware of, and frequent falls. Examination showed chorea, motor impersistence of tongue protrusion, slow saccades and an unsteady wide-based gait; cognitive testing showed impaired executive function. His father had developed similar movements in his forties and died in a nursing home at 58, and a paternal aunt had been institutionalised. Blood tests including thyroid function, copper and blood film for acanthocytes were normal. MRI of the brain showed atrophy of the caudate nuclei with enlarged frontal horns. Genetic testing found 44 CAG repeats in one allele of HTT. Tetrabenazine reduced the chorea and the family was referred for genetic counselling."
+  },
+  {
+   "id": "R13",
+   "gold_id": "778",
+   "gold": "Rett syndrome",
+   "difficulty": "typical",
+   "text": "A 2-year-old girl was referred for developmental regression. She was born at term after an uneventful pregnancy and sat at six months and walked at 13 months, saying a few words by 15 months. From around 18 months she lost the words she had and stopped using her hands to hold toys or feed herself. She developed continuous hand-wringing and hand-mouthing movements while awake, episodes of breath-holding alternating with hyperventilation, teeth grinding and inconsolable crying at night. Head circumference had fallen from the 50th to the 10th centile. She walked with a stiff wide-based gait. Hearing tests, metabolic screen, MRI of the brain and karyotype were normal, and EEG showed slowing with multifocal spikes. MECP2 sequencing identified a de novo pathogenic variant. She was referred for physiotherapy, communication therapy and cardiac monitoring for QT prolongation, and was seizure-free on valproate at follow-up."
+  },
+  {
+   "id": "R14",
+   "gold_id": "739",
+   "gold": "Prader-Willi syndrome",
+   "difficulty": "typical",
+   "text": "The proband was a 5-year-old boy referred for obesity and behavioural problems. In the neonatal period he had been severely hypotonic with a weak cry and poor suck, requiring nasogastric feeding for six weeks, and undescended testes were noted. He gained weight slowly in infancy, but from the age of three he developed an insatiable appetite, took food from bins and cupboards and now weighed 34 kg, above the 99th centile, while his height was on the 3rd centile. He had almond-shaped eyes, a narrow forehead, small hands and feet, light hair compared with his family, and frequent temper tantrums and skin picking. IQ testing showed mild intellectual disability. Methylation analysis of 15q11-q13 showed a paternal deletion pattern. Growth hormone therapy was started after sleep studies, the family received dietary and behavioural support with locked food storage, and he underwent orchidopexy."
+  },
+  {
+   "id": "R15",
+   "gold_id": "881",
+   "gold": "Turner syndrome",
+   "difficulty": "typical",
+   "text": "A 14-year-old girl was referred to paediatric endocrinology because she was the shortest in her class and had not started breast development. She had been born with swollen hands and feet that resolved in the first months. Her height was 136 cm, well below the 3rd centile and below her mid-parental target. On examination she had a webbed neck, a low posterior hairline, a broad shield chest with widely spaced nipples, increased carrying angle at the elbows, short fourth metacarpals and multiple pigmented naevi. Breasts and pubic hair were at Tanner stage 1. LH and FSH were markedly elevated with low oestradiol. Pelvic ultrasound showed a small prepubertal uterus and streak ovaries. Echocardiography showed a bicuspid aortic valve and renal ultrasound a horseshoe kidney. Karyotype was 45,X in all cells examined. She was started on growth hormone and later low-dose oestrogen to induce puberty."
+  },
+  {
+   "id": "R16",
+   "gold_id": "478",
+   "gold": "Kallmann syndrome",
+   "difficulty": "typical",
+   "text": "We report a 17-year-old boy referred to endocrinology with delayed puberty. He had no voice change, sparse facial and body hair and complained that he could not smell anything, which he said had always been the case; formal smell testing confirmed anosmia. He had had surgery for an undescended testis as a child. Height was on the 50th centile with eunuchoid proportions. Testicular volumes were 3 ml bilaterally. Testosterone was 0.8 nmol/l with low LH and FSH; prolactin, thyroid function, cortisol and IGF-1 were normal. A GnRH stimulation test gave a pubertal LH response. Bone age was delayed by two years. MRI of the brain showed absent olfactory bulbs and hypoplastic olfactory sulci with a normal pituitary. Renal ultrasound showed unilateral renal agenesis. A variant in ANOS1 was identified. He was treated with gonadotrophins and later testosterone, with virilisation over the following two years."
+  },
+  {
+   "id": "R17",
+   "gold_id": "963",
+   "gold": "Acromegaly",
+   "difficulty": "typical",
+   "text": "A 48-year-old man presented to his dentist because of new gaps between his lower teeth and difficulty chewing, and was referred on after the dentist noted prognathism. He reported that his rings and shoes no longer fitted, he sweated excessively, snored heavily and had tingling in both hands at night. Old photographs showed coarsening of his features. He had recently been diagnosed with type 2 diabetes and hypertension. Examination showed frontal bossing, an enlarged nose and tongue, large spade-like hands and a positive Tinel sign. IGF-1 was three times the upper limit of normal and growth hormone failed to suppress during a 75 g oral glucose tolerance test. Visual fields were normal. MRI showed a 14 mm pituitary macroadenoma. Polysomnography confirmed obstructive sleep apnoea and colonoscopy showed two small adenomas. He underwent transsphenoidal surgery and IGF-1 normalised by three months."
+  },
+  {
+   "id": "R18",
+   "gold_id": "85138",
+   "gold": "Addison disease",
+   "difficulty": "typical",
+   "text": "The patient was a 32-year-old woman who attended the emergency department with vomiting, abdominal pain and light-headedness after a week of a viral illness. Over the preceding eight months she had become increasingly tired, lost 7 kg, felt dizzy on standing and craved salty food. Her partner had noticed that her skin had become darker. On examination she was hyperpigmented, especially in the palmar creases, knuckles, a surgical scar and the buccal mucosa. Blood pressure was 84/50 mmHg lying with a postural drop. Sodium was 124 mmol/l, potassium 6.1 mmol/l, urea raised and glucose 3.4 mmol/l. A random cortisol was 48 nmol/l with ACTH over 1,000 ng/l, and a short Synacthen test showed no rise in cortisol. Renin was high and aldosterone low. 21-hydroxylase antibodies were positive and CT showed small adrenal glands. She also had autoimmune hypothyroidism. She was resuscitated with intravenous fluids and hydrocortisone and discharged on hydrocortisone and fludrocortisone with sick-day rules."
+  },
+  {
+   "id": "R19",
+   "gold_id": "774",
+   "gold": "Hereditary hemorrhagic telangiectasia",
+   "difficulty": "typical",
+   "text": "A 38-year-old man was referred to haematology with iron-deficiency anaemia requiring repeated iron infusions. He described nosebleeds several times a week since adolescence, sometimes lasting over half an hour. Examination showed multiple small red spots on the lips, tongue, fingertips and nasal mucosa that blanched with pressure. Haemoglobin was 8.6 g/dl with low ferritin. Gastroscopy showed several angiodysplasias in the stomach and duodenum. Contrast echocardiography showed a delayed right-to-left shunt and CT of the chest confirmed a 6 mm feeding artery to a pulmonary arteriovenous malformation in the left lower lobe. Liver Doppler showed hepatic vascular malformations. His mother and sister also had frequent nosebleeds and his maternal grandfather had died of a brain abscess. Genetic testing showed a pathogenic ENG variant. He underwent embolisation of the pulmonary malformation, laser treatment of the nasal telangiectasias and tranexamic acid, with fewer nosebleeds."
+  },
+  {
+   "id": "R20",
+   "gold_id": "797",
+   "gold": "Sarcoidosis",
+   "difficulty": "typical",
+   "text": "We present a 35-year-old non-smoking woman with a four-month history of dry cough and breathlessness on exertion. One month before presentation she had developed painful red raised lumps on both shins and swollen, painful ankles. Examination showed erythema nodosum and periarticular ankle swelling; chest examination was normal. Chest radiograph showed bilateral hilar lymphadenopathy with reticular opacities. High-resolution CT showed perilymphatic nodules along the bronchovascular bundles in the upper lobes. Serum ACE was 98 U/l, calcium 2.8 mmol/l and 24-hour urinary calcium raised. Spirometry showed a mild restrictive defect with reduced gas transfer. Endobronchial ultrasound-guided biopsy of a subcarinal node showed non-caseating epithelioid granulomas; stains and cultures for mycobacteria and fungi were negative and interferon-gamma release assay was negative. Ophthalmology found anterior uveitis. She was treated with prednisolone with resolution of symptoms and partial radiological improvement at six months."
+  },
+  {
+   "id": "R21",
+   "gold_id": "35687",
+   "gold": "Erdheim-Chester disease",
+   "difficulty": "partial",
+   "text": "A 56-year-old man was referred with bone pain in both legs for a year and a recent onset of excessive thirst and passing large volumes of urine. He had lost 6 kg and had yellowish plaques on the eyelids. Water deprivation testing confirmed central diabetes insipidus. Plain radiographs showed symmetrical sclerosis of the diaphyses and metaphyses of the femurs and tibias, and a bone scan showed symmetric increased uptake around the knees. CT of the abdomen showed soft tissue infiltrating the perirenal fat of both kidneys, giving a hairy-kidney appearance, and circumferential sheathing of the thoracic and abdominal aorta. Cardiac MRI showed infiltration of the right atrium. MRI of the brain showed thickening of the pituitary stalk. Biopsy of the perirenal tissue showed foamy histiocytes that were CD68 positive and CD1a negative with surrounding fibrosis, and BRAF V600E was detected. He was treated with a BRAF inhibitor with partial response."
+  },
+  {
+   "id": "R22",
+   "gold_id": "900",
+   "gold": "Granulomatosis with polyangiitis",
+   "difficulty": "typical",
+   "text": "The patient was a 52-year-old man who had been treated by his general practitioner for chronic sinusitis with three courses of antibiotics over three months. He had a blocked nose with bloody crusts, facial pain and reduced hearing in the right ear. He then developed cough with blood-streaked sputum, fever, weight loss and joint pains. Examination showed a saddle-nose deformity starting to develop, a perforated nasal septum and a purpuric rash on the legs. CT of the chest showed several cavitating nodules in both lungs. Urinalysis showed blood and protein with red cell casts, and creatinine rose from 110 to 260 micromol/l over two weeks. c-ANCA with PR3 specificity was strongly positive. Kidney biopsy showed pauci-immune necrotising crescentic glomerulonephritis and nasal biopsy showed granulomatous inflammation with vasculitis. He was treated with pulsed methylprednisolone and rituximab, with recovery of kidney function to a creatinine of 150 micromol/l."
+  },
+  {
+   "id": "R23",
+   "gold_id": "221",
+   "gold": "Dermatomyositis",
+   "difficulty": "typical",
+   "text": "A 47-year-old woman presented with two months of progressive difficulty climbing stairs, rising from a chair and lifting her arms above her head to wash her hair, together with a rash. Examination showed a violaceous discolouration and swelling of the upper eyelids, scaly erythematous papules over the knuckles and elbows, a V-shaped red rash on the upper chest and a similar rash over the upper back and shoulders. Proximal muscle strength was reduced to grade 4 in the shoulders and hips. Creatine kinase was 4,600 U/l, aldolase raised and ANA positive with anti-TIF1-gamma antibodies. EMG showed a myopathic pattern with fibrillation potentials. MRI of the thighs showed symmetrical muscle oedema. Muscle biopsy showed perifascicular atrophy and perivascular inflammation. Because of the antibody profile she underwent CT of the chest, abdomen and pelvis, mammography and CA-125, and an ovarian carcinoma was found and resected. She was treated with prednisolone and IVIG with improvement in strength."
+  },
+  {
+   "id": "R24",
+   "gold_id": "204",
+   "gold": "Sporadic Creutzfeldt-Jakob disease",
+   "difficulty": "typical",
+   "text": "We report a 64-year-old retired teacher whose family noticed memory problems and confusion that progressed rapidly over three months. He became unable to manage his finances, got lost driving, developed unsteady walking and complained of distorted vision. On admission he was disoriented and had cerebellar ataxia, and sudden jerks of the limbs occurred when he was startled by noise. Routine blood tests, thyroid function, vitamin B12, syphilis and HIV serology and an autoimmune encephalitis antibody panel were negative. EEG showed periodic sharp wave complexes at about one per second. MRI diffusion-weighted imaging showed cortical ribboning in the parietal and occipital lobes and restricted diffusion in the caudate and putamen. CSF had normal cell count and protein, with positive 14-3-3 protein and positive RT-QuIC. He deteriorated to akinetic mutism within six weeks and died four months after onset; autopsy confirmed spongiform change with prion protein deposition."
+  },
+  {
+   "id": "R25",
+   "gold_id": "447",
+   "gold": "Paroxysmal nocturnal hemoglobinuria",
+   "difficulty": "partial",
+   "text": "A 31-year-old man was referred for anaemia after noticing that his first urine in the morning was dark brown, clearing during the day. He reported tiredness, intermittent abdominal pain, difficulty swallowing during the episodes and erectile dysfunction. Three months earlier he had been admitted with abdominal distension and ascites, and Doppler ultrasound had shown thrombosis of the hepatic veins. Haemoglobin was 8.9 g/dl with raised reticulocytes, LDH 1,850 U/l, low haptoglobin and raised indirect bilirubin. The direct antiglobulin test was negative and the blood film showed no fragments. White cells and platelets were mildly reduced. Urine was positive for haemosiderin. Bone marrow showed erythroid hyperplasia. Flow cytometry of peripheral blood showed loss of CD55 and CD59 on 65 percent of red cells and FLAER-negative granulocytes. He was anticoagulated, vaccinated against meningococcus and started on a complement C5 inhibitor, after which transfusion needs fell and LDH normalised."
+  },
+  {
+   "id": "R26",
+   "gold_id": "54057",
+   "gold": "Thrombotic thrombocytopenic purpura",
+   "difficulty": "typical",
+   "text": "A previously healthy 28-year-old woman presented to the emergency department with a week of headache and fatigue, followed by fever, confusion and bruising on her legs. She was intermittently disoriented and had a transient weakness of the right arm. Haemoglobin was 7.8 g/dl, platelets 12,000 per microlitre, reticulocytes raised, LDH 1,450 U/l and haptoglobin undetectable. The blood film showed numerous schistocytes. Creatinine was mildly raised, troponin elevated, and prothrombin time, APTT and fibrinogen were normal. The direct antiglobulin test was negative. CT of the brain was normal. ADAMTS13 activity was below 5 percent with a positive inhibitor. She was started on daily plasma exchange, corticosteroids, caplacizumab and rituximab. Platelets normalised on day 6 and the neurological symptoms resolved. ADAMTS13 activity recovered over two months, and testing for lupus and HIV was negative."
+  },
+  {
+   "id": "R27",
+   "gold_id": "91378",
+   "gold": "Hereditary angioedema",
+   "difficulty": "typical",
+   "text": "The patient was a 22-year-old woman referred to immunology with recurrent swelling since puberty. Episodes affected the hands, feet, face and lips, developing over a day and lasting two to four days, without hives or itch, and were sometimes triggered by minor trauma or dental work. She also had episodes of severe colicky abdominal pain with vomiting, and one episode had led to a laparotomy that found only bowel wall oedema and free fluid. Antihistamines, corticosteroids and adrenaline had not helped. Her symptoms had worsened after starting the combined contraceptive pill. Her father had had an episode of throat swelling requiring emergency tracheostomy. C4 was low between attacks, C1 inhibitor level was 18 percent of normal and function was reduced, and C1q was normal. A pathogenic SERPING1 variant was found. She was given on-demand icatibant, the contraceptive pill was stopped, and prophylaxis was started before dental procedures."
+  },
+  {
+   "id": "R28",
+   "gold_id": "56",
+   "gold": "Alkaptonuria",
+   "difficulty": "typical",
+   "text": "A 52-year-old man was referred to rheumatology with back pain and stiffness for ten years and progressive pain in both knees and hips. His mother recalled that his nappies had turned dark when left standing. He had had a rupture of the Achilles tendon and an aortic valve replacement for aortic stenosis at 49. Examination showed bluish-black pigmentation of the scleral sclera near the insertion of the eye muscles and of the ear cartilage, and reduced spinal movement. His urine darkened to black on standing and on adding alkali. Radiographs of the spine showed calcification of multiple intervertebral discs with narrowing of the disc spaces, and the knees showed severe degenerative change. At knee replacement surgery the cartilage was black. Urinary homogentisic acid was markedly elevated and HGD gene sequencing confirmed the diagnosis. He was started on nitisinone with a low-protein diet."
+  },
+  {
+   "id": "R29",
+   "gold_id": "586",
+   "gold": "Cystic fibrosis",
+   "difficulty": "typical",
+   "text": "We describe a 4-year-old boy referred to respiratory paediatrics with recurrent chest infections. He had required surgery on day two of life for meconium ileus. Since infancy he had had a daily wet cough, five hospital admissions for pneumonia, and poor weight gain despite a large appetite, with bulky, greasy, foul-smelling stools. His weight was on the 2nd centile and height on the 25th. He had finger clubbing, nasal polyps and crackles at both bases. Sputum cultures grew Staphylococcus aureus and Pseudomonas aeruginosa. Faecal elastase was below 15 micrograms per gram. CT of the chest showed bronchiectasis in the upper lobes. Sweat chloride was 92 and 98 mmol/l on two occasions and genetic testing showed homozygous F508del variants. He was started on pancreatic enzyme replacement, fat-soluble vitamins, airway clearance physiotherapy, nebulised antibiotics and a CFTR modulator, with weight gain and fewer exacerbations."
+  },
+  {
+   "id": "R30",
+   "gold_id": "63",
+   "gold": "Alport syndrome",
+   "difficulty": "typical",
+   "text": "A 15-year-old boy was referred to paediatric nephrology with persistent microscopic haematuria first noted at age four during an episode of visible haematuria with a throat infection. He now had proteinuria with a protein to creatinine ratio of 120 mg/mmol, blood pressure on the 95th centile and creatinine of 115 micromol/l. Audiometry showed bilateral sensorineural hearing loss affecting the high frequencies, and he had recently started using hearing aids. Ophthalmological examination showed anterior lenticonus and dot-and-fleck retinopathy. His maternal uncle had needed a kidney transplant at 24 and his mother had microscopic haematuria. Kidney biopsy showed thinning, thickening and splitting of the glomerular basement membrane with a basket-weave appearance, and immunostaining showed absent alpha-5 type IV collagen. A pathogenic COL4A5 variant was found. An ACE inhibitor was started and he was followed in a transition clinic."
+  },
+  {
+   "id": "R31",
+   "gold_id": "2467",
+   "gold": "Systemic mastocytosis",
+   "difficulty": "partial",
+   "text": "A 45-year-old woman was referred to allergy after collapsing with hypotension following a wasp sting. She described two years of episodes of flushing of the face and chest, palpitations, abdominal cramps, diarrhoea and light-headedness, triggered by alcohol, hot baths and exercise. Examination showed numerous small reddish-brown macules on the thighs and trunk that became raised and itchy when stroked. Serum tryptase was 46 ng/ml at baseline. Full blood count was normal. Abdominal ultrasound showed mild splenomegaly and a DEXA scan showed osteoporosis of the lumbar spine. Bone marrow biopsy showed multifocal dense aggregates of spindle-shaped mast cells expressing CD25, and the KIT D816V mutation was detected. Skin biopsy confirmed increased mast cells. She was started on H1 and H2 antihistamines, a mast cell stabiliser and bisphosphonate, was given an adrenaline autoinjector and venom immunotherapy, and has remained free of anaphylaxis."
+  },
+  {
+   "id": "R32",
+   "gold_id": "3452",
+   "gold": "Whipple disease",
+   "difficulty": "partial",
+   "text": "A 58-year-old farmer was admitted for investigation of weight loss of 14 kg over a year with chronic watery diarrhoea and crampy abdominal pain. For six years before that he had had episodes of pain and swelling moving between the knees, wrists and ankles, treated as seronegative arthritis with methotrexate. He now had low-grade fever, generalised lymphadenopathy and darkening of the skin. Haemoglobin was 10.2 g/dl, albumin 26 g/l, CRP raised and faecal calprotectin normal. CT showed enlarged mesenteric and retroperitoneal lymph nodes. Upper endoscopy showed pale yellow shaggy duodenal mucosa. Duodenal biopsies showed villi distended by foamy macrophages containing PAS-positive, diastase-resistant inclusions, and PCR for Tropheryma whipplei was positive in the biopsy and in saliva. CSF PCR was negative. He was treated with intravenous ceftriaxone for two weeks followed by a year of co-trimoxazole, with resolution of diarrhoea and weight gain."
+  },
+  {
+   "id": "R33",
+   "gold_id": "930",
+   "gold": "Idiopathic achalasia",
+   "difficulty": "typical",
+   "text": "The patient was a 39-year-old woman referred to gastroenterology with two years of difficulty swallowing both solids and liquids, worse with cold drinks, and regurgitation of undigested food when lying down at night, waking her with coughing. She had retrosternal chest pain after meals and had lost 9 kg. She had been treated for reflux with a proton pump inhibitor without benefit. Upper endoscopy showed a dilated oesophagus containing food residue with a tight gastro-oesophageal junction that the scope passed with gentle pressure, and no tumour. Barium swallow showed a dilated oesophagus tapering to a smooth bird's-beak narrowing at the lower end with delayed emptying. High-resolution manometry showed absent peristalsis and incomplete relaxation of the lower oesophageal sphincter with panesophageal pressurisation. CT of the chest excluded a mass. She underwent peroral endoscopic myotomy with resolution of dysphagia and weight regain."
+  },
+  {
+   "id": "R34",
+   "gold_id": "2573",
+   "gold": "Moyamoya disease",
+   "difficulty": "partial",
+   "text": "A 7-year-old girl of Japanese origin was referred to paediatric neurology after several brief episodes of weakness of the left arm and slurred speech over three months, each lasting a few minutes and often brought on by crying, blowing out birthday candles or blowing on hot soup. She also had frequent headaches. Neurological examination between episodes was normal. Blood tests including full blood count, coagulation screen and thrombophilia screen were normal. MRI of the brain showed small infarcts in the right frontal white matter and the ivy sign on FLAIR images. Magnetic resonance angiography and conventional angiography showed bilateral stenosis of the terminal internal carotid arteries and proximal middle cerebral arteries with a network of fine collateral vessels at the base of the brain resembling a puff of smoke. RNF213 testing showed the p.R4810K variant. She was started on aspirin and underwent indirect revascularisation surgery on both sides, with no further attacks."
+  },
+  {
+   "id": "R35",
+   "gold_id": "43393",
+   "gold": "Lambert-Eaton myasthenic syndrome",
+   "difficulty": "partial",
+   "text": "A 61-year-old man with a 40 pack-year smoking history presented with three months of difficulty rising from a low chair and climbing stairs, aching thighs, a dry mouth, constipation and erectile dysfunction. Examination showed proximal weakness of the hips and shoulders. Tendon reflexes were absent at rest but became elicitable after ten seconds of maximal contraction. There was mild ptosis. Nerve conduction studies showed low compound muscle action potential amplitudes that increased by over 200 percent after brief exercise and with high-frequency repetitive stimulation. Voltage-gated calcium channel antibodies of the P/Q type were strongly positive and acetylcholine receptor antibodies were negative. CT of the chest showed a right hilar mass with mediastinal lymphadenopathy, and bronchoscopic biopsy showed small cell lung carcinoma. He was treated with chemotherapy and amifampridine, with improvement of strength."
+  },
+  {
+   "id": "R36",
+   "gold_id": "104",
+   "gold": "Leber hereditary optic neuropathy",
+   "difficulty": "typical",
+   "text": "A 22-year-old man presented to the eye clinic with painless blurring of central vision in his left eye for three weeks, and six weeks later the right eye was affected. He smoked 20 cigarettes a day and drank heavily at weekends. Visual acuity fell to 6/60 in both eyes with dense central scotomas and impaired colour vision. The optic discs appeared hyperaemic and swollen with peripapillary telangiectatic microangiopathy, but fluorescein angiography showed no leakage. MRI of the brain and orbits with contrast was normal, aquaporin-4 and MOG antibodies were negative, and B12 and folate were normal. Optical coherence tomography later showed thinning of the retinal nerve fibre layer. His maternal uncle had lost central vision at a similar age. Mitochondrial DNA testing showed the m.11778G>A variant. He was advised to stop smoking and alcohol and treated with idebenone, with modest improvement in the left eye after a year."
+  },
+  {
+   "id": "R37",
+   "gold_id": "666",
+   "gold": "Osteogenesis imperfecta",
+   "difficulty": "typical",
+   "text": "An 8-year-old boy was referred to the bone clinic after his eleventh fracture, a femoral fracture after tripping in the playground. Previous fractures had involved the forearms, tibias and ribs after minor falls, and child protection services had been involved after the first two. Examination showed blue-grey sclerae, short stature on the 2nd centile, bowing of both femurs and tibias, joint hypermobility and opalescent, discoloured teeth. Radiographs showed generalised osteopenia, thin cortices, healed fractures with deformity and wormian bones in the skull. DEXA showed a lumbar spine Z-score of minus 3.4. Calcium, phosphate, vitamin D and alkaline phosphatase were normal. His mother had also had many fractures as a child and became hard of hearing in her thirties. A pathogenic COL1A1 variant was found in both. He was treated with intravenous bisphosphonate infusions, and intramedullary rods were placed in the femurs, with fewer fractures over two years."
+  },
+  {
+   "id": "R38",
+   "gold_id": "337",
+   "gold": "Fibrodysplasia ossificans progressiva",
+   "difficulty": "typical",
+   "text": "We report a 5-year-old girl referred with recurrent painful swellings of the neck and back. The first swelling appeared on the back of the neck after a fall at three, and was initially thought to be a tumour; a biopsy was considered but deferred. Over two years further firm, tender swellings appeared over the back and shoulders after minor bumps and intramuscular vaccination, each subsiding over weeks but leaving hard lumps. She could no longer turn her head fully and had restricted shoulder movement. Both great toes were short and deviated inwards since birth. Radiographs showed bony bridges forming in the soft tissues of the back and shoulder girdle and malformed first metatarsals. CT showed heterotopic ossification within muscles. Genetic testing found the ACVR1 R206H variant. Intramuscular injections, biopsies and surgery were avoided, and flare-ups were treated with short courses of corticosteroids."
+  },
+  {
+   "id": "R39",
+   "gold_id": "728",
+   "gold": "Relapsing polychondritis",
+   "difficulty": "partial",
+   "text": "A 46-year-old man was referred to rheumatology after three episodes over a year of painful, red, swollen outer ears that spared the earlobes, each treated as cellulitis with antibiotics without clear benefit. He also had episodes of red, painful eyes diagnosed as scleritis, pain and swelling of the knees, and recent hoarseness with a sensation of breathlessness on exertion. Examination showed floppy, deformed auricles and early collapse of the nasal bridge. CRP and ESR were raised during attacks. CT of the chest showed thickening of the tracheal and main bronchial walls sparing the posterior membrane, and spirometry showed variable extrathoracic obstruction. Ear cartilage biopsy showed perichondral inflammation with loss of cartilage basophilia. Myelodysplasia and vasculitis screens were negative. He was treated with prednisolone and methotrexate, and later a biologic agent, with fewer flares."
+  },
+  {
+   "id": "R40",
+   "gold_id": "538",
+   "gold": "Lymphangioleiomyomatosis",
+   "difficulty": "partial",
+   "text": "A 36-year-old woman presented to the emergency department with sudden right-sided chest pain and breathlessness. Chest radiograph showed a right pneumothorax, her second in two years, and an intercostal drain was inserted. She described increasing breathlessness on exertion over two years that had been treated as asthma. High-resolution CT showed numerous thin-walled round cysts evenly distributed throughout both lungs, a small chylous pleural effusion and a fat-containing mass in the left kidney consistent with an angiomyolipoma. Spirometry showed airflow obstruction with reduced gas transfer. She had no skin or neurological features of tuberous sclerosis. Serum VEGF-D was 1,450 pg/ml. She underwent pleurodesis and was started on sirolimus, after which her lung function stabilised over the next year."
+  },
+  {
+   "id": "R41",
+   "gold_id": "758",
+   "gold": "Pseudoxanthoma elasticum",
+   "difficulty": "brief",
+   "text": "Woman, 46. Loss of central vision; angioid streaks on fundoscopy; yellow papules on neck."
+  },
+  {
+   "id": "R42",
+   "gold_id": "905",
+   "gold": "Wilson disease",
+   "difficulty": "brief",
+   "text": "Teenager with tremor, abnormal liver tests and a corneal copper ring; low ceruloplasmin."
+  },
+  {
+   "id": "R43",
+   "gold_id": "589",
+   "gold": "Myasthenia gravis",
+   "difficulty": "brief",
+   "text": "Fatigable ptosis and diplopia, worse in the evening. AChR antibodies positive."
+  },
+  {
+   "id": "R44",
+   "gold_id": "2331",
+   "gold": "Kawasaki disease",
+   "difficulty": "brief",
+   "text": "Toddler, fever for 5 days, conjunctival injection, strawberry tongue, peeling fingers."
+  },
+  {
+   "id": "R45",
+   "gold_id": "54057",
+   "gold": "Thrombotic thrombocytopenic purpura",
+   "difficulty": "brief",
+   "text": "Severe thrombocytopenia, schistocytes, confusion, ADAMTS13 under 10 percent."
+  },
+  {
+   "id": "R46",
+   "gold_id": "636",
+   "gold": "Neurofibromatosis type 1",
+   "difficulty": "brief",
+   "text": "Child with multiple cafe-au-lait spots, axillary freckling and Lisch nodules."
+  }
+ ]
+}

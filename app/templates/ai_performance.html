@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% from "_ui.html" import banner %}
+{% block title %}Model performance{% endblock %}
+{% block content %}
+<div class="crumbs"><a href="/ai">AI diagnosis</a> › Model performance</div>
+{{ banner('How accurate is the AI?', 'How fast the diagnosis assistant answers, what it costs, how accurate it is on real and test cases, and where it can go wrong. Use it to support your judgement, never to replace it.', 'hero-ai.svg', 'violet') }}
+
+{% macro pctf(x) %}{{ '%.0f' | format(x * 100) }}%{% endmacro %}
+{% macro num(x) %}{{ '%.3f' | format(x) }}{% endmacro %}
+{% macro secs(ms) %}{{ '%.2f' | format(ms / 1000) }} s{% endmacro %}
+
+{# ---------------- real-world usage ---------------- #}
+<h2>In everyday use</h2>
+{% set h = ev.latency_http if ev else none %}
+<div class="perf-cards">
+  {% if usage and usage.load_local %}{% set one = usage.load_local[0] %}
+  <div class="perf-card"><span class="muted small">Time to results, typical</span><b>{{ secs(one.p50_ms) }}</b><span class="small muted">slowest 1%: {{ secs(one.p99_ms) }}</span></div>
+  <div class="perf-card"><span class="muted small">Analyses per second (one server)</span><b>{{ '%.1f' | format(usage.load_local[-1].throughput_per_s) }}</b><span class="small muted">{{ usage.load_local[-1].clients }} doctors at once: {{ secs(usage.load_local[-1].p50_ms) }} each</span></div>
+  {% elif h %}<div class="perf-card"><span class="muted small">Time to results, typical</span><b>{{ secs(h.p50_ms) }}</b><span class="small muted">slowest 1%: {{ secs(h.p99_ms) }}</span></div>{% endif %}
+  {% if usage and usage.llm and usage.llm.explain %}
+  <div class="perf-card"><span class="muted small">"Explain with AI"</span><b>{{ '%.0f' | format(usage.llm.explain.p50_s) }} s</b><span class="small muted">{{ pctf(usage.llm.explain.claims_kept_after_checks) }} of its claims pass the citation checks</span></div>
+  <div class="perf-card"><span class="muted small">AI cost per explanation</span><b>₹{{ '%.2f' | format(usage.llm.spend_inr_total / usage.llm.explain.cases) }}</b><span class="small muted">background AI review: under ₹0.01 per case</span></div>
+  {% endif %}
+</div>
+{% if usage %}
+<p class="small muted">Measured {{ usage.generated }} on a {{ usage.machine }}. The app is ready {{ '%.0f' | format(usage.cold_start.seconds_to_ready) }} s after start and uses about {{ usage.cold_start.working_set_mb }} MB of memory.
+  The AI review and explanation need DeepSeek credit; without it everything still works in rule-based mode.</p>
+{% set c = usage.coverage %}
+<div class="perf-notes" style="margin-top:10px">
+  <div class="perf-note"><span class="ic violet">{{ icon('sparkles') }}</span><div><b>What the suggestions are built on</b>
+    <div class="small">{{ '{:,}'.format(c.rare_disease_catalog) }} rare diseases ({{ '{:,}'.format(c.with_optimuskg_profile) }} with a knowledge-graph profile),
+    {{ '{:,}'.format(c.searchable_phenotypes) }} searchable symptoms and signs, {{ c.common_conditions }} everyday conditions.
+    Medicine suggestions: {{ '{:,}'.format(c.with_case_derived_medicines) }} rare diseases have medicines used in published case reports, and all {{ c.common_conditions_with_first_line_medicines }} everyday conditions have first-line options.</div></div></div>
+</div>
+{% endif %}
+
+{# ---------------- accuracy ---------------- #}
+{% if base %}{% set t = base.test %}
+<h2>Accuracy on real case reports</h2>
+<p class="muted" style="margin-top:-4px">{{ '{:,}'.format(10702) }} published case reports the model never saw in training, across 1,464 rare diseases. This is the best estimate of real-world accuracy.</p>
+<div class="perf-cards">
+  <div class="perf-card"><span class="muted small">Correct disease ranked first</span><b>{{ pctf(t.top1) }}</b></div>
+  <div class="perf-card"><span class="muted small">In the top 5</span><b>{{ pctf(t.top5) }}</b></div>
+  <div class="perf-card"><span class="muted small">In the top 10</span><b>{{ pctf(t.top10) }}</b></div>
+  <div class="perf-card"><span class="muted small">MRR (higher is better, max 1)</span><b>{{ num(t.mrr) }}</b></div>
+</div>
+{% endif %}
+
+{% if ev %}
+{% set r = ev.rare.retriever_only %}{% set re = ev.rare.end_to_end %}{% set c = ev.common.realist_common_list_strict %}{% set ce = ev.common.end_to_end %}{% set cb = ev.combined.end_to_end %}
+<h2>Accuracy checks on test cases</h2>
+<p class="muted" style="margin-top:-4px">{{ ev.cases.rare }} rare-disease and {{ ev.cases.common }} everyday cases written as case reports, plus {{ ev.real_heldout.n if ev.real_heldout else 0 }} real case reports held out from tuning (evaluated {{ ev.generated }}). The test cases are cleaner than real notes, so they are for checking the system, not for promising accuracy.</p>
+<div class="table-card"><table>
+  <tr><th>What is measured</th><th>MRR@10</th><th>Right answer 1st</th><th>In top 5</th><th>In top 10</th></tr>
+  <tr><td><b>Rare cases</b>: rare-disease ranking alone</td><td>{{ num(r['mrr@10']) }}</td><td>{{ pctf(r['recall@1']) }}</td><td>{{ pctf(r['recall@5']) }}</td><td>{{ pctf(r['recall@10']) }}</td></tr>
+  <tr><td><b>Rare cases</b>: as shown on the results page</td><td>{{ num(re['mrr@10']) }}</td><td>{{ pctf(re['recall@1']) }}</td><td>{{ pctf(re['recall@5']) }}</td><td>{{ pctf(re['recall@10']) }}</td></tr>
+  <tr><td><b>Everyday cases</b>: realist's list of 5 common conditions</td><td>{{ num(c['mrr@5']) }} <span class="muted small">@5</span></td><td>{{ pctf(c['recall@1']) }}</td><td>{{ pctf(c['recall@5']) }}</td><td>—</td></tr>
+  <tr><td><b>Everyday cases</b>: as shown on the results page</td><td>{{ num(ce['mrr@10']) }}</td><td>{{ pctf(ce['recall@1']) }}</td><td>{{ pctf(ce['recall@5']) }}</td><td>{{ pctf(ce['recall@10']) }}</td></tr>
+  <tr><td><b>All cases</b>: as shown on the results page</td><td><b>{{ num(cb['mrr@10']) }}</b>{% if old_rules %} <span class="small muted">(was {{ num(old_rules.combined.end_to_end['mrr@10']) }})</span>{% endif %}</td><td>{{ pctf(cb['recall@1']) }}</td><td>{{ pctf(cb['recall@5']) }}</td><td><b>{{ pctf(cb['recall@10']) }}</b></td></tr>
+  {% if ev.real_heldout %}{% set rh = ev.real_heldout %}
+  <tr><td><b>Real case reports</b> ({{ rh.n }}): as shown on the results page</td><td>{{ num(rh.end_to_end['mrr@10']) }}</td><td>{{ pctf(rh.end_to_end['recall@1']) }}</td><td>{{ pctf(rh.end_to_end['recall@5']) }}</td><td>{{ pctf(rh.end_to_end['recall@10']) }}</td></tr>{% endif %}
+</table></div>
+
+{% set ro = ev.routing %}
+<div class="perf-cards" style="margin-top:12px">
+  <div class="perf-card"><span class="muted small">Everyday cases shown common causes first</span><b>{{ pctf(ro.common_cases_sent_common_first) }}</b>{% if old_rules %}<span class="small muted">was {{ pctf(old_rules.routing.common_cases_sent_common_first) }}</span>{% endif %}</div>
+  <div class="perf-card"><span class="muted small">Rare cases wrongly shown common causes first</span><b>{{ pctf(ro.rare_cases_sent_common_first) }}</b>{% if ev.real_heldout %}<span class="small muted">real reports: {{ pctf(ev.real_heldout.verdicts.common_first / ev.real_heldout.n) }}</span>{% endif %}</div>
+</div>
+
+<h2>Known limits</h2>
+<div class="perf-notes">
+  <div class="perf-note"><span class="ic amber">{{ icon('bell') }}</span><div><b>Detailed everyday notes can look like a rare work-up.</b>
+    When a note lists several investigations (CT, cultures, ECG), the realist may say "rule out common causes too"; the common conditions then appear below the rare list. Scroll down for them.</div></div>
+  <div class="perf-note"><span class="ic amber">{{ icon('bell') }}</span><div><b>Rare diseases with mostly everyday symptoms</b> are occasionally shown common causes first. If the case has specific signs, read the rare list too.</div></div>
+  <div class="perf-note"><span class="ic blue">{{ icon('message') }}</span><div><b>Unusual wording may be missed.</b>
+    Ticking symptoms from the list helps the realist and the ranking.</div></div>
+  <div class="perf-note"><span class="ic green">{{ icon('check') }}</span><div><b>Clean, specific findings work best.</b>
+    Signs such as angioid streaks, a corneal copper ring or positive antibodies lift the right disease to the top, even in very short notes.</div></div>
+</div>
+{% else %}
+<div class="empty">No evaluation results yet. Run <code>python evaluation/run_eval.py</code> to create them.</div>
+{% endif %}
+<p class="small muted" style="margin-top:18px">Full method, all metrics and how to reproduce them: <code>evaluation/README.md</code>. Research prototype, not a diagnostic device.</p>
+{% endblock %}

@@ -38,13 +38,13 @@ _load_env()
 
 from . import history as hx  # noqa: E402
 from . import images as imgs  # noqa: E402
-from . import notify, pharmacy, realist  # noqa: E402
+from . import drug_suggest, notify, pharmacy, realist  # noqa: E402
 from .ai import AI  # noqa: E402
 from .symptoms import INDEX as SYMPTOMS  # noqa: E402
 from .symptoms import common_symptoms_grouped  # noqa: E402
-from .db import (APPT_STATUSES, ROLES, AIAnalysis, Appointment, Clinic,  # noqa: E402
+from .db import (APPT_STATUSES, ROLES, role_clause, AIAnalysis, Appointment, Clinic,  # noqa: E402
                  Diagnosis, Drug, Feedback, HistoryIntake, Hospital, Notification, Patient, PatientImage, Prescription,
-                 StockMove, Sale,
+                 StockMove, Sale, MedicineReaction,
                  SessionLocal, User, check_password, hash_password, init_db)
 
 app = FastAPI(title="MediPurse")
@@ -65,6 +65,10 @@ def _fmt_d(v):
 templates.env.filters["dt"] = _fmt_dt
 templates.env.filters["d"] = _fmt_d
 templates.env.filters["fromjson"] = lambda s: json.loads(s) if s else {}
+templates.env.filters["hue"] = lambda s: sum(ord(c) * (i + 1) for i, c in enumerate(str(s))) % 360
+# cache-busting for static files: the URL changes whenever the file changes
+_STATIC = Path(__file__).parent / "static"
+templates.env.globals["asset"] = lambda name: f"/static/{name}?v={int((_STATIC / name).stat().st_mtime)}"
 
 
 @app.on_event("startup")
@@ -117,7 +121,7 @@ def current_user(request: Request, db=Depends(get_db)) -> User:
     if not user or not user.active:
         request.session.pop("uid", None)
         raise Redirect("/login")
-    if user.role == "pharmacist" and not request.url.path.startswith(PHARMACIST_PATHS):
+    if user.only("pharmacist") and not request.url.path.startswith(PHARMACIST_PATHS):
         raise HTTPException(403, "Pharmacists have access to dispensing, stock, sales and medicine reports.")
     return user
 
@@ -126,14 +130,14 @@ PHARMACIST_PATHS = ("/pharmacy", "/inventory", "/reports")
 
 
 def require(user: User, *roles: str) -> None:
-    if user.role not in roles:
+    if not user.has(*roles):
         raise HTTPException(403, "You do not have access to this page.")
 
 
 def online_bookings_query(db, user: User):
     q = scoped_appointments(db, user).filter(Appointment.source == "online", Appointment.acknowledged == 0,
                                              Appointment.status == "scheduled")
-    if user.role == "doctor":
+    if user.has("doctor"):
         q = q.filter(Appointment.doctor_id == user.id)
     return q
 
@@ -144,8 +148,8 @@ def render(request: Request, name: str, user: User | None = None, **ctx):
         db = SessionLocal()
         try:
             ctx["new_online"] = online_bookings_query(db, user).count()
-            cid = None if user.role == "admin" else user.clinic_id
-            ctx["low_stock_n"] = len(pharmacy.low_stock(db, cid)) if user.role in ("pharmacist", "admin") or \
+            cid = None if user.has("admin") else user.clinic_id
+            ctx["low_stock_n"] = len(pharmacy.low_stock(db, cid)) if user.has("pharmacist", "admin") or \
                 pharmacy.can_manage_stock(db, user) else 0
             ctx["rx_pending_n"] = len(pharmacy.pending_groups(db, cid)) if pharmacy.can_dispense(user) else 0
             ctx["can_sell"] = pharmacy.can_sell(user)
@@ -158,28 +162,28 @@ def render(request: Request, name: str, user: User | None = None, **ctx):
 
 def scoped_patients(db, user: User):
     q = db.query(Patient)
-    if user.role != "admin":
+    if not user.has("admin"):
         q = q.filter(Patient.clinic_id == user.clinic_id)
     return q
 
 
 def get_patient(db, user: User, pid: int) -> Patient:
     p = db.get(Patient, pid)
-    if not p or (user.role != "admin" and p.clinic_id != user.clinic_id):
+    if not p or (not user.has("admin") and p.clinic_id != user.clinic_id):
         raise HTTPException(404, "Patient not found")
     return p
 
 
 def scoped_appointments(db, user: User):
     q = db.query(Appointment).join(Patient)
-    if user.role != "admin":
+    if not user.has("admin"):
         q = q.filter(Patient.clinic_id == user.clinic_id)
     return q
 
 
 def doctors_for(db, user: User, clinic_id: int | None = None):
-    q = db.query(User).filter(User.role == "doctor", User.active == 1)
-    cid = clinic_id or (user.clinic_id if user.role != "admin" else None)
+    q = db.query(User).filter(role_clause("doctor"), User.active == 1)
+    cid = clinic_id or (user.clinic_id if not user.has("admin") else None)
     if cid:
         q = q.filter(User.clinic_id == cid)
     return q.order_by(User.name).all()
@@ -187,7 +191,7 @@ def doctors_for(db, user: User, clinic_id: int | None = None):
 
 def visible_clinics(db, user: User):
     q = db.query(Clinic)
-    if user.role != "admin":
+    if not user.has("admin"):
         q = q.filter(Clinic.id == user.clinic_id)
     return q.order_by(Clinic.name).all()
 
@@ -246,7 +250,7 @@ def home(request: Request, db=Depends(get_db)):
     uid = request.session.get("uid")
     user = db.get(User, uid) if uid else None
     if user and user.active:
-        if user.role == "pharmacist":
+        if user.only("pharmacist"):
             return redirect("/pharmacy")
         return dashboard(request, db, user)
     if request.session.get("patient_id"):
@@ -272,12 +276,12 @@ def dashboard(request: Request, db, user: User):
     end = start + timedelta(days=1)
     appts = scoped_appointments(db, user).filter(
         Appointment.scheduled_at >= start, Appointment.scheduled_at < end)
-    if user.role == "doctor":
+    if user.has("doctor"):
         appts = appts.filter(Appointment.doctor_id == user.id)
     appts = appts.order_by(Appointment.scheduled_at).all()
     upcoming = scoped_appointments(db, user).filter(
         Appointment.scheduled_at >= end, Appointment.status == "scheduled")
-    if user.role == "doctor":
+    if user.has("doctor"):
         upcoming = upcoming.filter(Appointment.doctor_id == user.id)
     stats = {
         "patients": scoped_patients(db, user).count(),
@@ -285,24 +289,24 @@ def dashboard(request: Request, db, user: User):
         "upcoming": upcoming.count(),
         "active_dx": db.query(Diagnosis).join(Patient).filter(
             Diagnosis.status == "active",
-            *( [] if user.role == "admin" else [Patient.clinic_id == user.clinic_id])).count(),
+            *( [] if user.has("admin") else [Patient.clinic_id == user.clinic_id])).count(),
     }
     rxq = db.query(Prescription).join(Patient).filter(Prescription.prescribed_at >= start,
                                                       Prescription.prescribed_at < end)
-    if user.role != "admin":
+    if not user.has("admin"):
         rxq = rxq.filter(Patient.clinic_id == user.clinic_id)
     stats["rx_today"] = rxq.count()
-    if user.role == "admin":
+    if user.has("admin"):
         stats["hospitals"] = db.query(Hospital).count()
         stats["clinics"] = db.query(Clinic).count()
         stats["staff"] = db.query(User).count()
     recent_patients = scoped_patients(db, user).order_by(Patient.created_at.desc()).limit(5).all()
     online = online_bookings_query(db, user).order_by(Appointment.scheduled_at).all()
     intakes = []
-    if user.role in ("doctor", "admin"):
+    if user.has("doctor", "admin"):
         iq = db.query(HistoryIntake).join(Patient).filter(HistoryIntake.status == "completed",
                                                          HistoryIntake.reviewed == 0)
-        if user.role != "admin":
+        if not user.has("admin"):
             iq = iq.filter(Patient.clinic_id == user.clinic_id)
         intakes = iq.order_by(HistoryIntake.completed_at.desc()).limit(20).all()
     return render(request, "dashboard.html", user, appts=appts, stats=stats,
@@ -406,7 +410,7 @@ async def clinic_create(request: Request, db=Depends(get_db), user: User = Depen
 
 @app.get("/clinics/{cid}")
 def clinic_detail(cid: int, request: Request, db=Depends(get_db), user: User = Depends(current_user)):
-    if user.role != "admin" and user.clinic_id != cid:
+    if not user.has("admin") and user.clinic_id != cid:
         raise HTTPException(403)
     c = db.get(Clinic, cid)
     if not c:
@@ -458,12 +462,13 @@ async def staff_create(request: Request, db=Depends(get_db), user: User = Depend
     require(user, "admin")
     form = await request.form()
     email = _s(form, "email").lower()
-    role = _s(form, "role")
+    roles = [r for r in form.getlist("roles") if r in ROLES]
+    role = next((r for r in ROLES if r in roles), "")
     err = None
     if not _s(form, "name") or not email:
         err = "Name and email are required."
-    elif role not in ROLES:
-        err = "Choose a role."
+    elif not roles:
+        err = "Choose at least one role."
     elif len(_s(form, "password")) < 6:
         err = "Password must be at least 6 characters."
     elif db.query(User).filter(User.email == email).first():
@@ -474,8 +479,9 @@ async def staff_create(request: Request, db=Depends(get_db), user: User = Depend
         flash(request, err, "error")
         return redirect("/staff/new")
     s = User(name=_s(form, "name"), email=email, role=role, specialty=_s(form, "specialty"),
-             clinic_id=_int(form.get("clinic_id")) if role != "admin" else None,
              password_hash=hash_password(_s(form, "password")))
+    s.set_roles(roles)
+    s.clinic_id = _int(form.get("clinic_id")) if not s.has("admin") else None
     db.add(s)
     db.commit()
     flash(request, f"Account created for {s.name}.")
@@ -496,9 +502,13 @@ async def staff_update(sid: int, request: Request, db=Depends(get_db), user: Use
     form = await request.form()
     s.name = _s(form, "name") or s.name
     s.specialty = _s(form, "specialty")
-    if _s(form, "role") in ROLES and s.id != user.id:
-        s.role = _s(form, "role")
-    s.clinic_id = _int(form.get("clinic_id")) if s.role != "admin" else None
+    roles = [r for r in form.getlist("roles") if r in ROLES]
+    if roles and s.id != user.id:
+        if "admin" not in roles and not _int(form.get("clinic_id")):
+            flash(request, "Doctors, receptionists and pharmacists must belong to a clinic.", "error")
+            return redirect(f"/staff/{sid}/edit")
+        s.set_roles(roles)
+    s.clinic_id = _int(form.get("clinic_id")) if not s.has("admin") else None
     if _s(form, "password"):
         s.password_hash = hash_password(_s(form, "password"))
     if s.id != user.id:
@@ -537,7 +547,7 @@ def patient_new(request: Request, db=Depends(get_db), user: User = Depends(curre
 @app.post("/patients/new")
 async def patient_create(request: Request, db=Depends(get_db), user: User = Depends(current_user)):
     form = await request.form()
-    clinic_id = _int(form.get("clinic_id")) if user.role == "admin" else user.clinic_id
+    clinic_id = _int(form.get("clinic_id")) if user.has("admin") else user.clinic_id
     if not _s(form, "first_name") or not clinic_id:
         flash(request, "First name and clinic are required.", "error")
         return redirect("/patients/new")
@@ -571,6 +581,8 @@ def patient_detail(pid: int, request: Request, tab: str = "overview", db=Depends
                   intakes=db.query(HistoryIntake).filter(HistoryIntake.patient_id == p.id)
                   .order_by(HistoryIntake.id.desc()).all(),
                   images=patient_images(db, p.id), MODALITIES=imgs.MODALITIES, ACCEPT=imgs.ACCEPT,
+                  avoid=avoid_list(db, p.id), REACTIONS=REACTIONS,
+                  reactions_by_rx=_reactions_by_rx(db, p.id),
                   max_mb=imgs.MAX_BYTES // (1024 * 1024),
                   feedback=sorted(p.feedback, key=lambda f: f.created_at, reverse=True))
 
@@ -604,7 +616,7 @@ async def patient_update(pid: int, request: Request, db=Depends(get_db), user: U
         setattr(p, f, _s(form, f))
     p.email_reminders = 1 if form.get("email_reminders") else 0
     p.dob = _date(form.get("dob"))
-    if user.role == "admin" and _int(form.get("clinic_id")):
+    if user.has("admin") and _int(form.get("clinic_id")):
         p.clinic_id = _int(form.get("clinic_id"))
     db.commit()
     flash(request, "Patient details saved.")
@@ -782,7 +794,7 @@ async def diagnosis_create(pid: int, request: Request, db=Depends(get_db), user:
     if not _s(form, "condition"):
         flash(request, "Condition is required.", "error")
         return redirect(f"/patients/{pid}/diagnoses/new")
-    d = Diagnosis(patient_id=p.id, doctor_id=user.id if user.role == "doctor" else None,
+    d = Diagnosis(patient_id=p.id, doctor_id=user.id if user.has("doctor") else None,
                   condition=_s(form, "condition"), disease_id=_s(form, "disease_id"),
                   notes=_s(form, "notes"), diagnosed_on=_date(form.get("diagnosed_on")) or date.today(),
                   appointment_id=_int(form.get("appointment_id")), analysis_id=_int(form.get("analysis_id")))
@@ -818,9 +830,16 @@ def medicine_new(pid: int, request: Request, appointment_id: int | None = None,
                  diagnosis_id: int | None = None, db=Depends(get_db), user: User = Depends(current_user)):
     require(user, "doctor", "admin")
     p = get_patient(db, user, pid)
+    active_dx = [d for d in p.diagnoses if d.status == "active"]
+    sugg = {d.id: {**drug_suggest.suggestions_for(d), "condition": d.condition} for d in active_dx}
+    contra = []
+    for d in active_dx:
+        for name in sugg[d.id]["contraindicated"]:
+            contra.append({"generic": drug_suggest.generic(name), "name": name, "condition": d.condition})
     return render(request, "medicine_form.html", user, p=p, appointment_id=appointment_id,
                   diagnosis_id=diagnosis_id, rx_opts=pharmacy.form_options(db, p.clinic_id),
-                  active_dx=[d for d in p.diagnoses if d.status == "active"],
+                  suggestions=sugg, contra=contra, avoid=avoid_list(db, p.id), brands=drug_suggest.BRANDS,
+                  active_dx=active_dx,
                   appts=sorted(p.appointments, key=lambda a: a.scheduled_at, reverse=True))
 
 
@@ -841,6 +860,13 @@ async def medicine_create(pid: int, request: Request, db=Depends(get_db), user: 
     def col(k, i):
         return cols[k][i] if i < len(cols[k]) else ""
 
+    avoid = avoid_list(db, p.id)
+    clash = sorted({f"{n} ({a['reaction']})" for n in cols["medicine"] if n for a in avoid
+                    if drug_suggest.same_medicine(n, a["medicine"])})
+    if clash and form.get("override_avoid") != "1":
+        flash(request, "Not saved: " + ", ".join(clash) + " caused a reaction before and is marked to avoid. "
+              "Choose another medicine, or confirm to prescribe it anyway.", "error")
+        return redirect(f"/patients/{pid}/medicines/new" + (f"?appointment_id={appt_id}" if appt_id else ""))
     import uuid
     group = uuid.uuid4().hex
     added, rows = [], []
@@ -850,7 +876,7 @@ async def medicine_create(pid: int, request: Request, db=Depends(get_db), user: 
         drug = pharmacy.find_drug(db, p.clinic_id, name, _int(col("drug_id", i)))
         qty = _int(col("quantity", i)) or pharmacy.units_needed(
             drug.form if drug else "tablet", col("dosage", i), col("frequency", i), col("duration", i))
-        rx = Prescription(patient_id=p.id, doctor_id=user.id if user.role == "doctor" else None,
+        rx = Prescription(patient_id=p.id, doctor_id=user.id if user.has("doctor") else None,
                           appointment_id=appt_id, diagnosis_id=dx_id, medicine=drug.label if drug else name,
                           dosage=col("dosage", i), frequency=col("frequency", i),
                           duration=col("duration", i), instructions=col("instructions", i), rx_group=group)
@@ -871,6 +897,77 @@ async def medicine_create(pid: int, request: Request, db=Depends(get_db), user: 
     if appt_id and form.get("back") == "appointment":
         return redirect(f"/appointments/{appt_id}")
     return redirect(f"/patients/{pid}?tab=medicines")
+
+
+def _reactions_by_rx(db, pid: int) -> dict:
+    out: dict = {}
+    for r in db.query(MedicineReaction).filter(MedicineReaction.patient_id == pid).all():
+        out.setdefault(r.prescription_id, []).append(r)
+    return out
+
+
+def avoid_list(db, pid: int) -> list[dict]:
+    """Medicines this patient should not be given again (from recorded reactions)."""
+    rows = db.query(MedicineReaction).filter(MedicineReaction.patient_id == pid, MedicineReaction.avoid == 1) \
+        .order_by(MedicineReaction.created_at.desc()).all()
+    return [{"id": r.id, "medicine": r.medicine, "generic": drug_suggest.generic(r.medicine),
+             "reaction": r.reaction, "severity": r.severity} for r in rows]
+
+
+REACTIONS = ["Skin irritation / rash", "Itching", "Allergic reaction / swelling", "Breathing difficulty",
+             "Stomach upset / acidity", "Nausea / vomiting", "Diarrhoea", "Dizziness / drowsiness", "Headache",
+             "Palpitations", "Other"]
+
+
+def _save_reaction(db, request, form, p: Patient, user: User, medicine: str, rx_id: int | None):
+    reaction = _s(form, "reaction") or "Other"
+    if reaction == "Other" and _s(form, "other"):
+        reaction = _s(form, "other")[:80]
+    r = MedicineReaction(patient_id=p.id, prescription_id=rx_id, medicine=medicine[:200], reaction=reaction[:80],
+                         severity=form.get("severity") if form.get("severity") in ("mild", "moderate", "severe") else "mild",
+                         notes=_s(form, "notes")[:1000], avoid=1 if form.get("avoid") else 0, recorded_by=user.id)
+    db.add(r)
+    db.commit()
+    flash(request, f"Reaction to {medicine} recorded" + (" and marked to avoid in future." if r.avoid else "."))
+
+
+@app.post("/prescriptions/{rid}/reaction")
+async def prescription_reaction(rid: int, request: Request, db=Depends(get_db), user: User = Depends(current_user)):
+    rx = db.get(Prescription, rid)
+    if not rx:
+        raise HTTPException(404)
+    p = get_patient(db, user, rx.patient_id)
+    form = await request.form()
+    _save_reaction(db, request, form, p, user, rx.medicine, rx.id)
+    if form.get("stop") and rx.status == "active":
+        rx.status, rx.stopped_on = "stopped", date.today()
+        db.commit()
+        notify.notify_prescription_stopped(db, p, rx)
+    return redirect(f"/patients/{p.id}?tab=medicines")
+
+
+@app.post("/patients/{pid}/reactions")
+async def patient_reaction(pid: int, request: Request, db=Depends(get_db), user: User = Depends(current_user)):
+    p = get_patient(db, user, pid)
+    form = await request.form()
+    if not _s(form, "medicine"):
+        flash(request, "Enter the medicine that caused the problem.", "error")
+        return redirect(f"/patients/{pid}?tab=medicines")
+    _save_reaction(db, request, form, p, user, _s(form, "medicine"), None)
+    return redirect(f"/patients/{pid}?tab=medicines")
+
+
+@app.post("/reactions/{xid}/delete")
+def reaction_delete(xid: int, request: Request, db=Depends(get_db), user: User = Depends(current_user)):
+    require(user, "doctor", "admin")
+    r = db.get(MedicineReaction, xid)
+    if not r:
+        raise HTTPException(404)
+    get_patient(db, user, r.patient_id)
+    r.avoid = 0
+    db.commit()
+    flash(request, f"{r.medicine} is no longer marked to avoid (the reaction stays in the record).")
+    return redirect(f"/patients/{r.patient_id}?tab=medicines")
 
 
 @app.post("/prescriptions/{rid}/status")
@@ -921,7 +1018,7 @@ def _report_rows(db, user: User, d0: date, d1: date, doctor: str):
     q = db.query(Prescription).join(Patient).filter(
         Prescription.prescribed_at >= datetime.combine(d0, datetime.min.time()),
         Prescription.prescribed_at < datetime.combine(d1 + timedelta(days=1), datetime.min.time()))
-    if user.role != "admin":
+    if not user.has("admin"):
         q = q.filter(Patient.clinic_id == user.clinic_id)
     doc_id = user.id if doctor == "me" else _int(doctor)
     if doc_id:
@@ -963,7 +1060,7 @@ def reports_export(request: Request, db=Depends(get_db), user: User = Depends(cu
                "Medicine", "Dosage", "Frequency", "Duration", "Instructions", "Quantity", "Given by clinic",
                "Supply", "Status", "Prescribed by", "Clinic"]
     widths = [13, 10, 11, 22, 6, 8, 32, 30, 12, 20, 12, 30, 10, 14, 40, 10, 20, 24]
-    scope = "All clinics" if user.role == "admin" else (user.clinic.label if user.clinic else "")
+    scope = "All clinics" if user.has("admin") else (user.clinic.label if user.clinic else "")
     period = f"{d0:%d %b %Y}" if d0 == d1 else f"{d0:%d %b %Y} to {d1:%d %b %Y}"
     ws.append(["MediPurse: medicines given"])
     ws.append([f"Period: {period}   |   Clinic: {scope}"])
@@ -1014,7 +1111,7 @@ def reports_export(request: Request, db=Depends(get_db), user: User = Depends(cu
 def notifications(request: Request, kind: str = "", status: str = "", db=Depends(get_db),
                   user: User = Depends(current_user)):
     q = db.query(Notification).outerjoin(Patient, Notification.patient_id == Patient.id)
-    if user.role != "admin":
+    if not user.has("admin"):
         q = q.filter(Patient.clinic_id == user.clinic_id)
     if kind:
         q = q.filter(Notification.kind == kind)
@@ -1029,7 +1126,7 @@ def notifications(request: Request, kind: str = "", status: str = "", db=Depends
 @app.post("/notifications/{nid}/retry")
 def notification_retry(nid: int, request: Request, db=Depends(get_db), user: User = Depends(current_user)):
     n = db.get(Notification, nid)
-    if not n or (user.role != "admin" and (not n.patient or n.patient.clinic_id != user.clinic_id)):
+    if not n or (not user.has("admin") and (not n.patient or n.patient.clinic_id != user.clinic_id)):
         raise HTTPException(404)
     n.status, n.attempts, n.error = "queued", 0, ""
     db.commit()
@@ -1041,7 +1138,7 @@ def notification_retry(nid: int, request: Request, db=Depends(get_db), user: Use
 @app.get("/notifications/{nid}")
 def notification_view(nid: int, request: Request, db=Depends(get_db), user: User = Depends(current_user)):
     n = db.get(Notification, nid)
-    if not n or (user.role != "admin" and (not n.patient or n.patient.clinic_id != user.clinic_id)):
+    if not n or (not user.has("admin") and (not n.patient or n.patient.clinic_id != user.clinic_id)):
         raise HTTPException(404)
     return render(request, "notification_detail.html", user, n=n)
 
@@ -1052,7 +1149,7 @@ def notification_view(nid: int, request: Request, db=Depends(get_db), user: User
 @app.get("/feedback")
 def feedback_list(request: Request, db=Depends(get_db), user: User = Depends(current_user)):
     q = db.query(Feedback).join(Patient)
-    if user.role != "admin":
+    if not user.has("admin"):
         q = q.filter(Patient.clinic_id == user.clinic_id)
     rows = q.order_by(Feedback.created_at.desc()).all()
     avg = round(sum(f.rating for f in rows) / len(rows), 1) if rows else None
@@ -1089,11 +1186,30 @@ async def feedback_create(pid: int, request: Request, db=Depends(get_db), user: 
 def ai_home(request: Request, db=Depends(get_db), user: User = Depends(current_user)):
     require(user, "doctor", "admin")
     q = db.query(AIAnalysis).join(Patient)
-    if user.role != "admin":
+    if not user.has("admin"):
         q = q.filter(Patient.clinic_id == user.clinic_id)
     rows = q.order_by(AIAnalysis.created_at.desc()).limit(50).all()
     return render(request, "ai_home.html", user, rows=rows,
                   patients=scoped_patients(db, user).order_by(Patient.last_name).all())
+
+
+@app.get("/ai/performance")
+def ai_performance(request: Request, user: User = Depends(current_user)):
+    """Model performance: shipped test-split baseline + evaluation/results.json (synthetic cases)."""
+    require(user, "doctor", "admin")
+    ev, base = None, None
+    f = ROOT / "evaluation" / "results.json"
+    if f.exists():
+        ev = json.loads(f.read_text(encoding="utf-8"))
+        ev.pop("rows", None)
+    b = ROOT / "handoff" / "results" / "retrieval_full_test.json"
+    if b.exists():
+        base = json.loads(b.read_text(encoding="utf-8"))
+    u = ROOT / "evaluation" / "usage.json"
+    usage = json.loads(u.read_text(encoding="utf-8")) if u.exists() else None
+    old = ROOT / "evaluation" / "results_v2cases_rules.json"
+    old_rules = json.loads(old.read_text(encoding="utf-8")) if old.exists() else None
+    return render(request, "ai_performance.html", user, ev=ev, base=base, usage=usage, old_rules=old_rules)
 
 
 @app.get("/api/ai-status")
@@ -1183,7 +1299,7 @@ async def ai_create(pid: int, request: Request, db=Depends(get_db), user: User =
         flash(request, "The AI model is still loading (about a minute after start). Try again shortly.", "error")
         return redirect(f"/patients/{pid}/ai/new")
     ranking = AI.rank(text)
-    rules = realist.assess_rules(text)
+    rules = realist.assess_rules(text, ranking)
     an = AIAnalysis(patient_id=p.id, doctor_id=user.id, case_text=text, ranking_json=json.dumps(ranking),
                     symptoms_json=json.dumps(picked, ensure_ascii=False), realist_json=realist.dumps(rules),
                     realist_status="rules", image_ids=json.dumps([i.id for i in chosen]),
@@ -1234,7 +1350,7 @@ def ai_result(aid: int, request: Request, db=Depends(get_db), user: User = Depen
     saved_names = {d.condition.lower() for d in an.patient.diagnoses}
     real = json.loads(an.realist_json) if an.realist_json else None
     if real is None and an.case_text:   # analyses made before the realist existed
-        real = realist.assess_rules(an.case_text)
+        real = realist.assess_rules(an.case_text, ranking or None)
     llm_ok = AI.llm_available()
     return render(request, "ai_result.html", user, an=an, p=an.patient, ranking=ranking,
                   explain=explain, saved=saved, saved_names=saved_names, real=real, llm_ok=llm_ok,
@@ -1297,7 +1413,7 @@ def _can_edit_stock(user: User) -> bool:
 
 def _get_drug(db, user: User, did: int) -> Drug:
     d = db.get(Drug, did)
-    if not d or (user.role != "admin" and d.clinic_id != user.clinic_id):
+    if not d or (not user.has("admin") and d.clinic_id != user.clinic_id):
         raise HTTPException(404, "Medicine not found")
     return d
 
@@ -1305,7 +1421,7 @@ def _get_drug(db, user: User, did: int) -> Drug:
 @app.get("/inventory")
 def inventory(request: Request, q: str = "", level: str = "", clinic_id: int | None = None,
               db=Depends(get_db), user: User = Depends(current_user)):
-    cid = clinic_id if user.role == "admin" else user.clinic_id
+    cid = clinic_id if user.has("admin") else user.clinic_id
     drugs = pharmacy.clinic_drugs(db, cid, active_only=False)
     counts = {"all": len([d for d in drugs if d.active]), "low": 0, "out": 0, "expiring": 0}
     soon = date.today() + timedelta(days=60)
@@ -1342,9 +1458,9 @@ async def drug_create(request: Request, db=Depends(get_db), user: User = Depends
     if not _can_edit_stock(user):
         raise HTTPException(403)
     form = await request.form()
-    cid = _int(form.get("clinic_id")) if user.role == "admin" else user.clinic_id
+    cid = _int(form.get("clinic_id")) if user.has("admin") else user.clinic_id
     if not _s(form, "name") or not cid:
-        flash(request, "Name" + (" and clinic are" if user.role == "admin" else " is") + " required.", "error")
+        flash(request, "Name" + (" and clinic are" if user.has("admin") else " is") + " required.", "error")
         return redirect("/inventory/new")
     fm = _s(form, "form") or "tablet"
     d = Drug(clinic_id=cid, name=_s(form, "name"), strength=_s(form, "strength"), form=fm,
@@ -1440,7 +1556,7 @@ def _money(v) -> float:
 # dispensing (pharmacist, receptionist) and counter sales (pharmacist)
 # ----------------------------------------------------------------------------
 def _pharmacy_clinic(user: User, clinic_id: int | None = None) -> int | None:
-    return clinic_id if user.role == "admin" else user.clinic_id
+    return clinic_id if user.has("admin") else user.clinic_id
 
 
 @app.get("/pharmacy")
@@ -1479,7 +1595,7 @@ def dispense_page(key: str, request: Request, db=Depends(get_db), user: User = D
         raise HTTPException(403)
     lines = _group_or_404(db, user, key)
     p = lines[0].patient
-    return render(request, "dispense.html", user, key=key, lines=lines, p=p,
+    return render(request, "dispense.html", user, key=key, lines=lines, p=p, avoid=avoid_list(db, p.id),
                   stock=pharmacy.clinic_drugs(db, p.clinic_id), usable=pharmacy.usable,
                   pending=any(r.dispense_status == "pending" for r in lines))
 
@@ -1540,7 +1656,7 @@ def sale_new(request: Request, db=Depends(get_db), user: User = Depends(current_
     if not pharmacy.can_sell(user):
         raise HTTPException(403)
     clinics = visible_clinics(db, user)
-    cid = user.clinic_id if user.role != "admin" else None
+    cid = user.clinic_id if not user.has("admin") else None
     drugs = [d for d in pharmacy.clinic_drugs(db, cid) if pharmacy.usable(d) > 0]
     return render(request, "sale_form.html", user, drugs=drugs, PAYMENTS=pharmacy.PAYMENTS, clinics=clinics,
                   drugs_json=[{"id": d.id, "label": d.label, "stock": pharmacy.usable(d), "price": d.price,
@@ -1552,7 +1668,7 @@ async def sale_create(request: Request, db=Depends(get_db), user: User = Depends
     if not pharmacy.can_sell(user):
         raise HTTPException(403)
     form = await request.form()
-    cid = _int(form.get("clinic_id")) if user.role == "admin" else user.clinic_id
+    cid = _int(form.get("clinic_id")) if user.has("admin") else user.clinic_id
     if not cid:
         flash(request, "Choose the clinic pharmacy.", "error")
         return redirect("/pharmacy/sales/new")
@@ -1592,7 +1708,7 @@ def sale_detail(sid: int, request: Request, db=Depends(get_db), user: User = Dep
     if not pharmacy.can_sell(user):
         raise HTTPException(403)
     sale = db.get(Sale, sid)
-    if not sale or (user.role != "admin" and sale.clinic_id != user.clinic_id):
+    if not sale or (not user.has("admin") and sale.clinic_id != user.clinic_id):
         raise HTTPException(404)
     return render(request, "sale_receipt.html", user, sale=sale, PAYMENTS=dict(pharmacy.PAYMENTS))
 
@@ -1666,7 +1782,7 @@ def image_file(iid: int, request: Request, thumb: int = 0, db=Depends(get_db)):
         raise HTTPException(404)
     uid, patient_id = request.session.get("uid"), request.session.get("patient_id")
     user = db.get(User, uid) if uid else None
-    staff_ok = user is not None and user.active and (user.role == "admin" or img.patient.clinic_id == user.clinic_id)
+    staff_ok = user is not None and user.active and (user.has("admin") or img.patient.clinic_id == user.clinic_id)
     if not (staff_ok or (patient_id is not None and patient_id == img.patient_id)):
         raise HTTPException(404)
     path = imgs.file_path(img, thumb=bool(thumb))
@@ -1701,7 +1817,7 @@ async def image_edit(iid: int, request: Request, db=Depends(get_db), user: User 
 @app.post("/images/{iid}/delete")
 def image_delete(iid: int, request: Request, db=Depends(get_db), user: User = Depends(current_user)):
     img = _staff_image(db, user, iid)
-    if user.role not in ("doctor", "admin") and img.uploaded_by_id != user.id:
+    if not user.has("doctor", "admin") and img.uploaded_by_id != user.id:
         raise HTTPException(403, "Only doctors, admins or the person who uploaded it can remove an image.")
     img.deleted_at, img.deleted_by_id = datetime.now(), user.id
     db.commit()

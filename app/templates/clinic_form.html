@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}{{ 'Edit clinic' if c else 'Register clinic' }}{% endblock %}
 {% block content %}
-<div class="muted small"><a href="/clinics">Clinics</a> ›</div>
+<div class="crumbs"><a href="/clinics">Clinics</a> › {{ 'Edit' if c else 'New clinic' }}</div>
 <h1>{{ 'Edit ' ~ c.name if c else 'Register a clinic' }}</h1>
 <form method="post" class="stack">
   <div class="field"><label>Clinic name *</label><input name="name" required value="{{ c.name if c else '' }}"></div>
@@ -14,6 +14,6 @@
   <div class="field"><label>Location / address</label><input name="address" value="{{ c.address if c else '' }}"></div>
   <div class="field"><label>Phone</label><input name="phone" value="{{ c.phone if c else '' }}"></div>
   <div class="actions"><button class="btn primary">{{ 'Save' if c else 'Register clinic' }}</button>
-  <a class="btn" href="{{ '/clinics/' ~ c.id if c else '/clinics' }}">Cancel</a></div>
+  <a class="btn outline" href="{{ '/clinics/' ~ c.id if c else '/clinics' }}">Cancel</a></div>
 </form>
 {% endblock %}

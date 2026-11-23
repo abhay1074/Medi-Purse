@@ -135,23 +135,23 @@ SELLERS = ("pharmacist", "admin")
 
 
 def clinic_has_pharmacist(db, clinic_id: int | None) -> bool:
-    from .db import User
-    return bool(clinic_id) and db.query(User).filter(User.clinic_id == clinic_id, User.role == "pharmacist",
+    from .db import User, role_clause
+    return bool(clinic_id) and db.query(User).filter(User.clinic_id == clinic_id, role_clause("pharmacist"),
                                                      User.active == 1).count() > 0
 
 
 def can_manage_stock(db, user) -> bool:
-    if user.role in ("admin", "pharmacist"):
+    if user.has("admin", "pharmacist"):
         return True
-    return user.role == "receptionist" and not clinic_has_pharmacist(db, user.clinic_id)
+    return user.has("receptionist") and not clinic_has_pharmacist(db, user.clinic_id)
 
 
 def can_dispense(user) -> bool:
-    return user.role in DISPENSERS
+    return user.has(*DISPENSERS)
 
 
 def can_sell(user) -> bool:
-    return user.role in SELLERS
+    return user.has(*SELLERS)
 
 
 def usable(drug: Drug | None) -> int:

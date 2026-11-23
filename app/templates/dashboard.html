@@ -1,17 +1,15 @@
 {% extends "base.html" %}
 {% from "_icons.html" import icon %}
+{% from "_ui.html" import banner, avatar %}
 {% block title %}Dashboard{% endblock %}
 {% block content %}
-<div class="head">
-  <div><h1>Welcome, {{ user.display }}</h1>
-  <div class="muted">{{ today.strftime('%A') }}, {{ today | d }}</div></div>
-  <div class="actions">
+{% call banner('Welcome, ' ~ user.display, today.strftime('%A') ~ ', ' ~ (today | d) ~ ' · ' ~ user.role_label ~ ((' · ' ~ user.clinic.name) if user.clinic else ''), 'hero-ai.svg' if user.has('doctor') else 'hero-care.svg') %}
     <a class="btn primary" href="/patients/new">{{ icon('plus') }}Register patient</a>
     <a class="btn outline" href="/appointments/new">{{ icon('calendar') }}Book appointment</a>
+    {% if user.has('doctor', 'admin') %}<a class="btn ai" href="/ai">{{ icon('sparkles') }}AI diagnosis</a>{% endif %}
     <a class="btn outline" href="/reports">{{ icon('download') }}Medicine report</a>
-    {% if user.role == 'admin' %}<a class="btn outline" href="/hospitals/new">{{ icon('building') }}Register hospital</a>{% endif %}
-  </div>
-</div>
+    {% if user.has('admin') %}<a class="btn outline" href="/hospitals/new">{{ icon('building') }}Register hospital</a>{% endif %}
+{% endcall %}
 
 {% if online %}
 <div class="card alert-card">
@@ -46,20 +44,20 @@
 {% endmacro %}
 <div class="grid">
   {{ stat('/patients', 'Patients', stats.patients, 'users', 'blue') }}
-  {{ stat('/appointments?day=' ~ today.isoformat() ~ ('&doctor=me' if user.role == 'doctor' else ''), 'Appointments today', stats.today, 'clock', 'green') }}
-  {{ stat('/appointments?status=scheduled' ~ ('&doctor=me' if user.role == 'doctor' else ''), 'Upcoming', stats.upcoming, 'calendar', 'amber') }}
+  {{ stat('/appointments?day=' ~ today.isoformat() ~ ('&doctor=me' if user.has('doctor') else ''), 'Appointments today', stats.today, 'clock', 'green') }}
+  {{ stat('/appointments?status=scheduled' ~ ('&doctor=me' if user.has('doctor') else ''), 'Upcoming', stats.upcoming, 'calendar', 'amber') }}
   {{ stat('/reports', 'Medicines given today', stats.rx_today, 'pill', 'violet') }}
   {{ stat('', 'Active diagnoses', stats.active_dx, 'activity', 'red') }}
-  {% if user.role == 'admin' %}
+  {% if user.has('admin') %}
   {{ stat('/hospitals', 'Hospitals', stats.hospitals, 'building', 'blue') }}
   {{ stat('/clinics', 'Clinics', stats.clinics, 'stethoscope', 'green') }}
   {{ stat('/staff', 'Staff accounts', stats.staff, 'user', 'amber') }}
   {% endif %}
 </div>
 
-<h2>{{ 'Your appointments today' if user.role == 'doctor' else 'Appointments today' }}</h2>
+<h2>{{ 'Your appointments today' if user.has('doctor') else 'Appointments today' }}</h2>
 {% if appts %}
-<table>
+<div class="table-card"><table>
   <tr><th>Time</th><th>Patient</th><th>Reason</th><th>Doctor</th><th>Status</th><th></th></tr>
   {% for a in appts %}
   <tr>
@@ -69,21 +67,21 @@
     <td>{{ a.doctor.display if a.doctor else '—' }}</td>
     <td><span class="tag {{ a.status }}">{{ a.status }}</span>{% if a.source == "online" %} <span class="tag online">online</span>{% endif %}</td>
     <td class="actions">
-      <a class="btn small" href="/appointments/{{ a.id }}">Open</a>
-      {% if user.role in ('doctor','admin') %}<a class="btn ai small" href="/patients/{{ a.patient.id }}/ai/new?appointment_id={{ a.id }}">AI diagnose</a>{% endif %}
+      <a class="btn outline small" href="/appointments/{{ a.id }}">Open</a>
+      {% if user.has('doctor','admin') %}<a class="btn ai small" href="/patients/{{ a.patient.id }}/ai/new?appointment_id={{ a.id }}">AI diagnose</a>{% endif %}
     </td>
   </tr>
   {% endfor %}
-</table>
+</table></div>
 {% else %}<div class="empty">No appointments today.</div>{% endif %}
 
 <h2>Recently registered patients</h2>
 {% if recent_patients %}
-<table>
+<div class="table-card"><table>
   {% for p in recent_patients %}
-  <tr><td><a href="/patients/{{ p.id }}">{{ p.full_name }}</a></td><td class="muted">{{ p.mrn }}</td>
+  <tr><td><a class="who" href="/patients/{{ p.id }}">{{ avatar(p.full_name, 28) }}{{ p.full_name }}</a></td><td class="muted">{{ p.mrn }}</td>
   <td class="muted">{{ p.clinic.name }}</td><td class="muted">{{ p.created_at | d }}</td></tr>
   {% endfor %}
-</table>
+</table></div>
 {% else %}<div class="empty">No patients yet. <a href="/patients/new">Register the first one</a>.</div>{% endif %}
 {% endblock %}

@@ -1,13 +1,14 @@
 {% extends "base.html" %}
 {% from "_icons.html" import icon %}
+{% from "_ui.html" import avatar, avoid_banner, reaction_form %}
 {% from "_images.html" import gallery, upload_form, lightbox %}
 {% block title %}{{ p.full_name }}{% endblock %}
 {% block content %}
-{% set doc = user.role in ('doctor', 'admin') %}
+{% set doc = user.has('doctor', 'admin') %}
 <div class="crumbs"><a href="/patients">Patients</a> › {{ p.full_name }}</div>
 <div class="head">
-  <div><h1>{{ p.full_name }}</h1>
-  <div class="muted">{{ p.mrn }} · {{ p.age if p.age is not none else 'Age unknown' }}{% if p.age is not none %} yrs{% endif %}{% if p.sex %} · {{ p.sex }}{% endif %}{% if p.blood_group %} · {{ p.blood_group }}{% endif %} · {{ p.clinic.name }}</div></div>
+  <div class="who who-lg">{{ avatar(p.full_name, 52) }}<div><h1>{{ p.full_name }}</h1>
+  <div class="muted">{{ p.mrn }} · {{ p.age if p.age is not none else 'Age unknown' }}{% if p.age is not none %} yrs{% endif %}{% if p.sex %} · {{ p.sex }}{% endif %}{% if p.blood_group %} · {{ p.blood_group }}{% endif %} · {{ p.clinic.name }}</div></div></div>
   <div class="actions">
     <a class="btn primary" href="/appointments/new?patient_id={{ p.id }}">{{ icon('calendar') }}Book appointment</a>
     {% if doc %}<a class="btn outline" href="/patients/{{ p.id }}/medicines/new">{{ icon('pill') }}Prescribe</a>
@@ -17,6 +18,7 @@
   </div>
 </div>
 {% if p.allergies %}<div class="note danger"><b>Allergies:</b> {{ p.allergies }}</div>{% endif %}
+{{ avoid_banner(avoid) }}
 
 <nav class="tabs">
   {% for key, label in [('overview','Overview'), ('diagnoses','Diagnoses'), ('medicines','Medicines'), ('appointments','Appointments'), ('history','Patient history'), ('images','Images'), ('ai','AI analyses'), ('feedback','Feedback')] %}
@@ -41,7 +43,7 @@
 {% macro rx_table(rows, show_stopped) %}
 <div class="table-card"><table><tr><th>Medicine</th><th>Dosage</th><th>Frequency</th><th>Duration</th><th>For</th><th>Prescribed</th>{% if show_stopped %}<th>Stopped</th>{% endif %}<th>Doctor</th>{% if doc %}<th></th>{% endif %}</tr>
 {% for r in rows %}
-<tr><td><b>{{ r.medicine }}</b>{% if r.instructions %}<div class="muted small">{{ r.instructions }}</div>{% endif %}<div>{% if r.dispense_status == 'pending' %}<span class="tag scheduled">waiting at pharmacy</span>{% elif r.supply == 'clinic' %}<span class="tag completed">given by clinic{% if r.dispensed %} · {{ r.dispensed }}{% endif %}</span>{% elif r.supply == 'partial' %}<span class="tag uncertain">clinic gave {{ r.dispensed }} of {{ r.quantity }}; buy rest outside</span>{% elif r.supply == 'outside' %}<span class="tag uncertain">buy from another pharmacy</span>{% endif %}</div></td>
+<tr><td><b>{{ r.medicine }}</b>{% if r.instructions %}<div class="muted small">{{ r.instructions }}</div>{% endif %}{% for x in reactions_by_rx.get(r.id, []) %}<div><span class="tag error" title="{{ x.notes }}">reaction: {{ x.reaction | lower }} · {{ x.severity }}{% if x.avoid %} · avoid{% endif %}</span></div>{% endfor %}<div>{% if r.dispense_status == 'pending' %}<span class="tag scheduled">waiting at pharmacy</span>{% elif r.supply == 'clinic' %}<span class="tag completed">given by clinic{% if r.dispensed %} · {{ r.dispensed }}{% endif %}</span>{% elif r.supply == 'partial' %}<span class="tag uncertain">clinic gave {{ r.dispensed }} of {{ r.quantity }}; buy rest outside</span>{% elif r.supply == 'outside' %}<span class="tag uncertain">buy from another pharmacy</span>{% endif %}</div></td>
 <td>{{ r.dosage or '—' }}</td><td>{{ r.frequency or '—' }}</td><td>{{ r.duration or '—' }}</td>
 <td>{{ r.diagnosis.condition if r.diagnosis else '—' }}</td>
 <td class="nowrap">{{ r.prescribed_at | dt('%d %b %Y') }}<div class="muted small">{{ r.prescribed_at | dt('%I:%M %p') }}</div></td>
@@ -49,7 +51,8 @@
 <td>{{ r.doctor.display if r.doctor else '—' }}</td>
 {% if doc %}<td><form method="post" action="/prescriptions/{{ r.id }}/status" class="inline">
   <input type="hidden" name="status" value="{{ 'stopped' if r.status == 'active' else 'active' }}">
-  <button class="btn outline small">{{ 'Stop' if r.status == 'active' else 'Restart' }}</button></form></td>{% endif %}</tr>
+  <button class="btn outline small">{{ 'Stop' if r.status == 'active' else 'Restart' }}</button></form>
+  {{ reaction_form('/prescriptions/' ~ r.id ~ '/reaction', REACTIONS, can_stop=(r.status == 'active')) }}</td>{% endif %}</tr>
 {% endfor %}</table></div>
 {% endmacro %}
 
@@ -107,6 +110,16 @@
 {% if active_rx %}{{ rx_table(active_rx, false) }}{% else %}<div class="empty">No current medicines.</div>{% endif %}
 <h2>Medicine history</h2>
 {% if past_rx %}{{ rx_table(past_rx, true) }}{% else %}<div class="empty">No past medicines.</div>{% endif %}
+
+<div class="section-head"><h2>Medicines to avoid</h2>
+  {{ reaction_form('/patients/' ~ p.id ~ '/reactions', REACTIONS, ask_medicine=true, label='Record a reaction') }}</div>
+{% if avoid %}
+<div class="table-card"><table><tr><th>Medicine</th><th>Reaction</th><th>Severity</th><th></th></tr>
+{% for a in avoid %}
+<tr><td><b>{{ a.medicine }}</b></td><td>{{ a.reaction }}</td><td><span class="tag {{ 'error' if a.severity == 'severe' else 'uncertain' }}">{{ a.severity }}</span></td>
+<td>{% if doc %}<form method="post" action="/reactions/{{ a.id }}/delete" class="inline" onsubmit="return confirm('Allow {{ a.medicine }} to be prescribed again? The reaction stays in the record.')"><button class="btn ghost small">No longer avoid</button></form>{% endif %}</td></tr>
+{% endfor %}</table></div>
+{% else %}<div class="small muted">None recorded. Use "Report reaction" on a medicine above, or "Record a reaction" for a medicine given elsewhere. Doctors are warned before prescribing anything on this list.</div>{% endif %}
 
 {% elif tab == 'appointments' %}
 <h2>Upcoming</h2>

@@ -69,7 +69,8 @@ class User(Base):
     name: Mapped[str] = mapped_column(String(200))
     email: Mapped[str] = mapped_column(String(200), unique=True)
     password_hash: Mapped[str] = mapped_column(String(300))
-    role: Mapped[str] = mapped_column(String(20))
+    role: Mapped[str] = mapped_column(String(20))            # main role
+    extra_roles: Mapped[str] = mapped_column(String(100), default="")  # more roles, comma-separated
     specialty: Mapped[str] = mapped_column(String(100), default="")
     clinic_id: Mapped[int | None] = mapped_column(ForeignKey("clinics.id"), nullable=True)
     active: Mapped[int] = mapped_column(Integer, default=1)
@@ -77,12 +78,38 @@ class User(Base):
     clinic: Mapped[Clinic | None] = relationship(back_populates="staff")
 
     @property
+    def roles(self) -> list[str]:
+        """Main role first, then any extra roles (e.g. receptionist + pharmacist)."""
+        out = [self.role]
+        for r in (self.extra_roles or "").split(","):
+            r = r.strip()
+            if r in ROLES and r not in out:
+                out.append(r)
+        return out
+
+    def has(self, *names: str) -> bool:
+        """True if the person has any of these roles."""
+        return any(r in self.roles for r in names)
+
+    def only(self, name: str) -> bool:
+        return self.roles == [name]
+
+    def set_roles(self, names) -> None:
+        """Main role = the most senior one chosen; admin is never combined (it already has everything)."""
+        chosen = [r for r in ROLES if r in set(names)]
+        if not chosen:
+            return
+        if "admin" in chosen:
+            chosen = ["admin"]
+        self.role, self.extra_roles = chosen[0], ",".join(chosen[1:])
+
+    @property
     def role_label(self) -> str:
-        return ROLES.get(self.role, self.role)
+        return " + ".join(ROLES.get(r, r) for r in self.roles)
 
     @property
     def display(self) -> str:
-        return f"Dr. {self.name}" if self.role == "doctor" else self.name
+        return f"Dr. {self.name}" if self.has("doctor") else self.name
 
 
 class Patient(Base):
@@ -279,6 +306,23 @@ class SaleItem(Base):
     drug: Mapped[Drug] = relationship()
 
 
+class MedicineReaction(Base):
+    """A medicine that caused a problem for a patient (irritation, rash, allergy...)."""
+    __tablename__ = "medicine_reactions"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    patient_id: Mapped[int] = mapped_column(ForeignKey("patients.id"), index=True)
+    prescription_id: Mapped[int | None] = mapped_column(ForeignKey("prescriptions.id"), nullable=True)
+    medicine: Mapped[str] = mapped_column(String(200))
+    reaction: Mapped[str] = mapped_column(String(80))
+    severity: Mapped[str] = mapped_column(String(20), default="mild")   # mild | moderate | severe
+    notes: Mapped[str] = mapped_column(Text, default="")
+    avoid: Mapped[int] = mapped_column(Integer, default=1)               # do not prescribe again
+    recorded_by: Mapped[int | None] = mapped_column(ForeignKey("users.id"), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now)
+    patient: Mapped[Patient] = relationship()
+    recorder: Mapped[User | None] = relationship()
+
+
 class Feedback(Base):
     __tablename__ = "feedback"
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -443,6 +487,12 @@ def _add_missing_columns() -> None:
                 if default is not None:
                     ddl += f" DEFAULT {default!r}" if isinstance(default, str) else f" DEFAULT {default}"
                 conn.execute(text(ddl))
+
+
+def role_clause(name: str):
+    """SQL filter: staff who have this role (main or extra)."""
+    from sqlalchemy import or_
+    return or_(User.role == name, User.extra_roles.like(f"%{name}%"))
 
 
 def count(db, model) -> int:
