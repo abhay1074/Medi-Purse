@@ -1,4 +1,10 @@
-"""Email notifications: appointment confirmations, changes, reminders, portal invites.
+"""Email notifications.
+
+Patients: appointment confirmations, changes, cancellations and reminders; new and
+stopped prescriptions; a feedback request after a diagnosis or a completed visit;
+portal invites and password links.
+Staff: new online bookings, urgent symptoms reported in a patient check-in, and low
+feedback ratings.
 
 Emails are queued in the `notifications` table and sent by a background worker,
 so a slow mail server never blocks a page. The same worker sends reminders before
@@ -26,7 +32,10 @@ from email.utils import formataddr, make_msgid
 from html import escape
 from pathlib import Path
 
-from .db import ROOT, Appointment, Notification, Patient, SessionLocal
+import re
+import secrets
+
+from .db import ROOT, Appointment, FeedbackRequest, Notification, Patient, SessionLocal, User
 
 OUTBOX = ROOT / "outbox"
 MAX_ATTEMPTS = 3
@@ -190,9 +199,16 @@ def _ics(a: Appointment) -> bytes:
     return ("\r\n".join(lines) + "\r\n").encode()
 
 
+_URL = re.compile(r"(https?://[^\s<]+)")
+
+
+def _line_html(x: str) -> str:
+    return _URL.sub(r'<a href="\1" style="color:#2563eb">\1</a>', escape(x))
+
+
 def _html(body: str) -> str:
     paras = "".join(
-        f'<p style="margin:0 0 12px">{"<br>".join(escape(x) for x in block.splitlines())}</p>'
+        f'<p style="margin:0 0 12px">{"<br>".join(_line_html(x) for x in block.splitlines())}</p>'
         for block in body.split("\n\n"))
     return ('<div style="font-family:Arial,sans-serif;font-size:14px;line-height:1.5;color:#18181b;max-width:560px">'
             '<div style="font-weight:700;font-size:18px;color:#2563eb;margin-bottom:16px">MediPurse</div>'
@@ -315,3 +331,190 @@ def start_worker() -> None:
 
 def outbox_path() -> Path:
     return OUTBOX
+
+
+# ----------------------------------------------------------------------------
+# prescriptions, feedback and staff alerts
+# ----------------------------------------------------------------------------
+FEEDBACK_DAYS = 14          # how long a feedback link works
+FEEDBACK_GAP = timedelta(hours=12)   # at most one feedback request per patient per visit/half-day
+LOW_RATING = 2              # ratings at or below this alert the doctor
+
+
+def _clinic_footer(p: Patient) -> list[str]:
+    out = ["", f"Your patient account: {base_url()}/portal"]
+    if p.clinic.phone:
+        out.append(f"Questions? Call {p.clinic.label}: {p.clinic.phone}")
+    out += ["", "MediPurse"]
+    return out
+
+
+def _wants_email(p: Patient) -> bool:
+    return bool(p.email and "@" in p.email and p.email_reminders)
+
+
+def _rx_line(r) -> str:
+    bits = [b for b in (r.dosage, r.frequency, f"for {r.duration}" if r.duration else "") if b]
+    line = f"- {r.medicine}" + (f": {', '.join(bits)}" if bits else "")
+    if getattr(r, "quantity", 0):
+        line += f" ({r.quantity} in total)"
+    if r.instructions:
+        line += f"\n  {r.instructions}"
+    supply = getattr(r, "supply", "")
+    if getattr(r, "dispense_status", "") == "pending":
+        from .pharmacy import availability
+        av = availability(r)
+        line += {"full": "\n  Collect it from the clinic pharmacy.",
+                 "some": "\n  The clinic pharmacy has some of this; you may need to buy the rest from another pharmacy.",
+                 "none": "\n  Not available at the clinic. Please buy it from another pharmacy."}[av]
+    elif supply == "clinic":
+        line += "\n  Given to you by the clinic pharmacy."
+    elif supply == "partial":
+        line += f"\n  The clinic gave you {r.dispensed}. Please buy the remaining {r.quantity - r.dispensed} from another pharmacy."
+    elif supply == "outside":
+        line += "\n  Not available at the clinic. Please buy it from another pharmacy."
+    return line
+
+
+def prescription_message(p: Patient, rxs: list, doctor: User | None) -> tuple[str, str]:
+    names = ", ".join(r.medicine for r in rxs)
+    subject = f"New prescription: {names}" if len(names) <= 60 else f"New prescription: {len(rxs)} medicines"
+    by = f" by {doctor.display}" if doctor and doctor.role == "doctor" else ""
+    when = rxs[0].prescribed_at or datetime.now()
+    body = "\n".join([f"Dear {p.first_name},", "",
+                      f"The following medicine{'s were' if len(rxs) != 1 else ' was'} prescribed for you{by} "
+                      f"at {p.clinic.label} on {when:%d %B %Y, %I:%M %p}.", "",
+                      *[_rx_line(r) for r in rxs], "",
+                      "Take your medicines exactly as prescribed. Do not stop or change them without asking "
+                      "your doctor. If you notice side effects such as a rash, swelling or breathing trouble, "
+                      "contact the clinic straight away (in an emergency call 112).",
+                      *_clinic_footer(p)])
+    return subject, body
+
+
+def prescription_stopped_message(p: Patient, r) -> tuple[str, str]:
+    subject = f"Medicine stopped: {r.medicine}"
+    body = "\n".join([f"Dear {p.first_name},", "",
+                      f"Your doctor has stopped {r.medicine} as of {(r.stopped_on or datetime.now()):%d %B %Y}.",
+                      "Please stop taking it unless your doctor tells you otherwise. Your other medicines "
+                      "are not affected.", *_clinic_footer(p)])
+    return subject, body
+
+
+def notify_prescriptions(db, p: Patient, rxs: list, doctor: User | None) -> Notification | None:
+    if not rxs or not _wants_email(p):
+        return None
+    subject, body = prescription_message(p, rxs, doctor)
+    return queue(db, to=p.email, subject=subject, body=body, kind="prescription", patient_id=p.id,
+                 appointment_id=rxs[0].appointment_id)
+
+
+def notify_prescription_stopped(db, p: Patient, r) -> Notification | None:
+    if not _wants_email(p):
+        return None
+    subject, body = prescription_stopped_message(p, r)
+    return queue(db, to=p.email, subject=subject, body=body, kind="prescription-stopped", patient_id=p.id,
+                 appointment_id=r.appointment_id)
+
+
+def feedback_message(p: Patient, fr: FeedbackRequest, reason: str) -> tuple[str, str]:
+    link = f"{base_url()}/portal/feedback/{fr.token}"
+    who = f" with {fr.doctor.display}" if fr.doctor else ""
+    stars = [f"{'★' * n}{'☆' * (5 - n)}  {label}: {link}?rating={n}"
+             for n, label in [(5, "Excellent"), (4, "Good"), (3, "Okay"), (2, "Poor"), (1, "Very poor")]]
+    body = "\n".join([f"Dear {p.first_name},", "",
+                      f"Thank you for your visit to {p.clinic.label}{who}. {reason}", "",
+                      "How was your care? It takes 30 seconds and helps us improve. Tap a rating:", "",
+                      *stars, "",
+                      f"This link works for {FEEDBACK_DAYS} days and can be used once.",
+                      *_clinic_footer(p)])
+    return f"How was your visit to {p.clinic.name}?", body
+
+
+def request_feedback(db, p: Patient, *, doctor: User | None = None, appointment_id: int | None = None,
+                     diagnosis_id: int | None = None, reason: str = "") -> Notification | None:
+    """Email a one-time feedback link. Skipped if the patient was asked recently or about
+    this appointment already, so several diagnoses in one visit send one email."""
+    if not _wants_email(p):
+        return None
+    recent = db.query(FeedbackRequest).filter(FeedbackRequest.patient_id == p.id)
+    if appointment_id and recent.filter(FeedbackRequest.appointment_id == appointment_id).first():
+        return None
+    if recent.filter(FeedbackRequest.created_at >= datetime.now() - FEEDBACK_GAP).first():
+        return None
+    fr = FeedbackRequest(patient_id=p.id, appointment_id=appointment_id, diagnosis_id=diagnosis_id,
+                         doctor_id=doctor.id if doctor and doctor.role == "doctor" else None,
+                         token=secrets.token_urlsafe(32), expires_at=datetime.now() + timedelta(days=FEEDBACK_DAYS))
+    db.add(fr)
+    db.commit()
+    subject, body = feedback_message(p, fr, reason)
+    return queue(db, to=p.email, subject=subject, body=body, kind="feedback-request", patient_id=p.id,
+                 appointment_id=appointment_id)
+
+
+def _clinic_doctors(db, p: Patient) -> list[User]:
+    return db.query(User).filter(User.role == "doctor", User.active == 1, User.clinic_id == p.clinic_id).all()
+
+
+def alert_low_feedback(db, fb, doctor: User | None) -> int:
+    """A rating of 1-2 from a patient emails their doctor (or the clinic's doctors)."""
+    if fb.rating > LOW_RATING:
+        return 0
+    p = fb.patient
+    to = [doctor] if doctor and doctor.email else _clinic_doctors(db, p)
+    subject = f"Low feedback ({fb.rating}/5) from {p.full_name}"
+    body = "\n".join([f"{p.full_name} ({p.mrn}) rated their visit {fb.rating} out of 5.", "",
+                      f"Comments: {fb.comments or '(none)'}", "",
+                      f"Open the patient: {base_url()}/patients/{p.id}?tab=feedback", "", "MediPurse"])
+    n = 0
+    for u in to:
+        if u.email:
+            queue(db, to=u.email, subject=subject, body=body, kind="feedback-alert", patient_id=p.id)
+            n += 1
+    return n
+
+
+def alert_red_flags(db, intake) -> int:
+    """Urgent symptoms in a patient's check-in email the appointment doctor (or clinic doctors)."""
+    if not intake.red_flags:
+        return 0
+    p = intake.patient
+    doc = intake.appointment.doctor if intake.appointment and intake.appointment.doctor else None
+    to = [doc] if doc and doc.email else _clinic_doctors(db, p)
+    subject = f"Urgent symptoms reported by {p.full_name}"
+    body = "\n".join([f"{p.full_name} ({p.mrn}) reported possible red-flag symptoms in their symptom check-in:", "",
+                      intake.red_flags, "",
+                      "The patient was told to call 112 or go to the emergency department if it is happening now.",
+                      "Please review and contact the patient if needed.", "",
+                      f"Read the history: {base_url()}/history/{intake.id}", "", "MediPurse"])
+    n = 0
+    for u in to:
+        if u.email:
+            queue(db, to=u.email, subject=subject, body=body, kind="urgent-alert", patient_id=p.id,
+                  appointment_id=intake.appointment_id)
+            n += 1
+    return n
+
+
+def dispensed_message(p: Patient, rxs: list) -> tuple[str, str]:
+    given = [r for r in rxs if r.dispensed]
+    outside = [r for r in rxs if r.supply in ("outside", "partial")]
+    lines = [f"Dear {p.first_name},", ""]
+    if given:
+        lines += ["The clinic pharmacy has given you:", *[f"- {r.medicine}: {r.dispensed}" for r in given], ""]
+    if outside:
+        lines += ["Please buy these from another pharmacy:",
+                  *[f"- {r.medicine}" + (f": {r.quantity - r.dispensed} more" if r.supply == "partial" else
+                                         (f": {r.quantity}" if r.quantity else "")) for r in outside], ""]
+    lines += ["Take your medicines as your doctor prescribed. Ask the pharmacist if anything is unclear.",
+              *_clinic_footer(p)]
+    subject = "Your medicines from the clinic pharmacy" if given else "Medicines to buy from another pharmacy"
+    return subject, "\n".join(lines)
+
+
+def notify_dispensed(db, p: Patient, rxs: list) -> Notification | None:
+    if not rxs or not _wants_email(p):
+        return None
+    subject, body = dispensed_message(p, rxs)
+    return queue(db, to=p.email, subject=subject, body=body, kind="dispensed", patient_id=p.id,
+                 appointment_id=rxs[0].appointment_id)

@@ -9,7 +9,7 @@
 </div>
 {% if p.allergies %}<div class="note danger"><b>Allergies:</b> {{ p.allergies }}</div>{% endif %}
 
-<form method="post" class="card">
+<form method="post" class="card" id="rx-form">
   {% if appointment_id %}<input type="hidden" name="back" value="appointment">{% endif %}
   <div class="row">
     <div class="field"><label>For diagnosis</label>
@@ -20,34 +20,129 @@
       {% for a in appts %}<option value="{{ a.id }}" {{ 'selected' if appointment_id == a.id }}>{{ a.scheduled_at | dt }}{% if a.reason %} · {{ a.reason[:40] }}{% endif %}</option>{% endfor %}</select></div>
   </div>
 
-  <div class="rx-head"><span>Medicine</span><span>Dosage</span><span>Frequency</span><span>Duration</span><span>Instructions</span><span></span></div>
-  <div id="rx-rows">
-    <div class="rx-row">
-      <input name="medicine" placeholder="e.g. Paracetamol" required list="common-meds">
-      <input name="dosage" placeholder="500 mg">
-      <input name="frequency" placeholder="Twice daily" list="common-freq">
-      <input name="duration" placeholder="5 days">
-      <input name="instructions" placeholder="After food">
-      <button type="button" class="btn ghost icon-only" onclick="removeRow(this)" title="Remove">{{ icon('x') }}</button>
+  <div class="field"><label>Common medicines <span class="muted small">(tick to add with the usual adult dose; change anything below)</span></label>
+    <div class="ticks" id="rx-common">
+      {% for c in rx_opts.common %}
+      <label class="tick"><input type="checkbox" data-i="{{ loop.index0 }}"><span class="tick-box">{{ icon('check', 12) }}</span>
+        <span>{{ c.label }}</span>{% if c.drug_id and c.stock > 0 %}<span class="tick-stock ok">{{ c.stock }}</span>{% else %}<span class="tick-stock out" title="Not in clinic stock">buy outside</span>{% endif %}</label>
+      {% endfor %}
     </div>
   </div>
-  <datalist id="common-freq"><option>Once daily</option><option>Twice daily</option><option>Three times daily</option><option>Four times daily</option><option>At bedtime</option><option>As needed</option><option>Once weekly</option></datalist>
-  <datalist id="common-meds"><option>Paracetamol</option><option>Ibuprofen</option><option>Amoxicillin</option><option>Azithromycin</option><option>Cetirizine</option><option>Omeprazole</option><option>Metformin</option><option>Amlodipine</option><option>Propranolol</option><option>Levetiracetam</option><option>Vitamin D3</option><option>Folic acid</option></datalist>
-  <button type="button" class="btn outline small" onclick="addRow()" style="margin:4px 0 16px">{{ icon('plus') }}Add another medicine</button>
 
+  <div class="rx2-head"><span>Medicine</span><span>Dose</span><span>How often</span><span>For how long</span><span>Instructions</span><span>Qty</span><span></span></div>
+  <div id="rx-rows"></div>
+  <button type="button" class="btn outline small" id="rx-add" style="margin:4px 0 16px">{{ icon('plus') }}Add another medicine</button>
+  <datalist id="rx-stock">{% for d in rx_opts.stock %}<option value="{{ d.label }}">{{ d.stock }} in stock</option>{% endfor %}</datalist>
+  <datalist id="rx-instr">{% for x in rx_opts.instructions %}<option>{{ x }}</option>{% endfor %}</datalist>
+
+  <div class="small muted" style="margin-bottom:14px">The prescription goes to the clinic pharmacy, where the pharmacist or receptionist gives the medicines and updates stock. Anything not in stock is still prescribed, and the patient is told to buy it from another pharmacy.</div>
   <div class="actions"><button class="btn primary">{{ icon('pill') }}Save prescription</button>
   <a class="btn outline" href="{{ '/appointments/' ~ appointment_id if appointment_id else '/patients/' ~ p.id ~ '?tab=medicines' }}">Cancel</a></div>
 </form>
+
+<template id="rx-tpl">
+  <div class="rx2-row">
+    <div class="rx2-med"><input name="medicine" placeholder="Type or pick a medicine" list="rx-stock" autocomplete="off">
+      <input type="hidden" name="drug_id"><div class="rx2-status small"></div></div>
+    <select name="dosage" data-other="Dose"><option value="">Dose</option>{% for x in rx_opts.doses %}<option>{{ x }}</option>{% endfor %}<option value="__other">Other…</option></select>
+    <select name="frequency" data-other="How often"><option value="">How often</option>{% for x in rx_opts.frequencies %}<option>{{ x }}</option>{% endfor %}<option value="__other">Other…</option></select>
+    <select name="duration" data-other="For how long"><option value="">Duration</option>{% for x in rx_opts.durations %}<option>{{ x }}</option>{% endfor %}<option value="__other">Other…</option></select>
+    <input name="instructions" placeholder="Instructions" list="rx-instr">
+    <input name="quantity" type="number" min="0" placeholder="Qty" title="Units for the whole course (worked out automatically)">
+    <button type="button" class="btn ghost icon-only rx2-del" title="Remove">{{ icon('x') }}</button>
+  </div>
+</template>
 <script>
-function addRow(){
-  var rows = document.getElementById('rx-rows'), r = rows.firstElementChild.cloneNode(true);
-  r.querySelectorAll('input').forEach(function(i){ i.value=''; i.required = false; });
-  rows.appendChild(r); r.querySelector('input').focus();
-}
-function removeRow(b){
-  var rows = document.getElementById('rx-rows');
-  if (rows.children.length > 1) b.parentElement.remove();
-  else b.parentElement.querySelectorAll('input').forEach(function(i){ i.value=''; });
-}
+(function () {
+  var O = {{ rx_opts | tojson }};
+  var rows = document.getElementById('rx-rows'), tpl = document.getElementById('rx-tpl');
+  var byLabel = {}; O.stock.forEach(function (d) { byLabel[d.label.toLowerCase()] = d; });
+
+  function setSelect(sel, v) {
+    if (!v) { sel.value = ''; return; }
+    var has = Array.prototype.some.call(sel.options, function (o) { return o.value === v; });
+    if (!has) { var o = new Option(v, v); sel.insertBefore(o, sel.lastElementChild); }
+    sel.value = v;
+  }
+  function doseN(d) { d = (d || '').trim().toLowerCase(); if (d.indexOf('½') === 0 || d.indexOf('1/2') === 0) return 0.5;
+    var m = d.match(/^(\d+(\.\d+)?)/); return m ? parseFloat(m[1]) : 1; }
+  function days(v) { if (v in O.days) return O.days[v]; var m = (v || '').toLowerCase().match(/(\d+)\s*(day|week|month)/);
+    return m ? +m[1] * {day: 1, week: 7, month: 30}[m[2]] : 0; }
+  function units(form, dose, freq, dur) {
+    if (O.counted.indexOf(form || 'tablet') < 0) return 1;
+    var pd = O.per_day[freq], d = days(dur), n = doseN(dose);
+    if (pd === -1) return Math.max(1, Math.ceil(n));
+    if (pd === 0) pd = O.as_needed;
+    if (pd == null || !d) return 0;
+    return Math.max(1, Math.ceil(n * pd * d));
+  }
+  function update(r) {
+    var med = r.querySelector('[name=medicine]'), id = r.querySelector('[name=drug_id]'), q = r.querySelector('[name=quantity]');
+    var st = r.querySelector('.rx2-status'), drug = byLabel[med.value.trim().toLowerCase()];
+    id.value = drug ? drug.id : '';
+    var need = units(drug ? drug.form : 'tablet', r.querySelector('[name=dosage]').value, r.querySelector('[name=frequency]').value, r.querySelector('[name=duration]').value);
+    if (!q.dataset.manual) q.value = need || '';
+    need = +q.value || need;
+    st.className = 'rx2-status small';
+    if (!med.value.trim()) { st.textContent = ''; return; }
+    if (!drug) { st.textContent = 'Not in clinic stock: patient buys from another pharmacy'; st.classList.add('warn'); return; }
+    if (drug.expired) { st.textContent = 'Clinic stock has expired: patient buys outside'; st.classList.add('bad'); return; }
+    if (drug.stock <= 0) { st.textContent = 'Out of stock: patient buys from another pharmacy'; st.classList.add('bad'); return; }
+    if (need && drug.stock < need) { st.textContent = 'Pharmacy has ' + drug.stock + ' ' + drug.unit + 's; patient may buy ' + (need - drug.stock) + ' outside'; st.classList.add('warn'); return; }
+    st.textContent = 'In stock at the clinic pharmacy (' + drug.stock + ' ' + drug.unit + (drug.stock === 1 ? '' : 's') + ')'; st.classList.add('ok');
+  }
+  function addRow(pre, commonI) {
+    var r = tpl.content.firstElementChild.cloneNode(true);
+    if (commonI != null) r.dataset.common = commonI;
+    if (pre) {
+      r.querySelector('[name=medicine]').value = pre.label || '';
+      setSelect(r.querySelector('[name=dosage]'), pre.dose);
+      setSelect(r.querySelector('[name=frequency]'), pre.frequency);
+      setSelect(r.querySelector('[name=duration]'), pre.duration);
+      r.querySelector('[name=instructions]').value = pre.instructions || '';
+    }
+    rows.appendChild(r);
+    update(r);
+    return r;
+  }
+  rows.addEventListener('input', function (e) {
+    var r = e.target.closest('.rx2-row'); if (!r) return;
+    if (e.target.name === 'quantity') e.target.dataset.manual = e.target.value ? '1' : '';
+    update(r);
+  });
+  rows.addEventListener('change', function (e) {
+    var t = e.target, r = t.closest('.rx2-row'); if (!r) return;
+    if (t.tagName === 'SELECT' && t.value === '__other') {
+      var v = prompt(t.dataset.other + ':', '');
+      setSelect(t, v ? v.trim() : '');
+    }
+    update(r);
+  });
+  rows.addEventListener('click', function (e) {
+    var b = e.target.closest('.rx2-del'); if (!b) return;
+    var r = b.closest('.rx2-row');
+    if (r.dataset.common != null) { var cb = document.querySelector('#rx-common input[data-i="' + r.dataset.common + '"]'); if (cb) cb.checked = false; }
+    r.remove();
+    if (!rows.children.length) addRow();
+  });
+  document.getElementById('rx-add').addEventListener('click', function () { addRow().querySelector('[name=medicine]').focus(); });
+  document.getElementById('rx-common').addEventListener('change', function (e) {
+    var cb = e.target, i = cb.dataset.i; if (i == null) return;
+    if (cb.checked) {
+      // reuse an empty row if there is one
+      var empty = Array.prototype.find.call(rows.children, function (r) { return !r.querySelector('[name=medicine]').value.trim(); });
+      if (empty) empty.remove();
+      addRow(O.common[i], i);
+    } else {
+      var r = rows.querySelector('.rx2-row[data-common="' + i + '"]'); if (r) r.remove();
+      if (!rows.children.length) addRow();
+    }
+  });
+  document.getElementById('rx-form').addEventListener('submit', function (e) {
+    var any = Array.prototype.some.call(rows.querySelectorAll('[name=medicine]'), function (i) { return i.value.trim(); });
+    if (!any) { e.preventDefault(); alert('Add at least one medicine.'); }
+  });
+  addRow();
+})();
 </script>
 {% endblock %}

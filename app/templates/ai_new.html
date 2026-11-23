@@ -1,20 +1,76 @@
 {% extends "base.html" %}
 {% from "_icons.html" import icon %}
+{% from "_symptom_picker.html" import symptom_picker %}
+{% from "_images.html" import lightbox %}
 {% block title %}AI diagnosis · {{ p.full_name }}{% endblock %}
 {% block content %}
 <div class="crumbs"><a href="/patients">Patients</a> › <a href="/patients/{{ p.id }}?tab=ai">{{ p.full_name }}</a> › AI diagnosis</div>
 <h1>AI diagnosis for {{ p.full_name }}</h1>
-<p class="muted">Describe the case as you would in a referral letter: age, sex, symptoms and when they started,
-examination findings, test and imaging results, family history. More specific findings give better suggestions.</p>
+<p class="muted">Describe the case as you would in a referral letter, and add symptoms and signs from the search.
+More specific findings give better suggestions.</p>
 
 {% if ai_status != 'ready' %}<div class="note">AI is starting up. Please try again in a minute.</div>{% endif %}
 
-<form method="post" class="card" style="max-width:860px">
+{% if intake %}
+<div class="alert" style="border-left-color:var(--violet)"><span class="ic violet">{{ icon('message') }}</span>
+  <div class="grow"><b>Filled in from the patient's history</b>
+  <div class="small muted">Taken {{ intake.completed_at | dt }}{% if intake.appointment %} for the visit on {{ intake.appointment.scheduled_at | dt('%d %b') }}{% endif %}. Review and edit before running.</div></div>
+  <a class="btn outline small" href="/history/{{ intake.id }}">View history</a></div>
+{% elif other_intakes %}
+<div class="note">This patient has completed a history with the intake assistant.
+  {% for h in other_intakes %}<a href="/patients/{{ p.id }}/ai/new?history_id={{ h.id }}">Use the one from {{ h.completed_at | dt('%d %b %Y') }}</a>{{ ' · ' if not loop.last }}{% endfor %}</div>
+{% endif %}
+
+<form method="post" class="card" style="max-width:920px">
+  {% if intake %}<input type="hidden" name="history_id" value="{{ intake.id }}">{% endif %}
   <div class="field"><label>Case description</label>
-    <textarea name="case_text" rows="10" style="min-height:220px" required
+    <textarea name="case_text" rows="8" style="min-height:170px"
       placeholder="A 46-year-old woman with progressive loss of central vision. Fundus examination shows angioid streaks in both eyes. Yellowish papules on the sides of the neck…">{{ case_text }}</textarea></div>
+
+  <div class="field"><label>Symptoms and signs</label>
+    {{ symptom_picker('symptoms', symptoms, groups, total=total) }}
+    <div class="small muted" style="margin-top:6px">Search the full phenotype list ({{ '{:,}'.format(total) }} terms from OptimusKG/HPO) or pick everyday symptoms. Selected terms are added to the case description.</div>
+  </div>
+
+  <div class="field"><label>Images <span class="muted small">(optional, up to {{ max_images }})</span></label>
+    <div class="img-picker" data-image-picker data-max="{{ max_images }}" data-upload="/patients/{{ p.id }}/images">
+      <div class="ip-bar">
+        <label class="btn outline small">{{ icon('upload', 14) }}Upload images<input type="file" class="ip-file" accept="{{ ACCEPT }}" multiple hidden></label>
+        <select class="ip-modality small" aria-label="Type of new images">{% for k, v in MODALITIES %}<option value="{{ k }}">{{ v }}</option>{% endfor %}</select>
+        <span class="small muted ip-count"></span>
+        <span class="small ip-status"></span>
+      </div>
+      <div class="ip-list">
+        {% for img in images %}
+        <div class="ip-item" data-id="{{ img.id }}">
+          <label class="ip-check"><input type="checkbox" name="image_ids" value="{{ img.id }}" {{ 'checked' if img.id in selected_images }}></label>
+          <button type="button" class="img-thumb" data-full="/images/{{ img.id }}" data-caption="{{ img.finding or '' }}"><img src="/images/{{ img.id }}?thumb=1" alt="" loading="lazy"></button>
+          <div class="ip-body">
+            <div class="small"><b class="ip-label">{{ dict(MODALITIES).get(img.modality, 'Image') }}{% if img.body_site %} · {{ img.body_site }}{% endif %}</b>
+              <span class="muted">· {{ img.created_at | d }}{% if img.source == 'patient' %} · from patient{% endif %}</span></div>
+            <div class="ip-row"><select name="modality_{{ img.id }}">{% for k, v in MODALITIES %}<option value="{{ k }}" {{ 'selected' if k == img.modality }}>{{ v }}</option>{% endfor %}</select></div>
+            <textarea name="finding_{{ img.id }}" rows="2" placeholder="What does it show? e.g. angioid streaks in both fundi">{{ img.finding }}</textarea>
+            {% if img.finding_source == 'patient' and img.finding %}<div class="small muted">Patient's description. Edit it into a clinical finding before running.</div>{% endif %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="small muted ip-empty" {{ 'hidden' if images }}>No images in this patient's record yet. Upload a photo, scan or report.</div>
+      <template><div class="ip-item">
+        <label class="ip-check"><input type="checkbox" name="image_ids"></label>
+        <button type="button" class="img-thumb"><img alt=""></button>
+        <div class="ip-body"><div class="small"><b class="ip-label"></b> <span class="muted">· just uploaded</span></div>
+          <div class="ip-row"><select>{% for k, v in MODALITIES %}<option value="{{ k }}">{{ v }}</option>{% endfor %}</select></div>
+          <textarea rows="2" placeholder="What does it show? e.g. angioid streaks in both fundi"></textarea></div>
+      </div></template>
+    </div>
+    <div class="small muted" style="margin-top:6px">Write what each image shows. The ranking reads your description; the AI explanation cites each image as an imaging finding. Images are saved to the patient's record.</div>
+  </div>
+
   {% if p.diagnoses %}<div class="small muted" style="margin-bottom:12px">Known conditions: {% for d in p.diagnoses %}{{ d.condition }} ({{ d.status }}){{ ', ' if not loop.last }}{% endfor %}</div>{% endif %}
   <div class="actions"><button class="btn ai">{{ icon('sparkles') }}Find likely conditions</button>
   <a class="btn outline" href="/patients/{{ p.id }}">Cancel</a></div>
 </form>
+{{ lightbox() }}
+<script src="/static/symptom-picker.js"></script>
 {% endblock %}

@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block title %}New counter sale{% endblock %}
+{% block content %}
+<div class="crumbs"><a href="/pharmacy/sales">Counter sales</a> › New sale</div>
+<h1>New counter sale</h1>
+<p class="muted">For walk-in customers or prescriptions from outside the clinic. Stock is deducted when you save.</p>
+
+<form method="post" class="card" id="sale-form">
+  {% if user.role == 'admin' %}<div class="field" style="max-width:320px"><label>Clinic pharmacy</label><select name="clinic_id" id="sale-clinic" required><option value="">Choose…</option>
+    {% for c in clinics %}<option value="{{ c.id }}">{{ c.name }}</option>{% endfor %}</select></div>{% endif %}
+  <div class="row">
+    <div class="field"><label>Customer name</label><input name="customer_name" placeholder="Optional"></div>
+    <div class="field"><label>Phone</label><input name="customer_phone" placeholder="Optional"></div>
+    <div class="field"><label>Patient ID <span class="muted small">(if a clinic patient)</span></label><input name="patient_mrn" placeholder="P-000001"></div>
+  </div>
+  <div class="row">
+    <div class="field"><label>Prescribed by <span class="muted small">(outside doctor or hospital, if any)</span></label><input name="prescribed_by" placeholder="e.g. Dr. Sharma, City Hospital"></div>
+    <div class="field"><label>Payment</label><select name="payment">{% for k, v in PAYMENTS %}<option value="{{ k }}">{{ v }}</option>{% endfor %}</select></div>
+  </div>
+
+  <div class="sale-head"><span>Medicine</span><span>In stock</span><span>Qty</span><span>Price / unit (Rs)</span><span>Amount</span><span></span></div>
+  <div id="sale-rows"></div>
+  <button type="button" class="btn outline small" id="sale-add" style="margin:6px 0 14px">{{ icon('plus') }}Add medicine</button>
+  <div class="sale-total">Total <b id="sale-total">Rs 0.00</b></div>
+  <div class="field"><label>Note</label><input name="note" maxlength="300" placeholder="Optional"></div>
+  <div class="actions"><button class="btn primary">{{ icon('check') }}Save sale</button><a class="btn outline" href="/pharmacy/sales">Cancel</a></div>
+</form>
+
+<template id="sale-tpl"><div class="sale-row">
+  <select name="drug_id" class="sr-drug"><option value="">Choose medicine…</option></select>
+  <span class="sr-stock small muted">—</span>
+  <input name="qty" type="number" min="1" value="1" class="sr-qty">
+  <input name="price" type="number" min="0" step="0.01" class="sr-price">
+  <span class="sr-amt">0.00</span>
+  <button type="button" class="btn ghost icon-only sr-del" title="Remove">{{ icon('x') }}</button>
+</div></template>
+<script>
+(function () {
+  var D = {{ drugs_json | tojson }}, rows = document.getElementById('sale-rows'), tpl = document.getElementById('sale-tpl');
+  var clinicSel = document.getElementById('sale-clinic');
+  function opts(sel) {
+    var cid = clinicSel ? +clinicSel.value : null, cur = sel.value;
+    sel.length = 1;
+    D.forEach(function (d) { if (cid === null || !clinicSel || d.clinic_id === cid) sel.add(new Option(d.label + ' · Rs ' + d.price.toFixed(2), d.id)); });
+    sel.value = cur;
+  }
+  function byId(id) { return D.find(function (d) { return String(d.id) === String(id); }); }
+  function total() {
+    var t = 0;
+    rows.querySelectorAll('.sale-row').forEach(function (r) {
+      var q = +r.querySelector('.sr-qty').value || 0, pr = +r.querySelector('.sr-price').value || 0, a = q * pr;
+      r.querySelector('.sr-amt').textContent = a.toFixed(2);
+      var d = byId(r.querySelector('.sr-drug').value);
+      r.classList.toggle('over', !!d && q > d.stock);
+      t += a;
+    });
+    document.getElementById('sale-total').textContent = 'Rs ' + t.toFixed(2);
+  }
+  function add() {
+    var r = tpl.content.firstElementChild.cloneNode(true);
+    opts(r.querySelector('.sr-drug'));
+    rows.appendChild(r);
+    return r;
+  }
+  rows.addEventListener('change', function (e) {
+    var r = e.target.closest('.sale-row');
+    if (e.target.classList.contains('sr-drug')) {
+      var d = byId(e.target.value);
+      r.querySelector('.sr-stock').textContent = d ? d.stock + ' ' + d.unit + (d.stock === 1 ? '' : 's') : '—';
+      r.querySelector('.sr-price').value = d ? d.price.toFixed(2) : '';
+      r.querySelector('.sr-qty').max = d ? d.stock : '';
+    }
+    total();
+  });
+  rows.addEventListener('input', total);
+  rows.addEventListener('click', function (e) {
+    if (!e.target.closest('.sr-del')) return;
+    e.target.closest('.sale-row').remove();
+    if (!rows.children.length) add();
+    total();
+  });
+  document.getElementById('sale-add').addEventListener('click', function () { add().querySelector('select').focus(); });
+  if (clinicSel) clinicSel.addEventListener('change', function () { rows.querySelectorAll('.sr-drug').forEach(opts); total(); });
+  document.getElementById('sale-form').addEventListener('submit', function (e) {
+    var over = rows.querySelector('.sale-row.over');
+    if (over) { e.preventDefault(); alert('A quantity is more than the stock available.'); }
+  });
+  add();
+})();
+</script>
+{% endblock %}

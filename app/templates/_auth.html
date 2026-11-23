@@ -1,0 +1,107 @@
+{% from "_icons.html" import icon, theme_toggle %}
+{# Split sign-in layout: branded showcase with a feature carousel, form on the right. #}
+
+{% macro slide_ai() %}
+<div class="mock">
+  <div class="mock-head">{{ icon('sparkles', 14) }} Likely conditions</div>
+  {% for name, w, tag in [('Pseudoxanthoma elasticum', 92, 'Top match'), ('Ehlers-Danlos syndrome', 64, ''), ('Marfan syndrome', 41, '')] %}
+  <div class="mock-row"><span class="mock-rank">{{ loop.index }}</span><div class="grow"><div class="mock-name">{{ name }}{% if tag %} <span class="mock-tag">{{ tag }}</span>{% endif %}</div>
+    <div class="mock-bar"><span style="width:{{ w }}%"></span></div></div></div>
+  {% endfor %}
+  <div class="mock-foot">{{ icon('check', 12) }} Every claim cited to the evidence</div>
+</div>
+{% endmacro %}
+
+{% macro slide_appts() %}
+<div class="mock">
+  <div class="mock-head">{{ icon('calendar', 14) }} Today · 4 appointments</div>
+  {% for t, n, s in [('09:30', 'Sunita Verma', 'Checked in'), ('11:00', 'Arjun Patel', 'Scheduled'), ('12:30', 'Kavya Nair', 'Booked online')] %}
+  <div class="mock-row"><span class="mock-time">{{ t }}</span><div class="grow mock-name">{{ n }}</div><span class="mock-pill">{{ s }}</span></div>
+  {% endfor %}
+  <div class="mock-mail">{{ icon('mail', 14) }}<div><b>Reminder sent</b><div>Your appointment is tomorrow at 11:00 AM</div></div></div>
+</div>
+{% endmacro %}
+
+{% macro slide_chat() %}
+<div class="mock">
+  <div class="mock-head">{{ icon('message', 14) }} Symptom check-in</div>
+  <div class="mock-bubble bot">When did the headaches start?</div>
+  <div class="mock-bubble me">About two weeks ago</div>
+  <div class="mock-bubble bot">How bad are they, from 1 to 10?</div>
+  <div class="mock-chips"><span>4</span><span>5</span><span class="on">6</span><span>7</span></div>
+</div>
+{% endmacro %}
+
+{% macro slide_book() %}
+<div class="mock">
+  <div class="mock-head">{{ icon('calendar', 14) }} Choose a time · Dr. Anita Mehta</div>
+  <div class="mock-days">{% for d in ['Mon 24', 'Tue 25', 'Wed 26', 'Thu 27'] %}<span class="{{ 'on' if loop.index == 2 }}">{{ d }}</span>{% endfor %}</div>
+  <div class="mock-slots">{% for s in ['09:00', '09:30', '10:30', '11:00', '14:00', '15:30'] %}<span class="{{ 'on' if s == '10:30' }}">{{ s }}</span>{% endfor %}</div>
+  <div class="mock-foot">{{ icon('check', 12) }} Confirmed instantly, with a calendar invite</div>
+</div>
+{% endmacro %}
+
+{% macro slide_rx() %}
+<div class="mock">
+  <div class="mock-head">{{ icon('pill', 14) }} New prescription</div>
+  {% for m, d in [('Amoxicillin 500 mg', '1 capsule · 3 times a day · 5 days'), ('Paracetamol 650 mg', '1 tablet · when needed')] %}
+  <div class="mock-row"><span class="mock-ic">{{ icon('pill', 14) }}</span><div class="grow"><div class="mock-name">{{ m }}</div><div class="mock-sub">{{ d }}</div></div></div>
+  {% endfor %}
+  <div class="mock-mail">{{ icon('mail', 14) }}<div><b>Sent to your inbox</b><div>With dose, timing and instructions</div></div></div>
+</div>
+{% endmacro %}
+
+{% macro auth_shell(kind) %}
+{% if kind == 'patient' %}
+  {% set slides = [
+    ('Book a visit in seconds', 'Pick your doctor and a free time. You get a confirmation and calendar invite straight away.', slide_book()),
+    ('Tell us how you feel before you arrive', 'A short guided check-in lets your doctor read your history before the visit.', slide_chat()),
+    ('Your medicines, always at hand', 'Prescriptions and reminders arrive by email, with clear instructions.', slide_rx()),
+  ] %}
+{% else %}
+  {% set slides = [
+    ('Diagnosis support for rare and common disease', 'Rank 1,400+ rare diseases in a second, with a realist check for everyday causes and cited explanations.', slide_ai()),
+    ('Every appointment, on time', 'Online booking, confirmations and automatic email reminders 24 and 2 hours before each visit.', slide_appts()),
+    ('Histories taken before the visit', 'Patients answer a guided check-in; urgent symptoms alert the doctor immediately.', slide_chat()),
+  ] %}
+{% endif %}
+{{ theme_toggle("theme-float") }}
+<div class="auth">
+  <aside class="auth-show" aria-label="About MediPurse">
+    <div class="auth-brand"><img class="logo" src="/static/logo.svg" alt="">MediPurse</div>
+    <div class="carousel" data-carousel>
+      {% for title, text, mock in slides %}
+      <section class="slide{{ ' on' if loop.first }}" aria-hidden="{{ 'false' if loop.first else 'true' }}">
+        <div class="slide-art">{{ mock }}</div>
+        <h2>{{ title }}</h2>
+        <p>{{ text }}</p>
+      </section>
+      {% endfor %}
+      <div class="dots" role="tablist">{% for s in slides %}<button type="button" class="{{ 'on' if loop.first }}" aria-label="Show slide {{ loop.index }}"></button>{% endfor %}</div>
+    </div>
+    <div class="auth-trust">{{ icon('check', 14) }} Patient data stays within your clinic · Role-based access · Email reminders</div>
+  </aside>
+  <div class="auth-main">
+    <div class="auth-form">{{ caller() }}</div>
+  </div>
+</div>
+<script>
+(function () {
+  var c = document.querySelector('[data-carousel]'); if (!c) return;
+  var slides = c.querySelectorAll('.slide'), dots = c.querySelectorAll('.dots button'), i = 0, timer;
+  function show(n) {
+    i = (n + slides.length) % slides.length;
+    slides.forEach(function (s, k) { s.classList.toggle('on', k === i); s.setAttribute('aria-hidden', k === i ? 'false' : 'true'); });
+    dots.forEach(function (d, k) { d.classList.toggle('on', k === i); });
+  }
+  function start() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    stop(); timer = setInterval(function () { show(i + 1); }, 5000);
+  }
+  function stop() { clearInterval(timer); }
+  dots.forEach(function (d, k) { d.addEventListener('click', function () { show(k); start(); }); });
+  c.addEventListener('mouseenter', stop); c.addEventListener('mouseleave', start);
+  start();
+})();
+</script>
+{% endmacro %}

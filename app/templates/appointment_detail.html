@@ -47,6 +47,16 @@
 
 <div>
 <div class="card">
+  <div class="section-head" style="margin-top:0"><h3 style="margin:0">Patient history</h3>
+  {% if intake and intake.status == 'completed' and doc %}<a class="btn ai small" href="/patients/{{ p.id }}/ai/new?history_id={{ intake.id }}&appointment_id={{ a.id }}">{{ icon('sparkles') }}AI diagnose</a>{% endif %}</div>
+  {% if intake %}{% set sm = intake.summary_json | fromjson %}
+    {% if intake.red_flags %}<div class="small" style="color:var(--red);margin-bottom:6px">Red flags: {{ intake.red_flags }}</div>{% endif %}
+    {% if intake.status == 'completed' %}<div>{{ (sm.case_text or '')[:320] }}{{ '…' if (sm.case_text or '') | length > 320 }}</div>
+    <div class="small" style="margin-top:6px"><a href="/history/{{ intake.id }}">Read the full history</a></div>
+    {% else %}<div class="muted">The patient has started but not finished the history.</div>{% endif %}
+  {% else %}<div class="muted small">The patient has not filled in a history for this visit. They can do it from the patient portal before the visit.</div>{% endif %}
+</div>
+<div class="card">
   <div class="section-head" style="margin-top:0"><h3 style="margin:0">Patient emails</h3>
   {% if a.status == 'scheduled' and p.email %}<form method="post" action="/appointments/{{ a.id }}/remind" class="inline"><button class="btn outline small">{{ icon('mail') }}Send reminder now</button></form>{% endif %}</div>
   {% if not p.email %}<div class="muted">No email address on file. <a href="/patients/{{ p.id }}/edit">Add one</a> to send confirmations and reminders.</div>

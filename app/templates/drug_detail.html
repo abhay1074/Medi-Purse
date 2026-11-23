@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block title %}{{ d.label }}{% endblock %}
+{% block content %}
+<div class="crumbs"><a href="/inventory">Pharmacy stock</a> › {{ d.label }}</div>
+<div class="head">
+  <div><h1>{{ d.name }} <span class="muted" style="font-weight:500">{{ d.strength }}</span></h1>
+  <div class="muted">{{ d.form | capitalize }} · {{ d.clinic.name }}{% if d.price %} · Rs {{ '%.2f' | format(d.price) }} per {{ d.unit }}{% endif %}{% if not d.active %} · <span class="tag stopped">not in use</span>{% endif %}</div></div>
+  <div class="inv-big"><span class="stock {{ d.level }}">{{ d.stock }}</span><span class="muted">{{ d.unit }}{{ 's' if d.stock != 1 }} in stock</span>
+    {% if d.level == 'out' %}<span class="tag error">out of stock</span>{% elif d.level == 'low' %}<span class="tag uncertain">running low (reorder at {{ d.reorder_level }})</span>{% endif %}</div>
+</div>
+{% if d.expiry and d.expiry < today %}<div class="note danger">This batch expired on {{ d.expiry | d }}. It will not be given to patients; remove it from stock below.</div>
+{% elif d.expiry and d.expiry <= soon %}<div class="note">Expires on {{ d.expiry | d }}.</div>{% endif %}
+
+{% if can_edit %}
+<div class="two">
+  <form method="post" action="/inventory/{{ d.id }}/receive" class="card">
+    <h3 style="margin-top:0">{{ icon('plus') }} Receive stock</h3>
+    <div class="row"><div class="field"><label>Units received</label><input name="quantity" type="number" min="1" required></div>
+      <div class="field"><label>Batch</label><input name="batch" value="{{ d.batch }}"></div>
+      <div class="field"><label>Expiry</label><input name="expiry" type="date" value="{{ d.expiry.isoformat() if d.expiry else '' }}"></div></div>
+    <div class="field"><label>Note</label><input name="note" placeholder="Supplier, invoice number"></div>
+    <button class="btn primary">Add to stock</button>
+  </form>
+  <form method="post" action="/inventory/{{ d.id }}/adjust" class="card">
+    <h3 style="margin-top:0">{{ icon('activity') }} Correct stock</h3>
+    <div class="row"><div class="field"><label>Counted stock</label><input name="count" type="number" min="0" value="{{ d.stock }}" required></div>
+      <div class="field"><label>Reason</label><select name="reason"><option value="adjusted">Stock count</option><option value="expired">Expired, removed</option><option value="damaged">Damaged or lost</option></select></div></div>
+    <div class="field"><label>Note</label><input name="note"></div>
+    <button class="btn outline">Save count</button>
+  </form>
+</div>
+<details class="card"><summary><b>Edit details</b></summary>
+  <form method="post" action="/inventory/{{ d.id }}/edit" style="margin-top:12px">
+    <div class="row"><div class="field"><label>Name</label><input name="name" value="{{ d.name }}" required></div>
+      <div class="field"><label>Strength</label><input name="strength" value="{{ d.strength }}"></div>
+      <div class="field"><label>Form</label><select name="form">{% for f, u in FORMS %}<option value="{{ f }}" {{ 'selected' if f == d.form }}>{{ f | capitalize }}</option>{% endfor %}</select></div></div>
+    <div class="row"><div class="field"><label>Reorder at</label><input name="reorder_level" type="number" min="0" value="{{ d.reorder_level }}"></div>
+      <div class="field"><label>Batch</label><input name="batch" value="{{ d.batch }}"></div>
+      <div class="field"><label>Expiry</label><input name="expiry" type="date" value="{{ d.expiry.isoformat() if d.expiry else '' }}"></div>
+      <div class="field"><label>Price per unit (Rs)</label><input name="price" type="number" min="0" step="0.01" value="{{ '%.2f' | format(d.price or 0) }}"></div></div>
+    <label class="check"><input type="checkbox" name="active" value="1" {{ 'checked' if d.active }}> In use (shown to doctors when prescribing)</label>
+    <div class="actions" style="margin-top:12px"><button class="btn primary">Save</button></div>
+  </form>
+</details>
+{% endif %}
+
+<h2>Stock history</h2>
+{% if moves %}
+<div class="table-card"><table><tr><th>When</th><th>Change</th><th>Balance</th><th>Reason</th><th>Details</th><th>By</th></tr>
+{% for m in moves %}
+<tr><td class="nowrap">{{ m.created_at | dt }}</td>
+  <td class="nowrap"><b style="color:{{ 'var(--green)' if m.change > 0 else 'var(--red)' }}">{{ '+' if m.change > 0 }}{{ m.change }}</b></td>
+  <td>{{ m.balance }}</td><td><span class="tag {{ 'completed' if m.reason in ('received','added') else 'scheduled' if m.reason in ('dispensed', 'sold') else 'uncertain' }}">{{ m.reason }}</span></td>
+  <td>{{ m.note }}{% if m.prescription_id %} <span class="small muted">(prescription #{{ m.prescription_id }})</span>{% endif %}{% if m.sale_id %} <a class="small" href="/pharmacy/sales/{{ m.sale_id }}">(sale #{{ m.sale_id }})</a>{% endif %}</td>
+  <td>{{ m.user.display if m.user else '—' }}</td></tr>
+{% endfor %}</table></div>
+{% else %}<div class="empty">No stock changes yet.</div>{% endif %}
+{% endblock %}

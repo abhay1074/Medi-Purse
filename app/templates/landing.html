@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon, theme_toggle %}
+{% from "_auth.html" import slide_ai, slide_book, slide_chat, slide_rx, slide_appts %}
+{% block title %}Hospital management and AI-assisted diagnosis{% endblock %}
+{% block public %}
+<div class="lp">
+
+<!-- utility bar -->
+<div class="lp-util">
+  <div class="lp-wrap lp-util-in">
+    <span class="hide-sm">{{ icon('globe', 15) }} For hospitals, clinics and their patients</span>
+    <nav>
+      <a href="#patients">For patients</a>
+      <a href="#how">How it works</a>
+      <a href="/portal/login">Patient portal</a>
+      <a href="/login" class="lp-util-acc">{{ icon('user', 15) }} Staff sign in</a>
+    </nav>
+  </div>
+</div>
+
+<!-- main nav -->
+<header class="lp-nav">
+  <div class="lp-wrap lp-nav-in">
+    <a class="lp-brand" href="/welcome"><img class="logo" src="/static/logo.svg" alt="">MediPurse</a>
+    <nav class="lp-links hide-sm">
+      <a href="#features">Features</a>
+      <a href="#ai">AI diagnosis</a>
+      <a href="#patients">Patients</a>
+      <a href="#how">How it works</a>
+    </nav>
+    <div class="lp-nav-cta">
+      <a class="lp-signin hide-sm" href="/portal/login">Patient sign in</a>
+      {{ theme_toggle() }}
+      <a class="btn lp-dark" href="/portal/register">Book an appointment</a>
+    </div>
+  </div>
+</header>
+
+<!-- hero -->
+<section class="lp-hero">
+  <svg class="lp-art" viewBox="0 0 640 560" aria-hidden="true">
+    <defs>
+      <linearGradient id="lpA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#facc15"/><stop offset=".35" stop-color="#f472b6"/><stop offset=".7" stop-color="#7c3aed"/><stop offset="1" stop-color="#2563eb"/></linearGradient>
+      <linearGradient id="lpB" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#22d3ee"/><stop offset=".5" stop-color="#818cf8"/><stop offset="1" stop-color="#f0abfc"/></linearGradient>
+      <linearGradient id="lpC" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fde047"/><stop offset=".6" stop-color="#fb7185"/><stop offset="1" stop-color="#f97316" stop-opacity=".2"/></linearGradient>
+      <linearGradient id="lpD" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a3e635"/><stop offset="1" stop-color="#14b8a6" stop-opacity=".1"/></linearGradient>
+      <radialGradient id="lpS" cx=".35" cy=".35" r=".7"><stop offset="0" stop-color="#fef9c3"/><stop offset=".6" stop-color="#fde047"/><stop offset="1" stop-color="#eab308"/></radialGradient>
+      <filter id="lpBlur"><feGaussianBlur stdDeviation="14"/></filter>
+    </defs>
+    <!-- glow -->
+    <ellipse cx="420" cy="300" rx="190" ry="150" fill="#f0abfc" opacity=".35" filter="url(#lpBlur)"/>
+    <!-- vertical bars -->
+    <rect x="560" y="120" width="14" height="440" rx="7" fill="url(#lpC)"/>
+    <rect x="600" y="40" width="10" height="520" rx="5" fill="url(#lpD)" opacity=".85"/>
+    <rect x="470" y="330" width="12" height="230" rx="6" fill="url(#lpC)" opacity=".9"/>
+    <!-- ribbons -->
+    <path d="M300 160 C 360 90, 470 80, 560 120 L 548 168 C 470 132, 380 140, 322 206 Z" fill="url(#lpA)" opacity=".95"/>
+    <path d="M250 300 C 300 200, 430 190, 520 230 L 500 300 C 420 262, 330 280, 292 360 Z" fill="url(#lpB)" opacity=".9"/>
+    <path d="M292 360 C 330 280, 420 262, 500 300 L 470 420 C 410 380, 340 400, 312 470 Z" fill="url(#lpA)" opacity=".85"/>
+    <path d="M330 520 C 360 470, 440 460, 520 490 L 510 560 L 330 560 Z" fill="url(#lpB)" opacity=".8"/>
+    <!-- capsule -->
+    <g transform="rotate(-32 200 430)">
+      <rect x="140" y="405" width="140" height="52" rx="26" fill="#fff" opacity=".9"/>
+      <path d="M210 405 h44 a26 26 0 0 1 0 52 h-44 z" fill="url(#lpA)"/>
+    </g>
+    <!-- spheres -->
+    <circle cx="276" cy="250" r="38" fill="url(#lpS)"/>
+    <circle cx="392" cy="545" r="34" fill="url(#lpS)"/>
+    <circle cx="590" cy="70" r="16" fill="url(#lpS)"/>
+    <!-- cross -->
+    <path d="M150 180v44M128 202h44" stroke="#fff" stroke-width="12" stroke-linecap="round" opacity=".75"/>
+  </svg>
+  <div class="lp-wrap">
+    <div class="lp-hero-card">
+      <h1>Run your clinic and diagnose with confidence</h1>
+      <p>Appointments, prescriptions, patient check-ins and AI-assisted diagnosis for rare and everyday
+        conditions, in one secure place.</p>
+      <div class="lp-hero-cta">
+        <a class="btn lp-dark lg" href="/portal/register">Book an appointment</a>
+        <a class="btn lp-ghost lg" href="/login">Staff sign in</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- stats -->
+<section class="lp-stats">
+  <div class="lp-wrap lp-stats-in">
+    <div><b>{{ '{:,}'.format(stats.diseases) if stats.diseases else '1,400+' }}</b><span>rare diseases ranked in about a second</span></div>
+    <div><b>{{ '{:,}'.format(stats.phenotypes) if stats.phenotypes else '18,000+' }}</b><span>searchable symptoms and signs (HPO)</span></div>
+    <div><b>24 h &amp; 2 h</b><span>automatic appointment reminders</span></div>
+    <div><b>5</b><span>common causes checked by the realist agent</span></div>
+  </div>
+</section>
+
+<!-- features -->
+<section class="lp-sec" id="features">
+  <div class="lp-wrap">
+    <div class="lp-eyebrow">Everything a clinic needs</div>
+    <h2 class="lp-h2">One system for the front desk, the doctor and the patient</h2>
+    <div class="lp-grid">
+      {% for ic, color, title, text in [
+        ('calendar', 'blue', 'Appointments', 'Book at the desk or online. Confirmations, calendar invites and reminders go out automatically.'),
+        ('pill', 'green', 'Prescriptions', 'Prescribe in seconds. Patients receive each medicine with dose, timing and instructions by email.'),
+        ('sparkles', 'violet', 'AI diagnosis', 'Rank rare diseases from the case, with images, a realist check for common causes and cited explanations.'),
+        ('message', 'amber', 'Patient check-ins', 'Patients describe their symptoms before the visit. Red flags alert the doctor straight away.'),
+        ('image', 'blue', 'Clinical images', 'Photos, scans and reports stored securely in the record, location data removed.'),
+        ('sheet', 'green', 'Reports and feedback', 'Excel medicine reports for any period, and patient ratings after every visit.'),
+      ] %}
+      <div class="lp-card"><span class="ic {{ color }}">{{ icon(ic, 18) }}</span><h3>{{ title }}</h3><p>{{ text }}</p></div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- AI -->
+<section class="lp-sec lp-alt" id="ai">
+  <div class="lp-wrap lp-split">
+    <div>
+      <div class="lp-eyebrow">For doctors</div>
+      <h2 class="lp-h2">Diagnosis support that shows its working</h2>
+      <ul class="lp-list">
+        <li>{{ icon('check') }} Ranks {{ '{:,}'.format(stats.diseases) if stats.diseases else '1,400+' }} rare diseases from your case description, symptoms and images</li>
+        <li>{{ icon('check') }} A realist agent lists the 5 most likely common causes when a rare diagnosis isn't the place to start</li>
+        <li>{{ icon('check') }} Every explanation is cited to the case and to Orphanet and OptimusKG evidence</li>
+        <li>{{ icon('check') }} You decide: add a suggestion to the record with one click</li>
+      </ul>
+    </div>
+    <div class="lp-mock-stage">{{ slide_ai() }}</div>
+  </div>
+</section>
+
+<!-- patients -->
+<section class="lp-sec" id="patients">
+  <div class="lp-wrap lp-split rev">
+    <div class="lp-mock-stage teal">{{ slide_book() }}</div>
+    <div>
+      <div class="lp-eyebrow">For patients</div>
+      <h2 class="lp-h2">Book, check in and keep track of your care</h2>
+      <ul class="lp-list">
+        <li>{{ icon('check') }} Book a visit online with your doctor at a time that suits you</li>
+        <li>{{ icon('check') }} Tell us your symptoms before you arrive, and add a photo if it helps</li>
+        <li>{{ icon('check') }} Get reminders and your prescriptions by email</li>
+      </ul>
+      <div class="lp-hero-cta"><a class="btn primary lg" href="/portal/register">Create a patient account</a>
+        <a class="btn outline lg" href="/portal/login">Sign in</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- how it works -->
+<section class="lp-sec lp-alt" id="how">
+  <div class="lp-wrap">
+    <div class="lp-eyebrow">How it works</div>
+    <h2 class="lp-h2">From booking to follow-up</h2>
+    <div class="lp-steps">
+      {% for title, text in [
+        ('Book', 'The patient books online or at the desk and gets a confirmation with a calendar invite.'),
+        ('Check in', 'Before the visit, a guided check-in collects the history and flags anything urgent.'),
+        ('Diagnose', 'The doctor reviews the history, runs the AI assistant and records the diagnosis.'),
+        ('Treat and follow up', 'Prescriptions are emailed, reminders sent, and the patient rates the visit.'),
+      ] %}
+      <div class="lp-step"><span class="lp-num">{{ loop.index }}</span><h3>{{ title }}</h3><p>{{ text }}</p></div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- CTA band -->
+<section class="lp-band">
+  <div class="lp-wrap lp-band-in">
+    <div><h2>Ready to see your doctor?</h2><p>Create an account in a minute and book your first appointment.</p></div>
+    <div class="lp-hero-cta"><a class="btn lp-light lg" href="/portal/register">Book an appointment</a>
+      <a class="btn lp-ghost-w lg" href="/login">Staff sign in</a></div>
+  </div>
+</section>
+
+<footer class="lp-foot">
+  <div class="lp-wrap lp-foot-in">
+    <div><div class="lp-brand"><img class="logo" src="/static/logo.svg" alt="">MediPurse</div>
+      <p class="small muted">Hospital management and AI-assisted diagnosis.<br>Not a replacement for a doctor's judgement. In an emergency call 112.</p></div>
+    <div><b>Patients</b><a href="/portal/register">Create account</a><a href="/portal/login">Sign in</a><a href="/portal/forgot">Forgot password</a></div>
+    <div><b>Staff</b><a href="/login">Sign in</a><a href="#ai">AI diagnosis</a><a href="#features">Features</a></div>
+    {% if clinics %}<div><b>Our clinics</b>{% for c in clinics[:5] %}<span class="small">{{ c.name }}{% if c.phone %} · {{ c.phone }}{% endif %}</span>{% endfor %}</div>{% endif %}
+  </div>
+  <div class="lp-wrap small muted lp-copy">© {{ today.year }} MediPurse</div>
+</footer>
+</div>
+{% endblock %}

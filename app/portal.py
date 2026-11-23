@@ -11,8 +11,14 @@ from datetime import date, datetime, time, timedelta
 
 from fastapi import APIRouter, Depends, HTTPException, Request
 
+import json
+
+from . import history as hx
+from . import images as imgs
 from . import notify
-from .db import Appointment, Clinic, Patient, User, check_password, hash_password
+from .db import (Appointment, Clinic, Feedback, FeedbackRequest, HistoryIntake, Patient, PatientImage, User,
+                 check_password, hash_password)
+from .symptoms import common_symptoms_grouped
 from .main import Redirect, _date, _int, _s, flash, get_db, redirect, templates
 
 router = APIRouter(prefix="/portal")
@@ -192,8 +198,15 @@ def home(request: Request, p: Patient = Depends(current_patient)):
     past = sorted([a for a in p.appointments if a not in upcoming], key=lambda a: a.scheduled_at, reverse=True)
     soon = [a for a in upcoming if a.scheduled_at - datetime.now() <= timedelta(hours=48)]
     rx = sorted([r for r in p.prescriptions if r.status == "active"], key=lambda r: r.prescribed_at, reverse=True)
+    intakes = sorted(db_intakes(p), key=lambda h: h.id, reverse=True)
+    by_appt = {h.appointment_id: h for h in reversed(intakes) if h.appointment_id}
     return prender(request, "portal/home.html", p, upcoming=upcoming, past=past[:20], soon=soon,
-                   rx=rx, cutoff=CANCEL_CUTOFF, now=datetime.now())
+                   rx=rx, cutoff=CANCEL_CUTOFF, now=datetime.now(), intakes=intakes[:5], by_appt=by_appt)
+
+
+def db_intakes(p: Patient) -> list[HistoryIntake]:
+    from sqlalchemy.orm import object_session
+    return object_session(p).query(HistoryIntake).filter(HistoryIntake.patient_id == p.id).all()
 
 
 # ----------------------------------------------------------------------------
@@ -320,3 +333,153 @@ async def profile(request: Request, db=Depends(get_db), p: Patient = Depends(cur
     db.commit()
     flash(request, "Your details are saved.")
     return redirect("/portal/profile")
+
+
+# ----------------------------------------------------------------------------
+# history-taking agent ("Tell us about your symptoms")
+# ----------------------------------------------------------------------------
+def _get_own_intake(db, p: Patient, hid: int) -> HistoryIntake:
+    h = db.get(HistoryIntake, hid)
+    if not h or h.patient_id != p.id:
+        raise HTTPException(404)
+    return h
+
+
+def _intake_llm():
+    from .ai import AI
+    return AI.llm() if AI.llm_available() else None
+
+
+@router.post("/history/new")
+async def history_new(request: Request, db=Depends(get_db), p: Patient = Depends(current_patient)):
+    form = await request.form()
+    appt_id = _int(form.get("appointment_id"))
+    appt = db.get(Appointment, appt_id) if appt_id else None
+    if appt and appt.patient_id != p.id:
+        appt = None
+    if appt:   # continue an unfinished one for the same visit instead of starting over
+        open_ = db.query(HistoryIntake).filter(HistoryIntake.patient_id == p.id, HistoryIntake.appointment_id == appt.id,
+                                               HistoryIntake.status == "in_progress").first()
+        if open_:
+            return redirect(f"/portal/history/{open_.id}")
+    llm = _intake_llm()
+    h = HistoryIntake(patient_id=p.id, appointment_id=appt.id if appt else None, mode="ai" if llm else "guided")
+    db.add(h)
+    db.flush()
+    hx.start(h, p, llm)
+    db.commit()
+    return redirect(f"/portal/history/{h.id}")
+
+
+@router.get("/history/{hid}")
+def history_page(hid: int, request: Request, db=Depends(get_db), p: Patient = Depends(current_patient)):
+    h = _get_own_intake(db, p, hid)
+    messages, _ = hx.load(h)
+    step = hx.current_step(h, p)
+    quick = []
+    if h.status == "in_progress" and h.mode == "ai" and messages and messages[-1]["role"] == "assistant":
+        quick = messages[-1].get("quick") or []
+    summary = json.loads(h.summary_json) if h.summary_json else None
+    n_photos = sum(1 for m in messages if m["role"] == "photo")
+    return prender(request, "portal/history.html", p, h=h, messages=messages, step=step, quick=quick,
+                   summary=summary, groups=common_symptoms_grouped(), ACCEPT=imgs.ACCEPT,
+                   MODALITIES=[(k, imgs.MODALITY_LABEL[k]) for k in imgs.PATIENT_MODALITIES],
+                   n_photos=n_photos, max_photos=MAX_PHOTOS, max_mb=imgs.MAX_BYTES // (1024 * 1024))
+
+
+@router.post("/history/{hid}")
+async def history_reply(hid: int, request: Request, db=Depends(get_db), p: Patient = Depends(current_patient)):
+    h = _get_own_intake(db, p, hid)
+    if h.status != "in_progress":
+        return redirect(f"/portal/history/{hid}")
+    form = await request.form()
+    text = _s(form, "text")[:2000]
+    try:
+        picked = [x for x in json.loads(form.get("symptoms") or "[]") if isinstance(x, dict) and x.get("name")][:30]
+    except ValueError:
+        picked = []
+    if form.get("finish") == "1":
+        text = text or "That's all for now."
+    hx.reply(h, p, text, picked, _intake_llm() if h.mode == "ai" else None)
+    if form.get("finish") == "1" and h.status == "in_progress":
+        messages, answers = hx.load(h)
+        hx._finish(h, p, messages, answers, _intake_llm() if h.mode == "ai" else None)
+        hx.save(h, messages, answers)
+    db.commit()
+    if h.status == "completed":
+        notify.alert_red_flags(db, h)
+    return redirect(f"/portal/history/{hid}#end")
+
+
+MAX_PHOTOS = 6   # per check-in
+
+
+@router.post("/history/{hid}/photos")
+async def history_photos(hid: int, request: Request, db=Depends(get_db), p: Patient = Depends(current_patient)):
+    """Patients can attach photos (a rash, a swelling, an old report) to their check-in."""
+    from .main import read_uploads
+    h = _get_own_intake(db, p, hid)
+    if h.status != "in_progress":
+        return redirect(f"/portal/history/{hid}")
+    form = await request.form()
+    messages, answers = hx.load(h)
+    room = MAX_PHOTOS - sum(1 for m in messages if m["role"] == "photo")
+    uploads = (await read_uploads(form))[:max(room, 0)]
+    if room <= 0:
+        flash(request, f"You can add up to {MAX_PHOTOS} photos to one check-in.", "error")
+        return redirect(f"/portal/history/{hid}#end")
+    if not uploads:
+        flash(request, "Choose a photo to add.", "error")
+        return redirect(f"/portal/history/{hid}#end")
+    what = _s(form, "what")[:300]
+    modality = form.get("modality") if form.get("modality") in imgs.PATIENT_MODALITIES else "clinical_photo"
+    saved, errors = imgs.save_uploads(db, p.id, uploads, source="patient", modality=modality,
+                                      finding=what, intake_id=h.id, appointment_id=h.appointment_id)
+    for e in errors:
+        flash(request, e, "error")
+    for img in saved:
+        if any(m.get("image_id") == img.id for m in messages):
+            continue
+        text = f"Photo added ({imgs.MODALITY_LABEL[img.modality].lower()})" + (f": {what}" if what else "")
+        messages.append(hx._msg("photo", text, image_id=img.id))
+    hx.save(h, messages, answers)
+    db.commit()
+    return redirect(f"/portal/history/{hid}#end")
+
+
+
+# ----------------------------------------------------------------------------
+# feedback from the emailed link (no sign-in needed; the link is one-time)
+# ----------------------------------------------------------------------------
+def _feedback_request(db, token: str) -> FeedbackRequest | None:
+    if not token or len(token) < 20:
+        return None
+    return db.query(FeedbackRequest).filter(FeedbackRequest.token == token).first()
+
+
+@router.get("/feedback/{token}")
+def feedback_page(token: str, request: Request, rating: int = 0, db=Depends(get_db)):
+    fr = _feedback_request(db, token)
+    state = "missing" if not fr else "used" if fr.used_at else "expired" if fr.expires_at < datetime.now() else "open"
+    return prender(request, "portal/feedback.html", None, fr=fr, state=state, token=token,
+                   rating=rating if 1 <= rating <= 5 else 0)
+
+
+@router.post("/feedback/{token}")
+async def feedback_submit(token: str, request: Request, db=Depends(get_db)):
+    fr = _feedback_request(db, token)
+    if not fr or fr.used_at or fr.expires_at < datetime.now():
+        return redirect(f"/portal/feedback/{token}")
+    form = await request.form()
+    rating = _int(form.get("rating"))
+    if not rating or not 1 <= rating <= 5:
+        flash(request, "Please choose a rating from 1 to 5.", "error")
+        return redirect(f"/portal/feedback/{token}")
+    fb = Feedback(patient_id=fr.patient_id, appointment_id=fr.appointment_id, rating=rating,
+                  comments=_s(form, "comments")[:2000], source="patient", doctor_id=fr.doctor_id)
+    db.add(fb)
+    db.flush()
+    fr.used_at, fr.feedback_id = datetime.now(), fb.id
+    db.commit()
+    notify.alert_low_feedback(db, fb, fr.doctor)
+    return redirect(f"/portal/feedback/{token}")

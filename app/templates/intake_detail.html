@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% from "_images.html" import strip, lightbox %}
+{% block title %}History · {{ p.full_name }}{% endblock %}
+{% block content %}
+<div class="crumbs"><a href="/patients">Patients</a> › <a href="/patients/{{ p.id }}?tab=history">{{ p.full_name }}</a> › Patient history</div>
+<div class="head">
+  <div><h1>Patient-reported history</h1>
+  <div class="muted">{{ p.full_name }} ({{ p.mrn }}) · {{ (h.completed_at or h.created_at) | dt }}
+    {% if h.appointment %} · <a href="/appointments/{{ h.appointment.id }}">visit {{ h.appointment.scheduled_at | dt('%d %b, %I:%M %p') }}</a>{% endif %}
+    · <span class="tag {{ 'completed' if h.status == 'completed' else 'scheduled' }}">{{ 'completed' if h.status == 'completed' else 'in progress' }}</span>
+    <span class="tag">{{ 'AI interview' if h.mode == 'ai' else 'guided interview' }}</span></div></div>
+  <div class="actions">
+    {% if user.role in ('doctor','admin') and h.status == 'completed' %}<a class="btn ai" href="/patients/{{ p.id }}/ai/new?history_id={{ h.id }}{% if h.appointment_id %}&appointment_id={{ h.appointment_id }}{% endif %}">{{ icon('sparkles') }}Use in AI diagnosis</a>{% endif %}
+    {% if not h.reviewed and h.status == 'completed' %}<form method="post" action="/history/{{ h.id }}/reviewed" class="inline"><button class="btn outline">{{ icon('check') }}Mark reviewed</button></form>{% endif %}
+  </div>
+</div>
+
+{% if h.red_flags %}<div class="note danger"><b>Red flags mentioned by the patient:</b> {{ h.red_flags }}. The patient was advised to seek emergency care if urgent.</div>{% endif %}
+
+<div class="two">
+<div>
+  {% if summary %}
+  <div class="card">
+    <h3 style="margin-top:0">Summary</h3>
+    <dl class="info">{% for k, v in summary.sections.items() %}<dt>{{ k }}</dt><dd>{{ v }}</dd>{% endfor %}</dl>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">Clinical summary</h3>
+    <div>{{ summary.case_text }}</div>
+    {% if summary.symptoms %}<div class="small muted" style="margin:10px 0 4px">Terms found (OptimusKG/HPO)</div>
+    <div class="chips">{% for s in summary.symptoms %}<span class="chip" title="{{ s.id }}">{{ s.name }}</span>{% endfor %}</div>{% endif %}
+  </div>
+  {% else %}<div class="empty">The patient has not finished yet.</div>{% endif %}
+  {% if images %}<div class="card"><h3 style="margin-top:0">{{ icon('camera') }} Photos from the patient</h3>
+    {{ strip(images) }}
+    <div class="small muted" style="margin-top:6px">Also in the patient's <a href="/patients/{{ p.id }}?tab=images">Images</a>. "Use in AI diagnosis" selects them; describe what each shows before running.</div></div>{% endif %}
+</div>
+<div class="card">
+  <h3 style="margin-top:0">Conversation</h3>
+  <div class="chat compact">
+  {% for m in messages %}
+    <div class="msg {{ m.role }}{{ ' urgent' if m.urgent }}"><div class="bubble">{% if m.role == 'photo' and m.image_id %}<button type="button" class="img-thumb chat-photo" data-full="/images/{{ m.image_id }}" data-caption="{{ m.text }}"><img src="/images/{{ m.image_id }}?thumb=1" alt="photo"></button>{% endif %}{{ m.text }}<div class="time">{{ m.at }}</div></div></div>
+  {% endfor %}
+  </div>
+</div>
+</div>
+{{ lightbox() }}
+{% endblock %}

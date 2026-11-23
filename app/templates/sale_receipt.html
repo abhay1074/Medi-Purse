@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block title %}Receipt #{{ sale.id }}{% endblock %}
+{% block content %}
+<div class="crumbs no-print"><a href="/pharmacy/sales">Counter sales</a> › Receipt #{{ sale.id }}</div>
+<div class="receipt card">
+  <div class="receipt-head">
+    <div class="lp-brand"><img class="logo" src="/static/logo.svg" alt="">MediPurse</div>
+    <div style="text-align:right"><b>{{ sale.clinic.label }}</b>{% if sale.clinic.phone %}<div class="small muted">{{ sale.clinic.phone }}</div>{% endif %}</div>
+  </div>
+  <div class="receipt-meta small">
+    <div>Receipt <b>#{{ sale.id }}</b></div><div>{{ sale.created_at | dt }}</div>
+    <div>Customer: {{ sale.customer_name or 'Walk-in' }}{% if sale.customer_phone %} · {{ sale.customer_phone }}{% endif %}{% if sale.patient %} · {{ sale.patient.mrn }}{% endif %}</div>
+    {% if sale.prescribed_by %}<div>Prescription from: {{ sale.prescribed_by }}</div>{% endif %}
+  </div>
+  <table class="receipt-table"><tr><th>Medicine</th><th>Batch / expiry</th><th style="text-align:right">Qty</th><th style="text-align:right">Rate</th><th style="text-align:right">Amount</th></tr>
+  {% for it in sale.items %}
+  <tr><td>{{ it.name }}</td><td class="small muted">{{ it.drug.batch or '—' }}{% if it.drug.expiry %} · {{ it.drug.expiry | d }}{% endif %}</td>
+    <td style="text-align:right">{{ it.quantity }}</td><td style="text-align:right">{{ '%.2f' | format(it.unit_price) }}</td><td style="text-align:right">{{ '%.2f' | format(it.amount) }}</td></tr>
+  {% endfor %}
+  <tr class="receipt-total"><td colspan="4">Total ({{ PAYMENTS.get(sale.payment, sale.payment) }})</td><td style="text-align:right">Rs {{ '{:,.2f}'.format(sale.total) }}</td></tr>
+  </table>
+  <div class="small muted" style="margin-top:12px">Sold by {{ sale.pharmacist.display if sale.pharmacist else '—' }}. Take medicines as directed. Keep out of reach of children.</div>
+</div>
+<div class="actions no-print" style="margin-top:12px"><button class="btn primary" onclick="window.print()">{{ icon('download') }}Print receipt</button>
+  <a class="btn outline" href="/pharmacy/sales/new">New sale</a></div>
+{% endblock %}
