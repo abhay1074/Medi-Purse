@@ -1,25 +1,31 @@
 {% extends "base.html" %}
+{% from "_icons.html" import icon %}
 {% block title %}Dashboard{% endblock %}
 {% block content %}
 <div class="head">
   <div><h1>Welcome, {{ user.display }}</h1>
-  <div class="muted">{{ today | d }}</div></div>
+  <div class="muted">{{ today.strftime('%A') }}, {{ today | d }}</div></div>
   <div class="actions">
-    <a class="btn primary" href="/patients/new">Register patient</a>
-    <a class="btn" href="/appointments/new">Book appointment</a>
-    {% if user.role == 'admin' %}<a class="btn" href="/hospitals/new">Register hospital</a>{% endif %}
+    <a class="btn primary" href="/patients/new">{{ icon('plus') }}Register patient</a>
+    <a class="btn outline" href="/appointments/new">{{ icon('calendar') }}Book appointment</a>
+    <a class="btn outline" href="/reports">{{ icon('download') }}Medicine report</a>
+    {% if user.role == 'admin' %}<a class="btn outline" href="/hospitals/new">{{ icon('building') }}Register hospital</a>{% endif %}
   </div>
 </div>
 
+{% macro stat(href, label, n, ic, color) %}
+<a class="stat" {% if href %}href="{{ href }}"{% endif %}><div class="stat-top"><span class="muted">{{ label }}</span><span class="ic {{ color }}">{{ icon(ic) }}</span></div><div class="n">{{ n }}</div></a>
+{% endmacro %}
 <div class="grid">
-  <a class="stat" href="/patients"><div class="muted">Patients</div><div class="n">{{ stats.patients }}</div></a>
-  <a class="stat" href="/appointments?day={{ today.isoformat() }}{% if user.role == 'doctor' %}&doctor=me{% endif %}"><div class="muted">Appointments today</div><div class="n">{{ stats.today }}</div></a>
-  <a class="stat" href="/appointments?status=scheduled{% if user.role == 'doctor' %}&doctor=me{% endif %}"><div class="muted">Upcoming</div><div class="n">{{ stats.upcoming }}</div></a>
-  <div class="stat"><div class="muted">Active diagnoses</div><div class="n">{{ stats.active_dx }}</div></div>
+  {{ stat('/patients', 'Patients', stats.patients, 'users', 'blue') }}
+  {{ stat('/appointments?day=' ~ today.isoformat() ~ ('&doctor=me' if user.role == 'doctor' else ''), 'Appointments today', stats.today, 'clock', 'green') }}
+  {{ stat('/appointments?status=scheduled' ~ ('&doctor=me' if user.role == 'doctor' else ''), 'Upcoming', stats.upcoming, 'calendar', 'amber') }}
+  {{ stat('/reports', 'Medicines given today', stats.rx_today, 'pill', 'violet') }}
+  {{ stat('', 'Active diagnoses', stats.active_dx, 'activity', 'red') }}
   {% if user.role == 'admin' %}
-  <a class="stat" href="/hospitals"><div class="muted">Hospitals</div><div class="n">{{ stats.hospitals }}</div></a>
-  <a class="stat" href="/clinics"><div class="muted">Clinics</div><div class="n">{{ stats.clinics }}</div></a>
-  <a class="stat" href="/staff"><div class="muted">Staff accounts</div><div class="n">{{ stats.staff }}</div></a>
+  {{ stat('/hospitals', 'Hospitals', stats.hospitals, 'building', 'blue') }}
+  {{ stat('/clinics', 'Clinics', stats.clinics, 'stethoscope', 'green') }}
+  {{ stat('/staff', 'Staff accounts', stats.staff, 'user', 'amber') }}
   {% endif %}
 </div>
 
@@ -36,7 +42,7 @@
     <td><span class="tag {{ a.status }}">{{ a.status }}</span></td>
     <td class="actions">
       <a class="btn small" href="/appointments/{{ a.id }}">Open</a>
-      {% if user.role in ('doctor','admin') %}<a class="btn small" href="/patients/{{ a.patient.id }}/ai/new?appointment_id={{ a.id }}">AI diagnose</a>{% endif %}
+      {% if user.role in ('doctor','admin') %}<a class="btn ai small" href="/patients/{{ a.patient.id }}/ai/new?appointment_id={{ a.id }}">AI diagnose</a>{% endif %}
     </td>
   </tr>
   {% endfor %}

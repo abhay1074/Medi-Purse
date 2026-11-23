@@ -1,7 +1,7 @@
 # MediPurse: hospital management with AI diagnosis support
 
-A simple, plain-styled hospital management system built on the Glassbox rare-disease
-retriever in `handoff/`. Styling is intentionally minimal; visual design comes later.
+A hospital management system built on the Glassbox rare-disease retriever in `handoff/`.
+The UI follows shadcn/ui design tokens (Inter, zinc greys, blue primary, Lucide icons) in plain CSS.
 
 ## Run it (Windows)
 
@@ -13,22 +13,37 @@ copy .env.example .env      # then put your DeepSeek key in .env
 ```
 
 Open http://localhost:8000. On first start the database (`hospital.db`) is created
-with demo data; the demo accounts are listed on the sign-in page and the password is
-in `app/seed.py`. Delete `hospital.db` to start fresh.
+with demo data. Delete `hospital.db` to start fresh.
+
+Demo accounts (password is `DEMO_PASSWORD` in `app/seed.py`):
+
+| Email | Role |
+|---|---|
+| admin@medipurse.test | Registrar / Admin |
+| dr.mehta@medipurse.test | Doctor, Genetics Clinic |
+| dr.rao@medipurse.test | Doctor, Neurology Clinic |
+| reception@medipurse.test | Receptionist, Genetics Clinic |
 
 ## What's in it
 
 | Role | Can do |
 |---|---|
 | Registrar / Admin | Register hospitals, clinics (in a hospital or independent), staff accounts; sees everything |
-| Doctor | Patients in their clinic, appointments, diagnoses, AI diagnosis |
-| Receptionist | Register patients, book and manage appointments, record feedback |
+| Doctor | Patients in their clinic, appointments, diagnoses, medicines, AI diagnosis, medicine reports |
+| Receptionist | Register patients, book and manage appointments, record feedback, medicine reports |
 
 - **Patients**: registration, search (name, phone or ID like `P-000001`), record page with
   tabs for overview, active diagnoses and diagnosis history, upcoming appointments and
   appointment history, AI analyses, and feedback.
 - **Appointments**: booking with a 15-minute double-booking check per doctor, status
   (scheduled, completed, cancelled, no-show), consultation notes, filters by date/status/doctor.
+- **Medicines**: doctors prescribe one or more medicines at once (dosage, frequency,
+  duration, instructions), linked to a diagnosis and visit; stop or restart them later.
+  Patient record has a Medicines tab with current medicines and history.
+- **Medicine reports**: pick Today, Last 2 days, Last 7 days, Last 30 days or custom dates
+  (and optionally a doctor), preview, then **Download Excel**. The .xlsx has date, time,
+  patient, disease, medicine, dosage, frequency, duration, doctor and clinic, plus the
+  period and a generated-at timestamp; the file name includes both.
 - **Feedback**: 1-5 rating plus comments per patient or visit; clinic-wide list with average.
 
 ## AI diagnosis

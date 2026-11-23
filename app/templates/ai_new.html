@@ -1,20 +1,20 @@
 {% extends "base.html" %}
+{% from "_icons.html" import icon %}
 {% block title %}AI diagnosis · {{ p.full_name }}{% endblock %}
 {% block content %}
-<div class="muted small"><a href="/patients">Patients</a> › <a href="/patients/{{ p.id }}?tab=ai">{{ p.full_name }}</a> ›</div>
+<div class="crumbs"><a href="/patients">Patients</a> › <a href="/patients/{{ p.id }}?tab=ai">{{ p.full_name }}</a> › AI diagnosis</div>
 <h1>AI diagnosis for {{ p.full_name }}</h1>
 <p class="muted">Describe the case as you would in a referral letter: age, sex, symptoms and when they started,
 examination findings, test and imaging results, family history. More specific findings give better suggestions.</p>
 
-{% if ai_status != 'ready' %}<div class="note">The AI model is {{ ai_status }}. It is usually ready within a minute of starting the app.</div>{% endif %}
+{% if ai_status != 'ready' %}<div class="note">AI is starting up. Please try again in a minute.</div>{% endif %}
 
-<form method="post" class="stack" style="max-width:820px">
+<form method="post" class="card" style="max-width:860px">
   <div class="field"><label>Case description</label>
     <textarea name="case_text" rows="10" style="min-height:220px" required
       placeholder="A 46-year-old woman with progressive loss of central vision. Fundus examination shows angioid streaks in both eyes. Yellowish papules on the sides of the neck…">{{ case_text }}</textarea></div>
   {% if p.diagnoses %}<div class="small muted" style="margin-bottom:12px">Known conditions: {% for d in p.diagnoses %}{{ d.condition }} ({{ d.status }}){{ ', ' if not loop.last }}{% endfor %}</div>{% endif %}
-  <div class="actions"><button class="btn primary">Find likely conditions</button>
-  <a class="btn" href="/patients/{{ p.id }}">Cancel</a></div>
-  <p class="small muted">This runs locally and takes about a second. You can then ask DeepSeek for a cited explanation.</p>
+  <div class="actions"><button class="btn ai">{{ icon('sparkles') }}Find likely conditions</button>
+  <a class="btn outline" href="/patients/{{ p.id }}">Cancel</a></div>
 </form>
 {% endblock %}

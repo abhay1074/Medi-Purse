@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_icons.html" import icon %}
 {% block title %}AI Diagnosis{% endblock %}
 {% block content %}
 <div class="head"><div><h1>AI Diagnosis assistant</h1>
@@ -10,20 +11,19 @@
     <div class="field" style="flex:1"><label>Patient</label>
       <select name="pid" style="width:100%"><option value="">Choose a patient…</option>
       {% for p in patients %}<option value="{{ p.id }}">{{ p.full_name }} ({{ p.mrn }})</option>{% endfor %}</select></div>
-    <button class="btn primary">Continue</button>
+    <button class="btn ai">{{ icon('sparkles') }}Continue</button>
   </form>
-  <div class="small muted">Model status: {% if ai_status == 'ready' %}<span class="tag done">ready</span>{% else %}<span class="tag running">{{ ai_status }}</span>{% endif %}
-  · AI explanations (DeepSeek): {% if llm_on %}<span class="tag done">configured</span>{% else %}<span class="tag">not configured</span>{% endif %}</div>
+  {% if ai_status != 'ready' %}<div class="small muted"><span class="spinner"></span> AI is starting up…</div>{% endif %}
 </div>
 
 <h2>Recent analyses</h2>
 {% if rows %}
-<table><tr><th>Date</th><th>Patient</th><th>Case summary</th><th>Top suggestion</th><th>Explanation</th></tr>
+<div class="table-card"><table><tr><th>Date</th><th>Patient</th><th>Case summary</th><th>Top suggestion</th><th>Explanation</th></tr>
 {% for an in rows %}
 <tr class="click" onclick="location='/ai/{{ an.id }}'"><td><a href="/ai/{{ an.id }}">{{ an.created_at | dt }}</a></td>
 <td>{{ an.patient.full_name }}</td><td>{{ an.case_text[:80] }}{% if an.case_text | length > 80 %}…{% endif %}</td>
 <td>{{ (an.ranking_json | fromjson).candidates[0].name if an.ranking_json else '—' }}</td>
 <td><span class="tag {{ an.explain_status }}">{{ 'not run' if an.explain_status == 'none' else an.explain_status }}</span></td></tr>
-{% endfor %}</table>
+{% endfor %}</table></div>
 {% else %}<div class="empty">No analyses yet.</div>{% endif %}
 {% endblock %}

@@ -14,7 +14,7 @@ from datetime import date, datetime, timedelta
 from pathlib import Path
 
 from fastapi import Depends, FastAPI, HTTPException, Request
-from fastapi.responses import JSONResponse, RedirectResponse
+from fastapi.responses import JSONResponse, RedirectResponse, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from sqlalchemy import or_
@@ -38,8 +38,8 @@ _load_env()
 
 from .ai import AI  # noqa: E402
 from .db import (APPT_STATUSES, ROLES, AIAnalysis, Appointment, Clinic,  # noqa: E402
-                 Diagnosis, Feedback, Hospital, Patient, SessionLocal, User,
-                 check_password, hash_password, init_db)
+                 Diagnosis, Feedback, Hospital, Patient, Prescription, SessionLocal,
+                 User, check_password, hash_password, init_db)
 
 app = FastAPI(title="MediPurse")
 app.add_middleware(SessionMiddleware, secret_key=os.environ.get("SECRET_KEY") or secrets.token_hex(32),
@@ -64,8 +64,9 @@ templates.env.filters["fromjson"] = lambda s: json.loads(s) if s else {}
 @app.on_event("startup")
 def _startup() -> None:
     init_db()
-    from .seed import seed_if_empty
+    from .seed import seed_if_empty, seed_prescriptions_if_empty
     seed_if_empty()
+    seed_prescriptions_if_empty()
     AI.load_async()
 
 
@@ -178,8 +179,7 @@ def _s(form, key) -> str:
 # ----------------------------------------------------------------------------
 @app.get("/login")
 def login_page(request: Request):
-    from .seed import DEMO_ACCOUNTS
-    return render(request, "login.html", demo=DEMO_ACCOUNTS)
+    return render(request, "login.html")
 
 
 @app.post("/login")
@@ -225,6 +225,11 @@ def dashboard(request: Request, db=Depends(get_db), user: User = Depends(current
             Diagnosis.status == "active",
             *( [] if user.role == "admin" else [Patient.clinic_id == user.clinic_id])).count(),
     }
+    rxq = db.query(Prescription).join(Patient).filter(Prescription.prescribed_at >= start,
+                                                      Prescription.prescribed_at < end)
+    if user.role != "admin":
+        rxq = rxq.filter(Patient.clinic_id == user.clinic_id)
+    stats["rx_today"] = rxq.count()
     if user.role == "admin":
         stats["hospitals"] = db.query(Hospital).count()
         stats["clinics"] = db.query(Clinic).count()
@@ -484,7 +489,10 @@ def patient_detail(pid: int, request: Request, tab: str = "overview", db=Depends
                       key=lambda a: a.scheduled_at)
     past = [a for a in appts if a not in upcoming]
     dx = sorted(p.diagnoses, key=lambda d: d.diagnosed_on, reverse=True)
+    rx = sorted(p.prescriptions, key=lambda r: r.prescribed_at, reverse=True)
     return render(request, "patient_detail.html", user, p=p, tab=tab,
+                  active_rx=[r for r in rx if r.status == "active"],
+                  past_rx=[r for r in rx if r.status != "active"],
                   upcoming=upcoming, past=past,
                   active_dx=[d for d in dx if d.status == "active"],
                   past_dx=[d for d in dx if d.status != "active"],
@@ -579,7 +587,8 @@ def appointment_detail(aid: int, request: Request, db=Depends(get_db), user: Use
     if not a:
         raise HTTPException(404)
     get_patient(db, user, a.patient_id)
-    return render(request, "appointment_detail.html", user, a=a, statuses=APPT_STATUSES,
+    rx = db.query(Prescription).filter(Prescription.appointment_id == a.id).order_by(Prescription.id).all()
+    return render(request, "appointment_detail.html", user, a=a, statuses=APPT_STATUSES, rx=rx,
                   doctors=doctors_for(db, user, a.patient.clinic_id))
 
 
@@ -651,6 +660,186 @@ async def diagnosis_status(did: int, request: Request, db=Depends(get_db), user:
     db.commit()
     flash(request, f"Diagnosis marked {d.status}.")
     return redirect(f"/patients/{d.patient_id}?tab=diagnoses")
+
+
+# ----------------------------------------------------------------------------
+# medicines (prescriptions)
+# ----------------------------------------------------------------------------
+@app.get("/patients/{pid}/medicines/new")
+def medicine_new(pid: int, request: Request, appointment_id: int | None = None,
+                 diagnosis_id: int | None = None, db=Depends(get_db), user: User = Depends(current_user)):
+    require(user, "doctor", "admin")
+    p = get_patient(db, user, pid)
+    return render(request, "medicine_form.html", user, p=p, appointment_id=appointment_id,
+                  diagnosis_id=diagnosis_id,
+                  active_dx=[d for d in p.diagnoses if d.status == "active"],
+                  appts=sorted(p.appointments, key=lambda a: a.scheduled_at, reverse=True))
+
+
+@app.post("/patients/{pid}/medicines/new")
+async def medicine_create(pid: int, request: Request, db=Depends(get_db), user: User = Depends(current_user)):
+    require(user, "doctor", "admin")
+    p = get_patient(db, user, pid)
+    form = await request.form()
+    cols = {k: [str(v).strip() for v in form.getlist(k)]
+            for k in ("medicine", "dosage", "frequency", "duration", "instructions")}
+    dx_id = _int(form.get("diagnosis_id"))
+    if dx_id and not any(d.id == dx_id for d in p.diagnoses):
+        dx_id = None
+    appt_id = _int(form.get("appointment_id"))
+    if appt_id and not any(a.id == appt_id for a in p.appointments):
+        appt_id = None
+
+    def col(k, i):
+        return cols[k][i] if i < len(cols[k]) else ""
+
+    added = []
+    for i, name in enumerate(cols["medicine"]):
+        if not name:
+            continue
+        db.add(Prescription(patient_id=p.id, doctor_id=user.id if user.role == "doctor" else None,
+                            appointment_id=appt_id, diagnosis_id=dx_id, medicine=name,
+                            dosage=col("dosage", i), frequency=col("frequency", i),
+                            duration=col("duration", i), instructions=col("instructions", i)))
+        added.append(name)
+    if not added:
+        flash(request, "Enter at least one medicine.", "error")
+        return redirect(f"/patients/{pid}/medicines/new")
+    db.commit()
+    flash(request, f"Prescribed {', '.join(added)} for {p.full_name}.")
+    if appt_id and form.get("back") == "appointment":
+        return redirect(f"/appointments/{appt_id}")
+    return redirect(f"/patients/{pid}?tab=medicines")
+
+
+@app.post("/prescriptions/{rid}/status")
+async def prescription_status(rid: int, request: Request, db=Depends(get_db), user: User = Depends(current_user)):
+    require(user, "doctor", "admin")
+    r = db.get(Prescription, rid)
+    if not r:
+        raise HTTPException(404)
+    get_patient(db, user, r.patient_id)
+    form = await request.form()
+    if _s(form, "status") == "stopped":
+        r.status, r.stopped_on = "stopped", date.today()
+    else:
+        r.status, r.stopped_on = "active", None
+    db.commit()
+    flash(request, f"{r.medicine} marked {r.status}.")
+    return redirect(f"/patients/{r.patient_id}?tab=medicines")
+
+
+# ----------------------------------------------------------------------------
+# reports (Excel export)
+# ----------------------------------------------------------------------------
+REPORT_RANGES = [("today", "Today"), ("2d", "Last 2 days"), ("7d", "Last 7 days"),
+                 ("30d", "Last 30 days"), ("custom", "Custom dates")]
+
+
+def _report_args(request: Request, user: User):
+    qp = request.query_params
+    range_ = qp.get("range", "today")
+    if range_ not in dict(REPORT_RANGES):
+        range_ = "today"
+    t = date.today()
+    days = {"today": 1, "2d": 2, "7d": 7, "30d": 30}.get(range_)
+    if days:
+        d0, d1 = t - timedelta(days=days - 1), t
+    else:
+        d0, d1 = _date(qp.get("start")) or t, _date(qp.get("end")) or t
+        if d0 > d1:
+            d0, d1 = d1, d0
+    doctor = qp.get("doctor", "")
+    return range_, d0, d1, doctor
+
+
+def _report_rows(db, user: User, d0: date, d1: date, doctor: str):
+    q = db.query(Prescription).join(Patient).filter(
+        Prescription.prescribed_at >= datetime.combine(d0, datetime.min.time()),
+        Prescription.prescribed_at < datetime.combine(d1 + timedelta(days=1), datetime.min.time()))
+    if user.role != "admin":
+        q = q.filter(Patient.clinic_id == user.clinic_id)
+    doc_id = user.id if doctor == "me" else _int(doctor)
+    if doc_id:
+        q = q.filter(Prescription.doctor_id == doc_id)
+    out = []
+    for r in q.order_by(Prescription.prescribed_at.desc()).all():
+        p = r.patient
+        disease = r.diagnosis.condition if r.diagnosis else "; ".join(
+            d.condition for d in p.diagnoses if d.status == "active")
+        out.append({"r": r, "p": p, "disease": disease or "—"})
+    return out
+
+
+@app.get("/reports")
+def reports(request: Request, db=Depends(get_db), user: User = Depends(current_user)):
+    range_, d0, d1, doctor = _report_args(request, user)
+    rows = _report_rows(db, user, d0, d1, doctor)
+    return render(request, "reports.html", user, rows=rows, range=range_, ranges=REPORT_RANGES,
+                  d0=d0, d1=d1, doctor=doctor, doctors=doctors_for(db, user),
+                  n_patients=len({x["p"].id for x in rows}), query=request.url.query)
+
+
+@app.get("/reports/export.xlsx")
+def reports_export(request: Request, db=Depends(get_db), user: User = Depends(current_user)):
+    from io import BytesIO
+
+    from openpyxl import Workbook
+    from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
+    from openpyxl.utils import get_column_letter
+
+    range_, d0, d1, doctor = _report_args(request, user)
+    rows = _report_rows(db, user, d0, d1, doctor)
+    now = datetime.now()
+
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Medicines"
+    headers = ["Date", "Time", "Patient ID", "Patient name", "Age", "Sex", "Disease / diagnosis",
+               "Medicine", "Dosage", "Frequency", "Duration", "Instructions", "Status",
+               "Prescribed by", "Clinic"]
+    widths = [13, 10, 11, 22, 6, 8, 32, 30, 12, 20, 12, 30, 10, 20, 24]
+    scope = "All clinics" if user.role == "admin" else (user.clinic.label if user.clinic else "")
+    period = f"{d0:%d %b %Y}" if d0 == d1 else f"{d0:%d %b %Y} to {d1:%d %b %Y}"
+    ws.append(["MediPurse: medicines given"])
+    ws.append([f"Period: {period}   |   Clinic: {scope}"])
+    ws.append([f"Generated: {now:%d %b %Y, %I:%M %p} by {user.display}   |   "
+               f"{len(rows)} prescriptions, {len({x['p'].id for x in rows})} patients"])
+    ws.append([])
+    ws.append(headers)
+    ws["A1"].font = Font(size=14, bold=True)
+    ws["A2"].font = Font(color="555555")
+    ws["A3"].font = Font(color="555555")
+    head_row = 5
+    thin = Side(style="thin", color="D4D4D8")
+    for c in ws[head_row]:
+        c.font = Font(bold=True, color="FFFFFF")
+        c.fill = PatternFill("solid", fgColor="2563EB")
+        c.alignment = Alignment(vertical="center")
+    for x in rows:
+        r, p = x["r"], x["p"]
+        ws.append([r.prescribed_at.date(), r.prescribed_at.time().replace(second=0, microsecond=0),
+                   p.mrn, p.full_name, p.age, p.sex, x["disease"], r.medicine, r.dosage,
+                   r.frequency, r.duration, r.instructions, r.status,
+                   r.doctor.display if r.doctor else "", p.clinic.name])
+        row = ws.max_row
+        ws.cell(row, 1).number_format = "DD-MMM-YYYY"
+        ws.cell(row, 2).number_format = "hh:mm AM/PM"
+        for c in ws[row]:
+            c.border = Border(bottom=thin)
+            c.alignment = Alignment(vertical="top", wrap_text=True)
+    for i, w in enumerate(widths, 1):
+        ws.column_dimensions[get_column_letter(i)].width = w
+    ws.freeze_panes = ws.cell(head_row + 1, 1)
+    if rows:
+        ws.auto_filter.ref = f"A{head_row}:{get_column_letter(len(headers))}{ws.max_row}"
+
+    buf = BytesIO()
+    wb.save(buf)
+    fname = f"medicines_{d0:%Y-%m-%d}_to_{d1:%Y-%m-%d}_generated_{now:%Y-%m-%d_%H%M}.xlsx"
+    return Response(buf.getvalue(),
+                    media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    headers={"Content-Disposition": f'attachment; filename="{fname}"'})
 
 
 # ----------------------------------------------------------------------------
@@ -792,7 +981,7 @@ def ai_explain(aid: int, request: Request, db=Depends(get_db), user: User = Depe
     require(user, "doctor", "admin")
     an = _get_analysis(db, user, aid)
     if not AI.llm_configured:
-        flash(request, "No DeepSeek API key is configured (set DEEPSEEK_API_KEY in .env).", "error")
+        flash(request, "AI explanations are not available right now.", "error")
         return redirect(f"/ai/{aid}")
     if an.explain_status != "running":
         an.explain_status, an.explain_stage, an.explain_error = "running", "Starting", ""

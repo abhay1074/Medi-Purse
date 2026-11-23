@@ -1,29 +1,34 @@
 {% extends "base.html" %}
+{% from "_icons.html" import icon %}
 {% block title %}Appointment{% endblock %}
 {% block content %}
 {% set p = a.patient %}
-<div class="muted small"><a href="/appointments">Appointments</a> › <a href="/patients/{{ p.id }}">{{ p.full_name }}</a> ›</div>
+{% set doc = user.role in ('doctor','admin') %}
+<div class="crumbs"><a href="/appointments">Appointments</a> › <a href="/patients/{{ p.id }}">{{ p.full_name }}</a> › Visit</div>
 <div class="head">
   <div><h1>{{ a.scheduled_at | dt }}</h1>
   <div class="muted"><a href="/patients/{{ p.id }}">{{ p.full_name }}</a> ({{ p.mrn }}) · {{ a.doctor.display if a.doctor else 'No doctor assigned' }} · <span class="tag {{ a.status }}">{{ a.status }}</span></div></div>
   <div class="actions">
-    {% if user.role in ('doctor','admin') %}
-    <a class="btn primary" href="/patients/{{ p.id }}/ai/new?appointment_id={{ a.id }}">AI diagnosis</a>
-    <a class="btn" href="/patients/{{ p.id }}/diagnoses/new?appointment_id={{ a.id }}">Add diagnosis</a>{% endif %}
-    {% if a.status == 'completed' %}<a class="btn" href="/patients/{{ p.id }}/feedback/new?appointment_id={{ a.id }}">Record feedback</a>{% endif %}
+    {% if doc %}
+    <a class="btn primary" href="/patients/{{ p.id }}/medicines/new?appointment_id={{ a.id }}">{{ icon('pill') }}Prescribe</a>
+    <a class="btn outline" href="/patients/{{ p.id }}/diagnoses/new?appointment_id={{ a.id }}">{{ icon('activity') }}Add diagnosis</a>
+    <a class="btn ai" href="/patients/{{ p.id }}/ai/new?appointment_id={{ a.id }}">{{ icon('sparkles') }}AI diagnosis</a>{% endif %}
+    {% if a.status == 'completed' %}<a class="btn outline" href="/patients/{{ p.id }}/feedback/new?appointment_id={{ a.id }}">{{ icon('message') }}Feedback</a>{% endif %}
   </div>
 </div>
+{% if p.allergies %}<div class="note danger"><b>Allergies:</b> {{ p.allergies }}</div>{% endif %}
 
 {% if a.status == 'scheduled' %}
 <div class="actions" style="margin-bottom:16px">
   {% for s, label in [('completed','Mark completed'), ('no-show','Mark no-show'), ('cancelled','Cancel appointment')] %}
-  <form method="post" class="inline"><input type="hidden" name="status" value="{{ s }}"><button class="btn {{ 'danger' if s == 'cancelled' }}">{{ label }}</button></form>
+  <form method="post" class="inline"><input type="hidden" name="status" value="{{ s }}"><button class="btn {{ 'destructive-outline' if s == 'cancelled' else ('success' if s == 'completed' else 'outline') }}">{{ label }}</button></form>
   {% endfor %}
 </div>
 {% endif %}
 
-<form method="post" class="stack card">
-  <h3 style="margin-top:0">Details</h3>
+<div class="two">
+<form method="post" class="card">
+  <h3 style="margin-top:0">Visit details</h3>
   <div class="row">
     <div class="field"><label>Date &amp; time</label><input type="datetime-local" name="scheduled_at" value="{{ a.scheduled_at.strftime('%Y-%m-%dT%H:%M') }}"></div>
     <div class="field"><label>Doctor</label><select name="doctor_id"><option value="">—</option>
@@ -34,4 +39,15 @@
   <div class="field"><label>Status</label><select name="status">{% for s in statuses %}<option {{ 'selected' if a.status == s }}>{{ s }}</option>{% endfor %}</select></div>
   <button class="btn primary">Save</button>
 </form>
+
+<div class="card">
+  <div class="section-head" style="margin-top:0"><h3 style="margin:0">Medicines given this visit</h3>
+  {% if doc %}<a class="btn outline small" href="/patients/{{ p.id }}/medicines/new?appointment_id={{ a.id }}">{{ icon('plus') }}Add</a>{% endif %}</div>
+  {% for r in rx %}
+  <div class="rx-item"><span class="ic violet">{{ icon('pill') }}</span><div><b>{{ r.medicine }}</b> {{ r.dosage }}
+    <div class="muted small">{{ r.frequency }}{% if r.duration %} · {{ r.duration }}{% endif %}{% if r.instructions %} · {{ r.instructions }}{% endif %}</div></div>
+    <span class="tag {{ r.status }}">{{ r.status }}</span></div>
+  {% else %}<div class="muted">No medicines prescribed for this visit yet.</div>{% endfor %}
+</div>
+</div>
 {% endblock %}

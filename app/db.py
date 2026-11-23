@@ -104,6 +104,7 @@ class Patient(Base):
     diagnoses: Mapped[list["Diagnosis"]] = relationship(back_populates="patient")
     feedback: Mapped[list["Feedback"]] = relationship(back_populates="patient")
     analyses: Mapped[list["AIAnalysis"]] = relationship(back_populates="patient")
+    prescriptions: Mapped[list["Prescription"]] = relationship(back_populates="patient")
 
     @property
     def mrn(self) -> str:
@@ -154,6 +155,28 @@ class Diagnosis(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now)
     patient: Mapped[Patient] = relationship(back_populates="diagnoses")
     doctor: Mapped[User | None] = relationship()
+
+
+class Prescription(Base):
+    """A medicine prescribed to a patient by a doctor."""
+    __tablename__ = "prescriptions"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    patient_id: Mapped[int] = mapped_column(ForeignKey("patients.id"))
+    doctor_id: Mapped[int | None] = mapped_column(ForeignKey("users.id"), nullable=True)
+    appointment_id: Mapped[int | None] = mapped_column(ForeignKey("appointments.id"), nullable=True)
+    diagnosis_id: Mapped[int | None] = mapped_column(ForeignKey("diagnoses.id"), nullable=True)
+    medicine: Mapped[str] = mapped_column(String(200))
+    dosage: Mapped[str] = mapped_column(String(100), default="")
+    frequency: Mapped[str] = mapped_column(String(100), default="")
+    duration: Mapped[str] = mapped_column(String(100), default="")
+    instructions: Mapped[str] = mapped_column(Text, default="")
+    status: Mapped[str] = mapped_column(String(20), default="active")  # active | stopped
+    prescribed_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now)
+    stopped_on: Mapped[date | None] = mapped_column(Date, nullable=True)
+    patient: Mapped[Patient] = relationship(back_populates="prescriptions")
+    doctor: Mapped[User | None] = relationship()
+    appointment: Mapped[Appointment | None] = relationship()
+    diagnosis: Mapped[Diagnosis | None] = relationship()
 
 
 class Feedback(Base):

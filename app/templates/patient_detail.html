@@ -1,29 +1,31 @@
 {% extends "base.html" %}
+{% from "_icons.html" import icon %}
 {% block title %}{{ p.full_name }}{% endblock %}
 {% block content %}
 {% set doc = user.role in ('doctor', 'admin') %}
-<div class="muted small"><a href="/patients">Patients</a> ›</div>
+<div class="crumbs"><a href="/patients">Patients</a> › {{ p.full_name }}</div>
 <div class="head">
   <div><h1>{{ p.full_name }}</h1>
   <div class="muted">{{ p.mrn }} · {{ p.age if p.age is not none else 'Age unknown' }}{% if p.age is not none %} yrs{% endif %}{% if p.sex %} · {{ p.sex }}{% endif %}{% if p.blood_group %} · {{ p.blood_group }}{% endif %} · {{ p.clinic.name }}</div></div>
   <div class="actions">
-    <a class="btn primary" href="/appointments/new?patient_id={{ p.id }}">Book appointment</a>
-    {% if doc %}<a class="btn" href="/patients/{{ p.id }}/ai/new">AI diagnosis</a>
-    <a class="btn" href="/patients/{{ p.id }}/diagnoses/new">Add diagnosis</a>{% endif %}
-    <a class="btn" href="/patients/{{ p.id }}/feedback/new">Record feedback</a>
+    <a class="btn primary" href="/appointments/new?patient_id={{ p.id }}">{{ icon('calendar') }}Book appointment</a>
+    {% if doc %}<a class="btn outline" href="/patients/{{ p.id }}/medicines/new">{{ icon('pill') }}Prescribe</a>
+    <a class="btn outline" href="/patients/{{ p.id }}/diagnoses/new">{{ icon('activity') }}Add diagnosis</a>
+    <a class="btn ai" href="/patients/{{ p.id }}/ai/new">{{ icon('sparkles') }}AI diagnosis</a>{% endif %}
+    <a class="btn outline" href="/patients/{{ p.id }}/feedback/new">{{ icon('message') }}Feedback</a>
   </div>
 </div>
-{% if p.allergies %}<div class="note"><b>Allergies:</b> {{ p.allergies }}</div>{% endif %}
+{% if p.allergies %}<div class="note danger"><b>Allergies:</b> {{ p.allergies }}</div>{% endif %}
 
 <nav class="tabs">
-  {% for key, label in [('overview','Overview'), ('diagnoses','Diagnoses'), ('appointments','Appointments'), ('ai','AI analyses'), ('feedback','Feedback')] %}
+  {% for key, label in [('overview','Overview'), ('diagnoses','Diagnoses'), ('medicines','Medicines'), ('appointments','Appointments'), ('ai','AI analyses'), ('feedback','Feedback')] %}
   <a href="?tab={{ key }}" class="{{ 'on' if tab == key }}">{{ label }}
-  {% if key == 'diagnoses' %}({{ active_dx | length }} active){% elif key == 'appointments' %}({{ upcoming | length }} upcoming){% elif key == 'ai' %}({{ analyses | length }}){% elif key == 'feedback' %}({{ feedback | length }}){% endif %}</a>
+  {% if key == 'diagnoses' %}<span class="count">{{ active_dx | length }}</span>{% elif key == 'medicines' %}<span class="count">{{ active_rx | length }}</span>{% elif key == 'appointments' %}<span class="count">{{ upcoming | length }}</span>{% elif key == 'ai' %}<span class="count">{{ analyses | length }}</span>{% elif key == 'feedback' %}<span class="count">{{ feedback | length }}</span>{% endif %}</a>
   {% endfor %}
 </nav>
 
 {% macro dx_table(rows, show_resolved) %}
-<table><tr><th>Condition</th><th>Diagnosed</th>{% if show_resolved %}<th>Resolved</th>{% endif %}<th>Doctor</th><th>Notes</th>{% if doc %}<th></th>{% endif %}</tr>
+<div class="table-card"><table><tr><th>Condition</th><th>Diagnosed</th>{% if show_resolved %}<th>Resolved</th>{% endif %}<th>Doctor</th><th>Notes</th>{% if doc %}<th></th>{% endif %}</tr>
 {% for d in rows %}
 <tr><td>{{ d.condition }}{% if d.disease_id %} <a class="small" href="https://www.orpha.net/en/disease/detail/{{ d.disease_id }}" target="_blank" rel="noopener">ORPHA:{{ d.disease_id }}</a>{% endif %}
   {% if d.analysis_id %}<div class="small"><a href="/ai/{{ d.analysis_id }}">AI-assisted</a></div>{% endif %}</td>
@@ -31,17 +33,32 @@
 <td>{{ d.doctor.display if d.doctor else '—' }}</td><td>{{ d.notes }}</td>
 {% if doc %}<td><form method="post" action="/diagnoses/{{ d.id }}/status" class="inline">
   <input type="hidden" name="status" value="{{ 'resolved' if d.status == 'active' else 'active' }}">
-  <button class="btn small">{{ 'Mark resolved' if d.status == 'active' else 'Reactivate' }}</button></form></td>{% endif %}</tr>
-{% endfor %}</table>
+  <button class="btn outline small">{{ 'Mark resolved' if d.status == 'active' else 'Reactivate' }}</button></form></td>{% endif %}</tr>
+{% endfor %}</table></div>
+{% endmacro %}
+
+{% macro rx_table(rows, show_stopped) %}
+<div class="table-card"><table><tr><th>Medicine</th><th>Dosage</th><th>Frequency</th><th>Duration</th><th>For</th><th>Prescribed</th>{% if show_stopped %}<th>Stopped</th>{% endif %}<th>Doctor</th>{% if doc %}<th></th>{% endif %}</tr>
+{% for r in rows %}
+<tr><td><b>{{ r.medicine }}</b>{% if r.instructions %}<div class="muted small">{{ r.instructions }}</div>{% endif %}</td>
+<td>{{ r.dosage or '—' }}</td><td>{{ r.frequency or '—' }}</td><td>{{ r.duration or '—' }}</td>
+<td>{{ r.diagnosis.condition if r.diagnosis else '—' }}</td>
+<td class="nowrap">{{ r.prescribed_at | dt('%d %b %Y') }}<div class="muted small">{{ r.prescribed_at | dt('%I:%M %p') }}</div></td>
+{% if show_stopped %}<td>{{ r.stopped_on | d }}</td>{% endif %}
+<td>{{ r.doctor.display if r.doctor else '—' }}</td>
+{% if doc %}<td><form method="post" action="/prescriptions/{{ r.id }}/status" class="inline">
+  <input type="hidden" name="status" value="{{ 'stopped' if r.status == 'active' else 'active' }}">
+  <button class="btn outline small">{{ 'Stop' if r.status == 'active' else 'Restart' }}</button></form></td>{% endif %}</tr>
+{% endfor %}</table></div>
 {% endmacro %}
 
 {% macro appt_table(rows) %}
-<table><tr><th>Date &amp; time</th><th>Reason</th><th>Doctor</th><th>Status</th><th></th></tr>
+<div class="table-card"><table><tr><th>Date &amp; time</th><th>Reason</th><th>Doctor</th><th>Status</th><th></th></tr>
 {% for a in rows %}
 <tr><td>{{ a.scheduled_at | dt }}</td><td>{{ a.reason }}{% if a.notes %}<div class="muted small">{{ a.notes }}</div>{% endif %}</td>
 <td>{{ a.doctor.display if a.doctor else '—' }}</td><td><span class="tag {{ a.status }}">{{ a.status }}</span></td>
-<td><a class="btn small" href="/appointments/{{ a.id }}">Open</a></td></tr>
-{% endfor %}</table>
+<td><a class="btn outline small" href="/appointments/{{ a.id }}">Open</a></td></tr>
+{% endfor %}</table></div>
 {% endmacro %}
 
 {% if tab == 'overview' %}
@@ -62,6 +79,10 @@
       {% for d in active_dx %}<div>• {{ d.condition }} <span class="muted small">since {{ d.diagnosed_on | d }}</span></div>
       {% else %}<div class="muted">None recorded.</div>{% endfor %}
     </div>
+    <div class="card"><h3 style="margin-top:0">Current medicines</h3>
+      {% for r in active_rx %}<div>• <b>{{ r.medicine }}</b> <span class="muted small">{{ r.dosage }} {{ r.frequency }}</span></div>
+      {% else %}<div class="muted">None.</div>{% endfor %}
+    </div>
     <div class="card"><h3 style="margin-top:0">Next appointment</h3>
       {% if upcoming %}{% set a = upcoming[0] %}<div><a href="/appointments/{{ a.id }}">{{ a.scheduled_at | dt }}</a></div>
       <div class="muted">{{ a.reason }}{% if a.doctor %} · {{ a.doctor.display }}{% endif %}</div>
@@ -76,6 +97,12 @@
 <h2>History</h2>
 {% if past_dx %}{{ dx_table(past_dx, true) }}{% else %}<div class="empty">No resolved diagnoses.</div>{% endif %}
 
+{% elif tab == 'medicines' %}
+<div class="section-head"><h2>Current medicines</h2>{% if doc %}<a class="btn primary small" href="/patients/{{ p.id }}/medicines/new">{{ icon('plus') }}Prescribe</a>{% endif %}</div>
+{% if active_rx %}{{ rx_table(active_rx, false) }}{% else %}<div class="empty">No current medicines.</div>{% endif %}
+<h2>Medicine history</h2>
+{% if past_rx %}{{ rx_table(past_rx, true) }}{% else %}<div class="empty">No past medicines.</div>{% endif %}
+
 {% elif tab == 'appointments' %}
 <h2>Upcoming</h2>
 {% if upcoming %}{{ appt_table(upcoming) }}{% else %}<div class="empty">No upcoming appointments. <a href="/appointments/new?patient_id={{ p.id }}">Book one</a>.</div>{% endif %}
@@ -84,22 +111,22 @@
 
 {% elif tab == 'ai' %}
 {% if analyses %}
-<table><tr><th>Date</th><th>Case summary</th><th>Top suggestion</th><th>AI explanation</th><th></th></tr>
+<div class="table-card"><table><tr><th>Date</th><th>Case summary</th><th>Top suggestion</th><th>AI explanation</th><th></th></tr>
 {% for an in analyses %}
 <tr><td>{{ an.created_at | dt }}</td><td>{{ an.case_text[:90] }}{% if an.case_text | length > 90 %}…{% endif %}</td>
 <td>{{ (an.ranking_json | fromjson).candidates[0].name if an.ranking_json else '—' }}</td>
 <td><span class="tag {{ an.explain_status }}">{{ 'not run' if an.explain_status == 'none' else an.explain_status }}</span></td>
-<td><a class="btn small" href="/ai/{{ an.id }}">Open</a></td></tr>
-{% endfor %}</table>
+<td><a class="btn outline small" href="/ai/{{ an.id }}">Open</a></td></tr>
+{% endfor %}</table></div>
 {% else %}<div class="empty">No AI analyses yet.{% if doc %} <a href="/patients/{{ p.id }}/ai/new">Run one</a>.{% endif %}</div>{% endif %}
 
 {% elif tab == 'feedback' %}
 {% if feedback %}
-<table><tr><th>Date</th><th>Rating</th><th>Comments</th><th>Appointment</th></tr>
+<div class="table-card"><table><tr><th>Date</th><th>Rating</th><th>Comments</th><th>Appointment</th></tr>
 {% for f in feedback %}
 <tr><td>{{ f.created_at | d }}</td><td>{{ '★' * f.rating }}{{ '☆' * (5 - f.rating) }}</td><td>{{ f.comments }}</td>
 <td>{% if f.appointment %}<a href="/appointments/{{ f.appointment.id }}">{{ f.appointment.scheduled_at | d }}</a>{% else %}—{% endif %}</td></tr>
-{% endfor %}</table>
+{% endfor %}</table></div>
 {% else %}<div class="empty">No feedback yet. <a href="/patients/{{ p.id }}/feedback/new">Record feedback</a>.</div>{% endif %}
 {% endif %}
 {% endblock %}

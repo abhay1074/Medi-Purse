@@ -8,7 +8,7 @@ from __future__ import annotations
 from datetime import date, datetime, timedelta
 
 from .db import (Appointment, Clinic, Diagnosis, Feedback, Hospital, Patient,
-                 SessionLocal, User, hash_password)
+                 Prescription, SessionLocal, User, hash_password)
 
 DEMO_PASSWORD = "demo1234"
 DEMO_ACCOUNTS = [
@@ -109,6 +109,50 @@ def seed_if_empty() -> None:
             Feedback(patient_id=p3.id, appointment_id=a4.id, rating=4,
                      comments="Long wait at reception, but good consultation.", recorded_by=rec.id),
         ])
+        db.commit()
+    finally:
+        db.close()
+
+
+def seed_prescriptions_if_empty() -> None:
+    """Demo medicines (also added to databases created before medicines existed)."""
+    db = SessionLocal()
+    try:
+        if db.query(Prescription).count():
+            return
+        mehta = db.query(User).filter(User.email == "dr.mehta@medipurse.test").first()
+        rao = db.query(User).filter(User.email == "dr.rao@medipurse.test").first()
+        if not mehta or not rao:
+            return
+
+        def pt(first, last):
+            return db.query(Patient).filter(Patient.first_name == first, Patient.last_name == last).first()
+
+        def dx(p, cond):
+            return next((d for d in p.diagnoses if d.condition == cond), None) if p else None
+
+        now = datetime.now().replace(second=0, microsecond=0)
+        rows = [
+            (pt("Sunita", "Verma"), mehta, "Pseudoxanthoma elasticum", now - timedelta(hours=2),
+             "Vitamin E", "400 IU", "Once daily", "3 months", "After breakfast"),
+            (pt("Sunita", "Verma"), mehta, "Pseudoxanthoma elasticum", now - timedelta(hours=2),
+             "Carboxymethylcellulose eye drops", "1 drop", "Four times daily", "1 month", "Both eyes"),
+            (pt("Kavya", "Nair"), mehta, "Hypermobile Ehlers-Danlos syndrome", now - timedelta(days=1, hours=3),
+             "Paracetamol", "500 mg", "As needed, max 3/day", "5 days", "For joint pain"),
+            (pt("Rohan", "Gupta"), rao, "Essential tremor", now - timedelta(days=1, hours=5),
+             "Propranolol", "40 mg", "Twice daily", "1 month", "Check pulse before each dose"),
+            (pt("Rohan", "Gupta"), rao, "Essential tremor", now - timedelta(days=30),
+             "Propranolol", "20 mg", "Twice daily", "1 month", "Starting dose"),
+        ]
+        for p, doc, cond, when, med, dose, freq, dur, instr in rows:
+            if not p:
+                continue
+            d = dx(p, cond)
+            db.add(Prescription(patient_id=p.id, doctor_id=doc.id, diagnosis_id=d.id if d else None,
+                                medicine=med, dosage=dose, frequency=freq, duration=dur,
+                                instructions=instr, prescribed_at=when,
+                                status="stopped" if when < now - timedelta(days=20) else "active",
+                                stopped_on=(when + timedelta(days=28)).date() if when < now - timedelta(days=20) else None))
         db.commit()
     finally:
         db.close()

@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block title %}Prescribe · {{ p.full_name }}{% endblock %}
+{% block content %}
+<div class="crumbs"><a href="/patients">Patients</a> › <a href="/patients/{{ p.id }}?tab=medicines">{{ p.full_name }}</a> › Prescribe</div>
+<div class="head">
+  <div><h1>Prescribe medicines</h1>
+  <div class="muted">{{ p.full_name }} · {{ p.mrn }}{% if p.age is not none %} · {{ p.age }} yrs{% endif %}{% if p.sex %} · {{ p.sex }}{% endif %}</div></div>
+</div>
+{% if p.allergies %}<div class="note danger"><b>Allergies:</b> {{ p.allergies }}</div>{% endif %}
+
+<form method="post" class="card">
+  {% if appointment_id %}<input type="hidden" name="back" value="appointment">{% endif %}
+  <div class="row">
+    <div class="field"><label>For diagnosis</label>
+      <select name="diagnosis_id"><option value="">Not linked to a diagnosis</option>
+      {% for d in active_dx %}<option value="{{ d.id }}" {{ 'selected' if diagnosis_id == d.id or (not diagnosis_id and loop.first and active_dx|length == 1) }}>{{ d.condition }}</option>{% endfor %}</select></div>
+    <div class="field"><label>Visit</label>
+      <select name="appointment_id"><option value="">Not linked to a visit</option>
+      {% for a in appts %}<option value="{{ a.id }}" {{ 'selected' if appointment_id == a.id }}>{{ a.scheduled_at | dt }}{% if a.reason %} · {{ a.reason[:40] }}{% endif %}</option>{% endfor %}</select></div>
+  </div>
+
+  <div class="rx-head"><span>Medicine</span><span>Dosage</span><span>Frequency</span><span>Duration</span><span>Instructions</span><span></span></div>
+  <div id="rx-rows">
+    <div class="rx-row">
+      <input name="medicine" placeholder="e.g. Paracetamol" required list="common-meds">
+      <input name="dosage" placeholder="500 mg">
+      <input name="frequency" placeholder="Twice daily" list="common-freq">
+      <input name="duration" placeholder="5 days">
+      <input name="instructions" placeholder="After food">
+      <button type="button" class="btn ghost icon-only" onclick="removeRow(this)" title="Remove">{{ icon('x') }}</button>
+    </div>
+  </div>
+  <datalist id="common-freq"><option>Once daily</option><option>Twice daily</option><option>Three times daily</option><option>Four times daily</option><option>At bedtime</option><option>As needed</option><option>Once weekly</option></datalist>
+  <datalist id="common-meds"><option>Paracetamol</option><option>Ibuprofen</option><option>Amoxicillin</option><option>Azithromycin</option><option>Cetirizine</option><option>Omeprazole</option><option>Metformin</option><option>Amlodipine</option><option>Propranolol</option><option>Levetiracetam</option><option>Vitamin D3</option><option>Folic acid</option></datalist>
+  <button type="button" class="btn outline small" onclick="addRow()" style="margin:4px 0 16px">{{ icon('plus') }}Add another medicine</button>
+
+  <div class="actions"><button class="btn primary">{{ icon('pill') }}Save prescription</button>
+  <a class="btn outline" href="{{ '/appointments/' ~ appointment_id if appointment_id else '/patients/' ~ p.id ~ '?tab=medicines' }}">Cancel</a></div>
+</form>
+<script>
+function addRow(){
+  var rows = document.getElementById('rx-rows'), r = rows.firstElementChild.cloneNode(true);
+  r.querySelectorAll('input').forEach(function(i){ i.value=''; i.required = false; });
+  rows.appendChild(r); r.querySelector('input').focus();
+}
+function removeRow(b){
+  var rows = document.getElementById('rx-rows');
+  if (rows.children.length > 1) b.parentElement.remove();
+  else b.parentElement.querySelectorAll('input').forEach(function(i){ i.value=''; });
+}
+</script>
+{% endblock %}
