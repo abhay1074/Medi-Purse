@@ -52,6 +52,7 @@ COMMON_SYMPTOMS: list[tuple[str, str, str, str, str]] = [
     ("wheeze", "Wheezing", "wheezing", "Chest and breathing", "HP:0030828"),
     ("chest_pain", "Chest pain", "chest pain", "Chest and breathing", "HP:0100749"),
     ("palpitations", "Fast or pounding heartbeat", "palpitations", "Chest and breathing", "HP:0001962"),
+    ("high_bp", "High blood pressure", "hypertension", "Chest and breathing", "HP:0000822"),
     ("ankle_swelling", "Swollen ankles", "pedal edema", "Chest and breathing", "HP:0010741"),
     # digestive
     ("abdominal_pain", "Stomach pain", "abdominal pain", "Stomach and digestion", "HP:0002027"),
@@ -155,7 +156,7 @@ COMMON_CONDITIONS: list[dict] = [
      "next": "TSH and free T4."},
     {"name": "Iron-deficiency anaemia", "keys": ["fatigue", "pale", "breathless", "dizziness", "palpitations", "hair_loss"],
      "next": "Full blood count and ferritin; look for a source of blood loss."},
-    {"name": "Essential hypertension", "keys": ["headache", "dizziness", "blurred_vision"], "prior": 0.6,
+    {"name": "Essential hypertension", "keys": ["high_bp", "headache", "dizziness", "blurred_vision"], "prior": 0.6,
      "next": "Repeated blood pressure measurement."},
     {"name": "Tension-type headache", "keys": ["headache", "neck_pain", "poor_sleep", "anxiety", "dizziness"], "prior": 1.3,
      "next": "Clinical diagnosis; check for red-flag features."},

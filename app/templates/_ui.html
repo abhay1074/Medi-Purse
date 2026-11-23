@@ -1,0 +1,43 @@
+{# Shared page pieces so every page looks the same. #}
+{% from "_icons.html" import icon %}
+
+{# Illustrated welcome banner for home pages. image: hero-care.svg | hero-pharmacy.svg | hero-ai.svg #}
+{% macro banner(title, subtitle='', image='hero-care.svg', tone='blue') %}
+<section class="banner tone-{{ tone }}" style="--banner-img:url({{ asset(image) }})">
+  <div class="banner-text">
+    <h1>{{ title }}</h1>
+    {% if subtitle %}<div class="banner-sub">{{ subtitle }}</div>{% endif %}
+    {% if caller %}<div class="actions banner-actions">{{ caller() }}</div>{% endif %}
+  </div>
+  <div class="banner-art" aria-hidden="true"></div>
+</section>
+{% endmacro %}
+
+{# Initials avatar with a stable colour per name #}
+{% macro avatar(name, size=32) -%}
+{%- set parts = (name or '?').split() -%}
+<span class="av" style="--av-h:{{ (name or '?') | hue }};width:{{ size }}px;height:{{ size }}px;font-size:{{ (size * 0.4) | int }}px">{{ (parts[0][:1] ~ (parts[-1][:1] if parts | length > 1 else '')) | upper }}</span>
+{%- endmacro %}
+
+{# Medicines this patient must not be given again (recorded reactions). #}
+{% macro avoid_banner(avoid) %}
+{% if avoid %}<div class="note danger avoid-note">{{ icon('x', 14) }} <b>Avoid:</b>
+  {% for a in avoid %}<span class="avoid-item">{{ a.medicine }} <span class="small">({{ a.reaction | lower }}{% if a.severity != 'mild' %}, {{ a.severity }}{% endif %})</span></span>{{ ' · ' if not loop.last }}{% endfor %}</div>{% endif %}
+{% endmacro %}
+
+{# Report a reaction. action: form URL. ask_medicine: free-text medicine field. #}
+{% macro reaction_form(action, REACTIONS, ask_medicine=false, can_stop=false, label='Report reaction') %}
+<details class="react">
+  <summary class="btn outline small">{{ icon('bell', 14) }}{{ label }}</summary>
+  <form method="post" action="{{ action }}" class="react-form">
+    {% if ask_medicine %}<input name="medicine" placeholder="Medicine, e.g. Amoxicillin" required>{% endif %}
+    <select name="reaction">{% for r in REACTIONS %}<option>{{ r }}</option>{% endfor %}</select>
+    <input name="other" placeholder="If other, describe">
+    <select name="severity"><option value="mild">Mild</option><option value="moderate">Moderate</option><option value="severe">Severe</option></select>
+    <textarea name="notes" rows="2" placeholder="Notes (when it started, what happened)"></textarea>
+    <label class="check"><input type="checkbox" name="avoid" value="1" checked> Do not prescribe this medicine again</label>
+    {% if can_stop %}<label class="check"><input type="checkbox" name="stop" value="1" checked> Stop it now</label>{% endif %}
+    <button class="btn primary small">Save</button>
+  </form>
+</details>
+{% endmacro %}

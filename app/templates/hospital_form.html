@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}{{ 'Edit hospital' if h else 'Register hospital' }}{% endblock %}
 {% block content %}
-<div class="muted small"><a href="/hospitals">Hospitals</a> ›</div>
+<div class="crumbs"><a href="/hospitals">Hospitals</a> › {{ 'Edit' if h else 'Register hospital' }}</div>
 <h1>{{ 'Edit ' ~ h.name if h else 'Register a hospital' }}</h1>
 <p class="muted">After registering, you can add the hospital's clinics and staff.</p>
 <form method="post" class="stack">
@@ -16,6 +16,6 @@
     <div class="field"><label>Email</label><input name="email" type="email" value="{{ h.email if h else '' }}"></div>
   </div>
   <div class="actions"><button class="btn primary">{{ 'Save' if h else 'Register hospital' }}</button>
-  <a class="btn" href="{{ '/hospitals/' ~ h.id if h else '/hospitals' }}">Cancel</a></div>
+  <a class="btn outline" href="{{ '/hospitals/' ~ h.id if h else '/hospitals' }}">Cancel</a></div>
 </form>
 {% endblock %}

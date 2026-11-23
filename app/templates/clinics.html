@@ -4,11 +4,11 @@
 <div class="head"><div><h1>Clinics</h1><div class="muted">Hospital clinics and independent clinics</div></div>
 <a class="btn primary" href="/clinics/new">Register clinic</a></div>
 {% if clinics %}
-<table><tr><th>Clinic</th><th>Hospital</th><th>Specialty</th><th>Phone</th><th>Staff</th><th>Patients</th></tr>
+<div class="table-card"><table><tr><th>Clinic</th><th>Hospital</th><th>Specialty</th><th>Phone</th><th>Staff</th><th>Patients</th></tr>
 {% for c in clinics %}
 <tr class="click" onclick="location='/clinics/{{ c.id }}'"><td><a href="/clinics/{{ c.id }}">{{ c.name }}</a></td>
 <td>{{ c.hospital.name if c.hospital else 'Independent' }}</td><td>{{ c.specialty }}</td><td>{{ c.phone }}</td>
 <td>{{ c.staff | length }}</td><td>{{ c.patients | length }}</td></tr>
-{% endfor %}</table>
+{% endfor %}</table></div>
 {% else %}<div class="empty">No clinics registered yet.</div>{% endif %}
 {% endblock %}

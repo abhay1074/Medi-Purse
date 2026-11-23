@@ -3,7 +3,7 @@
 {% block title %}Appointment{% endblock %}
 {% block content %}
 {% set p = a.patient %}
-{% set doc = user.role in ('doctor','admin') %}
+{% set doc = user.has('doctor','admin') %}
 <div class="crumbs"><a href="/appointments">Appointments</a> › <a href="/patients/{{ p.id }}">{{ p.full_name }}</a> › Visit</div>
 <div class="head">
   <div><h1>{{ a.scheduled_at | dt }}</h1>

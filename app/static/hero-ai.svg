@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 720" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e0e7ff"/><stop offset=".5" stop-color="#c7d2fe"/><stop offset="1" stop-color="#818cf8"/></linearGradient>
+    <radialGradient id="glow" cx=".78" cy=".45" r=".5"><stop offset="0" stop-color="#fff" stop-opacity=".6"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+    <linearGradient id="strandA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7c3aed"/><stop offset="1" stop-color="#2563eb"/></linearGradient>
+    <linearGradient id="strandB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#06b6d4"/><stop offset="1" stop-color="#14b8a6"/></linearGradient>
+    <linearGradient id="bar" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7c3aed"/><stop offset="1" stop-color="#2563eb"/></linearGradient>
+  </defs>
+  <rect width="1600" height="720" fill="url(#bg)"/>
+  <rect width="1600" height="720" fill="url(#glow)"/>
+  <!-- network -->
+  <g fill="none" stroke="#4f46e5" stroke-opacity=".22" stroke-width="2">
+    <path d="M920 120 L1040 210 L980 330 L1100 420 L1010 560 M1040 210 L1180 160 M1100 420 L1220 500 M980 330 L860 400 M1010 560 L900 640"/>
+  </g>
+  <g fill="#fff"><circle cx="920" cy="120" r="9"/><circle cx="1040" cy="210" r="12"/><circle cx="980" cy="330" r="9"/><circle cx="1100" cy="420" r="12"/><circle cx="1010" cy="560" r="9"/><circle cx="1180" cy="160" r="8"/><circle cx="1220" cy="500" r="8"/><circle cx="860" cy="400" r="8"/><circle cx="900" cy="640" r="8"/></g>
+  <!-- DNA helix -->
+  <g transform="translate(1390 40) rotate(18)">
+    <g stroke-width="10" stroke-linecap="round">
+      <line x1="-58" y1="60" x2="58" y2="60" stroke="#c4b5fd"/><line x1="-80" y1="120" x2="80" y2="120" stroke="#a5f3fc"/>
+      <line x1="-58" y1="180" x2="58" y2="180" stroke="#c4b5fd"/><line x1="-12" y1="240" x2="12" y2="240" stroke="#a5f3fc"/>
+      <line x1="-58" y1="300" x2="58" y2="300" stroke="#c4b5fd"/><line x1="-80" y1="360" x2="80" y2="360" stroke="#a5f3fc"/>
+      <line x1="-58" y1="420" x2="58" y2="420" stroke="#c4b5fd"/><line x1="-12" y1="480" x2="12" y2="480" stroke="#a5f3fc"/>
+      <line x1="-58" y1="540" x2="58" y2="540" stroke="#c4b5fd"/><line x1="-80" y1="600" x2="80" y2="600" stroke="#a5f3fc"/>
+    </g>
+    <path d="M0 0 C 110 60, 110 180, 0 240 S -110 420, 0 480 S 110 600, 0 680" fill="none" stroke="url(#strandA)" stroke-width="16" stroke-linecap="round"/>
+    <path d="M0 0 C -110 60, -110 180, 0 240 S 110 420, 0 480 S -110 600, 0 680" fill="none" stroke="url(#strandB)" stroke-width="16" stroke-linecap="round"/>
+  </g>
+  <!-- ranked-list card -->
+  <g transform="translate(1060 250) rotate(-4)">
+    <rect width="300" height="200" rx="20" fill="#fff" opacity=".95"/>
+    <rect x="22" y="22" width="140" height="14" rx="7" fill="#c7d2fe"/>
+    <g><circle cx="38" cy="72" r="14" fill="#ede9fe"/><rect x="62" y="64" width="210" height="8" rx="4" fill="#e0e7ff"/><rect x="62" y="78" width="196" height="8" rx="4" fill="url(#bar)"/></g>
+    <g><circle cx="38" cy="122" r="14" fill="#ede9fe"/><rect x="62" y="114" width="210" height="8" rx="4" fill="#e0e7ff"/><rect x="62" y="128" width="134" height="8" rx="4" fill="url(#bar)"/></g>
+    <g><circle cx="38" cy="172" r="14" fill="#ede9fe"/><rect x="62" y="164" width="210" height="8" rx="4" fill="#e0e7ff"/><rect x="62" y="178" width="84" height="8" rx="4" fill="url(#bar)"/></g>
+  </g>
+  <circle cx="1560" cy="660" r="150" fill="#6366f1" opacity=".15"/>
+  <circle cx="900" cy="80" r="50" fill="#fff" opacity=".35"/>
+</svg>

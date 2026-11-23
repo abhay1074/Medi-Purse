@@ -1,0 +1,173 @@
+{
+ "generated": "2026-11-24 04:15",
+ "machine": "development laptop, Windows 11, CPU only, single uvicorn worker",
+ "cold_start": {
+  "seconds_to_ready": 8.9,
+  "working_set_mb": 571,
+  "peak_mb": 575
+ },
+ "load_local": [
+  {
+   "clients": 1,
+   "requests": 12,
+   "errors": 0,
+   "throughput_per_s": 1.93,
+   "mean_ms": 331.2,
+   "p50_ms": 331.9,
+   "p90_ms": 377.2,
+   "p99_ms": 408.7,
+   "max_ms": 412.2
+  },
+  {
+   "clients": 2,
+   "requests": 24,
+   "errors": 0,
+   "throughput_per_s": 2.51,
+   "mean_ms": 595.5,
+   "p50_ms": 583.9,
+   "p90_ms": 662.9,
+   "p99_ms": 893.4,
+   "max_ms": 918.6
+  },
+  {
+   "clients": 4,
+   "requests": 48,
+   "errors": 0,
+   "throughput_per_s": 2.84,
+   "mean_ms": 1128.8,
+   "p50_ms": 1163.8,
+   "p90_ms": 1421.2,
+   "p99_ms": 1666.6,
+   "max_ms": 1839.1
+  },
+  {
+   "clients": 8,
+   "requests": 96,
+   "errors": 0,
+   "throughput_per_s": 2.89,
+   "mean_ms": 2350.4,
+   "p50_ms": 2483.3,
+   "p90_ms": 2941.0,
+   "p99_ms": 3076.1,
+   "max_ms": 3080.2
+  }
+ ],
+ "memory_after_load": {
+  "working_set_mb": 581,
+  "peak_mb": 860
+ },
+ "load_with_ai_review": [
+  {
+   "clients": 1,
+   "requests": 8,
+   "errors": 0,
+   "throughput_per_s": 1.74,
+   "mean_ms": 287.5,
+   "p50_ms": 282.2,
+   "p90_ms": 306.5,
+   "p99_ms": 338.7,
+   "max_ms": 342.3
+  },
+  {
+   "clients": 4,
+   "requests": 32,
+   "errors": 0,
+   "throughput_per_s": 2.47,
+   "mean_ms": 1275.4,
+   "p50_ms": 1270.2,
+   "p90_ms": 1630.3,
+   "p99_ms": 1918.5,
+   "max_ms": 2032.1
+  }
+ ],
+ "ai_review_spend": {
+  "analyses": 42,
+  "spend_cny": 0.01,
+  "spend_inr": 0.14
+ },
+ "coverage": {
+  "rare_disease_catalog": 1464,
+  "with_optimuskg_profile": 1244,
+  "with_case_derived_medicines": 1006,
+  "with_approved_indications": 158,
+  "searchable_phenotypes": 18555,
+  "everyday_symptoms": 81,
+  "common_conditions": 51,
+  "common_conditions_with_first_line_medicines": 51,
+  "retriever_weights_mb": 300
+ },
+ "llm": {
+  "model": "deepseek-chat",
+  "explain": {
+   "cases": 4,
+   "p50_s": 16.8,
+   "max_s": 18.9,
+   "calls_per_case": 4,
+   "tokens_in_per_case": 8779,
+   "tokens_out_per_case": 3756,
+   "claims_per_case": 16.8,
+   "claims_kept_after_checks": 0.97,
+   "rows": [
+    {
+     "id": "R01",
+     "s": 18.945991299988236,
+     "calls": 4,
+     "in": 10142,
+     "out": 4387,
+     "findings": 13,
+     "claims": 18,
+     "claims_shown": 18
+    },
+    {
+     "id": "C01",
+     "s": 15.771495199995115,
+     "calls": 4,
+     "in": 7946,
+     "out": 3286,
+     "findings": 13,
+     "claims": 18,
+     "claims_shown": 17
+    },
+    {
+     "id": "R02",
+     "s": 16.686644400004297,
+     "calls": 4,
+     "in": 9399,
+     "out": 3733,
+     "findings": 14,
+     "claims": 16,
+     "claims_shown": 15
+    },
+    {
+     "id": "C02",
+     "s": 16.92492320004385,
+     "calls": 4,
+     "in": 7630,
+     "out": 3619,
+     "findings": 13,
+     "claims": 15,
+     "claims_shown": 15
+    }
+   ]
+  },
+  "realist_ai_review": {
+   "cases": 4,
+   "p50_s": 3.2,
+   "max_s": 3.5,
+   "agrees_with_router": 1.0
+  },
+  "history_ai_turn": {
+   "turns": 3,
+   "p50_s": 2.8,
+   "max_s": 2.8
+  },
+  "spend_cny_total": 0.29,
+  "spend_note": "Measured as account balance before minus after on the first benchmark run (4 explanations, 4 AI reviews, 3 history turns): CNY 0.29 = INR 4.04. DeepSeek's balance updates with a delay, so a repeat run read 0.00; treat this as the figure.",
+  "spend_inr_total": 4.04
+ },
+ "currency": {
+  "inr_per_cny": 13.9476,
+  "source": "open.er-api.com, updated 23 Nov 2026",
+  "note": "DeepSeek bills this account in CNY; amounts are converted to INR at this rate."
+ }
+}

@@ -1,0 +1,443 @@
+{
+ "description": "Routing TUNING set, separate from the evaluation sets. Used only to fit the realist router; the 92 evaluation cases in synthetic_rare.json / synthetic_common.json are never used for fitting. Rare cases use diseases that are not in the evaluation set; common cases cover all 51 common conditions with different wording. v2: 30 of the 51 everyday notes are rewritten as case-report narratives (ZebraMap structure, 120-180 words) so that length alone cannot separate everyday from rare cases; 21 stay short.",
+ "author": "synthetic, 2026-11-24",
+ "rare": [
+  {
+   "id": "TR01",
+   "gold_id": "3198",
+   "text": "A 49-year-old woman has progressive stiffness of her back and thighs with painful spasms triggered by noise or being touched. She walks slowly and stiffly and is afraid of falling. EMG shows continuous motor unit activity in agonist and antagonist muscles. Anti-GAD antibodies are very high."
+  },
+  {
+   "id": "TR02",
+   "gold_id": "2073",
+   "text": "A 21-year-old student falls asleep uncontrollably in lectures and while eating. When he laughs his knees buckle and his jaw sags for a few seconds. He sees vivid images when falling asleep and sometimes cannot move on waking. Sleep latency test shows mean latency 3 minutes with two sleep-onset REM periods; CSF hypocretin is undetectable."
+  },
+  {
+   "id": "TR03",
+   "gold_id": "729",
+   "text": "A 62-year-old man has headaches, itching after hot showers and a red face. Haemoglobin is 19.8 g/dL with raised white cells and platelets and an enlarged spleen. Erythropoietin is low and JAK2 V617F mutation is detected."
+  },
+  {
+   "id": "TR04",
+   "gold_id": "232",
+   "text": "A 12-year-old boy of West African descent has repeated episodes of severe pain in his bones and chest, needing hospital admission, and chronic anaemia with jaundice. As a toddler his hands and feet swelled painfully. Blood film shows sickled red cells and haemoglobin electrophoresis shows HbS."
+  },
+  {
+   "id": "TR05",
+   "gold_id": "848",
+   "text": "An 18-month-old child of Mediterranean origin is pale, feeds poorly and has an enlarged liver and spleen. Haemoglobin is 5.8 with very small red cells, target cells and nucleated red cells. Haemoglobin electrophoresis shows absent HbA and raised HbF. The skull shows a hair-on-end appearance."
+  },
+  {
+   "id": "TR06",
+   "gold_id": "822",
+   "text": "A 10-year-old girl has had intermittent jaundice and anaemia since infancy, with gallstones at nine. Her spleen is enlarged. The blood film shows small round red cells without central pallor, the direct antiglobulin test is negative and EMA binding is reduced. Her father had his spleen removed."
+  },
+  {
+   "id": "TR07",
+   "gold_id": "186",
+   "text": "A 54-year-old woman has had intense itching and tiredness for a year. Alkaline phosphatase and GGT are high with normal bilirubin. Antimitochondrial antibodies are strongly positive. Ultrasound of the bile ducts is normal. She has xanthelasma and dry eyes."
+  },
+  {
+   "id": "TR08",
+   "gold_id": "2137",
+   "text": "A 24-year-old woman has jaundice and fatigue. ALT is 900, IgG is high, anti-smooth muscle antibodies are positive and viral hepatitis tests are negative. Liver biopsy shows interface hepatitis with plasma cells. She has thyroid disease."
+  },
+  {
+   "id": "TR09",
+   "gold_id": "244",
+   "text": "A 9-year-old boy has had a wet cough every day since birth, chronic runny nose, recurrent ear infections and hearing loss. Chest CT shows bronchiectasis and his heart is on the right side. Nasal nitric oxide is very low and electron microscopy shows absent dynein arms."
+  },
+  {
+   "id": "TR10",
+   "gold_id": "112",
+   "text": "A 3-year-old with polyuria, polydipsia, failure to thrive and salt craving. Born premature after polyhydramnios. Potassium low, metabolic alkalosis, high urinary calcium, normal blood pressure, high renin and aldosterone."
+  },
+  {
+   "id": "TR11",
+   "gold_id": "358",
+   "text": "A 28-year-old woman has muscle cramps, tingling of her hands and fatigue. Potassium and magnesium are low with metabolic alkalosis, low urinary calcium and normal blood pressure. She does not use diuretics or laxatives."
+  },
+  {
+   "id": "TR12",
+   "gold_id": "213",
+   "text": "A 2-year-old has failure to thrive, drinks and urinates excessively, rickets and photophobia. Urine shows glucose, phosphate and amino acids with normal blood glucose. Slit lamp shows crystals in the cornea and leucocyte cystine is high."
+  },
+  {
+   "id": "TR13",
+   "gold_id": "375",
+   "text": "A 25-year-old male smoker coughs up blood and has rapidly rising creatinine with blood and red cell casts in the urine. Chest CT shows bilateral alveolar haemorrhage. Kidney biopsy shows crescents with linear IgG deposition along the glomerular basement membrane."
+  },
+  {
+   "id": "TR14",
+   "gold_id": "389",
+   "text": "A 2-year-old boy has a scalp lump, discharging ears, a scaly rash in the groin and scalp, and drinks a lot. Skull X-ray shows punched-out lytic lesions. Biopsy shows cells positive for CD1a and langerin."
+  },
+  {
+   "id": "TR15",
+   "gold_id": "652",
+   "text": "A 38-year-old man has kidney stones and high calcium due to parathyroid hyperplasia, recurrent peptic ulcers with very high gastrin, and a pituitary prolactinoma. His sister had a pancreatic neuroendocrine tumour."
+  },
+  {
+   "id": "TR16",
+   "gold_id": "2869",
+   "text": "A 15-year-old girl has had episodes of colicky abdominal pain from intussusception and iron-deficiency anaemia. She has dark freckles on her lips and inside her mouth. Endoscopy shows several hamartomatous polyps in the small bowel."
+  },
+  {
+   "id": "TR17",
+   "gold_id": "524",
+   "text": "A 30-year-old woman with breast cancer had an adrenocortical carcinoma as a child. Her mother died of a brain tumour and a cousin had a sarcoma. Germline TP53 mutation is found."
+  },
+  {
+   "id": "TR18",
+   "gold_id": "648",
+   "text": "A 6-year-old boy with short stature, widely spaced down-slanting eyes, low-set ears, a webbed neck and pectus deformity. Echocardiography shows pulmonary valve stenosis. He has mild learning problems and undescended testes."
+  },
+  {
+   "id": "TR19",
+   "gold_id": "904",
+   "text": "A 4-year-old girl is very sociable and talkative but has learning difficulties. She has a wide mouth, full cheeks, puffy eyes and a star-like pattern in the iris. Echocardiography shows supravalvular aortic stenosis and calcium was high as a baby."
+  },
+  {
+   "id": "TR20",
+   "gold_id": "72",
+   "text": "A 3-year-old girl has severe developmental delay with no speech, a happy demeanour with frequent laughter, jerky unsteady movements, seizures and a small head. EEG shows high-amplitude slow waves. Methylation testing of 15q11-q13 is abnormal."
+  },
+  {
+   "id": "TR21",
+   "gold_id": "15",
+   "text": "A newborn has short arms and legs, a large head with prominent forehead, a flat nasal bridge and trident hands. X-rays show short long bones and narrowing of the lumbar interpedicular distance. FGFR3 G380R is found."
+  },
+  {
+   "id": "TR22",
+   "gold_id": "827",
+   "text": "A 14-year-old has gradual loss of central vision in both eyes, worse in bright light. Fundus shows macular atrophy with yellow flecks at the posterior pole. Fluorescein angiography shows a dark choroid. ABCA4 variants are found."
+  },
+  {
+   "id": "TR23",
+   "gold_id": "791",
+   "text": "A 25-year-old man cannot see in the dark since childhood and now bumps into things at the sides. Fundus shows bone-spicule pigment in the periphery and attenuated vessels. Electroretinogram is severely reduced."
+  },
+  {
+   "id": "TR24",
+   "gold_id": "3205",
+   "text": "An infant with a port-wine stain over the left forehead and upper eyelid develops seizures at 6 months. MRI shows leptomeningeal angiomatosis and later tram-track calcification. Eye pressure is raised on the same side."
+  },
+  {
+   "id": "TR25",
+   "gold_id": "803",
+   "text": "A 58-year-old man has progressive weakness of the right hand, muscle twitching, wasting and brisk reflexes, then slurred speech and difficulty swallowing over a year. Sensation is normal. EMG shows widespread denervation."
+  },
+  {
+   "id": "TR26",
+   "gold_id": "480",
+   "text": "A 16-year-old has drooping eyelids and limited eye movements since age 12, pigmentary retinopathy, short stature and now complete heart block needing a pacemaker. CSF protein is high and muscle biopsy shows ragged red fibres."
+  },
+  {
+   "id": "TR27",
+   "gold_id": "550",
+   "text": "A 19-year-old woman with short stature and hearing loss has stroke-like episodes with headache, vomiting and visual loss that do not fit vascular territories. Lactate is high and muscle biopsy shows ragged red fibres. mtDNA m.3243A>G is detected."
+  },
+  {
+   "id": "TR28",
+   "gold_id": "716",
+   "text": "A child from an area without newborn screening has severe intellectual disability, seizures, eczema, fair hair and skin and a musty body odour. Blood phenylalanine is very high."
+  },
+  {
+   "id": "TR29",
+   "gold_id": "85443",
+   "text": "A 64-year-old man has nephrotic-range proteinuria, a large tongue, bruising around the eyes, numb feet and breathlessness. Echocardiography shows thick ventricular walls. Serum free lambda light chains are high and fat pad biopsy is Congo red positive with apple-green birefringence."
+  },
+  {
+   "id": "TR30",
+   "gold_id": "183",
+   "text": "A 45-year-old with adult-onset asthma and nasal polyps develops numbness of the right foot and left wrist drop. Eosinophils are 4,500. Lung infiltrates come and go and p-ANCA is positive. Nerve biopsy shows vasculitis with eosinophils."
+  },
+  {
+   "id": "TR31",
+   "gold_id": "171",
+   "text": "A 35-year-old man with ulcerative colitis has itching and raised alkaline phosphatase. MRCP shows multiple strictures and dilatations of the bile ducts, giving a beaded appearance."
+  },
+  {
+   "id": "TR32",
+   "gold_id": "388",
+   "text": "A newborn did not pass meconium for 48 hours, then has a swollen abdomen and bilious vomiting. Rectal examination releases explosive stool. Rectal suction biopsy shows absent ganglion cells."
+  },
+  {
+   "id": "TR33",
+   "gold_id": "130",
+   "text": "A 38-year-old man fainted at night and his brother died suddenly in his sleep at 35. Resting ECG shows coved ST elevation in V1-V2 that becomes more pronounced after an ajmaline challenge. The heart is structurally normal."
+  },
+  {
+   "id": "TR34",
+   "gold_id": "768",
+   "text": "A 14-year-old girl fainted while swimming and again when her alarm clock rang. ECG shows a corrected QT of 520 ms. Her cousin died suddenly at 16."
+  },
+  {
+   "id": "TR35",
+   "gold_id": "94093",
+   "text": "A 30-year-old man started on haloperidol develops high fever, severe rigidity, confusion, sweating and fluctuating blood pressure. Creatine kinase is 45,000."
+  },
+  {
+   "id": "TR36",
+   "gold_id": "50918",
+   "text": "A 24-year-old woman has fever and tender lumps in the back of her neck for three weeks with night sweats. Lymph node biopsy shows necrotising lymphadenitis with histiocytes and no neutrophils. Lupus and infection tests are negative."
+  }
+ ],
+ "common": [
+  {
+   "id": "TC01",
+   "gold": "Viral upper respiratory infection (common cold)",
+   "text": "Blocked runny nose, scratchy throat and sneezing since Monday. Mild temperature. 33-year-old man."
+  },
+  {
+   "id": "TC02",
+   "gold": "Influenza-like illness",
+   "text": "The patient was a 28-year-old nurse who developed a sudden fever of 39.2 degrees during the winter season, with shivering, severe aching in the back and legs, headache and a dry cough, and had been in bed for two days. Several colleagues on her ward were off sick. She had no chest pain or breathlessness. On examination she was flushed, pulse 100, oxygen saturation 98 percent, with a mildly injected pharynx and a clear chest. A point-of-care PCR swab detected influenza B. Blood tests were not required. She was treated with oseltamivir, paracetamol and fluids and advised to remain off work until 24 hours after the fever settled. She recovered over a week, with residual tiredness for another week."
+  },
+  {
+   "id": "TC03",
+   "gold": "Acute pharyngitis / tonsillitis",
+   "text": "A 10-year-old girl with fever, painful swallowing and enlarged tonsils with exudate; tender glands in the neck."
+  },
+  {
+   "id": "TC04",
+   "gold": "Acute sinusitis",
+   "text": "A 44-year-old man presented with twelve days of nasal congestion, thick discoloured nasal discharge, a reduced sense of smell and pressure behind the cheeks and forehead that was worse when bending, together with aching in the upper teeth. His symptoms had started with a cold. He had a temperature of 37.8 degrees at home but no visual disturbance, eye swelling, severe headache or neck stiffness. On examination there was tenderness over the maxillary and frontal sinuses and mucopurulent discharge in the middle meatus on anterior rhinoscopy. Eye examination was normal. Imaging was not required. He was diagnosed with acute rhinosinusitis and treated with intranasal corticosteroid, saline irrigation and analgesia, and given a delayed antibiotic prescription. His symptoms resolved over the next ten days without the antibiotic."
+  },
+  {
+   "id": "TC05",
+   "gold": "Acute bronchitis",
+   "text": "Chesty cough with phlegm for a week after a cold, slight wheeze, no fever. Non-smoker, 50."
+  },
+  {
+   "id": "TC06",
+   "gold": "Community-acquired pneumonia",
+   "text": "A 72-year-old woman was admitted from home with two days of fever, productive cough, breathlessness and new confusion noticed by her daughter. On examination temperature was 38.4 degrees, respiratory rate 26, oxygen saturation 89 percent on air, blood pressure 108/60, with dullness and coarse crackles at the left base. White cells were 15,200, CRP 190 mg/l and urea 9.4 mmol/l. Chest radiograph showed left lower lobe consolidation. Blood cultures were negative and sputum grew Haemophilus influenzae. She was treated with intravenous amoxicillin and clarithromycin and supplemental oxygen, the confusion settled by day three, and she was discharged on day five on oral antibiotics, with a follow-up radiograph at six weeks showing resolution."
+  },
+  {
+   "id": "TC07",
+   "gold": "Asthma",
+   "text": "A 9-year-old boy who wheezes and coughs at night and when playing football; inhaler helps. Family history of hay fever."
+  },
+  {
+   "id": "TC08",
+   "gold": "Allergic rhinitis",
+   "text": "Itchy nose, sneezing and watery eyes whenever she dusts the house or is near cats. Year-round."
+  },
+  {
+   "id": "TC09",
+   "gold": "Allergic conjunctivitis / viral conjunctivitis",
+   "text": "The patient was a 31-year-old woman who presented every spring with itchy, red, watering eyes and swollen eyelids, together with sneezing and a runny nose, worse on high pollen days and after being outdoors. Rubbing the eyes made them worse. She had no pain, light sensitivity, reduced vision or sticky discharge, and did not wear contact lenses. On examination there was bilateral conjunctival injection with chemosis and fine papillae on the upper tarsal conjunctiva; the corneas were clear on fluorescein staining and visual acuity was normal. Skin prick testing was positive to grass pollen. She was diagnosed with seasonal allergic conjunctivitis and treated with antihistamine and mast cell stabiliser eye drops, cold compresses and an oral antihistamine during the pollen season, with good control of symptoms."
+  },
+  {
+   "id": "TC10",
+   "gold": "Acute otitis media / otitis externa",
+   "text": "The patient was a 24-year-old competitive swimmer who presented with three days of an itchy, then painful, right ear after a week of training, with a feeling of fullness and a small amount of discharge. The pain was worse when he chewed or when the ear was pulled. He had no fever or hearing loss. On examination there was marked tenderness on moving the pinna and tragus, the external canal was swollen and red with moist debris, and the tympanic membrane, once seen after gentle cleaning, was intact and normal. A swab grew Pseudomonas aeruginosa. He was diagnosed with acute otitis externa and treated with aural toilet and ciprofloxacin ear drops, advised to keep the ear dry and to use earplugs when swimming. Symptoms resolved within a week."
+  },
+  {
+   "id": "TC11",
+   "gold": "Acute gastroenteritis",
+   "text": "Diarrhoea six times today with vomiting and cramps; his wife has the same. 41-year-old man."
+  },
+  {
+   "id": "TC12",
+   "gold": "Gastro-oesophageal reflux disease",
+   "text": "Heartburn after dinner and at night, acid coming up into the throat, worse when bending. Overweight 46-year-old."
+  },
+  {
+   "id": "TC13",
+   "gold": "Dyspepsia / gastritis / peptic ulcer",
+   "text": "A 58-year-old man with osteoarthritis presented with a month of upper abdominal fullness after small meals, burning epigastric pain and nausea. He had been taking naproxen daily for his knees and drank alcohol most evenings. He had no vomiting, black stools, difficulty swallowing or weight loss. On examination there was mild epigastric tenderness. Haemoglobin and ferritin were normal and a urea breath test for Helicobacter pylori was negative. Because of his age and persistent symptoms on anti-inflammatory drugs he underwent upper endoscopy, which showed erosive antral gastritis without ulceration; biopsies showed chemical gastropathy. Naproxen was stopped and replaced with topical treatment and paracetamol, alcohol was reduced and a proton pump inhibitor was started for eight weeks, after which the symptoms resolved."
+  },
+  {
+   "id": "TC14",
+   "gold": "Irritable bowel syndrome",
+   "text": "Crampy tummy pain and bloating that improves after the toilet, loose stools alternating with constipation for 2 years, no weight loss or blood."
+  },
+  {
+   "id": "TC15",
+   "gold": "Functional constipation",
+   "text": "Passes hard stools only every 4-5 days with straining, needs to strain a lot. 8-year-old girl, drinks little water."
+  },
+  {
+   "id": "TC16",
+   "gold": "Haemorrhoids / anal fissure",
+   "text": "The patient was a 35-year-old woman who presented three months after the birth of her second child with bright red blood on the toilet paper and severe sharp pain at the anus during and for an hour after opening her bowels. She had been constipated since delivery and was straining. She had no change in bowel habit before pregnancy, weight loss or family history of bowel cancer. Inspection of the anus showed a posterior midline fissure with a small sentinel skin tag; digital examination was deferred because of pain. Haemoglobin was normal. She was diagnosed with an acute anal fissure and treated with stool softeners, increased fibre and fluids, warm baths and topical glyceryl trinitrate ointment. At eight weeks the fissure had healed, and proctoscopy then showed small internal haemorrhoids only."
+  },
+  {
+   "id": "TC17",
+   "gold": "Urinary tract infection",
+   "text": "Stinging when peeing, needing to go urgently, cloudy smelly urine. 30-year-old woman."
+  },
+  {
+   "id": "TC18",
+   "gold": "Acute pyelonephritis",
+   "text": "A 27-year-old woman presented to the emergency department with a day of high fever with rigors, pain in the right loin, nausea and vomiting, following three days of burning on passing urine and frequency that she had not had treated. On examination temperature was 39.3 degrees, pulse 112, blood pressure 112/70, with marked right renal angle tenderness and mild suprapubic tenderness. Urine dipstick showed leucocytes, nitrites and blood, and a pregnancy test was negative. White cells were 17,900, CRP 165 mg/l and creatinine normal. Urine and blood cultures grew Escherichia coli. Renal ultrasound showed no obstruction or abscess. She was treated with intravenous then oral antibiotics according to sensitivities for ten days, the fever settled within 48 hours and she was discharged on day three."
+  },
+  {
+   "id": "TC19",
+   "gold": "Kidney stone (renal colic)",
+   "text": "Sudden excruciating loin-to-groin pain on the right, rolling around, vomiting, blood in urine."
+  },
+  {
+   "id": "TC20",
+   "gold": "Type 2 diabetes mellitus",
+   "text": "The patient was a 58-year-old overweight man referred by his podiatrist because a small wound on the sole of his left foot had not healed for six weeks. On questioning he had been thirsty, passing urine at night and tired for some months. His mother had diabetes. On examination body mass index was 34, there was a shallow clean ulcer under the first metatarsal head, reduced vibration and monofilament sensation in both feet and palpable foot pulses. Fasting glucose was 11.8 mmol/l and HbA1c 81 mmol/mol; ketones were negative. Foot radiograph showed no osteomyelitis. Retinal screening showed mild background retinopathy. He was started on metformin and later a GLP-1 receptor agonist, given structured education, offloading footwear and wound care, and the ulcer healed in eight weeks."
+  },
+  {
+   "id": "TC21",
+   "gold": "Hypothyroidism",
+   "text": "Slowed down, gaining weight, always cold, constipated, puffy face and hoarse voice. Woman, 52."
+  },
+  {
+   "id": "TC22",
+   "gold": "Hyperthyroidism",
+   "text": "A 36-year-old woman presented with four months of weight loss, a racing heart, sweating, a tremor that made writing difficult, intolerance of hot weather and a feeling that her eyes were staring. She also had frequent bowel movements and was sleeping poorly. On examination pulse was 118, she had warm sweaty palms, a fine tremor, a smooth enlarged thyroid and mild bilateral proptosis with lid lag. TSH was undetectable with raised free T4 and T3, and TSH receptor antibodies were positive. Thyroid ultrasound showed a diffusely enlarged hypervascular gland. She was diagnosed with Graves disease and treated with propranolol and carbimazole, with referral to the thyroid eye clinic. She became euthyroid at ten weeks and the eye symptoms stabilised."
+  },
+  {
+   "id": "TC23",
+   "gold": "Iron-deficiency anaemia",
+   "text": "Pale and tired, breathless climbing stairs, heavy periods, haemoglobin 9 with small red cells."
+  },
+  {
+   "id": "TC24",
+   "gold": "Essential hypertension",
+   "text": "The patient was a 60-year-old man whose blood pressure was found to be 168/102 mmHg at a routine pharmacy check; home readings over a week averaged 160/100 mmHg. He had no headache, chest pain or visual symptoms. He drank alcohol most nights, was overweight and had a sedentary office job; his father had had a myocardial infarction. Examination showed no radio-femoral delay, abdominal bruit or signs of endocrine disease. Creatinine, potassium, glucose, thyroid function and urinalysis were normal and cholesterol was 5.9 mmol/l. ECG was normal and fundoscopy showed mild arteriovenous nipping. His ten-year cardiovascular risk was 18 percent. He was started on an ACE inhibitor and a statin, and given advice on reducing alcohol and salt, weight loss and exercise. Blood pressure was 136/84 mmHg after three months."
+  },
+  {
+   "id": "TC25",
+   "gold": "Tension-type headache",
+   "text": "Pressing headache on both sides of the head most evenings, like a tight cap, with sore neck muscles. Works night shifts."
+  },
+  {
+   "id": "TC26",
+   "gold": "Migraine",
+   "text": "Pounding headache on one side with vomiting, has to lie down in a dark room, several times a month. 29-year-old woman."
+  },
+  {
+   "id": "TC27",
+   "gold": "Benign paroxysmal positional vertigo",
+   "text": "A 66-year-old woman presented to the emergency department after waking with a violent spinning sensation when she rolled over in bed, lasting about 30 seconds and recurring each time she lay down or tipped her head back to wash her hair. She vomited once. Between episodes she felt only slightly off balance. She had no hearing loss, tinnitus, headache, slurred speech, double vision or limb weakness. Blood pressure was 138/80 and ECG was normal. Neurological examination including gait and the HINTS examination was reassuring, without spontaneous nystagmus. The Dix-Hallpike test to the left produced a delayed, brief, torsional nystagmus with vertigo. She was treated with an Epley manoeuvre in the department and discharged with Brandt-Daroff exercises, and was free of vertigo at follow-up."
+  },
+  {
+   "id": "TC28",
+   "gold": "Mechanical low back pain",
+   "text": "Low back ache after gardening, eases when lying down, no leg pain or numbness."
+  },
+  {
+   "id": "TC29",
+   "gold": "Cervical spondylosis / neck strain",
+   "text": "The patient was a 49-year-old software developer who presented with a week of neck pain and stiffness after sleeping awkwardly on a long flight, with aching spreading into the right shoulder blade and occasional headache at the back of the head. Turning his head to the right was painful. He had no arm weakness, numbness, clumsiness of the hands, fever, weight loss or trauma. On examination there was tenderness and spasm of the right paraspinal and trapezius muscles with reduced rotation; neurological examination of the arms was normal and Spurling's test negative. Cervical spine radiographs showed mild disc space narrowing at C5-C6 with small osteophytes consistent with spondylosis. He was treated with simple analgesia, heat, posture advice at his workstation and physiotherapy exercises, and improved over three weeks."
+  },
+  {
+   "id": "TC30",
+   "gold": "Knee osteoarthritis",
+   "text": "Aching knees when walking and going down stairs, worse at the end of the day, brief morning stiffness, 68-year-old."
+  },
+  {
+   "id": "TC31",
+   "gold": "Rheumatoid arthritis",
+   "text": "A 39-year-old woman presented with two months of painful swollen knuckles and wrists on both hands, stiffness for two hours every morning, swelling of the balls of the feet and marked fatigue. She had difficulty gripping her steering wheel. On examination there was symmetrical synovitis of the metacarpophalangeal and proximal interphalangeal joints and the wrists, with tenderness of the metatarsophalangeal joints. CRP was 28 mg/l, ESR 46 mm/h, rheumatoid factor and anti-CCP antibodies were positive and ANA was negative. Hand and foot radiographs showed periarticular osteopenia and a small erosion at the fifth metatarsal head. She was started on methotrexate with folic acid and a bridging course of prednisolone, and hydroxychloroquine was added at three months. She reached low disease activity by six months."
+  },
+  {
+   "id": "TC32",
+   "gold": "Gout",
+   "text": "The patient was a 55-year-old publican who presented with sudden overnight onset of a red, hot, extremely painful and swollen big toe on the left foot; he could not tolerate his sock or the bedsheet touching it. He drank several pints of beer a day and took furosemide for ankle swelling. He had had two milder attacks in the past three years. On examination the first metatarsophalangeal joint was swollen, shiny and exquisitely tender, and he had a small tophus on the right ear. Temperature was 37.5 degrees. Serum urate was 0.56 mmol/l and CRP 48 mg/l. Aspiration of the joint showed negatively birefringent needle-shaped crystals and no organisms. He was treated with colchicine and a short course of prednisolone, advised to reduce alcohol, and allopurinol was started once the attack had settled."
+  },
+  {
+   "id": "TC33",
+   "gold": "Frozen shoulder / rotator cuff disorder",
+   "text": "A 47-year-old painter and decorator presented with two months of pain in the outer right shoulder that was worse when lifting his arm sideways above shoulder height and when reaching up to shelves, and pain at night when lying on that side. It had started after a week of painting ceilings. On examination there was a painful arc between 70 and 120 degrees of abduction, pain on resisted abduction and positive impingement tests, with full passive range of movement and preserved strength. Neck examination was normal. Ultrasound of the shoulder showed supraspinatus tendinopathy with subacromial bursitis and no full-thickness tear. He was treated with activity modification, anti-inflammatory medication and a physiotherapy programme of rotator cuff strengthening, followed by a subacromial corticosteroid injection, and returned to work pain-free after eight weeks."
+  },
+  {
+   "id": "TC34",
+   "gold": "Vitamin D or B12 deficiency",
+   "text": "The patient was a 48-year-old woman who had followed a strict vegan diet for eight years and presented with months of tiredness, pins and needles in her hands and feet, a sore red tongue and forgetfulness. On examination she was pale with glossitis, reduced vibration sense at the ankles and a mildly positive Romberg test. Haemoglobin was 10.1 g/dl with an MCV of 112 fl and hypersegmented neutrophils on the film. Serum B12 was 98 ng/l with raised methylmalonic acid, folate was normal and intrinsic factor antibodies were negative. 25-hydroxy vitamin D was also low at 21 nmol/l. She was treated with intramuscular hydroxocobalamin injections followed by oral supplements and vitamin D replacement, and given dietary advice. Her blood count normalised by three months and the paraesthesia improved gradually."
+  },
+  {
+   "id": "TC35",
+   "gold": "Atopic dermatitis (eczema)",
+   "text": "Dry itchy patches behind the knees and on the wrists that flare in winter. Baby had cradle cap."
+  },
+  {
+   "id": "TC36",
+   "gold": "Urticaria / allergic reaction",
+   "text": "A 42-year-old man developed itchy raised welts over his trunk, arms and legs on the third day of a course of amoxicillin prescribed for a chest infection. The welts moved around the body, each lasting a few hours. He had no swelling of the lips or tongue, no breathing difficulty, joint pain or fever. On examination there were widespread blanching urticarial wheals of different sizes; vital signs were normal and the chest was clear. Full blood count and CRP were normal. A drug-induced urticaria was diagnosed. The amoxicillin was stopped and replaced with doxycycline, and he was treated with a non-sedating antihistamine. The welts settled over four days. Penicillin allergy was recorded in his notes, and he was later referred for formal allergy testing."
+  },
+  {
+   "id": "TC37",
+   "gold": "Fungal skin infection",
+   "text": "Itchy peeling skin between the toes with a white soggy look, wears trainers all day."
+  },
+  {
+   "id": "TC38",
+   "gold": "Cellulitis",
+   "text": "The patient was a 64-year-old woman with type 2 diabetes who presented with two days of a red, hot, swollen and painful left lower leg spreading upwards from a scratch she had sustained while gardening, with fever and shivering. On examination temperature was 38.3 degrees and pulse 98; there was a tender, warm, poorly demarcated area of erythema and oedema over the lower leg with a small wound on the shin, and the skin between her toes was cracked. There was no crepitus, bullae or pain out of proportion. White cells were 14,300 and CRP 120 mg/l. Ultrasound excluded deep vein thrombosis. She was treated with intravenous flucloxacillin, leg elevation and treatment of the toe-web fungal infection, switched to oral antibiotics after 48 hours, and the erythema resolved over ten days."
+  },
+  {
+   "id": "TC39",
+   "gold": "Acne vulgaris",
+   "text": "Teenage boy with spots, blackheads and pustules on the forehead and chin."
+  },
+  {
+   "id": "TC40",
+   "gold": "Viral exanthem",
+   "text": "A previously healthy 3-year-old girl was brought to the paediatric assessment unit with a fine red rash that had appeared on the trunk and then spread to the face and limbs, after three days of high fever that had settled the day the rash appeared. She had been irritable during the fever but was now playful and eating well. She was fully immunised. On examination she was alert and well-perfused, temperature 37.2 degrees, with a blanching maculopapular rash on the trunk and neck, small red papules on the soft palate and mild cervical lymphadenopathy; there was no conjunctivitis, mucosal change, desquamation or neck stiffness. A clinical diagnosis of roseola infantum due to human herpesvirus 6 was made. No tests were required, her parents were reassured and the rash faded over three days."
+  },
+  {
+   "id": "TC41",
+   "gold": "Dengue / other acute febrile illness (endemic areas)",
+   "text": "The patient was a 26-year-old man who presented in the monsoon season with four days of high fever, severe headache with pain behind the eyes, intense muscle and joint pains and a faint flushing rash. Several people in his neighbourhood had similar illnesses. On examination temperature was 39 degrees, pulse 96, blood pressure 118/74, with a blanching erythematous rash and a positive tourniquet test; there was no abdominal tenderness, bleeding or fluid accumulation. Platelets were 92,000 and falling, haematocrit 44 percent and white cells 2,900. Dengue NS1 antigen was positive and malaria tests were negative. He was managed as an outpatient with oral fluids, paracetamol and daily blood counts; platelets reached a nadir of 58,000 on day six without warning signs, and he recovered by day ten."
+  },
+  {
+   "id": "TC42",
+   "gold": "Generalised anxiety disorder",
+   "text": "A 29-year-old teacher presented with over a year of constant worry about many everyday matters that she could not switch off, feeling tense and on edge, muscle aches in the neck and shoulders, irritability, poor concentration, palpitations and difficulty falling asleep. She had no low mood, panic attacks, alcohol or drug use and drank one coffee a day. Physical examination was normal and pulse was 84. Thyroid function, full blood count and an ECG were normal. Her GAD-7 score was 14. She was diagnosed with generalised anxiety disorder and offered guided self-help followed by cognitive behavioural therapy, with sleep hygiene advice. After twelve sessions her GAD-7 score was 5 and she reported feeling much calmer."
+  },
+  {
+   "id": "TC43",
+   "gold": "Depression",
+   "text": "Feeling sad and empty, no interest in anything, waking early, poor appetite and no energy for months."
+  },
+  {
+   "id": "TC44",
+   "gold": "Insomnia",
+   "text": "The patient was a 52-year-old man who presented with three months of difficulty falling asleep, lying awake for hours most nights and waking at 4 a.m. unable to get back to sleep, with daytime tiredness, irritability and poor concentration at work. The problem began during a stressful restructuring at work. He drank three coffees a day, used his phone in bed and sometimes drank alcohol to help him sleep. He did not snore loudly or stop breathing at night according to his wife, and had no low mood, restless legs or pain. Examination and thyroid function were normal. A sleep diary confirmed short, fragmented sleep. He was diagnosed with chronic insomnia and treated with cognitive behavioural therapy for insomnia, including sleep restriction and stimulus control, and caffeine and alcohol reduction, with good improvement over two months."
+  },
+  {
+   "id": "TC45",
+   "gold": "Dysmenorrhoea",
+   "text": "A 19-year-old woman presented with painful cramps low in the abdomen starting a few hours before each period and lasting for the first two days, with back ache, nausea and occasional fainting, causing her to miss lectures every month. Her periods were regular and not heavy. She had no pain at other times, pain during intercourse, bowel symptoms related to her period or abnormal discharge. Abdominal examination was normal and chlamydia testing was negative. Transabdominal pelvic ultrasound showed a normal uterus and ovaries with no endometrioma. She was diagnosed with primary dysmenorrhoea and advised to take naproxen from the day before the expected period, with heat and exercise. Pain improved considerably; she was told to return if symptoms changed, given the possibility of endometriosis."
+  },
+  {
+   "id": "TC46",
+   "gold": "Polycystic ovary syndrome",
+   "text": "The patient was a 26-year-old woman who presented because she had been trying to conceive for a year without success. Her periods had always been irregular, every six to ten weeks, and she had acne and excess hair on her face and abdomen that she removed regularly. Her body mass index was 29. On examination there was moderate hirsutism and mild acne. Testosterone was mildly raised, LH higher than FSH, and prolactin, thyroid function and 17-hydroxyprogesterone were normal. Day-21 progesterone confirmed anovulation. Transvaginal ultrasound showed polycystic ovarian morphology. Her partner's semen analysis was normal. She was diagnosed with polycystic ovary syndrome, given lifestyle and weight loss advice, and started on letrozole for ovulation induction, conceiving in the third cycle."
+  },
+  {
+   "id": "TC47",
+   "gold": "Vaginal infection (candida, bacterial vaginosis)",
+   "text": "A 31-year-old woman presented with five days of vulval itching, soreness and a thick white curd-like vaginal discharge without an unpleasant odour, which began after a course of antibiotics for a chest infection. She had mild discomfort on passing urine but no frequency, fever, pelvic pain or abnormal bleeding, and was not pregnant. On examination the vulva was red and swollen with fissuring, and speculum examination showed thick white discharge adherent to the vaginal walls; the cervix was normal. Vaginal pH was 4.2. Microscopy of the discharge showed budding yeasts and pseudohyphae, and a high vaginal swab grew Candida albicans. Tests for chlamydia and gonorrhoea were negative. She was treated with a single dose of oral fluconazole and a topical clotrimazole cream, with resolution of symptoms within a week."
+  },
+  {
+   "id": "TC48",
+   "gold": "Dental infection / caries",
+   "text": "The patient was a 38-year-old man who presented to the emergency dental service with three days of throbbing pain in a lower left back tooth, worse with hot and cold drinks and at night, followed by swelling of the gum and cheek and a bad taste in the mouth. He had not seen a dentist for five years. On examination temperature was 37.8 degrees, there was a firm tender swelling of the left lower face without trismus or difficulty swallowing, and the lower left first molar had a large carious cavity and was tender to percussion with a fluctuant buccal gum swelling. Periapical radiograph showed a periapical radiolucency. The abscess was drained, root canal treatment was started and he received a short course of amoxicillin and metronidazole, with resolution of the swelling."
+  },
+  {
+   "id": "TC49",
+   "gold": "Aphthous ulcers",
+   "text": "A 24-year-old student presented with recurrent painful mouth ulcers over two years, appearing every few weeks, especially during exams, and healing without scarring within ten days. At the visit she had three small round ulcers with yellow-grey bases and red halos on the inside of the lower lip and the tongue. She had no genital ulcers, eye inflammation, skin rash, joint pain, diarrhoea, weight loss or fever. Full blood count, ferritin, folate, B12 and coeliac serology were normal. A diagnosis of recurrent minor aphthous stomatitis was made. She was treated with a topical corticosteroid preparation and an antiseptic mouthwash, advised to avoid toothpaste containing sodium lauryl sulphate and trauma from sharp foods, and reported fewer and less painful episodes at follow-up."
+  },
+  {
+   "id": "TC50",
+   "gold": "Stable angina / coronary artery disease",
+   "text": "The patient was a 66-year-old retired builder who smoked twenty cigarettes a day and presented with four months of chest pressure across the front of his chest when climbing stairs, carrying shopping or walking quickly in cold weather, relieved by rest within a few minutes. He had no pain at rest and the pattern had not changed. Blood pressure was 152/90 and examination was otherwise normal. Resting ECG was normal, troponin negative and LDL cholesterol 4.2 mmol/l. CT coronary angiography showed a significant stenosis of the right coronary artery and moderate disease elsewhere, and myocardial perfusion scanning showed inferior ischaemia. He was treated with aspirin, atorvastatin, bisoprolol and glyceryl trinitrate spray, supported to stop smoking and referred to cardiac rehabilitation, with good symptom control."
+  },
+  {
+   "id": "TC51",
+   "gold": "Heart failure",
+   "text": "A 70-year-old man with a myocardial infarction five years earlier presented with six weeks of increasing breathlessness, needing to sleep propped up on four pillows and waking at night gasping for breath, with swollen legs and fatigue. On examination he had raised jugular venous pressure, a third heart sound, bibasal inspiratory crackles and pitting oedema to the mid-shins. NT-proBNP was 4,800 ng/l, creatinine and potassium were normal and haemoglobin was normal. ECG showed sinus rhythm with old inferior Q waves and left bundle branch block. Chest radiograph showed cardiomegaly with interstitial oedema. Echocardiography showed a left ventricular ejection fraction of 28 percent with inferior akinesia. He was treated with diuretics and started on guideline-directed medical therapy, and later received a cardiac resynchronisation device."
+  }
+ ]
+}

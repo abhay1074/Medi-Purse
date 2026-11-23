@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 720" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#dbeafe"/><stop offset=".45" stop-color="#bfdbfe"/><stop offset="1" stop-color="#5eead4"/></linearGradient>
+    <radialGradient id="glow" cx=".78" cy=".45" r=".45"><stop offset="0" stop-color="#fff" stop-opacity=".7"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+    <linearGradient id="tube" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f766e"/><stop offset="1" stop-color="#1d4ed8"/></linearGradient>
+    <linearGradient id="heart" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fb7185"/><stop offset="1" stop-color="#e11d48"/></linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset="1" stop-color="#fff" stop-opacity=".75"/></linearGradient>
+    <pattern id="dots" width="34" height="34" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="2" fill="#1d4ed8" opacity=".08"/></pattern>
+  </defs>
+  <rect width="1600" height="720" fill="url(#bg)"/>
+  <rect width="1600" height="720" fill="url(#dots)"/>
+  <rect width="1600" height="720" fill="url(#glow)"/>
+  <!-- ECG across -->
+  <path d="M0 560 H860 l26 -70 l30 150 l30 -210 l26 170 l20 -40 H1600" fill="none" stroke="#0f766e" stroke-opacity=".25" stroke-width="5" stroke-linejoin="round"/>
+  <!-- calendar card -->
+  <g transform="translate(1000 150) rotate(-6)">
+    <rect width="280" height="250" rx="22" fill="url(#card)"/>
+    <rect width="280" height="62" rx="22" fill="#2563eb"/><rect y="40" width="280" height="22" fill="#2563eb"/>
+    <rect x="58" y="-16" width="14" height="40" rx="7" fill="#1e3a8a"/><rect x="208" y="-16" width="14" height="40" rx="7" fill="#1e3a8a"/>
+    <g fill="#bfdbfe">
+      <rect x="28" y="90" width="44" height="34" rx="8"/><rect x="88" y="90" width="44" height="34" rx="8"/><rect x="148" y="90" width="44" height="34" rx="8"/><rect x="208" y="90" width="44" height="34" rx="8"/>
+      <rect x="28" y="140" width="44" height="34" rx="8"/><rect x="148" y="140" width="44" height="34" rx="8"/><rect x="208" y="140" width="44" height="34" rx="8"/>
+      <rect x="28" y="190" width="44" height="34" rx="8"/><rect x="88" y="190" width="44" height="34" rx="8"/><rect x="148" y="190" width="44" height="34" rx="8"/>
+    </g>
+    <rect x="88" y="140" width="44" height="34" rx="8" fill="#14b8a6"/>
+    <path d="M100 157l7 7 14-15" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <!-- stethoscope -->
+  <g fill="none" stroke="url(#tube)" stroke-width="16" stroke-linecap="round">
+    <path d="M1330 140 v120 a90 90 0 0 0 180 0 v-120"/>
+    <path d="M1420 350 v90 a110 110 0 0 1 -220 0 v-30"/>
+  </g>
+  <circle cx="1330" cy="132" r="14" fill="#1e3a8a"/><circle cx="1510" cy="132" r="14" fill="#1e3a8a"/>
+  <circle cx="1200" cy="392" r="46" fill="#e2e8f0" stroke="#1d4ed8" stroke-width="14"/><circle cx="1200" cy="392" r="18" fill="#94a3b8"/>
+  <!-- heart -->
+  <path d="M1460 470 c-30 -40 -100 -30 -100 30 c0 50 70 90 100 118 c30 -28 100 -68 100 -118 c0 -60 -70 -70 -100 -30z" fill="url(#heart)"/>
+  <path d="M1390 525 h30 l14 -26 l18 50 l14 -24 h34" stroke="#fff" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- soft shapes -->
+  <circle cx="940" cy="90" r="60" fill="#fff" opacity=".35"/>
+  <circle cx="1560" cy="640" r="120" fill="#14b8a6" opacity=".18"/>
+  <path d="M960 610 v44 M938 632 h44" stroke="#fff" stroke-width="12" stroke-linecap="round" opacity=".8"/>
+</svg>

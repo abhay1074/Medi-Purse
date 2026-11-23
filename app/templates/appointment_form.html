@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Book appointment{% endblock %}
 {% block content %}
-<div class="muted small"><a href="/appointments">Appointments</a> ›{% if p %} <a href="/patients/{{ p.id }}">{{ p.full_name }}</a> ›{% endif %}</div>
+<div class="crumbs"><a href="/appointments">Appointments</a> ›{% if p %} <a href="/patients/{{ p.id }}">{{ p.full_name }}</a> ›{% endif %} {{ 'Edit appointment' if a is defined and a else 'Book appointment' }}</div>
 <h1>Book an appointment{% if p %} for {{ p.full_name }}{% endif %}</h1>
 <form method="post" class="stack">
   {% if p %}<input type="hidden" name="patient_id" value="{{ p.id }}">
@@ -19,6 +19,6 @@
   </div>
   <div class="field"><label>Reason for visit</label><input name="reason" placeholder="e.g. Follow-up, chest pain, test results"></div>
   <div class="actions"><button class="btn primary">Book appointment</button>
-  <a class="btn" href="{{ '/patients/' ~ p.id if p else '/appointments' }}">Cancel</a></div>
+  <a class="btn outline" href="{{ '/patients/' ~ p.id if p else '/appointments' }}">Cancel</a></div>
 </form>
 {% endblock %}

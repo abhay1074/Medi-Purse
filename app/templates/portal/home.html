@@ -1,12 +1,12 @@
 {% extends "portal/base.html" %}
 {% from "_icons.html" import icon %}
+{% from "_ui.html" import banner, avatar %}
 {% block title %}My appointments{% endblock %}
 {% block content %}
-<div class="head">
-  <div><h1>Hello, {{ patient.first_name }}</h1>
-  <div class="muted">{{ patient.clinic.label }}{% if patient.clinic.phone %} · {{ patient.clinic.phone }}{% endif %}</div></div>
-  <div class="actions"><a class="btn primary" href="/portal/book">{{ icon('calendar') }}Book an appointment</a></div>
-</div>
+{% call banner('Hello, ' ~ patient.first_name, patient.clinic.label ~ ((' · ' ~ patient.clinic.phone) if patient.clinic.phone else ''), 'hero-care.svg') %}
+  <a class="btn primary" href="/portal/book">{{ icon('calendar') }}Book an appointment</a>
+  <form method="post" action="/portal/history/new" class="inline"><button class="btn outline">{{ icon('message') }}Symptom check-in</button></form>
+{% endcall %}
 
 {% for a in soon %}
 <div class="alert">

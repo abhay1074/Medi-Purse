@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Add diagnosis{% endblock %}
 {% block content %}
-<div class="muted small"><a href="/patients">Patients</a> › <a href="/patients/{{ p.id }}?tab=diagnoses">{{ p.full_name }}</a> ›</div>
+<div class="crumbs"><a href="/patients">Patients</a> › <a href="/patients/{{ p.id }}?tab=diagnoses">{{ p.full_name }}</a> › Add diagnosis</div>
 <h1>Add a diagnosis for {{ p.full_name }}</h1>
 {% if analysis_id %}<div class="note">From AI analysis. The AI only suggests possibilities; record this only if you, the doctor, confirm it clinically.</div>{% endif %}
 <form method="post" class="stack">
@@ -15,6 +15,6 @@
     {% for a in appts %}<option value="{{ a.id }}" {{ 'selected' if appointment_id == a.id }}>{{ a.scheduled_at | dt }} — {{ a.reason }}</option>{% endfor %}</select></div>
   <div class="field"><label>Notes</label><textarea name="notes" placeholder="Basis for diagnosis, confirmatory tests, plan…"></textarea></div>
   <div class="actions"><button class="btn primary">Save diagnosis</button>
-  <a class="btn" href="{{ '/ai/' ~ analysis_id if analysis_id else '/patients/' ~ p.id ~ '?tab=diagnoses' }}">Cancel</a></div>
+  <a class="btn outline" href="{{ '/ai/' ~ analysis_id if analysis_id else '/patients/' ~ p.id ~ '?tab=diagnoses' }}">Cancel</a></div>
 </form>
 {% endblock %}

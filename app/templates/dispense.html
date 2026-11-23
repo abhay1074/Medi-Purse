@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% from "_icons.html" import icon %}
+{% from "_ui.html" import avoid_banner %}
 {% block title %}Give medicines · {{ p.full_name }}{% endblock %}
 {% block content %}
 <div class="crumbs"><a href="/pharmacy">Dispensing</a> › {{ p.full_name }}</div>
@@ -9,6 +10,7 @@
     · prescribed by {{ lines[0].doctor.display if lines[0].doctor else 'the doctor' }} on {{ lines[0].prescribed_at | dt }}</div></div>
 </div>
 {% if p.allergies %}<div class="note danger"><b>Allergies:</b> {{ p.allergies }}</div>{% endif %}
+{{ avoid_banner(avoid) }}
 {% if lines[0].diagnosis %}<div class="small muted" style="margin-bottom:10px">For: {{ lines[0].diagnosis.condition }}</div>{% endif %}
 
 <form method="post" class="card">

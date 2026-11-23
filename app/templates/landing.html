@@ -5,72 +5,47 @@
 {% block public %}
 <div class="lp">
 
-<!-- utility bar -->
-<div class="lp-util">
-  <div class="lp-wrap lp-util-in">
-    <span class="hide-sm">{{ icon('globe', 15) }} For hospitals, clinics and their patients</span>
-    <nav>
-      <a href="#patients">For patients</a>
-      <a href="#how">How it works</a>
-      <a href="/portal/login">Patient portal</a>
-      <a href="/login" class="lp-util-acc">{{ icon('user', 15) }} Staff sign in</a>
-    </nav>
-  </div>
-</div>
-
-<!-- main nav -->
+<!-- one navigation bar -->
 <header class="lp-nav">
   <div class="lp-wrap lp-nav-in">
     <a class="lp-brand" href="/welcome"><img class="logo" src="/static/logo.svg" alt="">MediPurse</a>
-    <nav class="lp-links hide-sm">
+    <nav class="lp-links">
       <a href="#features">Features</a>
       <a href="#ai">AI diagnosis</a>
-      <a href="#patients">Patients</a>
+      <a href="#patients">For patients</a>
       <a href="#how">How it works</a>
     </nav>
     <div class="lp-nav-cta">
-      <a class="lp-signin hide-sm" href="/portal/login">Patient sign in</a>
+      <a class="lp-signin" href="/portal/login">Patient sign in</a>
+      <a class="lp-signin" href="/login">Staff sign in</a>
       {{ theme_toggle() }}
       <a class="btn lp-dark" href="/portal/register">Book an appointment</a>
+      <details class="lp-menu">
+        <summary class="theme-toggle" aria-label="Menu">{{ icon('menu') }}</summary>
+        <div class="lp-menu-panel">
+          <a href="/portal/register"><b>Book an appointment</b></a>
+          <a href="/portal/login">Patient sign in</a>
+          <a href="/login">Staff sign in</a>
+          <hr>
+          <a href="#features">Features</a><a href="#ai">AI diagnosis</a><a href="#patients">For patients</a><a href="#how">How it works</a>
+        </div>
+      </details>
     </div>
   </div>
 </header>
 
-<!-- hero -->
-<section class="lp-hero">
-  <svg class="lp-art" viewBox="0 0 640 560" aria-hidden="true">
-    <defs>
-      <linearGradient id="lpA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#facc15"/><stop offset=".35" stop-color="#f472b6"/><stop offset=".7" stop-color="#7c3aed"/><stop offset="1" stop-color="#2563eb"/></linearGradient>
-      <linearGradient id="lpB" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#22d3ee"/><stop offset=".5" stop-color="#818cf8"/><stop offset="1" stop-color="#f0abfc"/></linearGradient>
-      <linearGradient id="lpC" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fde047"/><stop offset=".6" stop-color="#fb7185"/><stop offset="1" stop-color="#f97316" stop-opacity=".2"/></linearGradient>
-      <linearGradient id="lpD" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a3e635"/><stop offset="1" stop-color="#14b8a6" stop-opacity=".1"/></linearGradient>
-      <radialGradient id="lpS" cx=".35" cy=".35" r=".7"><stop offset="0" stop-color="#fef9c3"/><stop offset=".6" stop-color="#fde047"/><stop offset="1" stop-color="#eab308"/></radialGradient>
-      <filter id="lpBlur"><feGaussianBlur stdDeviation="14"/></filter>
-    </defs>
-    <!-- glow -->
-    <ellipse cx="420" cy="300" rx="190" ry="150" fill="#f0abfc" opacity=".35" filter="url(#lpBlur)"/>
-    <!-- vertical bars -->
-    <rect x="560" y="120" width="14" height="440" rx="7" fill="url(#lpC)"/>
-    <rect x="600" y="40" width="10" height="520" rx="5" fill="url(#lpD)" opacity=".85"/>
-    <rect x="470" y="330" width="12" height="230" rx="6" fill="url(#lpC)" opacity=".9"/>
-    <!-- ribbons -->
-    <path d="M300 160 C 360 90, 470 80, 560 120 L 548 168 C 470 132, 380 140, 322 206 Z" fill="url(#lpA)" opacity=".95"/>
-    <path d="M250 300 C 300 200, 430 190, 520 230 L 500 300 C 420 262, 330 280, 292 360 Z" fill="url(#lpB)" opacity=".9"/>
-    <path d="M292 360 C 330 280, 420 262, 500 300 L 470 420 C 410 380, 340 400, 312 470 Z" fill="url(#lpA)" opacity=".85"/>
-    <path d="M330 520 C 360 470, 440 460, 520 490 L 510 560 L 330 560 Z" fill="url(#lpB)" opacity=".8"/>
-    <!-- capsule -->
-    <g transform="rotate(-32 200 430)">
-      <rect x="140" y="405" width="140" height="52" rx="26" fill="#fff" opacity=".9"/>
-      <path d="M210 405 h44 a26 26 0 0 1 0 52 h-44 z" fill="url(#lpA)"/>
-    </g>
-    <!-- spheres -->
-    <circle cx="276" cy="250" r="38" fill="url(#lpS)"/>
-    <circle cx="392" cy="545" r="34" fill="url(#lpS)"/>
-    <circle cx="590" cy="70" r="16" fill="url(#lpS)"/>
-    <!-- cross -->
-    <path d="M150 180v44M128 202h44" stroke="#fff" stroke-width="12" stroke-linecap="round" opacity=".75"/>
-  </svg>
-  <div class="lp-wrap">
+<!-- hero: rotating backgrounds behind the booking box -->
+<section class="lp-hero" data-hero>
+  {% for img, title, link, label in [
+      ('hero-care.svg', 'Book a visit in minutes', '/portal/register', 'Book now'),
+      ('hero-pharmacy.svg', 'Medicines from the clinic pharmacy', '#patients', 'How it works'),
+      ('hero-ai.svg', 'AI diagnosis that shows its working', '#ai', 'Learn more'),
+  ] %}
+  <div class="lp-slide{{ ' on' if loop.first }}" style="background-image:url({{ asset(img) }})" aria-hidden="{{ 'false' if loop.first else 'true' }}">
+    <span class="lp-slide-cap" hidden>{{ title }}|{{ link }}|{{ label }}</span>
+  </div>
+  {% endfor %}
+  <div class="lp-wrap lp-hero-in">
     <div class="lp-hero-card">
       <h1>Run your clinic and diagnose with confidence</h1>
       <p>Appointments, prescriptions, patient check-ins and AI-assisted diagnosis for rare and everyday
@@ -79,9 +54,55 @@
         <a class="btn lp-dark lg" href="/portal/register">Book an appointment</a>
         <a class="btn lp-ghost lg" href="/login">Staff sign in</a>
       </div>
+      <div class="small lp-hero-alt">Already a patient? <a href="/portal/login">Sign in</a> · <a href="/portal/forgot">First time signing in?</a></div>
+    </div>
+  </div>
+  <div class="lp-hero-ctrl">
+    <a class="lp-cap" href="/portal/register"><span class="lp-cap-t">Book a visit in minutes</span><span class="lp-cap-l">Book now →</span></a>
+    <div class="lp-ctrl-btns">
+      <button type="button" class="lp-arrow" data-dir="-1" aria-label="Previous slide">‹</button>
+      <div class="lp-dots">{% for i in range(3) %}<button type="button" class="{{ 'on' if loop.first }}" aria-label="Slide {{ i + 1 }}"></button>{% endfor %}</div>
+      <button type="button" class="lp-arrow" data-dir="1" aria-label="Next slide">›</button>
     </div>
   </div>
 </section>
+
+<!-- quick actions: the four things people come here for -->
+<section class="lp-quick">
+  <div class="lp-wrap lp-quick-in">
+    {% for href, ic, color, title, text in [
+        ('/portal/register', 'calendar', 'blue', 'Book an appointment', 'New patient? Create an account and pick a time.'),
+        ('/portal/login', 'user', 'green', 'Patient sign in', 'Appointments, medicines and reminders.'),
+        ('/portal/login', 'message', 'violet', 'Symptom check-in', 'Tell your doctor how you feel before the visit.'),
+        ('/login', 'stethoscope', 'amber', 'Staff sign in', 'Doctors, reception, pharmacy and admin.'),
+    ] %}
+    <a class="lp-qa" href="{{ href }}"><span class="ic {{ color }}">{{ icon(ic, 18) }}</span>
+      <span><b>{{ title }}</b><span class="small muted">{{ text }}</span></span><span class="lp-qa-go">→</span></a>
+    {% endfor %}
+  </div>
+</section>
+
+<script>
+(function () {
+  var hero = document.querySelector('[data-hero]'); if (!hero) return;
+  var slides = hero.querySelectorAll('.lp-slide'), dots = hero.querySelectorAll('.lp-dots button');
+  var cap = hero.querySelector('.lp-cap'), i = 0, timer;
+  function show(n) {
+    i = (n + slides.length) % slides.length;
+    slides.forEach(function (s, k) { s.classList.toggle('on', k === i); s.setAttribute('aria-hidden', k === i ? 'false' : 'true'); });
+    dots.forEach(function (d, k) { d.classList.toggle('on', k === i); });
+    var c = slides[i].querySelector('.lp-slide-cap').textContent.split('|');
+    cap.href = c[1]; cap.querySelector('.lp-cap-t').textContent = c[0]; cap.querySelector('.lp-cap-l').textContent = c[2] + ' →';
+  }
+  function start() { if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return; stop(); timer = setInterval(function () { show(i + 1); }, 6000); }
+  function stop() { clearInterval(timer); }
+  dots.forEach(function (d, k) { d.addEventListener('click', function () { show(k); start(); }); });
+  hero.querySelectorAll('.lp-arrow').forEach(function (b) { b.addEventListener('click', function () { show(i + (+b.dataset.dir)); start(); }); });
+  hero.addEventListener('mouseenter', stop); hero.addEventListener('mouseleave', start);
+  document.querySelectorAll('.lp-menu-panel a').forEach(function (a) { a.addEventListener('click', function () { a.closest('details').open = false; }); });
+  start();
+})();
+</script>
 
 <!-- stats -->
 <section class="lp-stats">

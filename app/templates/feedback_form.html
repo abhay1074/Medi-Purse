@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Record feedback{% endblock %}
 {% block content %}
-<div class="muted small"><a href="/patients">Patients</a> › <a href="/patients/{{ p.id }}?tab=feedback">{{ p.full_name }}</a> ›</div>
+<div class="crumbs"><a href="/patients">Patients</a> › <a href="/patients/{{ p.id }}?tab=feedback">{{ p.full_name }}</a> › Feedback</div>
 <h1>Feedback from {{ p.full_name }}</h1>
 <form method="post" class="stack">
   <div class="field"><label>Rating *</label>
@@ -9,6 +9,6 @@
   <div class="field"><label>Visit</label><select name="appointment_id"><option value="">General feedback</option>
     {% for a in appts if a.status == 'completed' %}<option value="{{ a.id }}" {{ 'selected' if appointment_id == a.id }}>{{ a.scheduled_at | dt }} — {{ a.reason }}</option>{% endfor %}</select></div>
   <div class="field"><label>Comments</label><textarea name="comments" placeholder="What went well, what could be better"></textarea></div>
-  <div class="actions"><button class="btn primary">Save feedback</button><a class="btn" href="/patients/{{ p.id }}?tab=feedback">Cancel</a></div>
+  <div class="actions"><button class="btn primary">Save feedback</button><a class="btn outline" href="/patients/{{ p.id }}?tab=feedback">Cancel</a></div>
 </form>
 {% endblock %}

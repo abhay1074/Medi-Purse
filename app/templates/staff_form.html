@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}{{ 'Edit staff' if s else 'Add staff' }}{% endblock %}
 {% block content %}
-<div class="muted small"><a href="/staff">Staff accounts</a> ›</div>
+<div class="crumbs"><a href="/staff">Staff accounts</a> › {{ s.name if s else 'Add staff' }}</div>
 <h1>{{ 'Edit ' ~ s.name if s else 'Add a staff account' }}</h1>
 <form method="post" class="stack">
   <div class="row">
@@ -9,11 +9,16 @@
     <div class="field"><label>Email (sign-in) *</label><input name="email" type="email" {{ 'disabled' if s else 'required' }} value="{{ s.email if s else '' }}"></div>
   </div>
   <div class="row">
-    <div class="field"><label>Role *</label>
-      <select name="role" {{ 'disabled' if s and s.id == user.id }}>
-        {% for k, v in ROLES.items() %}<option value="{{ k }}" {{ 'selected' if s and s.role == k }}>{{ v }}</option>{% endfor %}
-      </select></div>
-    <div class="field"><label>Clinic (for doctors and receptionists)</label>
+    <div class="field"><label>Roles * <span class="muted small">(tick all that apply)</span></label>
+      {% set mine = s.roles if s else [] %}
+      <div class="ticks role-ticks" id="role-ticks" style="margin-top:2px">
+        {% for k, v in ROLES.items() %}
+        <label class="tick"><input type="checkbox" name="roles" value="{{ k }}" {{ 'checked' if k in mine }} {{ 'disabled' if s and s.id == user.id }}><span class="tick-box">✓</span>{{ v }}</label>
+        {% endfor %}
+      </div>
+      <div class="small muted" style="margin-top:6px">One person can have several roles, for example receptionist and pharmacist. Registrar / Admin already includes everything, so it can't be combined.</div>
+      {% if s and s.id == user.id %}<div class="small muted">You can't change your own roles.</div>{% endif %}</div>
+    <div class="field"><label>Clinic (for doctors, receptionists and pharmacists)</label>
       <select name="clinic_id"><option value="">—</option>
         {% for c in clinics %}<option value="{{ c.id }}" {{ 'selected' if (s and s.clinic_id == c.id) or clinic_id == c.id }}>{{ c.label }}</option>{% endfor %}
       </select></div>
@@ -24,6 +29,19 @@
   {% if s and s.id != user.id %}
   <div class="field"><label><input type="checkbox" name="active" {{ 'checked' if s.active }}> Account active (can sign in)</label></div>
   {% endif %}
-  <div class="actions"><button class="btn primary">{{ 'Save' if s else 'Create account' }}</button><a class="btn" href="/staff">Cancel</a></div>
+<script>
+  // admin can't be combined with other roles
+  (function () {
+    var box = document.getElementById('role-ticks'); if (!box) return;
+    box.addEventListener('change', function (e) {
+      var t = e.target; if (!t.checked) return;
+      box.querySelectorAll('input').forEach(function (i) {
+        if (i === t) return;
+        if (t.value === 'admin' || i.value === 'admin') i.checked = false;
+      });
+    });
+  })();
+  </script>
+  <div class="actions"><button class="btn primary">{{ 'Save' if s else 'Create account' }}</button><a class="btn outline" href="/staff">Cancel</a></div>
 </form>
 {% endblock %}

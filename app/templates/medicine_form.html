@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% from "_icons.html" import icon %}
+{% from "_ui.html" import avoid_banner %}
 {% block title %}Prescribe · {{ p.full_name }}{% endblock %}
 {% block content %}
 <div class="crumbs"><a href="/patients">Patients</a> › <a href="/patients/{{ p.id }}?tab=medicines">{{ p.full_name }}</a> › Prescribe</div>
@@ -8,16 +9,24 @@
   <div class="muted">{{ p.full_name }} · {{ p.mrn }}{% if p.age is not none %} · {{ p.age }} yrs{% endif %}{% if p.sex %} · {{ p.sex }}{% endif %}</div></div>
 </div>
 {% if p.allergies %}<div class="note danger"><b>Allergies:</b> {{ p.allergies }}</div>{% endif %}
+{{ avoid_banner(avoid) }}
 
 <form method="post" class="card" id="rx-form">
+  <input type="hidden" name="override_avoid" id="rx-override" value="">
   {% if appointment_id %}<input type="hidden" name="back" value="appointment">{% endif %}
   <div class="row">
     <div class="field"><label>For diagnosis</label>
-      <select name="diagnosis_id"><option value="">Not linked to a diagnosis</option>
+      <select name="diagnosis_id" id="rx-dx"><option value="">Not linked to a diagnosis</option>
       {% for d in active_dx %}<option value="{{ d.id }}" {{ 'selected' if diagnosis_id == d.id or (not diagnosis_id and loop.first and active_dx|length == 1) }}>{{ d.condition }}</option>{% endfor %}</select></div>
     <div class="field"><label>Visit</label>
       <select name="appointment_id"><option value="">Not linked to a visit</option>
       {% for a in appts %}<option value="{{ a.id }}" {{ 'selected' if appointment_id == a.id }}>{{ a.scheduled_at | dt }}{% if a.reason %} · {{ a.reason[:40] }}{% endif %}</option>{% endfor %}</select></div>
+  </div>
+
+  <div class="field rx-sugg" id="rx-sugg-wrap" hidden><label>{{ icon('sparkles', 14) }} Suggested for <span id="rx-sugg-dx"></span>
+      <span class="muted small" id="rx-sugg-src"></span></label>
+    <div class="ticks" id="rx-sugg"></div>
+    <div class="small muted" id="rx-sugg-note" style="margin-top:6px"></div>
   </div>
 
   <div class="field"><label>Common medicines <span class="muted small">(tick to add with the usual adult dose; change anything below)</span></label>
@@ -55,6 +64,15 @@
 <script>
 (function () {
   var O = {{ rx_opts | tojson }};
+  var S = {{ suggestions | tojson }}, AVOID = {{ avoid | tojson }}, CONTRA = {{ contra | tojson }}, BRANDS = {{ brands | tojson }};
+  var STOP = ['tablet','tablets','capsule','capsules','syrup','cream','gel','drops','eye','ear','nasal','spray','inhaler',
+              'ointment','sachet','injection','mg','mcg','ml','iu','suspension','oral'];
+  function generic(name) {   // same rule as app/drug_suggest.py generic()
+    var w = ((name || '').toLowerCase().match(/[a-z][a-z-]+/g) || []).filter(function (x) { return STOP.indexOf(x) < 0; });
+    return w.length ? (BRANDS[w[0]] || w[0]) : '';
+  }
+  function avoidFor(name) { var g = generic(name); return g ? AVOID.find(function (a) { return a.generic === g; }) : null; }
+  function contraFor(name) { var g = generic(name); return g ? CONTRA.find(function (c) { return c.generic === g; }) : null; }
   var rows = document.getElementById('rx-rows'), tpl = document.getElementById('rx-tpl');
   var byLabel = {}; O.stock.forEach(function (d) { byLabel[d.label.toLowerCase()] = d; });
 
@@ -84,7 +102,11 @@
     if (!q.dataset.manual) q.value = need || '';
     need = +q.value || need;
     st.className = 'rx2-status small';
+    r.classList.remove('avoid');
     if (!med.value.trim()) { st.textContent = ''; return; }
+    var av = avoidFor(med.value), ci = contraFor(med.value);
+    if (av) { st.textContent = 'Caused ' + av.reaction.toLowerCase() + ' (' + av.severity + ') before: marked to avoid'; st.classList.add('bad'); r.classList.add('avoid'); return; }
+    if (ci) { st.textContent = 'Listed as contraindicated in ' + ci.condition + ' (OptimusKG)'; st.classList.add('bad'); return; }
     if (!drug) { st.textContent = 'Not in clinic stock: patient buys from another pharmacy'; st.classList.add('warn'); return; }
     if (drug.expired) { st.textContent = 'Clinic stock has expired: patient buys outside'; st.classList.add('bad'); return; }
     if (drug.stock <= 0) { st.textContent = 'Out of stock: patient buys from another pharmacy'; st.classList.add('bad'); return; }
@@ -140,7 +162,66 @@
   });
   document.getElementById('rx-form').addEventListener('submit', function (e) {
     var any = Array.prototype.some.call(rows.querySelectorAll('[name=medicine]'), function (i) { return i.value.trim(); });
-    if (!any) { e.preventDefault(); alert('Add at least one medicine.'); }
+    if (!any) { e.preventDefault(); alert('Add at least one medicine.'); return; }
+    var bad = Array.prototype.filter.call(rows.querySelectorAll('[name=medicine]'), function (i) { return i.value.trim() && avoidFor(i.value); })
+      .map(function (i) { return i.value.trim(); });
+    if (bad.length) {
+      if (confirm(bad.join(', ') + ' caused a reaction before and is marked to avoid. Prescribe anyway?')) document.getElementById('rx-override').value = '1';
+      else e.preventDefault();
+    }
+  });
+
+  // ---- suggestions for the chosen diagnosis
+  var dxSel = document.getElementById('rx-dx'), sugg = document.getElementById('rx-sugg');
+  function stockLabel(name) {   // match a suggested drug to clinic stock if we hold it
+    var g = generic(name);
+    var hit = O.stock.find(function (d) { return generic(d.label) === g; });
+    return hit ? hit : null;
+  }
+  function renderSugg() {
+    var s = S[dxSel.value], wrap = document.getElementById('rx-sugg-wrap');
+    sugg.innerHTML = '';
+    if (!s || !s.items.length) { wrap.hidden = true; return; }
+    wrap.hidden = false;
+    document.getElementById('rx-sugg-dx').textContent = s.condition;
+    document.getElementById('rx-sugg-src').textContent = s.source === 'rare'
+      ? '(medicines used in published ZebraMap case reports, and approved indications from OptimusKG)'
+      : '(usual first-line options; check the dose)';
+    document.getElementById('rx-sugg-note').textContent = s.source === 'rare'
+      ? 'Doses vary between cases, so set them yourself. Suggestions reflect what was reported, not a recommendation.' : '';
+    s.items.forEach(function (it, i) {
+      var st = stockLabel(it.label), av = avoidFor(it.label), ci = contraFor(it.label);
+      var lab = document.createElement('label');
+      lab.className = 'tick' + (av || ci ? ' tick-avoid' : '');
+      lab.title = it.why;
+      lab.innerHTML = '<input type="checkbox" data-s="' + i + '"><span class="tick-box">&#10003;</span><span></span>' +
+        '<span class="tick-why"></span>' + (av ? '<span class="tick-stock out">avoid</span>' : ci ? '<span class="tick-stock out">contraindicated</span>'
+        : st && st.stock > 0 ? '<span class="tick-stock ok">' + st.stock + '</span>' : '');
+      lab.children[2].textContent = it.label;
+      lab.children[3].textContent = it.why.replace('usual first-line option', 'first-line');
+      sugg.appendChild(lab);
+    });
+  }
+  sugg.addEventListener('change', function (e) {
+    var cb = e.target, i = cb.dataset.s; if (i == null) return;
+    var it = S[dxSel.value].items[i], key = 's' + dxSel.value + '-' + i;
+    if (cb.checked) {
+      var empty = Array.prototype.find.call(rows.children, function (r) { return !r.querySelector('[name=medicine]').value.trim(); });
+      if (empty) empty.remove();
+      var st = stockLabel(it.label);
+      var r = addRow({label: st ? st.label : it.label, dose: it.dose, frequency: it.frequency, duration: it.duration,
+                      instructions: it.instructions});
+      r.dataset.sugg = key;
+    } else {
+      var row = rows.querySelector('.rx2-row[data-sugg="' + key + '"]'); if (row) row.remove();
+      if (!rows.children.length) addRow();
+    }
+  });
+  dxSel.addEventListener('change', renderSugg);
+  renderSugg();
+  // mark everyday ticks for medicines to avoid
+  document.querySelectorAll('#rx-common .tick').forEach(function (t, i) {
+    var c = O.common[i]; if (c && avoidFor(c.label)) { t.classList.add('tick-avoid'); t.title = 'Marked to avoid for this patient'; }
   });
   addRow();
 })();

@@ -20,7 +20,7 @@
   });
 })();
 </script>
-<link rel="stylesheet" href="/static/style.css">
+<link rel="stylesheet" href="{{ asset('style.css') }}">
 </head>
 <body class="portal {% block bodyclass %}{% endblock %}">
 {% from "_icons.html" import icon, theme_toggle %}
@@ -28,10 +28,10 @@
   <a class="brand" href="/portal"><img class="logo" src="/static/logo.svg" alt="">MediPurse</a>
   {% if patient %}
   <nav class="portal-nav">
-    {% macro nav(href, label) %}<a href="{{ href }}" class="{{ 'on' if path == href }}">{{ label }}</a>{% endmacro %}
-    {{ nav('/portal', 'My appointments') }}
-    {{ nav('/portal/book', 'Book') }}
-    {{ nav('/portal/profile', 'My details') }}
+    {% macro nav(href, label, ic) %}<a href="{{ href }}" class="{{ 'on' if path == href }}">{{ icon(ic) }}<span>{{ label }}</span></a>{% endmacro %}
+    {{ nav('/portal', 'My appointments', 'home') }}
+    {{ nav('/portal/book', 'Book', 'calendar') }}
+    {{ nav('/portal/profile', 'My details', 'user') }}
   </nav>
   <div class="me">
     <span class="avatar">{{ patient.first_name[:1] | upper }}</span>

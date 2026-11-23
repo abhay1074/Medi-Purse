@@ -1,0 +1,302 @@
+{
+ "description": "Synthetic common cases for evaluation, v2 (2026-11-24). Full cases are written as single-paragraph case-report narratives in the structure of ZebraMap notes: opening ('The patient was...', 'A previously healthy...', 'We report...'), history, examination, laboratory values, imaging, diagnosis-confirming tests, treatment and follow-up, 120-230 words. Rare and common sets use the same structure and length range so that length and style do not reveal the answer. The short notes (one or two lines) mirror the ~10% of ZebraMap notes under 72 words. Nothing is copied from ZebraMap or Orphanet. v1 (short clinic notes) is kept in *_v1.json.",
+ "author": "synthetic, 2026-11-24",
+ "cases": [
+  {
+   "id": "C01",
+   "gold": "Viral upper respiratory infection (common cold)",
+   "difficulty": "typical",
+   "text": "The patient was a 26-year-old woman who attended her general practice with two days of runny nose, sneezing, a sore scratchy throat and a mild dry cough. Her partner had had similar symptoms the week before. She felt tired and had a low-grade temperature of 37.8 degrees but was eating and drinking normally. She had no breathlessness, chest pain, ear pain or rash. On examination the nasal mucosa was congested with clear discharge, the pharynx was mildly red without exudate, there was no cervical lymphadenopathy and the chest was clear. Oxygen saturation was 99 percent on air and pulse 82. A rapid antigen test for SARS-CoV-2 was negative. No blood tests were performed. She was advised to rest, drink fluids and use paracetamol and saline nasal spray, and given safety-net advice to return if the fever persisted beyond three days or she became breathless. Her symptoms had resolved by day seven."
+  },
+  {
+   "id": "C02",
+   "gold": "Influenza-like illness",
+   "difficulty": "typical",
+   "text": "A 40-year-old man presented to the urgent care centre during the winter season with a sudden onset the previous evening of fever to 39.4 degrees, shivering, generalised muscle aches, headache, a dry cough and marked exhaustion. Several colleagues at his office had been unwell. He had no underlying illnesses and had not received the seasonal vaccine. On examination he looked flushed and unwell, temperature 39.1 degrees, pulse 104, respiratory rate 18 and oxygen saturation 97 percent; the throat was mildly red and the chest was clear. A nasopharyngeal swab was positive for influenza A by PCR. Full blood count showed mild lymphopenia and CRP was 24 mg/l. Chest radiograph was normal. He was given oseltamivir, advised on rest, fluids and paracetamol, and told to self-isolate. The fever settled after three days, though fatigue and cough persisted for two weeks."
+  },
+  {
+   "id": "C03",
+   "gold": "Acute pharyngitis / tonsillitis",
+   "difficulty": "typical",
+   "text": "A 19-year-old university student presented to the student health service with three days of a very sore throat, pain on swallowing, fever and tender swollen glands in the neck. She had no cough or runny nose. On examination her temperature was 38.6 degrees, both tonsils were enlarged and red with white exudate, and there were tender enlarged anterior cervical lymph nodes. There was no trismus, uvular deviation or splenomegaly. Her Centor score was 4. A rapid antigen detection test for group A streptococcus was positive and a throat culture later grew Streptococcus pyogenes. A monospot test was negative. She was treated with phenoxymethylpenicillin for ten days with analgesia and was advised to return if she could not swallow fluids. Her symptoms improved within 48 hours of starting treatment and she returned to classes after three days."
+  },
+  {
+   "id": "C04",
+   "gold": "Acute sinusitis",
+   "difficulty": "typical",
+   "text": "The patient was a 35-year-old woman who presented with ten days of nasal blockage, thick yellow-green nasal discharge and pain over both cheeks and the forehead that was worse when bending forward. Her symptoms had started as a typical cold and improved slightly before worsening again on day seven, with a temperature of 38.2 degrees and aching in her upper teeth. She had no visual disturbance, periorbital swelling or severe headache. On examination there was tenderness over the maxillary sinuses and purulent discharge in the nasal cavity; eye movements and vision were normal. Temperature was 37.9 degrees. No imaging was performed. She was diagnosed with acute bacterial rhinosinusitis given the double worsening, and treated with amoxicillin for seven days, intranasal corticosteroid spray and saline irrigation. At review after one week her facial pain had resolved."
+  },
+  {
+   "id": "C05",
+   "gold": "Acute bronchitis",
+   "difficulty": "typical",
+   "text": "A 45-year-old non-smoking man attended his general practitioner with a productive cough for nine days that had begun after a cold. He was bringing up white to yellow sputum, had mild wheeze at night and a sore chest from coughing, but no fever for the last five days and no breathlessness at rest. He had no history of asthma or lung disease. On examination temperature was 37.1 degrees, respiratory rate 16, oxygen saturation 98 percent and pulse 76; there were scattered wheezes but no focal crackles or bronchial breathing. Peak flow was 90 percent of predicted. A CRP point-of-care test was 12 mg/l. Chest radiograph was not required. He was reassured that the cough might last up to three weeks, advised against antibiotics, and given honey, fluids and a short course of an inhaled bronchodilator for the wheeze. At follow-up three weeks later the cough had resolved."
+  },
+  {
+   "id": "C06",
+   "gold": "Community-acquired pneumonia",
+   "difficulty": "typical",
+   "text": "A 67-year-old man with type 2 diabetes was brought to the emergency department with three days of fever, rigors, cough productive of rusty sputum, breathlessness and sharp right-sided chest pain on deep breathing. On examination he was confused about the date, temperature 38.9 degrees, respiratory rate 26, blood pressure 102/64 and oxygen saturation 90 percent on air, with bronchial breathing and crackles at the right base. White cells were 18,600 with neutrophilia, CRP 245 mg/l and urea 8.9 mmol/l, giving a CURB-65 score of 3. Chest radiograph showed right lower lobe consolidation with a small effusion. Blood cultures grew Streptococcus pneumoniae and the urinary pneumococcal antigen was positive. He was admitted and treated with intravenous co-amoxiclav and clarithromycin and oxygen, switched to oral antibiotics on day four and discharged on day six; follow-up chest radiograph at six weeks showed resolution."
+  },
+  {
+   "id": "C07",
+   "gold": "Asthma",
+   "difficulty": "typical",
+   "text": "The patient was a 22-year-old woman referred to the respiratory clinic with two years of recurrent episodes of wheeze, chest tightness and a dry cough that woke her at night two or three times a week. Symptoms were triggered by exercise, cold air, cats and colds, and were relieved by a salbutamol inhaler borrowed from a friend. She had had eczema as a child and has hay fever; her mother has asthma. Between episodes she was well. Examination was normal apart from scattered expiratory wheeze. Spirometry showed an FEV1/FVC ratio of 0.66 with a 19 percent improvement in FEV1 after salbutamol. Fractional exhaled nitric oxide was 58 ppb and blood eosinophils were 0.6 x10^9/l. Chest radiograph was normal. She was started on a low-dose inhaled corticosteroid with formoterol as maintenance and reliever, given inhaler technique education and a written action plan, and at three months her symptoms were well controlled."
+  },
+  {
+   "id": "C08",
+   "gold": "Allergic rhinitis",
+   "difficulty": "typical",
+   "text": "A 28-year-old man presented to his general practitioner with sneezing fits, an itchy runny nose, nasal blockage and itchy watery eyes that recurred every spring and early summer for the past five years, worse on dry windy days and after cutting the grass. Symptoms were affecting his sleep and concentration at work. He had no fever, facial pain or loss of smell. On examination the nasal mucosa was pale and swollen with clear watery discharge, and the conjunctivae were mildly injected. Skin prick testing was positive to grass and birch tree pollen and negative to house dust mite and cat. Total IgE was mildly raised. He was treated with a daily intranasal corticosteroid spray, a non-sedating antihistamine and allergen avoidance advice, starting two weeks before the pollen season. At review his symptoms were much improved, and sublingual immunotherapy was discussed."
+  },
+  {
+   "id": "C09",
+   "gold": "Allergic conjunctivitis / viral conjunctivitis",
+   "difficulty": "typical",
+   "text": "A 12-year-old boy was brought to the clinic with two days of red, watery, gritty eyes that started in the right eye and spread to the left. Several classmates had similar symptoms. He had had a mild cold the week before. He had no pain, light sensitivity or change in vision and did not wear contact lenses. On examination both conjunctivae were diffusely injected with watery discharge and follicles on the inferior tarsal conjunctiva, and there was a small tender preauricular lymph node on the right. Visual acuity was 6/6 in both eyes, the corneas were clear on fluorescein staining and the pupils reacted normally. A clinical diagnosis of adenoviral conjunctivitis was made. He was advised on cold compresses, lubricating drops, hand hygiene and not sharing towels, and to stay off school while the eyes were discharging. Symptoms settled over ten days."
+  },
+  {
+   "id": "C10",
+   "gold": "Acute otitis media / otitis externa",
+   "difficulty": "typical",
+   "text": "The patient was a 4-year-old girl brought to the out-of-hours service with one day of right ear pain, tugging at the ear, fever to 38.7 degrees, irritability and poor sleep, following three days of a cold. She had had one previous ear infection. On examination she was miserable but alert; temperature 38.5 degrees. Otoscopy showed a red, bulging right tympanic membrane with loss of the light reflex; the left was normal. There was no mastoid swelling or tenderness and no neck stiffness. The throat was mildly red and the chest clear. She was diagnosed with acute otitis media. Her parents were advised on regular paracetamol and ibuprofen and given a delayed prescription for amoxicillin to use if symptoms had not improved after 48 hours. The pain improved the next day and the antibiotic was not needed; at review the eardrum had returned to normal."
+  },
+  {
+   "id": "C11",
+   "gold": "Acute gastroenteritis",
+   "difficulty": "typical",
+   "text": "A 30-year-old woman presented to the emergency department with vomiting, watery diarrhoea up to ten times a day and crampy abdominal pain that started the night before, about 24 hours after eating at a wedding where other guests were also unwell. She had a temperature of 37.9 degrees, felt dizzy on standing and had passed little urine. She had no blood in the stool and had not travelled. On examination she had dry mucous membranes, pulse 108 and blood pressure 104/66 with a postural drop; the abdomen was soft with diffuse mild tenderness and active bowel sounds, and there was no guarding. Sodium was 133 mmol/l, potassium 3.3 mmol/l and creatinine mildly raised. Stool PCR was positive for norovirus. She was treated with intravenous fluids and antiemetics and discharged the same evening with oral rehydration advice; she had recovered by day three."
+  },
+  {
+   "id": "C12",
+   "gold": "Gastro-oesophageal reflux disease",
+   "difficulty": "typical",
+   "text": "The patient was a 50-year-old man who attended his general practitioner with several months of burning retrosternal pain after meals and on lying down, with a sour taste of acid coming into the mouth, occasional night-time cough and hoarseness in the morning. Symptoms were worse after large meals, spicy food, coffee and alcohol. He had gained 8 kg in two years. He had no difficulty swallowing, vomiting, weight loss or black stools. Examination was normal apart from a body mass index of 31. Full blood count was normal. An ECG performed because of the chest pain was normal. He was given lifestyle advice on weight loss, smaller evening meals, raising the head of the bed and reducing alcohol, and started on a proton pump inhibitor for eight weeks. His symptoms resolved; when they recurred on stopping, upper endoscopy showed mild erosive oesophagitis without Barrett oesophagus."
+  },
+  {
+   "id": "C13",
+   "gold": "Dyspepsia / gastritis / peptic ulcer",
+   "difficulty": "typical",
+   "text": "A 42-year-old woman presented with six weeks of gnawing upper abdominal pain, bloating and nausea, worse when hungry and at night and relieved by eating and antacids. She had been taking ibuprofen most days for back pain. She had no vomiting of blood, black stools, weight loss or difficulty swallowing. On examination there was mild epigastric tenderness without guarding or masses. Haemoglobin was normal. A stool antigen test for Helicobacter pylori was positive. Because of persistent symptoms on non-steroidal anti-inflammatory drugs, upper endoscopy was performed and showed a 7 mm clean-based duodenal ulcer with antral gastritis; biopsies confirmed Helicobacter pylori. She stopped ibuprofen, received triple eradication therapy followed by four weeks of a proton pump inhibitor, and a urea breath test after treatment was negative. Her pain resolved."
+  },
+  {
+   "id": "C14",
+   "gold": "Irritable bowel syndrome",
+   "difficulty": "typical",
+   "text": "The patient was a 27-year-old woman referred to the gastroenterology clinic with more than a year of recurrent crampy lower abdominal pain, relieved by opening her bowels, with bloating that worsened through the day and stools alternating between loose and hard. Symptoms were worse during stressful periods at work and after certain foods. She had no rectal bleeding, weight loss, nocturnal symptoms, fever or family history of bowel cancer or coeliac disease. Examination was normal. Full blood count, CRP, thyroid function and coeliac serology were normal, and faecal calprotectin was 22 micrograms per gram. A diagnosis of irritable bowel syndrome with mixed bowel habit was made using the Rome IV criteria. She was given dietary advice including a trial of a low-FODMAP diet with dietitian support, an antispasmodic and information on stress management, and reported a clear improvement at three months."
+  },
+  {
+   "id": "C15",
+   "gold": "Functional constipation",
+   "difficulty": "typical",
+   "text": "A 60-year-old woman presented to her general practitioner with hard, infrequent stools only twice a week for several months, straining, a feeling of incomplete emptying and abdominal bloating. She ate little fibre, drank about three cups of fluid a day and walked little since retiring. She had no rectal bleeding, weight loss, change from a previously normal pattern in the past few weeks, anaemia or family history of colorectal cancer. She took no opioids or iron. On examination the abdomen was soft with palpable stool in the left iliac fossa and rectal examination showed hard stool without masses. Full blood count, calcium and thyroid function were normal and the faecal immunochemical test was negative. She was advised to increase dietary fibre, fluid intake and physical activity and started on a bulk-forming laxative and then a macrogol. At review six weeks later she was opening her bowels every one to two days without straining."
+  },
+  {
+   "id": "C16",
+   "gold": "Urinary tract infection",
+   "difficulty": "typical",
+   "text": "The patient was a 25-year-old woman who attended her general practice with two days of burning when passing urine, needing to go very often and urgently, passing small amounts, and lower abdominal discomfort. She had noticed cloudy, strong-smelling urine. She had no fever, loin pain, vomiting or vaginal discharge and was not pregnant. Symptoms had started after sexual activity, and she had had one similar episode a year ago. On examination she had mild suprapubic tenderness, no renal angle tenderness and temperature 36.9 degrees. Urine dipstick was positive for leucocytes and nitrites, and a pregnancy test was negative. Urine culture later grew Escherichia coli sensitive to nitrofurantoin. She was treated with nitrofurantoin for three days and advised on fluids, and symptoms resolved within 48 hours."
+  },
+  {
+   "id": "C17",
+   "gold": "Kidney stone (renal colic)",
+   "difficulty": "typical",
+   "text": "A 38-year-old man presented to the emergency department with sudden severe colicky pain in the left flank radiating to the groin, which had started two hours earlier. He was unable to lie still, was nauseated and had vomited twice. He had had a similar but milder episode two years earlier and drank little water working outdoors in hot weather. On examination he was restless, afebrile, pulse 96, with left renal angle tenderness and a soft abdomen. Urine dipstick showed blood. Creatinine and white cells were normal. Non-contrast CT of the kidneys, ureters and bladder showed a 5 mm calculus in the left distal ureter with mild hydronephrosis. He was treated with intramuscular diclofenac and an antiemetic, and discharged with analgesia, an alpha-blocker for medical expulsive therapy and a strainer. He passed the stone after four days; analysis showed calcium oxalate and he was advised to increase his fluid intake."
+  },
+  {
+   "id": "C18",
+   "gold": "Type 2 diabetes mellitus",
+   "difficulty": "typical",
+   "text": "The patient was a 52-year-old man who attended his general practitioner with two months of increased thirst, passing large volumes of urine including three times at night, tiredness and blurred vision, and a recurrent fungal groin rash. He worked as a taxi driver, had a body mass index of 33, and his father had diabetes. On examination blood pressure was 148/92 mmHg and there was intertrigo in the groins; foot pulses and sensation were normal. Random plasma glucose was 16.4 mmol/l and HbA1c 76 mmol/mol, with no ketones in the urine. Cholesterol was 6.1 mmol/l and urine albumin to creatinine ratio mildly raised. Retinal screening showed background retinopathy. He was started on metformin, given structured education, dietary and exercise advice, a statin and an ACE inhibitor, and referred for foot and eye surveillance. HbA1c fell to 55 mmol/mol at six months with 6 kg of weight loss."
+  },
+  {
+   "id": "C19",
+   "gold": "Hypothyroidism",
+   "difficulty": "typical",
+   "text": "A 44-year-old woman attended her general practitioner with six months of increasing tiredness, weight gain of 6 kg despite no change in diet, feeling cold when others were warm, dry skin, constipation, thinning hair and heavier periods. Her mother had thyroid disease. On examination she had a pulse of 56, dry coarse skin, a puffy face, a small diffuse non-tender goitre and slow-relaxing ankle reflexes. TSH was 38 mU/l with free T4 below the reference range. Thyroid peroxidase antibodies were strongly positive. Cholesterol was raised, and full blood count showed a mild normocytic anaemia. A diagnosis of primary hypothyroidism due to Hashimoto thyroiditis was made. She was started on levothyroxine with the dose titrated against TSH every six weeks. At four months TSH had normalised, her energy had improved and her periods had returned to normal."
+  },
+  {
+   "id": "C20",
+   "gold": "Hyperthyroidism",
+   "difficulty": "typical",
+   "text": "The patient was a 31-year-old woman who presented with three months of weight loss of 7 kg despite an increased appetite, palpitations, shaky hands, sweating, feeling hot when others were comfortable, anxiety, poor sleep and frequent loose stools. Her periods had become lighter. On examination pulse was 112 and irregularly regular, she had a fine tremor, warm moist skin and a diffuse smooth goitre with a bruit, and her eyes appeared prominent with lid retraction. TSH was suppressed below 0.01 mU/l, free T4 and free T3 were elevated and TSH receptor antibodies were positive. ECG showed sinus tachycardia. A diagnosis of Graves disease was made. She was started on carbimazole and a beta-blocker and referred to ophthalmology for mild thyroid eye disease. Thyroid function normalised after eight weeks and the beta-blocker was stopped."
+  },
+  {
+   "id": "C21",
+   "gold": "Iron-deficiency anaemia",
+   "difficulty": "typical",
+   "text": "A 29-year-old woman presented with several months of tiredness, breathlessness when climbing stairs, palpitations on exertion, headaches and a craving to chew ice. She had very heavy periods lasting seven days with clots and was vegetarian. On examination she was pale with brittle spoon-shaped nails and angular cheilitis; the abdomen was normal. Haemoglobin was 8.4 g/dl with MCV 68 fl, ferritin 4 micrograms per litre and raised platelets. Coeliac serology was negative and a pelvic ultrasound showed a normal uterus. She was started on oral ferrous sulphate on alternate days and referred to gynaecology, who started tranexamic acid and later a levonorgestrel intrauterine system for heavy menstrual bleeding. At three months her haemoglobin had risen to 12.6 g/dl and she felt much more energetic; iron was continued to replenish stores."
+  },
+  {
+   "id": "C22",
+   "gold": "Essential hypertension",
+   "difficulty": "partial",
+   "also_ok": [
+    "Tension-type headache"
+   ],
+   "text": "The patient was a 55-year-old man who attended a workplace health check where his blood pressure was found to be 162/98 mmHg. He reported occasional morning headaches but was otherwise well. He smoked ten cigarettes a day, drank about 25 units of alcohol a week, ate a high-salt diet and had a body mass index of 30. His father had a stroke at 64. Repeat clinic readings were 158/96 and 160/94 mmHg, and ambulatory blood pressure monitoring showed a daytime average of 152/94 mmHg. Examination was otherwise normal with no radio-femoral delay or abdominal bruits. Creatinine, electrolytes, glucose and urinalysis were normal; cholesterol was 6.3 mmol/l. ECG showed voltage criteria for left ventricular hypertrophy and fundoscopy showed mild arteriolar narrowing. He was started on amlodipine, given advice on salt, alcohol, smoking and weight, and his blood pressure was 134/84 mmHg at three months."
+  },
+  {
+   "id": "C23",
+   "gold": "Tension-type headache",
+   "difficulty": "typical",
+   "text": "A 34-year-old office worker presented with a three-month history of a tight, band-like headache around the forehead and temples on most afternoons, lasting several hours and of moderate intensity. It was worse during busy periods and long hours at the computer and was accompanied by stiffness and tenderness of the neck and shoulder muscles. There was no nausea, vomiting, visual aura or sensitivity to light, and the headache did not wake her. She was taking painkillers on most days. Neurological examination including fundoscopy was normal, blood pressure was 118/76 mmHg and there was pericranial muscle tenderness. No imaging was required. A diagnosis of chronic tension-type headache with possible medication overuse was made. She was advised to stop daily analgesics, improve her workstation posture, take regular breaks and exercise, and was started on low-dose amitriptyline; headaches became infrequent within two months."
+  },
+  {
+   "id": "C24",
+   "gold": "Migraine",
+   "difficulty": "typical",
+   "text": "The patient was a 24-year-old woman who presented to the neurology clinic with recurrent headaches since her teens, now occurring four times a month. Each attack began with flashing zig-zag lights in the left visual field lasting twenty minutes, followed by a throbbing one-sided headache with nausea, vomiting and sensitivity to light and noise, lasting up to a day and forcing her to lie in a dark room. Attacks were triggered by missed meals, poor sleep and the days before her period. Her mother has similar headaches. Neurological examination and fundoscopy were normal between attacks and blood pressure was normal. She was taking the combined contraceptive pill, which was changed to a progestogen-only method because of migraine with aura. She was treated with a triptan and an antiemetic for attacks and propranolol for prevention, with a reduction to one attack a month."
+  },
+  {
+   "id": "C25",
+   "gold": "Benign paroxysmal positional vertigo",
+   "difficulty": "typical",
+   "text": "A 58-year-old woman attended her general practitioner with a week of brief episodes of intense spinning dizziness lasting less than a minute, triggered by turning over in bed, lying down, looking up to a high shelf and bending forward. She felt slightly nauseated during episodes and unsteady afterwards, but was well between them. She had no hearing loss, tinnitus, headache, double vision, weakness or numbness. Neurological examination was normal, including gait and cerebellar testing, and there was no spontaneous nystagmus. The Dix-Hallpike manoeuvre to the right reproduced her vertigo with a brief torsional upbeating nystagmus after a few seconds' latency, which fatigued. A diagnosis of right posterior canal benign paroxysmal positional vertigo was made and an Epley repositioning manoeuvre was performed in the clinic. She was taught home exercises and her symptoms had resolved at review one week later."
+  },
+  {
+   "id": "C26",
+   "gold": "Mechanical low back pain",
+   "difficulty": "typical",
+   "text": "The patient was a 40-year-old warehouse worker who presented with three days of lower back pain that began while lifting heavy boxes. The pain was in the lumbar region without radiation below the knee, worse with bending, sitting and coughing, and eased by lying down. He had no leg weakness or numbness, saddle anaesthesia, bladder or bowel disturbance, fever, weight loss or history of cancer. On examination there was paraspinal muscle spasm and tenderness, reduced lumbar flexion, normal straight leg raising, and normal power, reflexes and sensation in the legs. No imaging was performed in the absence of red flags. He was reassured, advised to stay active and avoid bed rest, given ibuprofen and a short course of a muscle relaxant, and referred for physiotherapy. He returned to modified duties after one week and was pain-free at six weeks."
+  },
+  {
+   "id": "C27",
+   "gold": "Knee osteoarthritis",
+   "difficulty": "typical",
+   "text": "A 63-year-old woman presented to the orthopaedic clinic with three years of progressive pain in both knees, worse on climbing stairs, getting out of a chair and walking more than half a mile, and eased by rest. She had morning stiffness lasting about ten minutes and noticed creaking in the knees. She had a body mass index of 32 and had worked as a cleaner. On examination there was bony enlargement of both knees, a small effusion on the right, crepitus on movement, medial joint line tenderness, a mild varus deformity and reduced flexion. Inflammatory markers were normal and rheumatoid factor negative. Weight-bearing radiographs showed medial joint space narrowing, osteophytes and subchondral sclerosis. She was managed with weight loss support, quadriceps strengthening physiotherapy, topical anti-inflammatory gel and paracetamol, and later received an intra-articular corticosteroid injection in the right knee with temporary relief."
+  },
+  {
+   "id": "C28",
+   "gold": "Rheumatoid arthritis",
+   "difficulty": "typical",
+   "text": "The patient was a 45-year-old woman referred to the early arthritis clinic with three months of painful swollen joints in the fingers and wrists of both hands, morning stiffness lasting over an hour and fatigue. She had difficulty opening jars and buttoning clothes. On examination there was symmetrical synovitis of the second and third metacarpophalangeal joints, the proximal interphalangeal joints and both wrists, with a positive squeeze test of the hands and feet. ESR was 54 mm/h and CRP 32 mg/l, rheumatoid factor was positive and anti-CCP antibodies strongly positive. Radiographs of the hands and feet showed periarticular osteopenia without erosions, and ultrasound confirmed synovitis with power Doppler signal. She was started on methotrexate with folic acid and a short course of oral prednisolone. At six months she was in remission with no swollen joints."
+  },
+  {
+   "id": "C29",
+   "gold": "Gout",
+   "difficulty": "typical",
+   "text": "A 50-year-old man presented to the emergency department after waking at night with an extremely painful, red, hot, swollen right big toe joint; he could not bear the bedsheet touching it. He had eaten a large meal with red meat and drunk several pints of beer at a party the evening before. He took a thiazide diuretic for blood pressure and had a body mass index of 31. He had had a milder similar episode a year earlier. On examination temperature was 37.6 degrees and the first metatarsophalangeal joint was swollen, erythematous and exquisitely tender. Serum urate was 0.52 mmol/l, CRP 64 mg/l and white cells mildly raised. Joint aspiration showed needle-shaped negatively birefringent crystals under polarised light, and Gram stain and culture were negative. He was treated with colchicine and naproxen with resolution over five days. The thiazide was changed to losartan and allopurinol was started after the flare."
+  },
+  {
+   "id": "C30",
+   "gold": "Frozen shoulder / rotator cuff disorder",
+   "difficulty": "typical",
+   "text": "The patient was a 52-year-old woman with type 2 diabetes who presented with three months of pain and progressive stiffness in the right shoulder. She could no longer reach behind her back, fasten her bra or comb her hair, and the pain woke her at night when lying on that side. There had been no injury. On examination there was global restriction of active and passive shoulder movement, especially external rotation, with pain at the end of range; strength was preserved and neck movements were normal. Plain radiographs of the shoulder were normal. Ultrasound showed thickening of the coracohumeral ligament without a rotator cuff tear. A diagnosis of adhesive capsulitis in the freezing phase was made. She received an intra-articular corticosteroid injection and a course of physiotherapy with home stretching exercises, and her glucose control was reviewed. Pain and range of movement improved substantially over six months."
+  },
+  {
+   "id": "C31",
+   "gold": "Atopic dermatitis (eczema)",
+   "difficulty": "typical",
+   "text": "A 6-year-old boy was brought to his general practitioner with itchy, dry, red patches in the creases of the elbows and behind the knees that had come and gone since infancy and were worse in winter and after swimming. The itch disturbed his sleep. He had mild asthma and hay fever, and his father had eczema. On examination there were ill-defined erythematous, scaly, excoriated and slightly thickened plaques in the antecubital and popliteal fossae and on the wrists, with generally dry skin. There was no weeping, crusting or punched-out erosions to suggest infection. No tests were needed. He was diagnosed with moderate atopic eczema and treated with liberal emollients and soap substitutes, a moderate-potency topical corticosteroid for flares, and advice on avoiding irritants and wearing cotton clothing. At review four weeks later the patches had largely cleared and his sleep had improved."
+  },
+  {
+   "id": "C32",
+   "gold": "Urticaria / allergic reaction",
+   "difficulty": "typical",
+   "text": "The patient was a 30-year-old woman who presented to the emergency department with raised, itchy red welts that had appeared over her trunk and limbs an hour after eating prawns at a restaurant. Individual welts came and went within a few hours. She had mild swelling of the lips but no tongue or throat swelling, difficulty breathing, wheeze, dizziness or vomiting. On examination there were widespread blanching urticarial wheals; pulse was 92, blood pressure 124/78, oxygen saturation 99 percent and the chest was clear. She was treated with a non-sedating antihistamine and a short course of oral prednisolone, observed for four hours without progression, and discharged with advice to avoid shellfish. She was referred to the allergy clinic, where skin prick testing and specific IgE were positive to shrimp, and she was given an adrenaline autoinjector."
+  },
+  {
+   "id": "C33",
+   "gold": "Fungal skin infection",
+   "difficulty": "typical",
+   "text": "A 35-year-old man attended his general practitioner with an itchy red rash in the groin and inner thighs for several weeks, worse with sweating in hot weather and after going to the gym. He had been using an over-the-counter steroid cream, which had made it spread. He also had itchy peeling skin between his toes. On examination there was a sharply demarcated erythematous patch with a raised scaly advancing edge and central clearing in both groins extending onto the inner thighs, sparing the scrotum, and maceration and scaling in the fourth toe web spaces. Skin scrapings showed fungal hyphae on microscopy and culture grew Trichophyton rubrum. He was treated with a topical azole cream for four weeks, the steroid cream was stopped, and he was advised to dry the area thoroughly and treat his feet. The rash cleared over three weeks."
+  },
+  {
+   "id": "C34",
+   "gold": "Acne vulgaris",
+   "difficulty": "typical",
+   "text": "The patient was a 16-year-old girl who presented with a year of spots on her face and upper back that were affecting her confidence at school. She had blackheads and whiteheads on the forehead, nose and chin, and red tender pimples and pustules on the cheeks and upper back, which worsened before her periods. She had no excess hair growth, irregular periods or weight gain, and used no oily cosmetics. On examination there were open and closed comedones with inflammatory papules and pustules but no nodules or cysts, and mild post-inflammatory hyperpigmentation; there was no scarring. No investigations were needed. She was diagnosed with moderate acne vulgaris and started on a topical combination of benzoyl peroxide and adapalene with advice on gentle cleansing and non-comedogenic moisturisers. At twelve weeks there was clear improvement, and a course of oral doxycycline was not required."
+  },
+  {
+   "id": "C35",
+   "gold": "Generalised anxiety disorder",
+   "difficulty": "typical",
+   "also_ok": [
+    "Insomnia"
+   ],
+   "text": "A 33-year-old woman presented to her general practitioner with six months of excessive worrying about her work, finances and her children's health that she found difficult to control, with restlessness, feeling on edge, muscle tension, poor concentration, irritability, palpitations and difficulty falling asleep. She had no panic attacks, low mood, alcohol or drug misuse or excessive caffeine intake. She was functioning at work but with difficulty. Physical examination was normal with a pulse of 88; thyroid function, full blood count and glucose were normal and an ECG showed sinus rhythm. Her GAD-7 score was 15. A diagnosis of generalised anxiety disorder was made. She was referred for cognitive behavioural therapy, given information on self-help resources, and later started on sertraline after discussion. At three months her GAD-7 score had fallen to 6 and she was sleeping better."
+  },
+  {
+   "id": "C36",
+   "gold": "Depression",
+   "difficulty": "typical",
+   "text": "The patient was a 41-year-old man brought to his general practitioner by his wife after two months of low mood, loss of interest in activities he used to enjoy including football and his children's games, poor sleep with early morning waking, tiredness, poor appetite with 4 kg of weight loss, difficulty concentrating at work and feelings of worthlessness. He had recently been made redundant. He had passive thoughts that his family would be better off without him but no plans or intent, and no history of mania, psychosis or substance misuse. Physical examination was normal, and full blood count, thyroid function, B12 and glucose were normal. His PHQ-9 score was 19. He was diagnosed with a moderate to severe depressive episode, a safety plan was agreed, and he was started on an antidepressant and referred for psychological therapy. At eight weeks his mood had improved and his PHQ-9 was 8."
+  },
+  {
+   "id": "C37",
+   "gold": "Dysmenorrhoea",
+   "difficulty": "typical",
+   "text": "A 17-year-old girl attended with her mother because of cramping lower abdominal pain on the first two days of every period since she started menstruating at 13, radiating to the lower back and thighs and accompanied by nausea and sometimes loose stools. She had missed several days of school. Her periods were regular every 28 days and lasted five days with normal flow. She had no pain between periods, pain during intercourse, abnormal discharge or bleeding. Abdominal examination was normal and she was not sexually active, so pelvic examination was not performed. A pelvic ultrasound arranged because of the severity was normal, with no ovarian cyst or uterine abnormality. A diagnosis of primary dysmenorrhoea was made. She was advised to start mefenamic acid at the onset of bleeding and to use heat and exercise; when this was insufficient the combined contraceptive pill was started, with good relief."
+  },
+  {
+   "id": "C38",
+   "gold": "Polycystic ovary syndrome",
+   "difficulty": "typical",
+   "text": "The patient was a 23-year-old woman who presented with irregular periods occurring every two to three months since her teens, acne, excess dark hair on the face, chin and lower abdomen, and weight gain of 10 kg over three years with difficulty losing it. She was not trying to conceive. On examination her body mass index was 31, she had hirsutism with a modified Ferriman-Gallwey score of 14, inflammatory acne and acanthosis nigricans in the axillae. Total testosterone was mildly raised, sex hormone-binding globulin low, LH raised relative to FSH, and prolactin, thyroid function and 17-hydroxyprogesterone were normal. A pregnancy test was negative. Pelvic ultrasound showed more than 20 follicles in each ovary. An oral glucose tolerance test showed impaired glucose tolerance. She was diagnosed with polycystic ovary syndrome and started on the combined contraceptive pill, lifestyle and weight management support and metformin."
+  },
+  {
+   "id": "C39",
+   "gold": "Stable angina / coronary artery disease",
+   "difficulty": "typical",
+   "text": "A 62-year-old man with type 2 diabetes, hypertension and high cholesterol, and a 30 pack-year smoking history, presented with three months of central chest tightness that came on when walking uphill or in cold weather and went away within five minutes of rest. It did not occur at rest and had not changed in pattern. He occasionally felt breathless with the pain. Examination was normal with blood pressure 146/88 mmHg. Resting ECG was normal and troponin was not raised. CT coronary angiography showed a 70 percent stenosis of the proximal left anterior descending artery, and an exercise stress echocardiogram showed inducible anterior wall ischaemia. He was started on aspirin, a high-intensity statin, a beta-blocker and sublingual glyceryl trinitrate, and helped to stop smoking. Because symptoms persisted, he underwent percutaneous coronary intervention with a drug-eluting stent and was angina-free at follow-up."
+  },
+  {
+   "id": "C40",
+   "gold": "Heart failure",
+   "difficulty": "typical",
+   "text": "The patient was a 72-year-old woman with a previous myocardial infarction and hypertension who presented with three weeks of increasing breathlessness on walking, needing three pillows at night and waking up gasping for breath, swollen ankles and a 4 kg weight gain. On examination she was breathless at rest with oxygen saturation of 91 percent, pulse 102 and irregular, raised jugular venous pressure, bibasal crackles and pitting oedema to the knees. NT-proBNP was 6,400 ng/l and creatinine mildly raised. ECG showed atrial fibrillation with old anterior Q waves. Chest radiograph showed cardiomegaly, upper lobe diversion and small bilateral effusions. Echocardiography showed a dilated left ventricle with an ejection fraction of 30 percent. She was admitted and treated with intravenous furosemide and anticoagulation, then started on guideline-directed therapy including a beta-blocker, an ARNI, a mineralocorticoid receptor antagonist and an SGLT2 inhibitor, and discharged 5 kg lighter."
+  },
+  {
+   "id": "C41",
+   "gold": "Viral upper respiratory infection (common cold)",
+   "difficulty": "partial",
+   "also_ok": [
+    "Influenza-like illness",
+    "Acute pharyngitis / tonsillitis"
+   ],
+   "text": "Cough, sore throat and runny nose for 3 days. Child, 7 years."
+  },
+  {
+   "id": "C42",
+   "gold": "Urinary tract infection",
+   "difficulty": "partial",
+   "text": "Burning urine and going often. 60-year-old woman, mild lower tummy pain."
+  },
+  {
+   "id": "C43",
+   "gold": "Acute gastroenteritis",
+   "difficulty": "partial",
+   "text": "Loose motions and vomiting since morning, stomach cramps. 9-year-old boy."
+  },
+  {
+   "id": "C44",
+   "gold": "Migraine",
+   "difficulty": "partial",
+   "also_ok": [
+    "Tension-type headache"
+   ],
+   "text": "Recurrent headaches with nausea and light sensitivity, 30-year-old woman."
+  },
+  {
+   "id": "C45",
+   "gold": "Dengue / other acute febrile illness (endemic areas)",
+   "difficulty": "partial",
+   "also_ok": [
+    "Influenza-like illness",
+    "Viral exanthem"
+   ],
+   "text": "A 26-year-old man in the monsoon season with high fever for four days, severe pain behind the eyes, body and joint aches and a faint rash. Platelets slightly low."
+  },
+  {
+   "id": "C46",
+   "gold": "Vitamin D or B12 deficiency",
+   "difficulty": "partial",
+   "also_ok": [
+    "Iron-deficiency anaemia"
+   ],
+   "text": "A 48-year-old vegetarian woman with tiredness, tingling in the feet, aching bones and muscle weakness. Little sun exposure."
+  }
+ ]
+}

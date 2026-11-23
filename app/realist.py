@@ -23,6 +23,7 @@ from __future__ import annotations
 import json
 import re
 
+from . import router
 from .clinical import COMMON_BY_KEY, COMMON_CONDITIONS, RARE_CUES
 from .symptoms import INDEX, common_keys_in
 
@@ -48,6 +49,26 @@ def _signals(text: str) -> dict:
             "age": int(age.group(1)) if age else None, "infant": infant}
 
 
+def _common_scores(keys: set[str]):
+    scored = []
+    for c in COMMON_CONDITIONS:
+        ck = c["keys"]
+        hits = [k for k in ck if k in keys]
+        if not hits:
+            continue
+        weight = sum(1.0 / (1 + 0.15 * ck.index(k)) for k in hits)
+        coverage = len(hits) / max(1, len(keys))
+        scored.append(((weight + coverage) * c.get("prior", 1.0), c, hits))
+    scored.sort(key=lambda x: -x[0])
+    return scored
+
+
+def common_fit(keys: set[str]) -> float:
+    """How well the best common condition explains the everyday symptoms (0 if none)."""
+    sc = _common_scores(keys)
+    return sc[0][0] if sc else 0.0
+
+
 def _score_common(keys: set[str], limit: int = 5) -> list[dict]:
     scored = []
     for c in COMMON_CONDITIONS:
@@ -68,7 +89,10 @@ def _score_common(keys: set[str], limit: int = 5) -> list[dict]:
     return out
 
 
-def assess_rules(text: str) -> dict:
+def assess_rules(text: str, ranking: dict | None = None) -> dict:
+    """ranking: the retriever output for the same text (AIService.rank). When given and a
+    fitted router exists (app/data/router.json), the learned router decides the verdict;
+    otherwise the original hand-written rules are used."""
     s = _signals(text)
     n_found = len({f["id"] for f in s["found"]} | {COMMON_BY_KEY[k][4] or k for k in s["keys"]})
     signals = []
@@ -101,10 +125,26 @@ def assess_rules(text: str) -> dict:
         reason = ("Several findings across body systems" if multisystem else "Some findings are more specific") + (
             ", but there is no strong rare-disease cue. Rule out common causes alongside the "
             "rare-disease suggestions.")
+    source, p = "rules", None
+    if ranking is not None and router.model() is not None:
+        feat = router.features(text, s, ranking, common_fit(s["keys"]))
+        p, contrib = router.p_common(feat)
+        verdict = router.verdict(p)
+        why = router.explain(contrib)
+        reason = {
+            "common_first": "This looks like an everyday presentation" + (f": {why}" if why else "") +
+                            ". Common causes are listed first; the rare-disease list is shown below for reference.",
+            "both": "This case could go either way" + (f" ({why})" if why else "") +
+                    ". Rule out common causes alongside the rare-disease suggestions.",
+            "rare_ok": "Considering rare diseases early is reasonable" + (f": {why}" if why else "") + ".",
+        }[verdict]
+        signals.append(f"Router: {p:.0%} likely an everyday presentation")
+        source = "router"
     common = _score_common(s["keys"]) if verdict != "rare_ok" or s["keys"] else []
     if verdict == "rare_ok":
         common = common[:3]
-    return {"verdict": verdict, "reason": reason, "signals": signals, "source": "rules", "common": common}
+    return {"verdict": verdict, "reason": reason, "signals": signals, "source": source, "common": common,
+            "p_common": p}
 
 
 # ----------------------------------------------------------------------------
