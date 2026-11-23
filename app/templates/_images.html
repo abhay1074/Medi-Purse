@@ -1,0 +1,68 @@
+{% from "_icons.html" import icon %}
+
+{% macro upload_form(pid, MODALITIES, ACCEPT, max_mb, next='') %}
+<form method="post" action="/patients/{{ pid }}/images" enctype="multipart/form-data" class="card img-upload">
+  {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+  <label class="dropzone" data-dropzone>
+    <input type="file" name="files" accept="{{ ACCEPT }}" multiple required>
+    <span class="ic blue">{{ icon('upload', 18) }}</span>
+    <span><b>Choose images</b> or drop them here<br><span class="small muted">JPEG, PNG, WebP, TIFF · up to {{ max_mb }} MB each · location and camera data are removed</span></span>
+    <span class="dz-files small"></span>
+  </label>
+  <div class="img-upload-fields">
+    <div class="field"><label>Type</label><select name="modality">{% for k, v in MODALITIES %}<option value="{{ k }}">{{ v }}</option>{% endfor %}</select></div>
+    <div class="field"><label>Body site</label><input name="body_site" placeholder="e.g. left forearm, both eyes"></div>
+    <div class="field"><label>Date taken</label><input type="date" name="taken_on"></div>
+    <div class="field wide"><label>What it shows <span class="muted small">(used by the AI diagnosis)</span></label>
+      <input name="finding" placeholder="e.g. angioid streaks radiating from the optic disc"></div>
+  </div>
+  <div class="actions"><button class="btn primary">{{ icon('upload') }}Upload</button></div>
+</form>
+{% endmacro %}
+
+{% macro gallery(images, MODALITIES, editable=false, user=none) %}
+<div class="img-grid">
+{% for img in images %}
+  <figure class="img-card">
+    <button type="button" class="img-thumb" data-full="/images/{{ img.id }}" data-caption="{{ img.finding or '' }}" title="Open full size">
+      <img src="/images/{{ img.id }}?thumb=1" alt="{{ img.finding or 'clinical image' }}" loading="lazy"></button>
+    <figcaption>
+      <div class="img-meta"><b>{{ dict(MODALITIES).get(img.modality, 'Image') }}</b>{% if img.body_site %} · {{ img.body_site }}{% endif %}
+        {% if img.source == 'patient' %}<span class="tag online">from patient</span>{% endif %}</div>
+      {% if img.finding %}<div class="small">{{ img.finding }}{% if img.finding_source == 'patient' %} <span class="muted">(patient's words)</span>{% endif %}</div>{% else %}<div class="small muted">No description yet</div>{% endif %}
+      {% if img.caption %}<div class="small muted">Auto caption: {{ img.caption }}</div>{% endif %}
+      <div class="small muted">{{ (img.taken_on | d) if img.taken_on else (img.created_at | d) }}{% if img.uploaded_by %} · {{ img.uploaded_by.display }}{% endif %} · {{ img.width }}×{{ img.height }}</div>
+      {% if editable %}
+      <details class="img-edit"><summary class="small">Edit</summary>
+        <form method="post" action="/images/{{ img.id }}/edit">
+          <select name="modality">{% for k, v in MODALITIES %}<option value="{{ k }}" {{ 'selected' if k == img.modality }}>{{ v }}</option>{% endfor %}</select>
+          <input name="body_site" value="{{ img.body_site }}" placeholder="Body site">
+          <input type="date" name="taken_on" value="{{ img.taken_on.isoformat() if img.taken_on else '' }}">
+          <textarea name="finding" rows="2" placeholder="What it shows">{{ img.finding }}</textarea>
+          <div class="actions"><button class="btn primary small">Save</button></div>
+        </form>
+        {% if user and (user.role in ('doctor', 'admin') or img.uploaded_by_id == user.id) %}
+        <form method="post" action="/images/{{ img.id }}/delete" onsubmit="return confirm('Remove this image from the record?')">
+          <button class="btn danger small">{{ icon('trash', 14) }}Remove</button></form>{% endif %}
+      </details>
+      {% endif %}
+    </figcaption>
+  </figure>
+{% endfor %}
+</div>
+{% endmacro %}
+
+{% macro strip(images) %}
+<div class="img-strip">
+{% for img in images %}
+  <button type="button" class="img-thumb" data-full="/images/{{ img.id }}" data-caption="{{ img.finding or '' }}" title="{{ img.finding or 'Open' }}">
+    <img src="/images/{{ img.id }}?thumb=1" alt="{{ img.finding or 'image' }}" loading="lazy"></button>
+{% endfor %}
+</div>
+{% endmacro %}
+
+{% macro lightbox() %}
+<dialog class="lightbox" id="lightbox"><form method="dialog"><button class="btn ghost icon-only lb-close" aria-label="Close">{{ icon('x') }}</button></form>
+  <img alt=""><div class="lb-caption small"></div><a class="small lb-open" target="_blank" rel="noopener">Open original</a></dialog>
+<script src="/static/images.js"></script>
+{% endmacro %}

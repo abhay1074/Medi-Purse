@@ -1,0 +1,33 @@
+{% extends "portal/base.html" %}
+{% from "_icons.html" import icon %}
+{% block title %}Your feedback{% endblock %}
+{% block content %}
+<div class="card" style="max-width:560px;margin:24px auto">
+{% if state == 'open' %}
+  <h1 style="margin-bottom:6px">How was your visit?</h1>
+  <div class="muted" style="margin-bottom:18px">{{ fr.patient.clinic.label }}{% if fr.doctor %} · {{ fr.doctor.display }}{% endif %}{% if fr.appointment %} · {{ fr.appointment.scheduled_at | dt('%d %b %Y') }}{% endif %}</div>
+  <form method="post">
+    <div class="stars" role="radiogroup" aria-label="Rating">
+      {% for n, label in [(1,'Very poor'),(2,'Poor'),(3,'Okay'),(4,'Good'),(5,'Excellent')] %}
+      <label class="star"><input type="radio" name="rating" value="{{ n }}" {{ 'checked' if rating == n }} required>
+        <span class="star-n">{{ n }}</span><span class="small">{{ label }}</span></label>
+      {% endfor %}
+    </div>
+    <div class="field" style="margin-top:16px"><label>Anything you'd like to tell us? <span class="muted small">(optional)</span></label>
+      <textarea name="comments" rows="4" maxlength="2000" placeholder="What went well, what could be better"></textarea></div>
+    <button class="btn primary block">Send feedback</button>
+  </form>
+  <div class="small muted" style="margin-top:12px">Your feedback goes to {{ fr.patient.clinic.name }}. For medical questions please call the clinic.</div>
+{% elif state == 'used' %}
+  <h1>{{ icon('check', 20) }} Thank you, {{ fr.patient.first_name }}</h1>
+  <p class="muted">Your feedback has been received. It helps us improve care for everyone.</p>
+  <a class="btn outline" href="/portal">Go to my patient account</a>
+{% elif state == 'expired' %}
+  <h1>This link has expired</h1>
+  <p class="muted">Feedback links work for 14 days. You can still tell the clinic in person or by phone{% if fr.patient.clinic.phone %} ({{ fr.patient.clinic.phone }}){% endif %}.</p>
+{% else %}
+  <h1>Link not found</h1>
+  <p class="muted">Please use the link from your email exactly as it was sent.</p>
+{% endif %}
+</div>
+{% endblock %}

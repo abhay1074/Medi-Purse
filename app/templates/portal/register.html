@@ -1,0 +1,31 @@
+{% extends "portal/base.html" %}
+{% block title %}Create account{% endblock %}
+{% block content %}
+<div class="narrow">
+  <h1>Create your patient account</h1>
+  <p class="muted">Already registered at the clinic desk? Use the same email and we'll send you a link to finish setting up.</p>
+  <form method="post" class="card">
+    <div class="field"><label>Clinic</label>
+      <select name="clinic_id" required><option value="">Choose your clinic…</option>
+      {% for c in clinics %}<option value="{{ c.id }}">{{ c.label }}</option>{% endfor %}</select></div>
+    <div class="row">
+      <div class="field"><label>First name</label><input name="first_name" required></div>
+      <div class="field"><label>Last name</label><input name="last_name"></div>
+    </div>
+    <div class="row">
+      <div class="field"><label>Date of birth</label><input type="date" name="dob"></div>
+      <div class="field"><label>Sex</label><select name="sex"><option value=""></option><option>Female</option><option>Male</option><option>Other</option></select></div>
+    </div>
+    <div class="row">
+      <div class="field"><label>Email</label><input type="email" name="email" required></div>
+      <div class="field"><label>Phone</label><input name="phone" required></div>
+    </div>
+    <div class="row">
+      <div class="field"><label>Password</label><input type="password" name="password" minlength="8" required placeholder="At least 8 characters"></div>
+      <div class="field"><label>Confirm password</label><input type="password" name="password2" minlength="8" required></div>
+    </div>
+    <button class="btn primary block">Create account</button>
+  </form>
+  <p class="muted">Have an account? <a href="/portal/login">Sign in</a></p>
+</div>
+{% endblock %}

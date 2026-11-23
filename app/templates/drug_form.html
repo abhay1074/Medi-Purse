@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block title %}Add medicine{% endblock %}
+{% block content %}
+<div class="crumbs"><a href="/inventory">Pharmacy stock</a> › Add medicine</div>
+<h1>Add a medicine to stock</h1>
+<form method="post" class="card" style="max-width:760px">
+  {% if user.role == 'admin' %}<div class="field"><label>Clinic</label><select name="clinic_id" required><option value="">Choose…</option>
+    {% for c in clinics %}<option value="{{ c.id }}">{{ c.name }}</option>{% endfor %}</select></div>{% endif %}
+  <div class="row">
+    <div class="field"><label>Medicine (generic name)</label><input name="name" required placeholder="e.g. Paracetamol" list="med-names" autofocus></div>
+    <div class="field"><label>Strength</label><input name="strength" placeholder="500 mg" list="strengths"></div>
+    <div class="field"><label>Form</label><select name="form">{% for f, u in FORMS %}<option value="{{ f }}">{{ f | capitalize }} (counted per {{ u }})</option>{% endfor %}</select></div>
+  </div>
+  <div class="row">
+    <div class="field"><label>Opening stock</label><input name="stock" type="number" min="0" value="0"></div>
+    <div class="field"><label>Reorder when at or below</label><input name="reorder_level" type="number" min="0" value="20"></div>
+    <div class="field"><label>Batch</label><input name="batch"></div>
+    <div class="field"><label>Expiry</label><input name="expiry" type="date"></div>
+    <div class="field"><label>Price per unit (Rs)</label><input name="price" type="number" min="0" step="0.01" value="0"></div>
+  </div>
+  <datalist id="med-names">{% for n in ['Paracetamol','Ibuprofen','Amoxicillin','Azithromycin','Cetirizine','Pantoprazole','Omeprazole','Ondansetron','Metformin','Amlodipine','Atorvastatin','Losartan','Montelukast','Salbutamol','Levothyroxine','Prednisolone','Doxycycline','Ciprofloxacin','Metronidazole','Diclofenac','Vitamin D3','Folic acid','Iron (ferrous sulfate)','Calcium carbonate','ORS'] %}<option>{{ n }}</option>{% endfor %}</datalist>
+  <datalist id="strengths">{% for s in ['250 mg','500 mg','650 mg','1 g','5 mg','10 mg','20 mg','40 mg','100 mcg','5 mg/5 ml','125 mg/5 ml'] %}<option>{{ s }}</option>{% endfor %}</datalist>
+  <div class="actions"><button class="btn primary">{{ icon('plus') }}Add medicine</button><a class="btn outline" href="/inventory">Cancel</a></div>
+</form>
+{% endblock %}

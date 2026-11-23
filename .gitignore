@@ -4,3 +4,12 @@ __pycache__/
 *.pyc
 *.db
 *.log
+
+# local email outbox (used when SMTP is not configured)
+outbox/
+
+.venv-kg/
+data/optimuskg/*.parquet
+
+# clinical images (patient data, never commit)
+uploads/

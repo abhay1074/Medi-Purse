@@ -1,0 +1,23 @@
+{# Symptom picker. Args: name, initial (list of {id,name}), groups (common_symptoms_grouped()),
+   plain (True for patients), placeholder, total (number of searchable terms).
+   Common symptoms are shown as tick boxes (open by default) so everyday cases take a few taps. #}
+{% from "_icons.html" import icon %}
+{% macro symptom_picker(name, initial, groups, plain=False, placeholder='', total=0, open_common=True) %}
+<div class="sp" data-name="{{ name }}" data-plain="{{ '1' if plain else '0' }}" data-initial='{{ initial | tojson | forceescape }}'>
+  <input type="hidden" name="{{ name }}">
+  <div class="sp-chips"></div>
+  <div class="sp-box">
+    <input class="sp-input" autocomplete="off" placeholder="{{ placeholder or ('Search ' ~ ('{:,}'.format(total) if total else '') ~ ' symptoms and signs') }}">
+    <div class="sp-results" hidden></div>
+  </div>
+  <details class="sp-common" {{ 'open' if open_common }}>
+    <summary>Common symptoms <span class="muted small">(tick all that apply)</span></summary>
+    <div class="sp-groups">
+    {% for g in groups %}
+    <div class="sp-group"><div class="sp-cat">{{ g.category }}</div>
+      <div class="ticks">{% for s in g['items'] %}<button type="button" class="tick" data-id="{{ s.id }}" data-name="{{ s.term }}" data-label="{{ s.label }}"><span class="tick-box">{{ icon('check', 12) }}</span>{{ s.label }}</button>{% endfor %}</div></div>
+    {% endfor %}
+    </div>
+  </details>
+</div>
+{% endmacro %}

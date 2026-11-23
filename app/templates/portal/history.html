@@ -1,0 +1,83 @@
+{% extends "portal/base.html" %}
+{% from "_icons.html" import icon %}
+{% from "_symptom_picker.html" import symptom_picker %}
+{% from "_images.html" import lightbox %}
+{% block title %}Tell us about your symptoms{% endblock %}
+{% block content %}
+<div class="crumbs"><a href="/portal">My appointments</a> › Symptom check-in</div>
+<div class="head">
+  <div><h1>Tell us about your symptoms</h1>
+  <div class="muted">{% if h.appointment %}For your visit on {{ h.appointment.scheduled_at | dt('%A %d %b, %I:%M %p') }}{% if h.appointment.doctor %} with {{ h.appointment.doctor.display }}{% endif %}.{% else %}Your answers go to your doctor.{% endif %}</div></div>
+</div>
+<div class="note small">This assistant collects information for your doctor. It does not give a diagnosis or medical advice.
+  In an emergency call <b>112</b> or go to the nearest emergency department.</div>
+
+<div class="chat" id="chat">
+  {% for m in messages %}
+  <div class="msg {{ m.role }}{{ ' urgent' if m.urgent }}">
+    {% if m.role == 'assistant' %}<span class="avatar bot">{{ icon('message', 14) }}</span>{% endif %}
+    <div class="bubble">{% if m.role == 'photo' and m.image_id %}<button type="button" class="img-thumb chat-photo" data-full="/images/{{ m.image_id }}" data-caption="{{ m.text }}"><img src="/images/{{ m.image_id }}?thumb=1" alt="photo"></button>{% endif %}{{ m.text }}<div class="time">{{ m.at }}</div></div>
+  </div>
+  {% endfor %}
+  <div id="end"></div>
+</div>
+
+{% if h.status == 'in_progress' %}
+<form method="post" class="chat-form card" id="reply">
+  {% if step and step.kind == 'choice' %}
+    <div class="quick">{% for o in step.options %}<button class="btn outline" name="text" value="{{ o }}">{{ o }}</button>{% endfor %}</div>
+    <div class="chat-input"><input name="text" placeholder="Or type your answer" autocomplete="off"><button class="btn primary" name="send" value="1">Send</button></div>
+  {% elif step and step.kind == 'symptoms' %}
+    {{ symptom_picker('symptoms', [], groups, plain=True, placeholder='Search symptoms, e.g. headache, cough, rash') }}
+    <div class="chat-input" style="margin-top:10px"><input name="text" placeholder="{{ 'Describe it in your own words' if step.key == 'complaint' else 'Anything else, or type none' }}" autocomplete="off" {{ 'autofocus' if step.key == 'complaint' }}>
+      <button class="btn primary">Send</button></div>
+  {% else %}
+    {% if quick %}<div class="quick">{% for o in quick %}<button class="btn outline" name="text" value="{{ o }}">{{ o }}</button>{% endfor %}</div>{% endif %}
+    <div class="chat-input"><input name="text" placeholder="Type your answer" autocomplete="off" autofocus required><button class="btn primary">Send</button></div>
+  {% endif %}
+  <div class="small muted" style="margin-top:8px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap">
+    <span>You can stop at any time; what you have said is saved.</span>
+    <button class="linklike" name="finish" value="1" formnovalidate>Finish and send to my doctor</button></div>
+</form>
+{% if n_photos < max_photos %}
+<details class="card photo-add" {{ 'open' if n_photos == 0 and step and step.key in ('details', 'complaint') }}>
+  <summary>{{ icon('camera') }} Add a photo for your doctor <span class="muted small">(optional: a rash, a swelling, a report)</span></summary>
+  <form method="post" action="/portal/history/{{ h.id }}/photos" enctype="multipart/form-data">
+    <label class="dropzone" data-dropzone>
+      <input type="file" name="files" accept="{{ ACCEPT }}" multiple required>
+      <span class="ic blue">{{ icon('camera', 18) }}</span>
+      <span><b>Take or choose a photo</b><br><span class="small muted">Up to {{ max_mb }} MB · location data is removed · only your clinic can see it</span></span>
+      <span class="dz-files small"></span>
+    </label>
+    <div class="img-upload-fields">
+      <div class="field"><label>What is it?</label><select name="modality">{% for k, v in MODALITIES %}<option value="{{ k }}">{{ v }}</option>{% endfor %}</select></div>
+      <div class="field wide"><label>What does it show?</label><input name="what" maxlength="300" placeholder="e.g. the rash on my left arm, 3 days ago"></div>
+    </div>
+    <div class="actions"><button class="btn outline">{{ icon('upload') }}Add photo</button></div>
+  </form>
+</details>
+{% endif %}
+<script src="/static/symptom-picker.js"></script>
+<script>
+  // a symptom-only answer is fine: allow sending with chips and no text
+  (function(){ var f = document.getElementById('reply'); if (!f) return;
+    f.addEventListener('submit', function(e){
+      var t = f.querySelector('.chat-input input[name=text]'), sp = f.querySelector('input[type=hidden][name=symptoms]');
+      var sub = e.submitter;
+      if (sub && (sub.name === 'finish' || (sub.name === 'text' && sub.value))) { if (t && sub.name === 'text') t.disabled = true; return; }
+      if (t && !t.value.trim() && !(sp && sp.value && sp.value !== '[]')) { e.preventDefault(); t.focus(); }
+    });
+    document.getElementById('end').scrollIntoView({block: 'end'});
+  })();
+</script>
+{% else %}
+<div class="card">
+  <div class="section-head" style="margin-top:0"><h3 style="margin:0">{{ icon('check') }} Sent to your doctor</h3><a class="btn outline small" href="/portal">Back to my appointments</a></div>
+  {% if summary and summary.sections %}
+  <dl class="info small">{% for k, v in summary.sections.items() %}<dt>{{ k }}</dt><dd>{{ v }}</dd>{% endfor %}</dl>
+  {% endif %}
+</div>
+<script>document.getElementById('end').scrollIntoView({block: 'end'});</script>
+{% endif %}
+{{ lightbox() }}
+{% endblock %}

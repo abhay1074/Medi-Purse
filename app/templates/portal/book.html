@@ -1,0 +1,55 @@
+{% extends "portal/base.html" %}
+{% from "_icons.html" import icon %}
+{% block title %}Book an appointment{% endblock %}
+{% block content %}
+<div class="crumbs"><a href="/portal">My appointments</a> › Book</div>
+<h1>Book an appointment</h1>
+<p class="muted">{{ patient.clinic.label }}. Choose a doctor, a day and a time.</p>
+
+{% if n_upcoming >= max_upcoming %}
+<div class="note">You already have {{ n_upcoming }} upcoming appointments, the most you can book online. Cancel one to book another, or call the clinic.</div>
+{% elif not doctors %}
+<div class="empty">Online booking is not available for this clinic yet. Please call {{ patient.clinic.phone or 'the clinic' }}.</div>
+{% else %}
+
+<div class="card">
+  <div class="step">1. Doctor</div>
+  <div class="choice-grid">
+  {% for d in doctors %}
+    <a class="choice {{ 'on' if doc and doc.id == d.id }}" href="?doctor_id={{ d.id }}">
+      <span class="avatar">{{ d.name[:1] }}</span><div><b>{{ d.display }}</b><div class="muted small">{{ d.specialty or patient.clinic.specialty }}</div></div></a>
+  {% endfor %}
+  </div>
+
+  {% if doc %}
+  <div class="step">2. Day</div>
+  <div class="days">
+  {% for x in days %}
+    <a class="day {{ 'on' if day == x }}" href="?doctor_id={{ doc.id }}&day={{ x.isoformat() }}">
+      <span>{{ x.strftime('%a') }}</span><b>{{ x.day }}</b><span>{{ x.strftime('%b') }}</span></a>
+  {% endfor %}
+  </div>
+
+  <div class="step">3. Time</div>
+  {% if day and slots %}
+  <form method="post">
+    <input type="hidden" name="doctor_id" value="{{ doc.id }}">
+    <div class="slots">
+    {% for t in slots %}
+      <label class="slot"><input type="radio" name="slot" value="{{ t.isoformat() }}" required {{ 'checked' if loop.first }}><span>{{ t.strftime('%I:%M %p') }}</span></label>
+    {% endfor %}
+    </div>
+    <div class="field" style="margin-top:16px"><label>Reason for visit (optional)</label>
+      <input name="reason" maxlength="300" placeholder="e.g. Follow-up, new symptoms"></div>
+    <button class="btn primary">{{ icon('check') }}Confirm booking for {{ day.strftime('%a %d %b') }}</button>
+    {% if patient.email and patient.email_reminders %}<span class="muted small" style="margin-left:8px">You'll get a confirmation and reminders at {{ patient.email }}.</span>{% endif %}
+  </form>
+  {% elif day %}
+  <div class="empty">No free times on {{ day | d }}. Please choose another day.</div>
+  {% else %}
+  <div class="empty">No free times in the next month. Please call the clinic.</div>
+  {% endif %}
+  {% endif %}
+</div>
+{% endif %}
+{% endblock %}

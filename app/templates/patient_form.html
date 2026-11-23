@@ -30,6 +30,7 @@
     <div class="field"><label>Emergency contact</label><input name="emergency_contact" placeholder="Name, relation, phone" value="{{ p.emergency_contact if p else '' }}"></div>
   </div>
   <div class="field"><label>Allergies</label><input name="allergies" placeholder="e.g. Penicillin" value="{{ p.allergies if p else '' }}"></div>
+  <div class="field"><label class="check"><input type="checkbox" name="email_reminders" value="1" {{ 'checked' if (not p or p.email_reminders) }}> Email appointment confirmations and reminders to the patient</label></div>
   <div class="actions"><button class="btn primary">{{ 'Save' if p else 'Register patient' }}</button>
   <a class="btn" href="{{ '/patients/' ~ p.id if p else '/patients' }}">Cancel</a></div>
 </form>

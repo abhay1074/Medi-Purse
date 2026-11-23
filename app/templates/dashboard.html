@@ -13,6 +13,34 @@
   </div>
 </div>
 
+{% if online %}
+<div class="card alert-card">
+  <div class="section-head" style="margin:0 0 8px"><h3 style="margin:0;display:flex;align-items:center;gap:8px"><span class="ic blue">{{ icon('bell') }}</span>New online bookings <span class="badge">{{ online | length }}</span></h3></div>
+  {% for a in online %}
+  <div class="rx-item">
+    <div><a href="/appointments/{{ a.id }}"><b>{{ a.patient.full_name }}</b></a> <span class="muted small">{{ a.patient.mrn }}</span>
+    <div class="muted small">{{ a.scheduled_at | dt('%a %d %b, %I:%M %p') }}{% if a.doctor %} · {{ a.doctor.display }}{% endif %}{% if a.reason %} · {{ a.reason }}{% endif %} · booked {{ a.created_at | dt('%d %b %I:%M %p') }}</div></div>
+    <form method="post" action="/appointments/{{ a.id }}/acknowledge" class="inline"><button class="btn outline small">{{ icon('check') }}Seen</button></form>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+{% if intakes %}
+<div class="card alert-card" style="border-left-color:var(--violet)">
+  <h3 style="margin:0 0 8px;display:flex;align-items:center;gap:8px"><span class="ic violet">{{ icon('message') }}</span>New patient histories <span class="badge">{{ intakes | length }}</span></h3>
+  {% for h in intakes %}{% set sm = h.summary_json | fromjson %}
+  <div class="rx-item">
+    <div><a href="/history/{{ h.id }}"><b>{{ h.patient.full_name }}</b></a> <span class="muted small">{{ h.patient.mrn }}</span>
+      {% if h.red_flags %}<span class="tag error">red flag: {{ h.red_flags }}</span>{% endif %}
+      <div class="muted small">{{ (sm.sections or {}).get('Main problem', '') }}{% if h.appointment %} · visit {{ h.appointment.scheduled_at | dt('%a %d %b, %I:%M %p') }}{% endif %} · sent {{ h.completed_at | dt('%d %b %I:%M %p') }}</div></div>
+    <a class="btn ai small" href="/patients/{{ h.patient_id }}/ai/new?history_id={{ h.id }}">{{ icon('sparkles') }}AI diagnose</a>
+    <form method="post" action="/history/{{ h.id }}/reviewed" class="inline"><button class="btn outline small">{{ icon('check') }}Reviewed</button></form>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
 {% macro stat(href, label, n, ic, color) %}
 <a class="stat" {% if href %}href="{{ href }}"{% endif %}><div class="stat-top"><span class="muted">{{ label }}</span><span class="ic {{ color }}">{{ icon(ic) }}</span></div><div class="n">{{ n }}</div></a>
 {% endmacro %}
@@ -39,7 +67,7 @@
     <td><a href="/patients/{{ a.patient.id }}">{{ a.patient.full_name }}</a> <span class="muted small">{{ a.patient.mrn }}</span></td>
     <td>{{ a.reason }}</td>
     <td>{{ a.doctor.display if a.doctor else '—' }}</td>
-    <td><span class="tag {{ a.status }}">{{ a.status }}</span></td>
+    <td><span class="tag {{ a.status }}">{{ a.status }}</span>{% if a.source == "online" %} <span class="tag online">online</span>{% endif %}</td>
     <td class="actions">
       <a class="btn small" href="/appointments/{{ a.id }}">Open</a>
       {% if user.role in ('doctor','admin') %}<a class="btn ai small" href="/patients/{{ a.patient.id }}/ai/new?appointment_id={{ a.id }}">AI diagnose</a>{% endif %}

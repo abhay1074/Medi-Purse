@@ -1,0 +1,85 @@
+{% extends "portal/base.html" %}
+{% from "_icons.html" import icon %}
+{% block title %}My appointments{% endblock %}
+{% block content %}
+<div class="head">
+  <div><h1>Hello, {{ patient.first_name }}</h1>
+  <div class="muted">{{ patient.clinic.label }}{% if patient.clinic.phone %} · {{ patient.clinic.phone }}{% endif %}</div></div>
+  <div class="actions"><a class="btn primary" href="/portal/book">{{ icon('calendar') }}Book an appointment</a></div>
+</div>
+
+{% for a in soon %}
+<div class="alert">
+  <span class="ic amber">{{ icon('bell') }}</span>
+  <div><b>Upcoming: {{ a.scheduled_at | dt('%A, %d %b at %I:%M %p') }}</b>
+  <div class="small">{{ a.doctor.display if a.doctor else patient.clinic.name }} · {{ patient.clinic.label }}. Please arrive 10 minutes early.</div></div>
+</div>
+{% endfor %}
+{% if not patient.email_reminders %}
+<div class="note">Email reminders are turned off. <a href="/portal/profile">Turn them on</a> to get a reminder before each visit.</div>
+{% endif %}
+
+<h2>Upcoming appointments</h2>
+{% if upcoming %}
+<div class="appt-list">
+{% for a in upcoming %}{% set hi = by_appt.get(a.id) %}
+  <div class="appt-card">
+    <div class="date-chip"><span>{{ a.scheduled_at.strftime('%b') }}</span><b>{{ a.scheduled_at.day }}</b></div>
+    <div class="grow">
+      <div><b>{{ a.scheduled_at | dt('%A, %I:%M %p') }}</b></div>
+      <div class="muted small">{{ a.doctor.display if a.doctor else 'Doctor to be assigned' }}{% if a.reason %} · {{ a.reason }}{% endif %}</div>
+      <div style="margin-top:6px">
+      {% if hi and hi.status == 'completed' %}<span class="tag completed">{{ icon('check', 12) }} Symptoms sent to your doctor</span>
+      {% elif hi %}<a class="btn outline small" href="/portal/history/{{ hi.id }}">{{ icon('message') }}Continue telling us about your symptoms</a>
+      {% else %}<form method="post" action="/portal/history/new" class="inline"><input type="hidden" name="appointment_id" value="{{ a.id }}">
+        <button class="btn ai small">{{ icon('message') }}Tell us about your symptoms</button></form>{% endif %}
+      </div>
+    </div>
+    {% if a.scheduled_at - now >= cutoff %}
+    <form method="post" action="/portal/appointments/{{ a.id }}/cancel" onsubmit="return confirm('Cancel this appointment?')">
+      <button class="btn destructive-outline small">Cancel</button></form>
+    {% else %}<span class="muted small">Call the clinic to change</span>{% endif %}
+  </div>
+{% endfor %}
+</div>
+{% else %}
+<div class="empty">No upcoming appointments. <a href="/portal/book">Book one</a>.</div>
+{% endif %}
+
+{% if rx %}
+<h2>Current medicines</h2>
+<div class="card">
+{% for r in rx %}
+  <div class="rx-item"><span class="ic violet">{{ icon('pill') }}</span><div><b>{{ r.medicine }}</b> {{ r.dosage }}
+    <div class="muted small">{{ r.frequency }}{% if r.duration %} · {{ r.duration }}{% endif %}{% if r.instructions %} · {{ r.instructions }}{% endif %}</div>
+    {% if r.dispense_status == 'pending' %}<div class="small" style="color:var(--primary);margin-top:2px">{{ 'Collect from the clinic pharmacy' if r.drug and r.drug.stock > 0 else 'Not available at the clinic: buy from another pharmacy' }}</div>
+    {% elif r.supply in ('outside', 'partial') %}<div class="small" style="color:var(--amber);margin-top:2px">{{ 'Buy from another pharmacy' if r.supply == 'outside' else 'The clinic gave ' ~ r.dispensed ~ '; buy the remaining ' ~ (r.quantity - r.dispensed) ~ ' from another pharmacy' }}</div>{% endif %}</div></div>
+{% endfor %}
+</div>
+{% endif %}
+
+<div class="card" style="display:flex;align-items:center;gap:14px;margin-top:16px">
+  <span class="ic violet">{{ icon('message') }}</span>
+  <div class="grow"><b>Not feeling well?</b><div class="small muted">Answer a few questions about your symptoms. Your doctor will see them, then you can book a visit.</div></div>
+  <form method="post" action="/portal/history/new"><button class="btn outline">Start a symptom check-in</button></form>
+</div>
+{% if intakes %}
+<h2>My symptom check-ins</h2>
+<div class="card">{% for h in intakes %}{% set sm = h.summary_json | fromjson %}
+  <div class="rx-item"><span class="ic {{ 'green' if h.status == 'completed' else 'blue' }}">{{ icon('message') }}</span>
+    <div><a href="/portal/history/{{ h.id }}">{{ (sm.sections or {}).get('Main problem') or 'Symptom check-in' }}</a>
+    <div class="muted small">{{ (h.completed_at or h.created_at) | dt }} · {{ 'sent to your doctor' if h.status == 'completed' else 'not finished' }}</div></div></div>
+{% endfor %}</div>
+{% endif %}
+
+<h2>Past appointments</h2>
+{% if past %}
+<div class="table-card"><table>
+  <tr><th>Date &amp; time</th><th>Doctor</th><th>Reason</th><th>Status</th></tr>
+  {% for a in past %}
+  <tr><td>{{ a.scheduled_at | dt }}</td><td>{{ a.doctor.display if a.doctor else '—' }}</td><td>{{ a.reason }}</td>
+  <td><span class="tag {{ a.status }}">{{ a.status }}</span></td></tr>
+  {% endfor %}
+</table></div>
+{% else %}<div class="empty">No past appointments.</div>{% endif %}
+{% endblock %}

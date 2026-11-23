@@ -142,6 +142,44 @@ class AIService:
     def llm_configured(self) -> bool:
         return bool(os.environ.get("DEEPSEEK_API_KEY"))
 
+    _avail_cache: tuple[float, bool, str] = (0.0, False, "")
+
+    def llm_available(self, force: bool = False) -> bool:
+        """Configured AND able to answer. For DeepSeek, the free /user/balance endpoint says
+        whether the account can be used; the answer is cached for 10 minutes."""
+        if not self.llm_configured:
+            AIService._avail_cache = (time.time(), False, "No API key configured.")
+            return False
+        t, ok, _ = AIService._avail_cache
+        if not force and time.time() - t < 600:
+            return ok
+        base = os.environ.get("DEEPSEEK_BASE_URL", "https://api.deepseek.com/v1")
+        ok, why = True, ""
+        if "deepseek.com" in base:
+            try:
+                import requests
+                r = requests.get(base.split("/v1")[0] + "/user/balance", timeout=10,
+                                 headers={"Authorization": f"Bearer {os.environ['DEEPSEEK_API_KEY']}"})
+                if r.status_code == 200:
+                    ok = bool(r.json().get("is_available"))
+                    why = "" if ok else "The DeepSeek account has no credit."
+                elif r.status_code in (401, 403):
+                    ok, why = False, "DeepSeek rejected the API key."
+            except Exception as exc:  # network trouble: assume usable, calls fall back on failure
+                why = f"Balance check failed: {exc}"
+        AIService._avail_cache = (time.time(), ok, why)
+        return ok
+
+    @property
+    def llm_unavailable_reason(self) -> str:
+        return AIService._avail_cache[2]
+
+    def mark_llm_failed(self, why: str) -> None:
+        AIService._avail_cache = (time.time(), False, why)
+
+    def llm(self) -> "DeepSeekLLM":
+        return self._llm()
+
     def _llm(self) -> DeepSeekLLM:
         return DeepSeekLLM(os.environ.get("DEEPSEEK_BASE_URL", "https://api.deepseek.com/v1"),
                            os.environ["DEEPSEEK_API_KEY"],
@@ -178,7 +216,8 @@ class AIService:
         return {"candidates": out, "catalog_size": ranked["catalog_size"]}
 
     # --- level 2: DeepSeek explanation (4 LLM calls) -----------------------
-    def explain(self, text: str, case_id: str = "case", progress=None) -> dict:
+    def explain(self, text: str, case_id: str = "case", progress=None,
+                images: list[dict] | None = None) -> dict:
         """Adapted from handoff/code/live_engine.py:analyze.
 
         Differences: skips the LLM-only baseline call, returns the evidence and
@@ -209,11 +248,15 @@ class AIService:
         row = SimpleNamespace(CaseID=case_id, Age=age.group(1) if age else "unknown",
                               Gender=gender.group(1) if gender else "unknown")
 
+        # images (app/images.py:pipeline_meta), at most 4 as in the handoff pipeline
+        from .images import image_findings
+        img_meta = list(images or [])[:4]
+
         # CALL 1: plan
         step("Extracting findings (1/4)")
         plan, _ = llm.json_chat(
             [{"role": "system", "content": g.PLAN_SYSTEM},
-             {"role": "user", "content": g.fmt_case_for_plan(row, text[:6000], [], audit)}],
+             {"role": "user", "content": g.fmt_case_for_plan(row, text[:6000], img_meta, audit)}],
             max_tokens=1400, required=["findings"], tag="plan")
         findings = []
         for f in ((plan or {}).get("findings") or [])[:16]:
@@ -228,6 +271,9 @@ class AIService:
             for s in g.split_sentences(text, min_len=10)[:10]:
                 findings.append({"id": f"C{len(findings)+1}", "text": s[:160],
                                  "type": "sign", "quote": s, "quote_verified": True})
+        for f in findings:
+            f.setdefault("source", "text")
+        findings += image_findings(img_meta, len(findings))
         checks = {}
         for ck in (plan or {}).get("checks", []) or []:
             nm = g.norm_text(str(ck.get("candidate", "")))
@@ -350,6 +396,7 @@ class AIService:
         return {
             "model": llm.model,
             "findings": findings,
+            "images": img_meta,
             "audit_ok": audit_ok,
             "diseases": per_disease,
             "order": [c["disease_id"] for c in sorted(cand, key=lambda c: c["retriever_rank"])],

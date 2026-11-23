@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block title %}Give medicines · {{ p.full_name }}{% endblock %}
+{% block content %}
+<div class="crumbs"><a href="/pharmacy">Dispensing</a> › {{ p.full_name }}</div>
+<div class="head">
+  <div><h1>{{ 'Give medicines' if pending else 'Medicines given' }}</h1>
+  <div class="muted">{{ p.full_name }} · {{ p.mrn }}{% if p.age is not none %} · {{ p.age }} yrs{% endif %}{% if p.sex %} · {{ p.sex }}{% endif %}
+    · prescribed by {{ lines[0].doctor.display if lines[0].doctor else 'the doctor' }} on {{ lines[0].prescribed_at | dt }}</div></div>
+</div>
+{% if p.allergies %}<div class="note danger"><b>Allergies:</b> {{ p.allergies }}</div>{% endif %}
+{% if lines[0].diagnosis %}<div class="small muted" style="margin-bottom:10px">For: {{ lines[0].diagnosis.condition }}</div>{% endif %}
+
+<form method="post" class="card">
+<div class="table-card" style="box-shadow:none"><table>
+<tr><th>Prescribed</th><th>Course</th><th>From clinic stock</th><th style="width:110px">Give</th><th>Result</th></tr>
+{% for r in lines %}
+<tr data-need="{{ r.quantity or 0 }}">
+  <td><b>{{ r.medicine }}</b><div class="small muted">{{ [r.dosage, r.frequency, r.duration] | select | join(' · ') }}</div>
+    {% if r.instructions %}<div class="small muted">{{ r.instructions }}</div>{% endif %}</td>
+  <td class="nowrap">{{ r.quantity or '—' }}{% if r.drug %} <span class="small muted">{{ r.drug.unit }}{{ 's' if r.quantity != 1 }}</span>{% endif %}</td>
+  {% if r.dispense_status == 'pending' %}
+  <td><select name="drug_{{ r.id }}" class="ds-drug">
+      <option value="" data-stock="0">Not from clinic stock (buy outside)</option>
+      {% for d in stock %}{% set u = usable(d) %}<option value="{{ d.id }}" data-stock="{{ u }}" {{ 'selected' if r.drug_id == d.id }} {{ 'disabled' if u <= 0 and r.drug_id != d.id }}>{{ d.label }} · {{ u }} available{% if d.expiry and d.expiry < today %} (expired){% endif %}</option>{% endfor %}
+    </select></td>
+  {% set u0 = usable(r.drug) if r.drug else 0 %}
+  <td><input type="number" min="0" name="give_{{ r.id }}" class="ds-give" value="{{ [u0, r.quantity or u0] | min }}"></td>
+  <td class="small ds-res"></td>
+  {% else %}
+  <td>{{ r.drug.label if r.drug else '—' }}</td><td>{{ r.dispensed }}</td>
+  <td class="small">{% if r.supply == 'clinic' %}<span style="color:var(--green)">Given</span>{% elif r.supply == 'partial' %}<span style="color:var(--amber)">Gave {{ r.dispensed }}; {{ r.quantity - r.dispensed }} to buy outside</span>{% else %}<span style="color:var(--amber)">Buy from another pharmacy</span>{% endif %}
+    {% if r.dispensed_by %}<div class="muted">{{ r.dispensed_by.display }}, {{ r.dispensed_at | dt('%d %b %I:%M %p') }}</div>{% endif %}</td>
+  {% endif %}
+</tr>
+{% endfor %}
+</table></div>
+{% if pending %}
+<div class="actions" style="margin-top:16px">
+  <button class="btn primary">{{ icon('check') }}Give medicines and update stock</button>
+  <button class="btn outline" name="all_outside" value="1" onclick="return confirm('Mark every medicine as bought from another pharmacy? Nothing will be taken from stock.')">Patient will buy all outside</button>
+  <a class="btn ghost" href="/pharmacy">Back</a>
+</div>
+<div class="small muted" style="margin-top:10px">Anything you don't give is marked "buy from another pharmacy" for the patient. The patient is emailed what they received.</div>
+{% endif %}
+</form>
+<script>
+(function () {
+  document.querySelectorAll('tr[data-need]').forEach(function (tr) {
+    var sel = tr.querySelector('.ds-drug'), give = tr.querySelector('.ds-give'), res = tr.querySelector('.ds-res');
+    if (!sel) return;
+    var need = +tr.dataset.need;
+    function upd(resetGive) {
+      var st = +(sel.selectedOptions[0] ? sel.selectedOptions[0].dataset.stock : 0);
+      give.max = st;
+      if (resetGive) give.value = sel.value ? Math.min(st, need || st) : 0;
+      give.disabled = !sel.value;
+      var g = Math.min(+give.value || 0, st);
+      if (!sel.value || g <= 0) { res.innerHTML = '<span style="color:var(--amber)">Buy from another pharmacy</span>'; }
+      else if (need && g < need) { res.innerHTML = '<span style="color:var(--amber)">Give ' + g + ', ' + (need - g) + ' to buy outside</span>'; }
+      else { res.innerHTML = '<span style="color:var(--green)">Give ' + g + '</span>'; }
+    }
+    sel.addEventListener('change', function () { upd(true); });
+    give.addEventListener('input', function () { upd(false); });
+    upd(false);
+  });
+})();
+</script>
+{% endblock %}

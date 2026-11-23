@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block title %}Pharmacy stock{% endblock %}
+{% block content %}
+<div class="head">
+  <div><h1>Pharmacy stock</h1>
+  <div class="muted">Medicines held by {{ user.clinic.name if user.clinic else 'each clinic' }}. Stock goes down when the pharmacy gives prescribed medicines or sells over the counter.</div></div>
+  {% if can_edit %}<div class="actions"><a class="btn primary" href="/inventory/new">{{ icon('plus') }}Add medicine</a></div>{% endif %}
+</div>
+
+<div class="inv-stats">
+  {% for key, label, color, ic in [('', 'In stock list', 'blue', 'pill'), ('low', 'Running low', 'amber', 'bell'), ('out', 'Out of stock', 'red', 'x'), ('expiring', 'Expiring in 60 days', 'violet', 'clock')] %}
+  <a class="stat {{ 'on' if level == key }}" href="?level={{ key }}{% if clinic_id and user.role == 'admin' %}&clinic_id={{ clinic_id }}{% endif %}">
+    <div class="stat-top"><span class="muted">{{ label }}</span><span class="ic {{ color }}">{{ icon(ic) }}</span></div>
+    <div class="n">{{ counts[key or 'all'] }}</div></a>
+  {% endfor %}
+</div>
+
+<form method="get" class="filters">
+  <div class="field grow"><label>Search</label><input name="q" value="{{ q }}" placeholder="Medicine name or batch"></div>
+  {% if user.role == 'admin' %}<div class="field"><label>Clinic</label><select name="clinic_id" onchange="this.form.submit()"><option value="">All clinics</option>
+    {% for c in clinics %}<option value="{{ c.id }}" {{ 'selected' if clinic_id == c.id }}>{{ c.name }}</option>{% endfor %}</select></div>{% endif %}
+  <input type="hidden" name="level" value="{{ level }}">
+  <div class="field"><label>&nbsp;</label><button class="btn outline">{{ icon('search') }}Search</button></div>
+</form>
+
+{% if drugs %}
+<div class="table-card"><table>
+<tr><th>Medicine</th><th>Stock</th><th>Price</th><th>Reorder at</th><th>Batch</th><th>Expiry</th>{% if user.role == 'admin' %}<th>Clinic</th>{% endif %}<th></th></tr>
+{% for d in drugs %}
+<tr>
+  <td><a href="/inventory/{{ d.id }}"><b>{{ d.name }}</b></a> <span class="muted">{{ d.strength }}</span><div class="small muted">{{ d.form }}</div></td>
+  <td class="nowrap"><span class="stock {{ d.level }}">{{ d.stock }}</span> <span class="small muted">{{ d.unit }}{{ 's' if d.stock != 1 }}</span>
+    {% if d.level == 'out' %}<span class="tag error">out of stock</span>{% elif d.level == 'low' %}<span class="tag uncertain">low</span>{% endif %}</td>
+  <td class="nowrap">{{ ('Rs %.2f' | format(d.price)) if d.price else '—' }}</td>
+  <td>{{ d.reorder_level }}</td>
+  <td>{{ d.batch or '—' }}</td>
+  <td class="nowrap">{% if d.expiry %}{% if d.expiry < today %}<span class="tag error">expired {{ d.expiry | d }}</span>{% elif d.expiry <= soon %}<span class="tag uncertain">{{ d.expiry | d }}</span>{% else %}{{ d.expiry | d }}{% endif %}{% else %}—{% endif %}</td>
+  {% if user.role == 'admin' %}<td>{{ d.clinic.name }}</td>{% endif %}
+  <td class="nowrap">{% if can_edit %}
+    <form method="post" action="/inventory/{{ d.id }}/receive" class="inline inv-quick">
+      <input name="quantity" type="number" min="1" placeholder="+ qty" aria-label="Units received">
+      <button class="btn outline small">{{ icon('plus', 14) }}Receive</button></form>{% endif %}
+    <a class="btn ghost small" href="/inventory/{{ d.id }}">Open</a></td>
+</tr>
+{% endfor %}
+</table></div>
+{% else %}
+<div class="empty">No medicines match.{% if can_edit %} <a href="/inventory/new">Add one</a>.{% endif %}</div>
+{% endif %}
+{% endblock %}

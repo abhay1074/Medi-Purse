@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block title %}Counter sales{% endblock %}
+{% block content %}
+<div class="head">
+  <div><h1>Counter sales</h1>
+  <div class="muted">Medicines sold over the counter on {{ day | d }}.</div></div>
+  <div class="actions"><a class="btn primary" href="/pharmacy/sales/new">{{ icon('plus') }}New sale</a></div>
+</div>
+<form method="get" class="filters">
+  <div class="field"><label>Day</label><input type="date" name="day" value="{{ day.isoformat() }}" onchange="this.form.submit()"></div>
+</form>
+<div class="ph-stats">
+  <div class="ph-stat"><span class="muted small">Total</span><b>Rs {{ '{:,.2f}'.format(total) }}</b><span class="small muted">{{ rows | length }} sale{{ 's' if rows | length != 1 }}</span></div>
+  {% for k, v in by_pay.items() %}<div class="ph-stat"><span class="muted small">{{ PAYMENTS.get(k, k) }}</span><b>Rs {{ '{:,.2f}'.format(v) }}</b></div>{% endfor %}
+</div>
+{% if rows %}
+<div class="table-card"><table><tr><th>#</th><th>Time</th><th>Customer</th><th>Medicines</th><th>Payment</th><th style="text-align:right">Amount</th><th></th></tr>
+{% for s in rows %}
+<tr><td>{{ s.id }}</td><td class="nowrap">{{ s.created_at | dt('%I:%M %p') }}</td>
+<td>{{ s.customer_name or 'Walk-in' }}{% if s.patient %} <span class="small muted">{{ s.patient.mrn }}</span>{% endif %}{% if s.prescribed_by %}<div class="small muted">Rx: {{ s.prescribed_by }}</div>{% endif %}</td>
+<td>{% for it in s.items %}<div class="small">{{ it.name }} × {{ it.quantity }}</div>{% endfor %}</td>
+<td>{{ PAYMENTS.get(s.payment, s.payment) }}</td><td style="text-align:right" class="nowrap"><b>Rs {{ '{:,.2f}'.format(s.total) }}</b></td>
+<td><a class="btn ghost small" href="/pharmacy/sales/{{ s.id }}">Receipt</a></td></tr>
+{% endfor %}</table></div>
+{% else %}<div class="empty">No sales on this day.</div>{% endif %}
+{% endblock %}

@@ -16,6 +16,7 @@ DEMO_ACCOUNTS = [
     ("dr.mehta@medipurse.test", "Doctor, Genetics Clinic"),
     ("dr.rao@medipurse.test", "Doctor, Neurology Clinic"),
     ("reception@medipurse.test", "Receptionist, Genetics Clinic"),
+    ("pharmacy@medipurse.test", "Pharmacist, Genetics Clinic"),
 ]
 
 
@@ -153,6 +154,67 @@ def seed_prescriptions_if_empty() -> None:
                                 instructions=instr, prescribed_at=when,
                                 status="stopped" if when < now - timedelta(days=20) else "active",
                                 stopped_on=(when + timedelta(days=28)).date() if when < now - timedelta(days=20) else None))
+        db.commit()
+    finally:
+        db.close()
+
+
+DEMO_PATIENT_EMAIL = "sunita.verma@example.test"
+
+
+def seed_portal_demo() -> None:
+    """Give one demo patient an email and a portal password (local testing only)."""
+    db = SessionLocal()
+    try:
+        p = db.query(Patient).filter(Patient.first_name == "Sunita", Patient.last_name == "Verma").first()
+        if p and not p.password_hash and not p.email:
+            p.email = DEMO_PATIENT_EMAIL
+            p.password_hash = hash_password(DEMO_PASSWORD)
+            db.commit()
+    finally:
+        db.close()
+
+
+def seed_inventory_if_empty() -> None:
+    """Demo pharmacy stock for every clinic (some low, out of stock or expiring, to show alerts)."""
+    from .db import Drug, StockMove
+    from .pharmacy import COMMON_MEDS, FORM_UNIT
+    db = SessionLocal()
+    try:
+        if db.query(Drug).count():
+            return
+        special = {"Montelukast": 0, "Salbutamol": 3, "Azithromycin": 12, "Vitamin D3": 8}
+        for c in db.query(Clinic).all():
+            for i, (name, strength, form, *_rest) in enumerate(COMMON_MEDS):
+                stock = special.get(name, 60 + (i * 37) % 240)
+                if form not in ("tablet", "capsule", "sachet"):
+                    stock = special.get(name, 6 + i % 10)
+                expiry = date.today() + timedelta(days=40 if name == "Cetirizine" else 400 + i * 15)
+                d = Drug(clinic_id=c.id, name=name, strength=strength, form=form, unit=FORM_UNIT.get(form, "unit"),
+                         stock=stock, reorder_level=5 if form not in ("tablet", "capsule", "sachet") else 30,
+                         batch=f"B{2400 + i}", expiry=expiry)
+                db.add(d)
+                db.flush()
+                db.add(StockMove(drug_id=d.id, change=stock, balance=stock, reason="added", note="Opening stock"))
+        db.commit()
+    finally:
+        db.close()
+
+
+def seed_pharmacy_extras() -> None:
+    """Demo pharmacist (Genetics Clinic) and unit prices; safe to run on older databases."""
+    from .db import Drug
+    from .pharmacy import PRICES
+    db = SessionLocal()
+    try:
+        if not db.query(User).filter(User.email == "pharmacy@medipurse.test").first():
+            gen = db.query(Clinic).filter(Clinic.name == "Genetics Clinic").first()
+            if gen:
+                db.add(User(name="Rahul Desai", email="pharmacy@medipurse.test", role="pharmacist",
+                            clinic_id=gen.id, password_hash=hash_password(DEMO_PASSWORD)))
+        for d in db.query(Drug).filter((Drug.price == None) | (Drug.price == 0)).all():  # noqa: E711
+            if d.name in PRICES:
+                d.price = PRICES[d.name]
         db.commit()
     finally:
         db.close()

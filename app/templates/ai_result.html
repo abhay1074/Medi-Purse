@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% from "_icons.html" import icon %}
+{% from "_images.html" import strip, lightbox %}
 {% block title %}AI analysis · {{ p.full_name }}{% endblock %}
 {% block content %}
 <div class="crumbs"><a href="/patients">Patients</a> › <a href="/patients/{{ p.id }}?tab=ai">{{ p.full_name }}</a> › AI analysis</div>
@@ -13,13 +14,19 @@
 
 <h3>Case description</h3>
 <div class="casebox">{{ an.case_text }}</div>
+{% if picked or intake %}<div class="small muted" style="margin-top:8px">
+  {% if intake %}From the patient's history (<a href="/history/{{ intake.id }}">view</a>).{% endif %}
+  {% if picked %}Symptoms added: {% for s in picked %}<span class="chip" title="{{ s.id }}">{{ s.name }}</span> {% endfor %}{% endif %}</div>{% endif %}
+{% if images %}<div class="small muted" style="margin:10px 0 4px">Images used ({{ images | length }})</div>{{ strip(images) }}{% endif %}
 
 {# ---------------- explanation status ---------------- #}
 <div class="card" style="margin-top:16px">
 {% if an.explain_status == 'none' %}
   <div class="head" style="margin:0"><div><b>AI explanation</b>
     <div class="muted small">Extracts the key findings, checks each suggestion against the evidence and explains the reasoning. Takes about a minute.</div></div>
-  <form method="post" action="/ai/{{ an.id }}/explain"><button class="btn ai" {{ 'disabled' if not llm_on }}>{{ icon('sparkles') }}Explain with AI</button></form></div>
+  <form method="post" action="/ai/{{ an.id }}/explain"><button class="btn ai" {{ 'disabled' if not llm_ok }}>{{ icon('sparkles') }}Explain with AI</button></form></div>
+  {% if not llm_ok %}<div class="small muted" style="margin-top:8px">AI explanations are temporarily unavailable. The suggestions and evidence below are still available.
+    {% if user.role == 'admin' and llm_reason %}<span style="color:var(--red)">({{ llm_reason }})</span>{% endif %}</div>{% endif %}
 {% elif an.explain_status == 'running' %}
   <span class="spinner"></span> <b>Generating explanation…</b> <span class="muted" id="stage">{{ an.explain_stage }}</span>
   <script>
@@ -34,18 +41,62 @@
 {% elif explain %}
   <b>Key findings extracted by AI</b>
   <ul class="ev">{% for f in explain.findings %}
-    <li><span class="cite">{{ f.id }}</span> {{ f.text }} <span class="muted small">({{ f.type }}{% if not f.quote_verified %}, quote not found in case text{% endif %})</span></li>
+    <li>{% if f.source == 'image' and f.db_id %}<button type="button" class="img-thumb ev-thumb" data-full="/images/{{ f.db_id }}" data-caption="{{ f.text }}"><img src="/images/{{ f.db_id }}?thumb=1" alt=""></button>{% endif %}<span class="cite">{{ f.id }}</span> {{ f.text }} <span class="muted small">({{ f.type }}{% if f.source == 'image' %}, from an image{% elif not f.quote_verified %}, quote not found in case text{% endif %})</span></li>
   {% endfor %}</ul>
 {% endif %}
 </div>
 
+{# ---------------- realist agent ---------------- #}
+{% macro common_list(items, start_open) %}
+{% for c in items %}
+<details class="cand common" {{ 'open' if start_open and loop.first }}>
+  <summary>
+    <span class="rank">C{{ loop.index }}</span>
+    <span class="name">{{ c.name }}{% if c.name.lower() in saved_names %} <span class="tag completed">in record</span>{% endif %}</span>
+    <span class="tag online">common</span>
+  </summary>
+  <div class="body">
+    {% if c.why %}<div><b>Why:</b> {{ c.why }}</div>{% endif %}
+    {% if c.next %}<div style="margin-top:4px"><b>First step:</b> {{ c.next }}</div>{% endif %}
+    <div class="actions" style="margin-top:12px">
+      {% if c.name.lower() in saved_names %}<span class="muted small">Already in the patient's record.</span>
+      {% else %}<a class="btn primary small" href="/patients/{{ p.id }}/diagnoses/new?condition={{ c.name | urlencode }}&analysis_id={{ an.id }}">Add to patient's diagnoses</a>{% endif %}
+    </div>
+  </div>
+</details>
+{% endfor %}
+{% endmacro %}
+
+{% if real %}
+<div class="realist {{ real.verdict }}">
+  <div class="realist-head"><span class="ic {{ 'amber' if real.verdict == 'common_first' else ('blue' if real.verdict == 'both' else 'green') }}">{{ icon('activity') }}</span>
+    <div class="grow"><b>Realist check:
+      {% if real.verdict == 'common_first' %}start with common causes{% elif real.verdict == 'both' %}rule out common causes too{% else %}rare-disease workup is reasonable{% endif %}</b>
+      <div class="small">{{ real.reason }}</div></div>
+    {% if an.realist_status == 'running' %}<span class="small muted" id="realist-wait"><span class="spinner"></span> AI review…</span>
+    {% elif real.source == 'ai' %}<span class="tag">AI reviewed</span>{% endif %}
+  </div>
+  {% if real.signals %}<div class="small muted" style="margin-top:6px">{{ real.signals | join(' · ') }}</div>{% endif %}
+</div>
+{% if an.realist_status == 'running' %}
+<script>(function poll(){ setTimeout(function(){ fetch('/ai/{{ an.id }}/status').then(r=>r.json()).then(function(s){
+  if (s.realist !== 'running') location.reload(); else poll(); }).catch(poll); }, 2500); })();</script>
+{% endif %}
+{% endif %}
+
 {# ---------------- candidates ---------------- #}
 <h2>Suggested conditions</h2>
+{% if real and real.verdict == 'common_first' and real.common %}
+<p class="muted small">Common causes first, then rare diseases for reference. Click a condition to see more.</p>
+{{ common_list(real.common, true) }}
+<h3 style="margin-top:20px">Rare diseases <span class="muted small" style="font-weight:400">· for reference, out of {{ ranking.catalog_size }}</span></h3>
+{% else %}
 <p class="muted small">Most likely first, out of {{ ranking.catalog_size }} rare diseases. Click a condition to see the evidence.</p>
+{% endif %}
 {% set fmap = {} %}{% if explain %}{% for f in explain.findings %}{% set _ = fmap.update({f.id: f.text}) %}{% endfor %}{% endif %}
 {% for c in ranking.candidates %}
 {% set x = explain.diseases[c.disease_id] if explain and c.disease_id in explain.diseases else none %}
-<details class="cand" {{ 'open' if loop.first }}>
+<details class="cand" {{ 'open' if loop.first and not (real and real.verdict == 'common_first' and real.common) }}>
   <summary>
     <span class="rank">{{ c.rank }}</span>
     <span class="name">{{ c.name }}{% if c.disease_id in saved %} <span class="tag completed">in record</span>{% endif %}</span>
@@ -95,4 +146,9 @@
   </div>
 </details>
 {% endfor %}
+{% if real and real.verdict != 'common_first' and real.common %}
+<h3 style="margin-top:20px">{{ 'Common causes to rule out' if real.verdict == 'both' else 'Common conditions to keep in mind' }}</h3>
+{{ common_list(real.common, false) }}
+{% endif %}
+{{ lightbox() }}
 {% endblock %}
