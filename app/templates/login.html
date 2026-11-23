@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Sign in{% endblock %}
+{% block public %}
+<div class="login">
+  <h1 style="font-size:26px">MediPurse</h1>
+  <p class="muted">Hospital management with AI diagnosis support</p>
+  {% for kind, msg in flashes %}<div class="flash {{ kind }}">{{ msg }}</div>{% endfor %}
+  <form method="post" class="card">
+    <div class="field"><label>Email</label><input name="email" type="email" required autofocus></div>
+    <div class="field"><label>Password</label><input name="password" type="password" required></div>
+    <button class="btn primary" style="width:100%;justify-content:center">Sign in</button>
+  </form>
+  {% if demo %}
+  <div class="card small">
+    <b>Demo accounts</b> <span class="muted">(local testing only; the password is in app/seed.py)</span>
+    <table>{% for email, role in demo %}<tr><td>{{ email }}</td><td class="muted">{{ role }}</td></tr>{% endfor %}</table>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

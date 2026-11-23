@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Appointment{% endblock %}
+{% block content %}
+{% set p = a.patient %}
+<div class="muted small"><a href="/appointments">Appointments</a> › <a href="/patients/{{ p.id }}">{{ p.full_name }}</a> ›</div>
+<div class="head">
+  <div><h1>{{ a.scheduled_at | dt }}</h1>
+  <div class="muted"><a href="/patients/{{ p.id }}">{{ p.full_name }}</a> ({{ p.mrn }}) · {{ a.doctor.display if a.doctor else 'No doctor assigned' }} · <span class="tag {{ a.status }}">{{ a.status }}</span></div></div>
+  <div class="actions">
+    {% if user.role in ('doctor','admin') %}
+    <a class="btn primary" href="/patients/{{ p.id }}/ai/new?appointment_id={{ a.id }}">AI diagnosis</a>
+    <a class="btn" href="/patients/{{ p.id }}/diagnoses/new?appointment_id={{ a.id }}">Add diagnosis</a>{% endif %}
+    {% if a.status == 'completed' %}<a class="btn" href="/patients/{{ p.id }}/feedback/new?appointment_id={{ a.id }}">Record feedback</a>{% endif %}
+  </div>
+</div>
+
+{% if a.status == 'scheduled' %}
+<div class="actions" style="margin-bottom:16px">
+  {% for s, label in [('completed','Mark completed'), ('no-show','Mark no-show'), ('cancelled','Cancel appointment')] %}
+  <form method="post" class="inline"><input type="hidden" name="status" value="{{ s }}"><button class="btn {{ 'danger' if s == 'cancelled' }}">{{ label }}</button></form>
+  {% endfor %}
+</div>
+{% endif %}
+
+<form method="post" class="stack card">
+  <h3 style="margin-top:0">Details</h3>
+  <div class="row">
+    <div class="field"><label>Date &amp; time</label><input type="datetime-local" name="scheduled_at" value="{{ a.scheduled_at.strftime('%Y-%m-%dT%H:%M') }}"></div>
+    <div class="field"><label>Doctor</label><select name="doctor_id"><option value="">—</option>
+      {% for d in doctors %}<option value="{{ d.id }}" {{ 'selected' if a.doctor_id == d.id }}>{{ d.display }}</option>{% endfor %}</select></div>
+  </div>
+  <div class="field"><label>Reason for visit</label><input name="reason" value="{{ a.reason }}"></div>
+  <div class="field"><label>Consultation notes</label><textarea name="notes" placeholder="Examination findings, plan…">{{ a.notes }}</textarea></div>
+  <div class="field"><label>Status</label><select name="status">{% for s in statuses %}<option {{ 'selected' if a.status == s }}>{{ s }}</option>{% endfor %}</select></div>
+  <button class="btn primary">Save</button>
+</form>
+{% endblock %}

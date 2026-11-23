@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}{{ c.name }}{% endblock %}
+{% block content %}
+{% if user.role == 'admin' %}<div class="muted small"><a href="/clinics">Clinics</a> ›</div>{% endif %}
+<div class="head"><div><h1>{{ c.name }}</h1>
+<div class="muted">{% if c.hospital %}{% if user.role == 'admin' %}<a href="/hospitals/{{ c.hospital.id }}">{{ c.hospital.name }}</a>{% else %}{{ c.hospital.name }}{% endif %}{% else %}Independent clinic{% endif %}{% if c.specialty %} · {{ c.specialty }}{% endif %}</div></div>
+{% if user.role == 'admin' %}<div class="actions"><a class="btn primary" href="/staff/new?clinic_id={{ c.id }}">Add staff</a>
+<a class="btn" href="/clinics/{{ c.id }}/edit">Edit</a></div>{% endif %}</div>
+<div class="card"><dl class="info">
+  <dt>Location</dt><dd>{{ c.address or '—' }}</dd>
+  <dt>Phone</dt><dd>{{ c.phone or '—' }}</dd>
+  <dt>Patients</dt><dd><a href="/patients">{{ n_patients }}</a></dd>
+</dl></div>
+<h2>Staff</h2>
+{% if c.staff %}
+<table><tr><th>Name</th><th>Role</th><th>Specialty</th><th>Email</th></tr>
+{% for s in c.staff %}<tr><td>{{ s.display }}</td><td>{{ s.role_label }}</td><td>{{ s.specialty }}</td><td>{{ s.email }}</td></tr>{% endfor %}
+</table>
+{% else %}<div class="empty">No staff in this clinic yet.</div>{% endif %}
+{% endblock %}

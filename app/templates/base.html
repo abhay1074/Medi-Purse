@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}MediPurse{% endblock %} · MediPurse</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+{% if user %}
+<header class="topbar">
+  <a class="brand" href="/">MediPurse</a>
+  <form class="search" action="/patients" method="get">
+    <input name="q" placeholder="Search patients by name, phone or ID (P-000001)" value="{{ q or '' }}">
+  </form>
+  <div class="me">
+    <div>{{ user.display }}</div>
+    <div class="muted small">{{ user.role_label }}{% if user.clinic %} · {{ user.clinic.name }}{% endif %}</div>
+  </div>
+  <a href="/logout" class="btn small">Sign out</a>
+</header>
+<div class="shell">
+  <nav class="sidebar">
+    {% macro nav(href, label) %}<a href="{{ href }}" class="{{ 'on' if (path == href or (href != '/' and path.startswith(href))) }}">{{ label }}</a>{% endmacro %}
+    {{ nav('/', 'Dashboard') }}
+    {{ nav('/patients', 'Patients') }}
+    {{ nav('/appointments', 'Appointments') }}
+    {% if user.role in ('doctor', 'admin') %}{{ nav('/ai', 'AI Diagnosis') }}{% endif %}
+    {{ nav('/feedback', 'Feedback') }}
+    {% if user.role == 'admin' %}
+      <div class="sep"></div>
+      <div class="label">Registry</div>
+      {{ nav('/hospitals', 'Hospitals') }}
+      {{ nav('/clinics', 'Clinics') }}
+      {{ nav('/staff', 'Staff accounts') }}
+    {% elif user.clinic %}
+      <div class="sep"></div>
+      {{ nav('/clinics/' ~ user.clinic.id, 'My clinic') }}
+    {% endif %}
+  </nav>
+  <main>
+    {% for kind, msg in flashes %}<div class="flash {{ kind }}">{{ msg }}</div>{% endfor %}
+    {% block content %}{% endblock %}
+  </main>
+</div>
+{% else %}
+  {% block public %}{% endblock %}
+{% endif %}
+</body>
+</html>
