@@ -22,7 +22,7 @@ Updated 2026-11-24. This report has two halves:
 | Optional "Explain with AI" (4 DeepSeek calls) | **≈17 s**, ≈8.8k tokens in + 3.8k out per case, **97%** of claims pass the citation checks |
 | AI cost | ≈**₹1 per explanation**; the background AI review is ≈₹0.003 per analysis |
 | Rare-disease ranking on real held-out case reports (300) | MRR@10 **0.71**, Recall@10 **0.90** (optimistic: ~69% come from the training articles) |
-| Rare-disease ranking on the official test split (10,702, Aarav) | MRR **0.496**, Recall@10 **0.685**: the realistic estimate |
+| Rare-disease ranking on the official test split (10,702) | MRR **0.496**, Recall@10 **0.685**: the realistic estimate |
 | **All 92 synthetic cases, as shown on the page** | **MRR@10 0.832**, Recall@10 **0.924** (old rules: 0.518 / 0.565) |
 | Everyday cases correctly sent "common first" / rare cases wrongly sent | **87%** / **9%** (old rules: 13% / 7%) |
 
@@ -159,7 +159,7 @@ Metrics:
 | `synthetic_rare.json` (v2) | 46 | 40 case-report narratives over 40 rare diseases, plus 6 one-line notes |
 | `synthetic_common.json` (v2) | 46 | 40 case-report narratives over 40 everyday conditions, plus 6 short notes |
 | Real held-out | 300 | ZebraMap case reports from articles **not** used to fit the router, one per article |
-| Official test split (Aarav) | 10,702 | real case reports, article-disjoint split, seed 42 |
+| Official test split | 10,702 | real case reports, article-disjoint split, seed 42 |
 
 **How the synthetic cases were written (v2).** ZebraMap notes are single-paragraph case reports:
 - median 275 words, middle half 131–506;
@@ -235,7 +235,7 @@ routing: the router sends half as many real rare cases to "common first" as the 
 | Always rare first | 0.957 | 0.000 | 0.478 | 0.500 |
 | Perfect routing | 0.957 | 0.833 | 0.895 | 0.989 |
 
-## B4. Baseline: shipped ranking on the official test split (Aarav)
+## B4. Baseline: shipped ranking on the official test split
 
 | System | MRR | Top-1 | Top-5 | Top-10 | R@100 |
 |---|---:|---:|---:|---:|---:|
@@ -327,15 +327,15 @@ The v1 results are kept for reference:
 |---|---|---|
 | ZebraMap (Diagnostics 2025, doi 10.3390/diagnostics16010107, [Zenodo 17623607](https://zenodo.org/records/17623607), CC BY 4.0) | real case reports for routing checks; treatments for medicine suggestions | `scripts/zebramap_fetch.py` reads the 12.6 GB zip remotely with HTTP range requests and downloads only `ZebraMap.json` (73 MB) and `structured_cases.json` (16 MB) with 16–32 parallel connections: about 1 minute, no images. Files go to `data/zebramap/` (not in git). |
 | OptimusKG (Harvard Dataverse doi:10.7910/DVN/IYNGEV) | phenotype list; drug lexicon; indications and contraindications | `drug.parquet`, `drug_disease.parquet`, phenotype tables, in `data/optimuskg/` (not in git) |
-| Fusion v4 SHAP-8 weights (Aarav) | rare-disease ranking | `handoff/weights/retriever/` |
+| Fusion v4 SHAP-8 weights | rare-disease ranking | `handoff/weights/retriever/` |
 
-All 69,146 ZebraMap cases are present: exactly Aarav's train + validation + test (47,858 +
+All 69,146 ZebraMap cases are present: exactly the train + validation + test split (47,858 +
 10,586 + 10,702), 1,464 diseases, 36,131 source articles.
 
 ## Retraining recipe (not run yet)
 
 The data is now available, so retraining on all 69,146 cases is possible; it hasn't been run.
-These are Aarav's settings (architecture document, `retriever_config.json`). With no held-out set
+These are the retriever settings (architecture document, `retriever_config.json`). With no held-out set
 left, use the iteration counts chosen on the split.
 
 1. **mass80 pruning** for BoW and SVD (reuse `prune_sets_mass80.json`); TF-IDF uses raw text.

@@ -76,7 +76,7 @@ flowchart LR
   E --> F[Cited claims, checked<br/>by a validator + adjudicator]
 ```
 
-1. **Rare-disease ranking.** Aarav's frozen *fusion v4 SHAP-8* retriever (`handoff/`) ranks
+1. **Rare-disease ranking.** The team's frozen *fusion v4 SHAP-8* retriever (`handoff/`, built by Animesh Pathak and Aarav Singh) ranks
    1,464 Orphanet diseases.
    - A TF-IDF/SGD classifier picks 100 candidates.
    - Mass-pruned bag-of-words disease centroids and a 32-dimensional SVD add signals.
@@ -121,7 +121,7 @@ Measured on a development laptop (Windows 11, CPU only, one server worker).
 
 | Test | What is scored | Result |
 |---|---|---|
-| Official test split: 10,702 real case reports never seen in training (Aarav) | rare-disease ranking | **MRR 0.496 · Top-1 0.391 · Top-10 0.685 · R@100 0.844** |
+| Official test split: 10,702 real case reports never seen in training | rare-disease ranking | **MRR 0.496 · Top-1 0.391 · Top-10 0.685 · R@100 0.844** |
 | 300 real ZebraMap reports held out from router tuning | ranking alone / as shown on the page | MRR@10 0.710 / 0.678, Recall@10 0.90 (optimistic: ~69% are from training articles) |
 | 92 synthetic cases (46 rare, 46 everyday) written as case reports | as shown on the page | **MRR@10 0.832 · Recall@10 0.924** (old rules: 0.518 / 0.565) |
 | Routing on those 92 cases | everyday sent "common first" / rare wrongly sent | **87% / 9%**; F1 0.89 (old rules: 13% / 7%) |
@@ -216,7 +216,7 @@ app/
   templates/, static/
 evaluation/          synthetic test cases, run_eval.py, usage_bench.py, results, README
 scripts/             zebramap_fetch.py, build_phenotypes.py, build_drug_suggestions.py, fit_router.py
-handoff/             Aarav's retriever: weights, catalog, pipeline code, architecture docs
+handoff/             shared retriever bundle: weights, catalog, pipeline code, architecture docs
 data/                downloaded datasets (git-ignored)
 ```
 
@@ -230,8 +230,8 @@ data/                downloaded datasets (git-ignored)
 | `scripts/fit_router.py` | Fits the realist router on `evaluation/tuning_cases.json` + 200 real ZebraMap reports | ZebraMap data |
 
 The generated files in `app/data/` are committed, so the app runs without any of these scripts.
-The retriever weights in `handoff/weights/` are frozen. The README in `evaluation/` gives Aarav's
-exact recipe for retraining on all 69,146 cases.
+The retriever weights in `handoff/weights/` are frozen. The README in `evaluation/` gives the exact
+recipe for retraining on all 69,146 cases.
 
 ## Testing and evaluation
 
@@ -282,8 +282,13 @@ exact recipe for retraining on all 69,146 cases.
 
 ## Credits and licences
 
-- **Rare-disease retriever and explanation pipeline:** Aarav, the Glassbox handoff in `handoff/`
-  (see [`handoff/README.md`](handoff/README.md) and `handoff/docs/architecture.pdf`).
+- **Team:** Animesh Pathak, Aarav Singh and Abhay Yadav. See [`CONTRIBUTORS.md`](CONTRIBUTORS.md).
+- **Rare-disease retrieval and explanation engine:** built by Animesh Pathak and Aarav Singh
+  in `handoff/` (committed through Aarav's account); see [`handoff/README.md`](handoff/README.md)
+  and `handoff/docs/architecture.pdf`.
+- **Backend, integration and evaluation:** Animesh Pathak and Abhay Yadav built the backend
+  and the backend–frontend–LLM glue; Animesh Pathak built the realist router and the
+  evaluation, and hardened the security.
 - **ZebraMap** (Diagnostics 2025, doi 10.3390/diagnostics16010107), CC BY 4.0: case reports,
   disease profiles and treatments.
 - **OptimusKG** (Harvard Dataverse, doi:10.7910/DVN/IYNGEV): phenotypes, drugs, indications and
@@ -298,5 +303,5 @@ exact recipe for retraining on all 69,146 cases.
 |---|---|
 | [`APP_README.md`](APP_README.md) | Feature-by-feature guide: emails, portal, pharmacy, images, prescribing, AI diagnosis |
 | [`evaluation/README.md`](evaluation/README.md) | Usage and accuracy report: method, every metric, router design, retraining recipe |
-| [`handoff/README.md`](handoff/README.md) | The original retriever bundle and its validated results |
+| [`handoff/README.md`](handoff/README.md) | The shared retriever bundle and its validated results |
 | `/ai/performance` (in the app) | Live summary of the metrics for doctors and admins |
