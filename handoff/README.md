@@ -1,7 +1,11 @@
-# Glass-box rare-disease retrieval and explanation -- handoff bundle
+# Glass-box rare-disease retrieval and explanation — shared retriever bundle
 
 This folder contains everything needed to run the frozen **fusion v4 SHAP-8**
 retriever and to build the live evidence-grounded agent around it.
+
+**Contributors.** This is part of the MediPurse team project: Aarav Singh (retriever and
+seed data), Animesh Pathak (integration, router, evaluation), Abhay Yadav (platform).
+See [`../CONTRIBUTORS.md`](../CONTRIBUTORS.md).
 
 Start with **`docs/architecture.pdf`** (LaTeX source in `docs/architecture.tex`).
 It covers the data split, preprocessing, retrieval training, agent architecture,
