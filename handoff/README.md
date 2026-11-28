@@ -3,9 +3,10 @@
 This folder contains everything needed to run the frozen **fusion v4 SHAP-8**
 retriever and to build the live evidence-grounded agent around it.
 
-**Contributors.** This is part of the MediPurse team project: Aarav Singh (retriever and
-seed data), Animesh Pathak (integration, router, evaluation), Abhay Yadav (platform).
-See [`../CONTRIBUTORS.md`](../CONTRIBUTORS.md).
+**Contributors.** This is part of the MediPurse team project. The retriever and explanation
+engine were built by Animesh Pathak and Aarav Singh, and are committed here through Aarav's
+account. Abhay Yadav built the frontend; Animesh Pathak and Abhay Yadav then built the
+backend and the backend–frontend–LLM glue. See [`../CONTRIBUTORS.md`](../CONTRIBUTORS.md).
 
 Start with **`docs/architecture.pdf`** (LaTeX source in `docs/architecture.tex`).
 It covers the data split, preprocessing, retrieval training, agent architecture,
