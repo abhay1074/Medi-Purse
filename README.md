@@ -76,7 +76,7 @@ flowchart LR
   E --> F[Cited claims, checked<br/>by a validator + adjudicator]
 ```
 
-1. **Rare-disease ranking.** The team's frozen *fusion v4 SHAP-8* retriever (`handoff/`, built by Aarav Singh) ranks
+1. **Rare-disease ranking.** The team's frozen *fusion v4 SHAP-8* retriever (`handoff/`, built by Animesh Pathak and Aarav Singh) ranks
    1,464 Orphanet diseases.
    - A TF-IDF/SGD classifier picks 100 candidates.
    - Mass-pruned bag-of-words disease centroids and a 32-dimensional SVD add signals.
@@ -282,12 +282,13 @@ recipe for retraining on all 69,146 cases.
 
 ## Credits and licences
 
-- **Team:** Abhay Yadav (platform, portal, pharmacy, UI), Aarav Singh (rare-disease retrieval and
-  seed data), Animesh Pathak (realist router, FastAPI backend, integration, evaluation,
-  security). See [`CONTRIBUTORS.md`](CONTRIBUTORS.md).
-- **Rare-disease retrieval:** Aarav Singh's Glassbox retriever and seed data in `handoff/`
-  (see [`handoff/README.md`](handoff/README.md) and `handoff/docs/architecture.pdf`),
-  integrated with the router and explanation flow in `app/`.
+- **Team:** Animesh Pathak, Aarav Singh and Abhay Yadav. See [`CONTRIBUTORS.md`](CONTRIBUTORS.md).
+- **Rare-disease retrieval and explanation engine:** built by Animesh Pathak and Aarav Singh
+  in `handoff/` (committed through Aarav's account); see [`handoff/README.md`](handoff/README.md)
+  and `handoff/docs/architecture.pdf`.
+- **Backend, integration and evaluation:** Animesh Pathak and Abhay Yadav built the backend
+  and the backend–frontend–LLM glue; Animesh Pathak built the realist router and the
+  evaluation, and hardened the security.
 - **ZebraMap** (Diagnostics 2025, doi 10.3390/diagnostics16010107), CC BY 4.0: case reports,
   disease profiles and treatments.
 - **OptimusKG** (Harvard Dataverse, doi:10.7910/DVN/IYNGEV): phenotypes, drugs, indications and
